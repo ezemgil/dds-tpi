@@ -1,0 +1,13 @@
+{
+  "name": "backend-tpi-dds",
+  "version": "1.0.0",
+  "description": "Aplicación backend con una interface WebApiRest, programada en NodeJs/Javascript, usando el framework express y con acceso a una base de datos (sqlite) mediante un ORM (Sequelize)",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon app.js"
+  },
+  "author": "89675-Gil, 89768-Gutierrez, 97848-Witt",
+  "license": "ISC"
+}
