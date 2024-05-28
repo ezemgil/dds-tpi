@@ -20,15 +20,31 @@ dds-tpi/
 |   ├── config
 |   |   └── database.js
 |   ├── controllers
+|   |   ├── generoController.js
+|   |   └── ...
 |   ├── data
 |   |   ├── init.sql
 |   |   └── peliculas.db
 |   ├── middleware
+|   |   ├── errorHandler.js
+|   |   └── ...
 |   ├── models
+|   |   ├── generos.js
+|   |   └── ...
+|   ├── repositories
+|   |   ├── generoRepository.js
+|   |   └── ...
 |   ├── routes
-|   ├── services
+|   |   ├── genero.routes.js
+|   |   └── ...
 |   ├── security
 |   |   └── auth.js
+|   ├── services
+|   |   ├── generoService.js
+|   |   └── ...
+|   ├── test
+|   ├── utils
+|   |   └── errors.js
 |   ├── app.js
 |   ├── package-lock.json
 |   └── package.json
@@ -46,6 +62,7 @@ dds-tpi/
         - ```peliculas.db```: Archivo de la base de datos SQLite que almacena los datos de la aplicación.
     - ```middleware/```: Funciones que se ejecutan durante el ciclo de vida de una solicitud HTTP y pueden modificar la solicitud o la respuesta, o terminar el ciclo de vida de la solicitud.
     - ```models/```: Modelos de la aplicación. Representan las estructuras de datos y las operaciones de negocio. Mapean tablas de la base de datos
+    - ```repositories/```: Contienen la lógica para acceder y manipular los datos de la base de datos.
     - ```routes/```: Este directorio contiene las definiciones de las rutas de la aplicación. Las rutas definen los endpoints de la API y vinculan las solicitudes HTTP con los controladores correspondientes.
     - ```services/```: Encapsulan la lógica de negocio y las operaciones sobre los datos.
     - ```security/```: Almacenar los archivos y módulos relacionados con la seguridad de la aplicación.
@@ -56,6 +73,17 @@ dds-tpi/
 - ```frontend/```: Directorio para el código del lado del cliente (frontend). 
 
 # Backend
+Para ejecutar el correctamente el backend, asegurarse de crear un archivo ```.env``` en la raíz del proyecto con las siguientes variables de entorno:
+```env
+# Variables de entorno para el backend
+
+# Configuración del servidor
+PORT=3000
+
+# Base de datos
+DB_NAME=data/peliculas.db
+DB_DIALECT=sqlite
+```
 
 ## Dependencias
 - ```npm i express```

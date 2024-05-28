@@ -1,8 +1,12 @@
 import { Sequelize } from "sequelize";
+import dotenv from "dotenv";
 
-const sequelize = new Sequelize(process.env.DATABASE_URL, {
-  dialect: "sqlite",
-  storage: process.env.DATABASE_URL,
+dotenv.config();
+
+// Crear una instancia de Sequelize
+const sequelize = new Sequelize({
+  dialect: process.env.DB_DIALECT,
+  storage: process.env.DB_NAME,
 });
 
 export default sequelize;

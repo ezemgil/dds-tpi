@@ -9,5 +9,18 @@
     "dev": "nodemon app.js"
   },
   "author": "89675-Gil, 89768-Gutierrez, 97848-Witt",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "aa-sqlite": "^1.0.29",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "sequelize": "^6.37.3",
+    "sqlite3": "^5.1.7"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.1",
+    "supertest": "^7.0.0"
+  }
 }
