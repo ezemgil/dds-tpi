@@ -1,5 +1,6 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../config/database.js";
+import Clasificacion from "./clasificaciones.js";
 
 const Pelicula = sequelize.define(
   "Pelicula",
@@ -30,6 +31,10 @@ const Pelicula = sequelize.define(
     },
     id_clasificacion: {
       type: DataTypes.INTEGER,
+      references: {
+        model: Clasificacion,
+        key: "id",
+      },
     },
   },
   {

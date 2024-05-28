@@ -2,6 +2,9 @@ import express from "express";
 import sequelize from "./config/database.js";
 import errorHandler from "./middleware/errorHandler.js";
 
+// Relaciones de modelos
+import "./models/associations.js";
+
 // Importar rutas
 import generoRoutes from "./routes/genero.routes.js";
 import peliculaRoutes from "./routes/pelicula.routes.js";

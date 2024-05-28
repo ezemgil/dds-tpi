@@ -1,8 +1,14 @@
 import Pelicula from "../models/peliculas.js";
+import Clasificacion from "../models/clasificaciones.js";
 
 // Buscar todas las películas
 export const findAll = async () => {
-  return await Pelicula.findAll();
+  return await Pelicula.findAll({
+    include: {
+      model: Clasificacion,
+      as: "clasificacion",
+    },
+  });
 };
 
 // Crear una nueva película
@@ -12,7 +18,12 @@ export const create = async (pelicula) => {
 
 // Buscar una película por su id
 export const findById = async (id) => {
-  return await Pelicula.findByPk(id);
+  return await Pelicula.findByPk(id, {
+    include: {
+      model: Clasificacion,
+      as: "clasificacion",
+    },
+  });
 };
 
 // Actualizar una película
