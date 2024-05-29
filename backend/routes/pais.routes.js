@@ -4,10 +4,10 @@ import * as paisController from '../controllers/paisController.js';
 const router = express.Router();
 
 // Rutas para los paises
-router.get('/paises', paisController.getPaises);
-router.get('/paises/:id', paisController.getPaisById);
-router.post('/paises', paisController.createPais);
-router.put('/paises/:id', paisController.updatePais);
-router.delete('/paises/:id', paisController.deletePais);
+router.post('/paises', paisController.createPais); // Create
+router.get('/paises', paisController.getPaises); // Read
+router.get('/paises/:id', paisController.getPaisById); // Read
+router.put('/paises/:id', paisController.updatePais);  // Update
+router.delete('/paises/:id', paisController.deletePais); // Delete
 
 export default router;
