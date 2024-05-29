@@ -19,8 +19,3 @@ export async function createGenero(genero) {
 export async function updateGenero(id, genero) {
   return await generoRepository.update(id, genero);
 }
-
-// Eliminar un género
-export async function deleteGenero(id) {
-  return await generoRepository.remove(id);
-}

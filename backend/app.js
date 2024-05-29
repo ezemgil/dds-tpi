@@ -4,6 +4,7 @@ import errorHandler from "./middleware/errorHandler.js";
 
 // Importar rutas
 import generoRoutes from "./routes/genero.routes.js";
+import paisRoutes from "./routes/pais.routes.js";
 
 // Crear aplicación express
 const app = express();
@@ -17,6 +18,7 @@ app.use(errorHandler);
 
 // Rutas
 app.use(generoRoutes);
+app.use(paisRoutes);
 
 // Iniciar el servidor
 sequelize.sync().then(() => {
