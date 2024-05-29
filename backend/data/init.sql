@@ -99,6 +99,14 @@ CREATE TABLE GenerosPelicula (
     FOREIGN KEY (id_genero) REFERENCES Generos(id)
 );
 
+-- Creación de la tabla Usuarios
+CREATE TABLE Usuarios (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nombre TEXT NOT NULL UNIQUE,
+    clave TEXT NOT NULL,
+    rol TEXT NOT NULL
+);
+
 -- INSERSIÓN DE DATOS
 -- Claficiaciones
 INSERT INTO Clasificaciones (nombre, descripcion) VALUES ('R', 'Restringida'), ('PG-13', 'Mayores de 13 años'), ('PG', 'Mayores de 7 años'), ('G', 'Todo público'), ('NR', 'No recomendada'), ('NC-17', 'Mayores de 17 años');

@@ -16,4 +16,22 @@ class BadRequestError extends Error {
   }
 }
 
-export { NotFoundError, BadRequestError };
+// Error de autenticación: 401
+class UnauthorizedError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = "UnauthorizedError";
+    this.statusCode = 401;
+  }
+}
+
+// Error de autorización: 403
+class ForbiddenError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = "ForbiddenError";
+    this.statusCode = 403;
+  }
+}
+
+export { NotFoundError, BadRequestError, UnauthorizedError, ForbiddenError };

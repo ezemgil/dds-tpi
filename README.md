@@ -83,6 +83,11 @@ PORT=3000
 # Base de datos
 DB_NAME=data/peliculas.db
 DB_DIALECT=sqlite
+
+# JWT
+ACCESS_TOKEN_SECRET=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub21icmUiOiJhZG1pbiIsImlhdCI6MTcxNjk4OTYxMywiZXhwIjoxNzE2OTkwODEzfQ.2e7Aj_z1vNAfiOdNMQuT-ALdpmT5tZabfkBmJpcmiaw
+REFRESH_TOKEN_SECRET=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub21icmUiOiJhZG1pbiIsImlhdCI6MTcxNjk4OTYxM30.153KcXudtPZxZqy7H7JN2_mV5uJ9AswY3pgxw22W9e0
+
 ```
 
 ## Dependencias
@@ -93,6 +98,9 @@ DB_DIALECT=sqlite
 - ```npm install jsonwebtoken```
 - ```npm install -g jest```
 - ```npm install --save-dev supertest```
+- ```npm i bcrypt```
+
+
 
 ## DER (Diagrama Entidad-Relación)
 La base de datos almacena información relacionada con películas, cineastas, clasificaciones, roles de cineasta, idiomas, géneros, países y tipos de traducción.
@@ -112,5 +120,6 @@ La base de datos almacena información relacionada con películas, cineastas, cl
 - ```PeliculaCineastaRol```: Relaciona las películas con los cineastas y sus roles específicos en esas películas.
 - ```IdiomasPelicula```: Asocia las películas con los idiomas en los que están disponibles y el tipo de traducción aplicado.
 - ```GenerosPelicula```: Establece la relación entre las películas y sus géneros correspondientes.
+- ```Usuarios```: Almacena información sobre los usuarios de la aplicación, incluyendo su nombre, clave (aplicando un hash con la librería ```bcrypt```), y rol asociado.
 
 Script que crea las tablas e inserta valores: [init.sql](backend\data\init.sql)
