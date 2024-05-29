@@ -1,6 +1,7 @@
 import express from "express";
 import sequelize from "./config/database.js";
 import errorHandler from "./middleware/errorHandler.js";
+import { logger } from "./utils/logger.js";
 
 // Relaciones de modelos
 import "./models/associations.js";
@@ -30,6 +31,6 @@ app.use(errorHandler);
 // Iniciar el servidor
 sequelize.sync().then(() => {
   app.listen(PORT, () => {
-    console.log(`Servidor iniciado en http://localhost:${PORT}`);
+    logger.info(`Servidor iniciado en http://localhost:${PORT}`);
   });
 });

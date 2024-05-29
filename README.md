@@ -96,10 +96,10 @@ REFRESH_TOKEN_SECRET=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub21icmUiOiJhZG1pbi
 - ```npm i cors dotenv```
 - ```npm i sqlite3 aa-sqlite sequelize```
 - ```npm install jsonwebtoken```
-- ```npm install -g jest```
+- ```npm install --save-dev jest```
 - ```npm install --save-dev supertest```
 - ```npm i bcrypt```
-
+- ```npm i winston```
 
 
 ## DER (Diagrama Entidad-Relación)
