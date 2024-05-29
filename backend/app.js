@@ -3,6 +3,9 @@ import sequelize from "./config/database.js";
 import errorHandler from "./middleware/errorHandler.js";
 
 // Importar rutas
+
+import "./models/associations.js";
+import cineasta from "./routes/cineasta.routes.js";
 import generoRoutes from "./routes/genero.routes.js";
 import paisRoutes from "./routes/pais.routes.js";
 
@@ -19,6 +22,7 @@ app.use(errorHandler);
 // Rutas
 app.use(generoRoutes);
 app.use(paisRoutes);
+app.use(cineasta);
 
 // Iniciar el servidor
 sequelize.sync().then(() => {
