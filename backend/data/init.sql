@@ -174,9 +174,8 @@ INSERT INTO NominacionesPelicula (id_academia, id_premio, id_pelicula, fecha_nom
 
 -- NominacionesCineasta
 INSERT INTO NominacionesCineasta (id_academia, id_premio, id_pelicula, id_cineasta, id_rol, fecha_nominacion, fue_ganador)
-        VALUES (1, 1, 1, 1, 1, '1995-03-27', 1), (1, 1, 1, 2, 2, '1995-03-27', 1), (1, 1, 1, 3, 4, '1995-03-27', 1), (1, 1, 1, 4, 4, '1995-03-27', 1), (1, 1, 1, 5, 4, '1995-03-27', 1), (1, 1, 1, 6, 4, '1995-03-27', 1), (1, 1, 1, 7, 4, '1995-03-27', 1), (1, 1, 1, 8, 4, '1995-03-27', 1), (1, 1, 1, 9, 4, '1995-03-27', 1), (1, 1, 1, 10, 4, '1995-03-27', 1);
+        VALUES (1, 9, 9, 1, 1, '1995-03-27', 0), (2, 1, 3, 2, 2, '1995-03-27', 1), (9, 3, 3, 3, 4, '1995-03-27', 1), (3, 6, 6, 4, 4, '1995-03-27', 1), (4, 5, 8, 5, 4, '1995-03-27', 1), (2, 2, 4, 6, 4, '1995-03-27', 1), (7, 4, 1, 7, 4, '1995-03-27', 0), (6, 7, 5, 8, 4, '1995-03-27', 1), (9, 8, 6, 9, 4, '1995-03-27', 1), (5, 2, 8, 10, 4, '1995-03-27', 0);
     
-
 -- Sueño de fuga
 -- Dirección: Frank Darabont
 -- Guionistas: Stephen King, Frank Darabont
