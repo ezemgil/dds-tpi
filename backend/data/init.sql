@@ -99,6 +99,49 @@ CREATE TABLE GenerosPelicula (
     FOREIGN KEY (id_genero) REFERENCES Generos(id)
 );
 
+-- Creacion de la tabla Academias
+CREATE TABLE Academias (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nombre TEXT NOT NULL,
+    fecha_fundacion DATE
+);
+
+-- Creacion de la tabla Premios
+CREATE TABLE Premios (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nombre TEXT NOT NULL
+);
+
+-- Creacion de la tabla Nominaciones por pelicula
+CREATE TABLE NominacionesPelicula (
+    id_academia INTEGER,
+    id_premio INTEGER,
+    id_pelicula INTEGER,
+    fecha_nominacion DATE,
+    fue_ganador BOOLEAN,
+    PRIMARY KEY (id_academia, id_premio, id_pelicula),
+    FOREIGN KEY (id_academia) REFERENCES Academias(id),
+    FOREIGN KEY (id_premio) REFERENCES Premios(id),
+    FOREIGN KEY (id_pelicula) REFERENCES Peliculas(id),
+)
+
+-- Creacion de la tabla Nominaciones por cineasta
+CREATE TABLE NominacionesCineasta (
+    id_academia INTEGER,
+    id_premio INTEGER,
+    id_pelicula INTEGER,
+    id_cineasta INTEGER,
+    id_rol INTEGER,
+    fecha_nominacion DATE,
+    fue_ganador BOOLEAN,
+    PRIMARY KEY (id_academia, id_premio, id_pelicula, id_cineasta, id_rol),
+    FOREIGN KEY (id_academia) REFERENCES Academias(id),
+    FOREIGN KEY (id_premio) REFERENCES Premios(id),
+    FOREIGN KEY (id_pelicula) REFERENCES PeliculaCineastaRol(id_pelicula),
+    FOREIGN KEY (id_cineasta) REFERENCES PeliculaCineastaRol(id_cineasta),
+    FOREIGN KEY (id:rol) REFERENCES PeliculaCineastaRol(id_rol)
+)
+
 -- INSERSIÓN DE DATOS
 -- Claficiaciones
 INSERT INTO Clasificaciones (nombre, descripcion) VALUES ('R', 'Restringida'), ('PG-13', 'Mayores de 13 años'), ('PG', 'Mayores de 7 años'), ('G', 'Todo público'), ('NR', 'No recomendada'), ('NC-17', 'Mayores de 17 años');
@@ -119,6 +162,20 @@ INSERT INTO TiposTraduccion (nombre) VALUES ('Doblaje'), ('Subtitulado');
 -- Idiomas
 INSERT INTO Idiomas (nombre) VALUES ('Alemán'), ('Francés'), ('Italiano'), ('Neerlandés'), ('Danés'), ('Inglés'), ('Griego'), ('Español'), ('Portugués'), ('Finés'), ('Sueco'), ('Checo'), ('Eslovaco'), ('Esloveno'), ('Estonio'), ('Húngaro'), ('Letón'), ('Lituano'), ('Maltés'), ('Polaco'), ('Búlgaro'), ('Irlandés'), ('Rumano'), ('Croata');
 
+-- Academias
+INSERT INTO Academias (nombre, fecha_fundacion) VALUES ('Academia de Artes y Ciencias Cinematográficas', '11-05-1927'), ('Academia Británica de las Artes Cinematográficas y de la Televisión', '16-04-1947'), ('Academia de Cine Europeo', '01-11-1988'), ('Academia de las Artes y Ciencias Cinematográficas de España', '08-01-1986'), ('Academia Mexicana de Artes y Ciencias Cinematográficas', '03-07-1946'), ('Academia de Cine de Hong Kong', '05-03-1982'), ('Academia de Cine de Japón', '01-01-1978'), ('Academia de Cine de India', '01-01-1975'), ('Academia de Cine de Australia', '18-08-1958'), ('Academia de Cine de Canadá', '01-01-1980')
+
+-- Premios 
+INSERT INTO Premios (nombre) VALUES ('Mejor Película'), ('Mejor Director'), ('Mejor Actor'), ('Mejor Actriz'), ('Mejor Guión'), ('Mejor Fotografía'), ('Mejor Diseño de Producción'), ('Mejor Edición'), ('Mejor Banda Sonora'), ('Mejor Sonido');
+
+-- NominacionesPelicula
+INSERT INTO NominacionesPelicula (id_academia, id_premio, id_pelicula, fecha_nominacion, fue_ganador) 
+    VALUES (1, 1, 1, '1995-03-27', 1), (7, 6, 1, '1995-03-27', 1), (2, 3, 1, '1995-03-27', 0), (1, 4, 1, '1995-03-27', 1), (1, 5, 1, '1995-03-27', 1), (8, 6, 1, '1995-03-27', 1), (4, 7, 1, '1995-03-27', 1), (1, 8, 1, '1995-03-27', 1), (3, 9, 1, '1995-03-27', 1), (1, 10, 1, '1995-03-27', 1);
+
+-- NominacionesCineasta
+INSERT INTO NominacionesCineasta (id_academia, id_premio, id_pelicula, id_cineasta, id_rol, fecha_nominacion, fue_ganador)
+        VALUES (1, 1, 1, 1, 1, '1995-03-27', 1), (1, 1, 1, 2, 2, '1995-03-27', 1), (1, 1, 1, 3, 4, '1995-03-27', 1), (1, 1, 1, 4, 4, '1995-03-27', 1), (1, 1, 1, 5, 4, '1995-03-27', 1), (1, 1, 1, 6, 4, '1995-03-27', 1), (1, 1, 1, 7, 4, '1995-03-27', 1), (1, 1, 1, 8, 4, '1995-03-27', 1), (1, 1, 1, 9, 4, '1995-03-27', 1), (1, 1, 1, 10, 4, '1995-03-27', 1);
+    
 
 -- Sueño de fuga
 -- Dirección: Frank Darabont
