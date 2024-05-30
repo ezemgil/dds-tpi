@@ -20,6 +20,10 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 
 // Rutas
+app.get("/", (req, res) => {
+  logger.info(`GET / | ${req.headers["user-agent"]}`);
+  res.send("Estado de la API: OK");
+});
 app.use(authRoutes);
 app.use(generoRoutes);
 app.use(peliculaRoutes);

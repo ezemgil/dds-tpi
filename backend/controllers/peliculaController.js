@@ -1,5 +1,6 @@
 import * as peliculaService from "../services/peliculaService.js";
 import { NotFoundError, BadRequestError } from "../utils/errors.js";
+import { logger } from "../utils/logger.js";
 
 // Obtener todas las películas
 export const getPeliculas = async (req, res, next) => {
