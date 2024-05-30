@@ -118,12 +118,12 @@ CREATE TABLE NominacionesPelicula (
     id_premio INTEGER,
     id_pelicula INTEGER,
     fecha_nominacion DATE,
-    fue_ganador BOOLEAN,
+    fue_ganador INTEGER,
     PRIMARY KEY (id_academia, id_premio, id_pelicula),
     FOREIGN KEY (id_academia) REFERENCES Academias(id),
     FOREIGN KEY (id_premio) REFERENCES Premios(id),
-    FOREIGN KEY (id_pelicula) REFERENCES Peliculas(id),
-)
+    FOREIGN KEY (id_pelicula) REFERENCES Peliculas(id)
+);
 
 -- Creacion de la tabla Nominaciones por cineasta
 CREATE TABLE NominacionesCineasta (
@@ -133,14 +133,12 @@ CREATE TABLE NominacionesCineasta (
     id_cineasta INTEGER,
     id_rol INTEGER,
     fecha_nominacion DATE,
-    fue_ganador BOOLEAN,
+    fue_ganador INTEGER,
     PRIMARY KEY (id_academia, id_premio, id_pelicula, id_cineasta, id_rol),
     FOREIGN KEY (id_academia) REFERENCES Academias(id),
     FOREIGN KEY (id_premio) REFERENCES Premios(id),
-    FOREIGN KEY (id_pelicula) REFERENCES PeliculaCineastaRol(id_pelicula),
-    FOREIGN KEY (id_cineasta) REFERENCES PeliculaCineastaRol(id_cineasta),
-    FOREIGN KEY (id:rol) REFERENCES PeliculaCineastaRol(id_rol)
-)
+    FOREIGN KEY (id_pelicula, id_cineasta, id_rol) REFERENCES PeliculaCineastaRol(id_pelicula, id_cineasta, id_rol)
+);
 
 -- INSERSIÓN DE DATOS
 -- Claficiaciones
@@ -163,18 +161,10 @@ INSERT INTO TiposTraduccion (nombre) VALUES ('Doblaje'), ('Subtitulado');
 INSERT INTO Idiomas (nombre) VALUES ('Alemán'), ('Francés'), ('Italiano'), ('Neerlandés'), ('Danés'), ('Inglés'), ('Griego'), ('Español'), ('Portugués'), ('Finés'), ('Sueco'), ('Checo'), ('Eslovaco'), ('Esloveno'), ('Estonio'), ('Húngaro'), ('Letón'), ('Lituano'), ('Maltés'), ('Polaco'), ('Búlgaro'), ('Irlandés'), ('Rumano'), ('Croata');
 
 -- Academias
-INSERT INTO Academias (nombre, fecha_fundacion) VALUES ('Academia de Artes y Ciencias Cinematográficas', '11-05-1927'), ('Academia Británica de las Artes Cinematográficas y de la Televisión', '16-04-1947'), ('Academia de Cine Europeo', '01-11-1988'), ('Academia de las Artes y Ciencias Cinematográficas de España', '08-01-1986'), ('Academia Mexicana de Artes y Ciencias Cinematográficas', '03-07-1946'), ('Academia de Cine de Hong Kong', '05-03-1982'), ('Academia de Cine de Japón', '01-01-1978'), ('Academia de Cine de India', '01-01-1975'), ('Academia de Cine de Australia', '18-08-1958'), ('Academia de Cine de Canadá', '01-01-1980')
+INSERT INTO Academias (nombre, fecha_fundacion) VALUES ('Academia de Artes y Ciencias Cinematográficas', '1927-05-11'), ('Academia Británica de las Artes Cinematográficas y de la Televisión', '1947-04-16'), ('Academia de Cine Europeo', '1988-11-01'), ('Academia de las Artes y Ciencias Cinematográficas de España', '1986-01-08'), ('Academia Mexicana de Artes y Ciencias Cinematográficas', '1946-07-03'), ('Academia de Cine de Hong Kong', '1982-03-05'), ('Academia de Cine de Japón', '1978-01-01'), ('Academia de Cine de India', '1975-01-01'), ('Academia de Cine de Australia', '1958-08-18'), ('Academia de Cine de Canadá', '1980-01-01');
 
 -- Premios 
 INSERT INTO Premios (nombre) VALUES ('Mejor Película'), ('Mejor Director'), ('Mejor Actor'), ('Mejor Actriz'), ('Mejor Guión'), ('Mejor Fotografía'), ('Mejor Diseño de Producción'), ('Mejor Edición'), ('Mejor Banda Sonora'), ('Mejor Sonido');
-
--- NominacionesPelicula
-INSERT INTO NominacionesPelicula (id_academia, id_premio, id_pelicula, fecha_nominacion, fue_ganador) 
-    VALUES (1, 1, 1, '1995-03-27', 1), (7, 6, 1, '1995-03-27', 1), (2, 3, 1, '1995-03-27', 0), (1, 4, 1, '1995-03-27', 1), (1, 5, 1, '1995-03-27', 1), (8, 6, 1, '1995-03-27', 1), (4, 7, 1, '1995-03-27', 1), (1, 8, 1, '1995-03-27', 1), (3, 9, 1, '1995-03-27', 1), (1, 10, 1, '1995-03-27', 1);
-
--- NominacionesCineasta
-INSERT INTO NominacionesCineasta (id_academia, id_premio, id_pelicula, id_cineasta, id_rol, fecha_nominacion, fue_ganador)
-        VALUES (1, 9, 9, 1, 1, '1995-03-27', 0), (2, 1, 3, 2, 2, '1995-03-27', 1), (9, 3, 3, 3, 4, '1995-03-27', 1), (3, 6, 6, 4, 4, '1995-03-27', 1), (4, 5, 8, 5, 4, '1995-03-27', 1), (2, 2, 4, 6, 4, '1995-03-27', 1), (7, 4, 1, 7, 4, '1995-03-27', 0), (6, 7, 5, 8, 4, '1995-03-27', 1), (9, 8, 6, 9, 4, '1995-03-27', 1), (5, 2, 8, 10, 4, '1995-03-27', 0);
     
 -- Sueño de fuga
 -- Dirección: Frank Darabont
@@ -459,3 +449,42 @@ INSERT INTO PeliculaCineastaRol (id_pelicula, id_cineasta, id_rol) VALUES (10, 4
 INSERT INTO Cineastas (nombre, apellido, fecha_nacimiento, nacionalidad) VALUES ('Lee Van', 'Cleef', '1925-01-09', 27);
 INSERT INTO RolesCineasta (id_cineasta, id_rol) VALUES (47, 4), (47, 1), (47, 3);
 INSERT INTO PeliculaCineastaRol (id_pelicula, id_cineasta, id_rol) VALUES (10, 47, 4);
+
+
+-- NominacionesPelicula
+INSERT INTO NominacionesPelicula (id_academia, id_premio, id_pelicula, fecha_nominacion, fue_ganador) 
+    VALUES (1, 1, 1, '1995-03-27', 1), 
+        (7, 6, 1, '1995-03-27', 1), 
+        (2, 3, 1, '1995-03-27', 0), 
+        (1, 4, 1, '1995-03-27', 1), 
+        (1, 5, 1, '1995-03-27', 1), 
+        (8, 6, 1, '1995-03-27', 1), 
+        (4, 7, 1, '1995-03-27', 1), 
+        (1, 8, 1, '1995-03-27', 1), 
+        (3, 9, 1, '1995-03-27', 1), 
+        (1, 10, 1, '1995-03-27', 1);
+
+-- NominacionesCineasta
+INSERT INTO NominacionesCineasta (id_academia, id_premio, id_pelicula, id_cineasta, id_rol, fecha_nominacion, fue_ganador)
+        VALUES (1, 9, 1, 1, 1, '1995-03-27', 0), 
+            (5, 3, 1, 2, 2, '1995-03-27', 0), 
+            (4, 5, 2, 6, 1, '1995-03-27', 0), 
+            (7, 8, 3, 11, 1, '1995-03-27', 0), 
+            (9, 3, 3, 14, 4, '1995-03-27', 0), 
+            (6, 2, 4, 17, 4, '1995-03-27', 0), 
+            (1, 9, 5, 18, 1, '1995-03-27', 0), 
+            (9, 9, 6, 24, 2, '1995-03-27', 0), 
+            (8, 7, 7, 35, 4, '1995-03-27', 0), 
+            (4, 1, 9, 29, 1, '1995-03-27', 0), 
+            (3, 2, 8, 40, 4, '1995-03-27', 0);
+
+
+-- Creación de la tabla Usuarios
+CREATE TABLE Usuarios (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nombre TEXT NOT NULL UNIQUE,
+    clave TEXT NOT NULL,
+    rol TEXT NOT NULL
+);
+-- Usuarios
+INSERT INTO Usuarios (nombre, clave, rol) VALUES ('admin', '$2b$10$kXII2Vd5f3KOgUBbiJ7Oq.ChAHdEbszy4xHbzvQInvGBYc6rPQ3wS', 'admin'); 
