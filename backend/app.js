@@ -8,6 +8,7 @@ import "./models/associations.js";
 import cineasta from "./routes/cineasta.routes.js";
 import generoRoutes from "./routes/genero.routes.js";
 import paisRoutes from "./routes/pais.routes.js";
+import tipoRolRoutes from "./routes/tipoRol.routes.js";
 
 // Crear aplicación express
 const app = express();
@@ -23,6 +24,7 @@ app.use(errorHandler);
 app.use(generoRoutes);
 app.use(paisRoutes);
 app.use(cineasta);
+app.use(tipoRolRoutes);
 
 // Iniciar el servidor
 sequelize.sync().then(() => {
