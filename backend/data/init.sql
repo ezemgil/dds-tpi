@@ -119,7 +119,7 @@ CREATE TABLE NominacionesPelicula (
     id_pelicula INTEGER,
     fecha_nominacion DATE,
     fue_ganador INTEGER,
-    PRIMARY KEY (id_academia, id_premio, id_pelicula),
+    PRIMARY KEY (id_academia, id_premio, id_pelicula, fecha_nominacion),
     FOREIGN KEY (id_academia) REFERENCES Academias(id),
     FOREIGN KEY (id_premio) REFERENCES Premios(id),
     FOREIGN KEY (id_pelicula) REFERENCES Peliculas(id)
@@ -134,7 +134,7 @@ CREATE TABLE NominacionesCineasta (
     id_rol INTEGER,
     fecha_nominacion DATE,
     fue_ganador INTEGER,
-    PRIMARY KEY (id_academia, id_premio, id_pelicula, id_cineasta, id_rol),
+    PRIMARY KEY (id_academia, id_premio, id_pelicula, id_cineasta, id_rol, fecha_nominacion),
     FOREIGN KEY (id_academia) REFERENCES Academias(id),
     FOREIGN KEY (id_premio) REFERENCES Premios(id),
     FOREIGN KEY (id_pelicula, id_cineasta, id_rol) REFERENCES PeliculaCineastaRol(id_pelicula, id_cineasta, id_rol)

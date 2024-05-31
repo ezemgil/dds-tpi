@@ -6,7 +6,8 @@ import errorHandler from "./middleware/errorHandler.js";
 import generoRoutes from "./routes/genero.routes.js";
 import idiomaRoutes from "./routes/idioma.routes.js"
 import tipoTraduccionRoutes from "./routes/tipo_traduccion.routes.js";
-import academiasRoutes from "./models/academia.routes.js";
+import academiaRoutes from "./routes/academia.routes.js";
+import nominacion_peliculaRoutes from "./routes/nominacion_pelicula.routes.js";
 
 // Crear aplicación express
 const app = express();
@@ -22,7 +23,8 @@ app.use(errorHandler);
 app.use(generoRoutes);
 app.use(idiomaRoutes);
 app.use(tipoTraduccionRoutes);
-app.use(academiasRoutes);
+app.use(academiaRoutes);
+app.use(nominacion_peliculaRoutes);
 
 // Iniciar el servidor
 sequelize.sync().then(() => {
