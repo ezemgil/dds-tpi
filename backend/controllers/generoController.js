@@ -92,7 +92,7 @@ export const deleteGenero = async (req, res, next) => {
       logger.info(
         `DELETE /generos/${req.params.id} | ${req.headers["user-agent"]} | Género eliminado`
       );
-      res.send("Género eliminado");
+      res.status(204).send("Género eliminado");
     } else {
       logger.warn(
         `DELETE /generos/${req.params.id} | ${req.headers["user-agent"]} | Género ${req.params.id} no encontrado`

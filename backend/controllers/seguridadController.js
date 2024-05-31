@@ -97,3 +97,73 @@ export const token = (req, res, next) => {
     res.json({ accessToken });
   });
 };
+
+// Registrar un nuevo usuario
+export const register = async (req, res, next) => {
+  const { nombre, clave } = req.body;
+  if (!nombre || !clave) {
+    logger.error(
+      `POST /auth/register | ${req.headers["user-agent"]} | Usuario y contraseña requeridos`
+    );
+    next(new BadRequestError("Usuario y contraseña requeridos"));
+  }
+  const usuario = await seguridadService.getUsuarioByUsername(nombre);
+  if (usuario) {
+    logger.warn(
+      `POST /auth/register | ${req.headers["user-agent"]} | Usuario ${nombre} ya existe`
+    );
+    next(new BadRequestError("Usuario ya existe"));
+  }
+  const hashedClave = await bcrypt.hash(clave, 10);
+  await seguridadService.createUsuario({ nombre, clave: hashedClave });
+  logger.info(
+    `POST /auth/register | ${req.headers["user-agent"]} | Usuario ${nombre} registrado`
+  );
+  res.json({ message: "Usuario registrado" });
+};
+
+// Actualizar un usuario
+export const update = async (req, res, next) => {
+  const { id } = req.params;
+  const { nombre, clave } = req.body;
+  if (!nombre || !clave) {
+    logger.error(
+      `PUT /auth/${id} | ${req.headers["user-agent"]} | Usuario y contraseña requeridos`
+    );
+    next(new BadRequestError("Usuario y contraseña requeridos"));
+  }
+  const hashedClave = await bcrypt.hash(clave, 10);
+  const result = await seguridadService.updateUsuario(id, nombre, hashedClave);
+  if (!result) {
+    logger.warn(
+      `PUT /auth/${id} | ${req.headers["user-agent"]} | Usuario no encontrado`
+    );
+    next(new UnauthorizedError("Usuario no encontrado"));
+  }
+  logger.info(
+    `PUT /auth/${id} | ${req.headers["user-agent"]} | Usuario actualizado`
+  );
+  res.json({ message: "Usuario actualizado" });
+};
+
+// Eliminar un usuario
+export const remove = async (req, res, next) => {
+  const { id } = req.params;
+  const result = await seguridadService.deleteUsuario(id);
+  if (!result) {
+    logger.warn(
+      `DELETE /auth/${id} | ${req.headers["user-agent"]} | Usuario no encontrado`
+    );
+    next(new UnauthorizedError("Usuario no encontrado"));
+  }
+  logger.info(
+    `DELETE /auth/${id} | ${req.headers["user-agent"]} | Usuario eliminado`
+  );
+  res.json({ message: "Usuario eliminado" });
+};
+
+// Obtener todos los usuarios
+export const getUsuarios = async (req, res, next) => {
+  const usuarios = await seguridadService.getUsuarios();
+  res.json(usuarios);
+};

@@ -6,7 +6,7 @@ import { logger } from "../utils/logger.js";
 export const getClasificaciones = async (req, res, next) => {
   try {
     const clasificaciones = await clasificacionService.getClasificaciones();
-    res.json(clasificaciones);
+    res.json(clasificaciones).status(200);
     logger.info(
       `GET /clasificaciones | ${req.headers["user-agent"]} | ${clasificaciones.length} registros encontrados`
     );
@@ -28,7 +28,7 @@ export const getClasificacionById = async (req, res, next) => {
       logger.info(
         `GET /clasificaciones/${req.params.id} | ${req.headers["user-agent"]} | Clasificación ${req.params.id} encontrada`
       );
-      res.json(clasificacion);
+      res.json(clasificacion).status(200);
     } else {
       logger.warn(
         `GET /clasificaciones/${req.params.id} | ${req.headers["user-agent"]} | Clasificación ${req.params.id} no encontrada`
@@ -78,7 +78,7 @@ export const updateClasificacion = async (req, res, next) => {
           clasificacion
         )}`
       );
-      res.json(clasificacion);
+      res.json(clasificacion).status(200);
     } else {
       logger.warn(
         `PUT /clasificaciones/${req.params.id} | ${req.headers["user-agent"]} | Clasificación ${req.params.id} no encontrada`
@@ -103,7 +103,7 @@ export const deleteClasificacion = async (req, res, next) => {
       logger.info(
         `DELETE /clasificaciones/${req.params.id} | ${req.headers["user-agent"]} | Clasificación ${req.params.id} eliminada`
       );
-      res.send("Clasificación eliminada");
+      res.status(204).send("Clasificación eliminada");
     } else {
       logger.warn(
         `DELETE /clasificaciones/${req.params.id} | ${req.headers["user-agent"]} | Clasificación ${req.params.id} no encontrada`

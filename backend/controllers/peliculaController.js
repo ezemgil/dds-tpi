@@ -95,7 +95,7 @@ export const deletePelicula = async (req, res, next) => {
       logger.info(
         `DELETE /peliculas/${req.params.id} | ${req.headers["user-agent"]} | Película eliminada`
       );
-      res.send("Película eliminada");
+      res.status(204).send("Película eliminada");
     } else {
       logger.warn(
         `DELETE /peliculas/${req.params.id} | ${req.headers["user-agent"]} | Película ${req.params.id} no encontrada`

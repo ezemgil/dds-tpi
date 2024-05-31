@@ -98,6 +98,7 @@ REFRESH_TOKEN_SECRET=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub21icmUiOiJhZG1pbi
 - ```npm install jsonwebtoken```
 - ```npm install --save-dev jest```
 - ```npm install --save-dev supertest```
+- ```npm install --save-dev @babel/core @babel/preset-env babel-jest```
 - ```npm i bcrypt```
 - ```npm i winston```
 
