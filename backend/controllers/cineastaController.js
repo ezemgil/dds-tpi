@@ -29,6 +29,7 @@ export const getCineastaById = async (req, res, next) => {
 export const createCineasta = async (req, res, next) => {
   try {
     const cineasta = await cineastaService.create(req.body);
+    console.log(cineasta);
     res.status(201).json(cineasta);
   } catch (error) {
     next(error);

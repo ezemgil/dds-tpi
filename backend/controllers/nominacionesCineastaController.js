@@ -27,9 +27,24 @@ export const getNominacionCineasta = async (req, res, next) => {
 export const createNominacionCineasta = async (req, res, next) => {
   try {
     const nominacionCineasta = req.body;
-    console.log(nominacionCineasta);
     const result = await nominacionesCineastaService.createNominacionCineasta(nominacionCineasta);
     res.status(201).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
+// Actualizar una nominación de cineasta
+export const updateNominacionCineasta = async (req, res, next) => {
+  const { academia, premio, pelicula, cineasta, rol } = req.params;
+  try {
+    const nominacionCineasta = req.body;
+    const result = await nominacionesCineastaService.updateNominacionCineasta(academia, premio, pelicula, cineasta, rol, nominacionCineasta);
+    if (result) {
+      res.json(result);
+    } else {
+      next(new NotFoundError('Nominación de cineasta no encontrada'));
+    }
   } catch (error) {
     next(error);
   }

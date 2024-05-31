@@ -22,7 +22,6 @@ const NominacionCineasta = sequelize.define(
         },
         id_rol: {
             type: DataTypes.INTEGER,
-            
             primaryKey: true
         },
         fecha_nominacion: {
