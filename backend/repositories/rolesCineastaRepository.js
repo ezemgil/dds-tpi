@@ -62,11 +62,11 @@ export const findCineastasPorRol = async (rol) => {
     });
 };
 
-export const findRolCineasta = async (rol, cineasta) => {
+export const findRolCineasta = async (cineasta, rol) => {
     return await RolesCineasta.findOne({
         where: {
-            id_rol: rol,
-            id_cineasta: cineasta
+          id_cineasta: cineasta,
+          id_rol: rol
         },
         include: [
           {
@@ -83,7 +83,7 @@ export const findRolCineasta = async (rol, cineasta) => {
 };
 
 // Eliminar un rol de cineasta
-export const remove = async (rol, cineasta) => {
+export const remove = async (cineasta, rol) => {
   const result = await RolesCineasta.findOne({
     where: {
       id_cineasta: cineasta,

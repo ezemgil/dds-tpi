@@ -5,6 +5,6 @@ const PORT = process.env.PORT || 3000;
 
 sequelize.sync().then(() => {
   app.listen(PORT, () => {
-    logger.info(`Servidor iniciado en http://localhost:${PORT}`);
+    console.log(`Servidor iniciado en http://localhost:${PORT}`);
   });
 });

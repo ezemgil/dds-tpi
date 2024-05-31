@@ -39,7 +39,7 @@ export const getCineastasPorRol = async (req, res, next) => {
 
 export const getRolDeCineasta = async (req, res, next) => {
   try {
-    const rolCineasta = await rolesCineastaService.getRolDeCineasta(req.query.id_rol, req.query.id_cineasta);
+    const rolCineasta = await rolesCineastaService.getRolDeCineasta(req.params.id_cineasta, req.params.id_rol);
     if (rolCineasta) {
       res.json(rolCineasta);
     } else {
@@ -63,7 +63,7 @@ export const createRolCineasta = async (req, res, next) => {
 // Eliminar un rol de cineasta
 export const deleteRolCineasta = async (req, res, next) => {
     try{
-        const result = await rolesCineastaService.deleteRolCineasta(req.query.id_rol, req.query.id_cineasta);
+        const result = await rolesCineastaService.deleteRolCineasta(req.params.id_cineasta, req.params.id_rol);
         if (result) {
             res.send('Rol de cineasta eliminado');
         } else {
