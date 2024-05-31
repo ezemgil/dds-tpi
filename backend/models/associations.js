@@ -1,7 +1,9 @@
 import NominacionPelicula from "./nominaciones_pelicula.js";
 import Academia from "./academias.js";
 import Premio from "./premios.js";
-import Pelicula from "./peliculas.js";
+import Pelicula from "../models/peliculas.js";
+import Clasificacion from "../models/clasificaciones.js";
+import Genero from "../models/generos.js";
 
 // Asociaciones
 
@@ -46,11 +48,6 @@ Pelicula.hasMany(NominacionPelicula, {
   as: "nominacion",
   timestamps: false,
 });
-import Pelicula from "../models/peliculas.js";
-import Clasificacion from "../models/clasificaciones.js";
-import Genero from "../models/generos.js";
-
-// Asociaciones
 
 // Una clasificación tiene muchas películas
 Clasificacion.hasMany(Pelicula, {
