@@ -19,7 +19,7 @@ export async function findById(academia, premio, pelicula, cineasta, rol) {
 
 export const create = async (nominacionCineasta) => {
     return await NominacionCineasta.create(nominacionCineasta);
-}
+};
 
 // export async function update(academia, premio, pelicula, cineasta, rol, nominacionCineasta) {
 //     const result = await NominacionCineasta.findOne({

@@ -5,11 +5,17 @@
   "main": "app.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest --testTimeout=10000 --force-exit --detectOpenHandles --silent",
+    "test:jsmodule": "node --experimental-vm-modules jest --verbose --silent",
     "dev": "nodemon app.js"
   },
   "author": "89675-Gil, 89768-Gutierrez, 97848-Witt",
   "license": "ISC",
+  "babel": {
+    "presets": [
+      "@babel/preset-env"
+    ]
+  },
   "dependencies": {
     "aa-sqlite": "^1.0.29",
     "cors": "^2.8.5",
@@ -20,6 +26,10 @@
     "sqlite3": "^5.1.7"
   },
   "devDependencies": {
+    "@babel/core": "^7.24.6",
+    "@babel/preset-env": "^7.24.6",
+    "babel-jest": "^29.7.0",
+    "jest": "^29.7.0",
     "nodemon": "^3.1.2",
     "supertest": "^7.0.0"
   }
