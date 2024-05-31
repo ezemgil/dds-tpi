@@ -99,10 +99,48 @@ CREATE TABLE GenerosPelicula (
     FOREIGN KEY (id_genero) REFERENCES Generos(id)
 );
 
--- INSERSIÓN DE DATOS
--- Usuarios
-INSERT INTO Usuarios (nombre, clave, rol) VALUES ('admin', '$2b$10$kXII2Vd5f3KOgUBbiJ7Oq.ChAHdEbszy4xHbzvQInvGBYc6rPQ3wS', 'admin');
+-- Creacion de la tabla Academias
+CREATE TABLE Academias (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nombre TEXT NOT NULL,
+    fecha_fundacion DATE
+);
 
+-- Creacion de la tabla Premios
+CREATE TABLE Premios (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nombre TEXT NOT NULL
+);
+
+-- Creacion de la tabla Nominaciones por pelicula
+CREATE TABLE NominacionesPelicula (
+    id_academia INTEGER,
+    id_premio INTEGER,
+    id_pelicula INTEGER,
+    fecha_nominacion DATE,
+    fue_ganador INTEGER,
+    PRIMARY KEY (id_academia, id_premio, id_pelicula, fecha_nominacion),
+    FOREIGN KEY (id_academia) REFERENCES Academias(id),
+    FOREIGN KEY (id_premio) REFERENCES Premios(id),
+    FOREIGN KEY (id_pelicula) REFERENCES Peliculas(id)
+);
+
+-- Creacion de la tabla Nominaciones por cineasta
+CREATE TABLE NominacionesCineasta (
+    id_academia INTEGER,
+    id_premio INTEGER,
+    id_pelicula INTEGER,
+    id_cineasta INTEGER,
+    id_rol INTEGER,
+    fecha_nominacion DATE,
+    fue_ganador INTEGER,
+    PRIMARY KEY (id_academia, id_premio, id_pelicula, id_cineasta, id_rol, fecha_nominacion),
+    FOREIGN KEY (id_academia) REFERENCES Academias(id),
+    FOREIGN KEY (id_premio) REFERENCES Premios(id),
+    FOREIGN KEY (id_pelicula, id_cineasta, id_rol) REFERENCES PeliculaCineastaRol(id_pelicula, id_cineasta, id_rol)
+);
+
+-- INSERSIÓN DE DATOS
 -- Claficiaciones
 INSERT INTO Clasificaciones (nombre, descripcion) VALUES ('R', 'Restringida'), ('PG-13', 'Mayores de 13 años'), ('PG', 'Mayores de 7 años'), ('G', 'Todo público'), ('NR', 'No recomendada'), ('NC-17', 'Mayores de 17 años');
 
@@ -450,28 +488,3 @@ CREATE TABLE Usuarios (
 );
 -- Usuarios
 INSERT INTO Usuarios (nombre, clave, rol) VALUES ('admin', '$2b$10$kXII2Vd5f3KOgUBbiJ7Oq.ChAHdEbszy4xHbzvQInvGBYc6rPQ3wS', 'admin'); 
--- NominacionesPelicula
-INSERT INTO NominacionesPelicula (id_academia, id_premio, id_pelicula, fecha_nominacion, fue_ganador) 
-    VALUES (1, 1, 1, '1995-03-27', 1), 
-        (7, 6, 1, '1995-03-27', 1), 
-        (2, 3, 1, '1995-03-27', 0), 
-        (1, 4, 1, '1995-03-27', 1), 
-        (1, 5, 1, '1995-03-27', 1), 
-        (8, 6, 1, '1995-03-27', 1), 
-        (4, 7, 1, '1995-03-27', 1), 
-        (1, 8, 1, '1995-03-27', 1), 
-        (3, 9, 1, '1995-03-27', 1), 
-        (1, 10, 1, '1995-03-27', 1);
-
--- NominacionesCineasta
-INSERT INTO NominacionesCineasta (id_academia, id_premio, id_pelicula, id_cineasta, id_rol, fecha_nominacion, fue_ganador)
-        VALUES (1, 9, 9, 1, 1, '1995-03-27', 0), 
-            (2, 1, 3, 2, 2, '1995-03-27', 1), 
-            (9, 3, 3, 3, 4, '1995-03-27', 1), 
-            (3, 6, 6, 4, 4, '1995-03-27', 1), 
-            (4, 5, 8, 5, 4, '1995-03-27', 1), 
-            (2, 2, 4, 6, 4, '1995-03-27', 1), 
-            (7, 4, 1, 7, 4, '1995-03-27', 0), 
-            (6, 7, 5, 8, 4, '1995-03-27', 1), 
-            (9, 8, 6, 9, 4, '1995-03-27', 1), 
-            (5, 2, 8, 10, 4, '1995-03-27', 0);
