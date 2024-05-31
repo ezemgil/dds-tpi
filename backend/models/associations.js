@@ -3,6 +3,7 @@ import Pais from "./pais.js";
 import RolesCineasta from "./rolesCineasta.js";
 import TipoRol from "./tiposRol.js";
 
+
 Cineasta.belongsTo(Pais, {
     foreignKey: "nacionalidad",
     as: "pais",
@@ -38,4 +39,5 @@ TipoRol.hasMany(RolesCineasta, {
     foreignKey: "id_rol",
     as: "roles",
 });
+
 

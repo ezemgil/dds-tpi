@@ -7,10 +7,10 @@ import errorHandler from "./middleware/errorHandler.js";
 import "./models/associations.js";
 import cineasta from "./routes/cineasta.routes.js";
 import generoRoutes from "./routes/genero.routes.js";
+import nominacionesCineastasRoutes from "./routes/nominacionesCineastas.routes.js";
 import paisRoutes from "./routes/pais.routes.js";
 import rolesCineasta from "./routes/rolesCineasta.routes.js";
 import tipoRolRoutes from "./routes/tipoRol.routes.js";
-
 
 // Crear aplicación express
 const app = express();
@@ -28,6 +28,7 @@ app.use(paisRoutes);
 app.use(cineasta);
 app.use(tipoRolRoutes);
 app.use(rolesCineasta);
+app.use(nominacionesCineastasRoutes);
 
 // Iniciar el servidor
 sequelize.sync().then(() => {
