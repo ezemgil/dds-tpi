@@ -54,7 +54,7 @@ export const deleteIdioma = async (req, res, next) => {
     try {
         const result = await idiomaService.deleteIdioma(req.params.id);
         if (result) {
-            res.send("Idioma eliminado");
+            res.status(204).send("Idioma eliminado");
         } else {
             next(new NotFoundError("Idioma no encontrado"));
         }

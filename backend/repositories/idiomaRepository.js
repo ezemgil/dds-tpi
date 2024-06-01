@@ -19,7 +19,7 @@ export const findById = async (id) => {
 export const update = async (id, idioma) => {
     const result = await Idioma.findByPk(id);
     if (result) {
-        return await result.upgrade(idioma);
+        return await result.update(idioma);
     }
     return null;
 };

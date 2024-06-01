@@ -6,7 +6,7 @@ import Pelicula from "../models/peliculas.js";
 
 // Buscar todas las nominaciones de peliculas
 export const findAll = async () => {
-  return await NominacionPelicula.findAll({
+    return await NominacionPelicula.findAll({
     include: [
         {
             model: Academia,
@@ -19,9 +19,6 @@ export const findAll = async () => {
         {
             model: Pelicula,
             as: "pelicula",
-            though: {
-                attributes: [],
-            },
         },
     ],
     attributes: {
@@ -38,31 +35,31 @@ export const create = async (nominacion) => {
 
 
 // Buscar una nominacion de pelicula por sus id's
-export const findById = async (id_academia, id_premio, id_pelicula, fecha_nominacion) => {
-  return await NominacionPelicula.findByPk(id_academia, id_premio, id_pelicula, fecha_nominacion, {
-    include: [
-        {
-            model: Academia,
-            as: "academia",
-        },
-        {
-            model: Premio,
-            as: "premio",
-        },
-        {
-            model: Pelicula,
-            as: "pelicula",
-            though: {
-                attributes: [],
-            },
-        }
-    ],
-    attributes: {
-        exclude: ["id_academia", "id_premio", "id_pelicula"],
-    },
-  });
-};
-
+export const findById = async (id_academia, id_premio, id_pelicula) => {
+    return await NominacionPelicula.findOne({
+      where: {
+        id_academia: id_academia,
+        id_premio: id_premio,
+        id_pelicula: id_pelicula},
+      include: [
+          {
+              model: Academia,
+              as: "academia",
+          },
+          {
+              model: Premio,
+              as: "premio",
+          },
+          {
+              model: Pelicula,
+              as: "pelicula",
+          }
+      ],
+      attributes: {
+          exclude: ["id_academia", "id_premio", "id_pelicula"],
+      },
+    });
+  };
 
 // Buscar una nominacion de pelicula por su id_academia
 export const findByAcademia = async (id_academia) => {
@@ -112,9 +109,6 @@ export const findByPremio = async (id_premio) => {
           {
               model: Pelicula,
               as: "pelicula",
-              though: {
-                  attributes: [],
-              },
           },
       ],
       attributes: {
@@ -154,49 +148,31 @@ export const findByPelicula = async (id_pelicula) => {
   };
 
 
-// Buscar nominacion de pelicula por su fecha de nominacion
-export const findByFecha = async (fecha_nominacion) => {
-    return await NominacionPelicula.findAll({
-      where: {
-          fecha_nominacion: fecha_nominacion,
-      },
-      include: [
-          {
-              model: Academia,
-              as: "academia",
-          },
-          {
-              model: Premio,
-              as: "premio",
-          },
-          {
-              model: Pelicula,
-              as: "pelicula",
-              though: {
-                  attributes: [],
-              },
-          },
-      ],
-      attributes: {
-          exclude: ["id_academia", "id_premio", "id_pelicula"],
-      },
-    });
-  };
-
-
 // Actualizar una nominacion de pelicula
-export const update = async (id_academia, id_premio, id_pelicula, fecha_nominacion, nominacion) => {
-  const result = await NominacionPelicula.findByPk(id_academia, id_premio, id_pelicula, fecha_nominacion);
-  if (result) {
-    return await result.update(nominacion);
+export const update = async (id_academia, id_premio, id_pelicula, nominacion) => {
+  const result = await NominacionPelicula.findOne({
+    where: {
+        id_academia: id_academia,
+        id_premio: id_premio,
+        id_pelicula: id_pelicula
+        }
+    });  
+    if (result) {
+        return await result.update(nominacion);
   }
   return null;
 };
 
 
 // Eliminar una nominacion de pelicula
-export const remove = async (id_academia, id_premio, id_pelicula, fecha_nominacion) => {
-  const result = await NominacionPelicula.findByPk(id_academia, id_premio, id_pelicula, fecha_nominacion);
+export const remove = async (id_academia, id_premio, id_pelicula) => {
+  const result = await NominacionPelicula.findOne({
+    where: {
+        id_academia: id_academia,
+        id_premio: id_premio,
+        id_pelicula: id_pelicula,
+    },
+  });
   if (result) {
     await result.destroy();
     return true;

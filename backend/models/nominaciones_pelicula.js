@@ -4,6 +4,7 @@ import Academia from "./academias.js";
 import Premio from "./premios.js";
 import Pelicula from "./peliculas.js";
 
+
 const NominacionPelicula = sequelize.define(
     "NominacionPelicula",
     {
@@ -13,7 +14,7 @@ const NominacionPelicula = sequelize.define(
         references: {
             model: Academia,
             key: "id",
-            },
+        },
         },
         id_premio: {
             type: DataTypes.INTEGER,
@@ -21,15 +22,15 @@ const NominacionPelicula = sequelize.define(
             references: {
                 model: Premio,
                 key: "id",
-            },
+        },
         },
         id_pelicula: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        references: {
+        references: { 
             model: Pelicula,
             key: "id",
-            },
+        },
         },
         fecha_nominacion: {
         type: DataTypes.DATE,
@@ -41,7 +42,7 @@ const NominacionPelicula = sequelize.define(
         }
     },
     {
-        tableName: "NominacionesPeliculas",
+        tableName: "NominacionesPelicula",
         timestamps: false,
     }
     );
