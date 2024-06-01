@@ -1,13 +1,13 @@
 import NominacionPelicula from "./nominaciones_pelicula.js";
 import Academia from "./academias.js";
 import Premio from "./premios.js";
-import Pelicula from "../models/peliculas.js";
-import Clasificacion from "../models/clasificaciones.js";
-import Genero from "../models/generos.js";
-import Cineasta from "../cineastas.js";
-import Pais from "../pais.js";
-import RolesCineasta from "../rolesCineasta.js";
-import TipoRol from "../tiposRol.js";
+import Pelicula from "./peliculas.js";
+import Clasificacion from "./clasificaciones.js";
+import Genero from "./generos.js";
+import Cineasta from "./cineastas.js";
+import Pais from "./pais.js";
+import RolesCineasta from "./rolesCineasta.js";
+import TipoRol from "./tiposRol.js";
 
 // Asociaciones
 

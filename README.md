@@ -85,8 +85,8 @@ DB_NAME=data/peliculas.db
 DB_DIALECT=sqlite
 
 # JWT
-ACCESS_TOKEN_SECRET=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub21icmUiOiJhZG1pbiIsImlhdCI6MTcxNjk4OTYxMywiZXhwIjoxNzE2OTkwODEzfQ.2e7Aj_z1vNAfiOdNMQuT-ALdpmT5tZabfkBmJpcmiaw
-REFRESH_TOKEN_SECRET=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub21icmUiOiJhZG1pbiIsImlhdCI6MTcxNjk4OTYxM30.153KcXudtPZxZqy7H7JN2_mV5uJ9AswY3pgxw22W9e0
+ACCESS_TOKEN_SECRET=accesstokensecret
+REFRESH_TOKEN_SECRET=refreshtokensecret
 
 ```
 
@@ -122,5 +122,9 @@ La base de datos almacena información relacionada con películas, cineastas, cl
 - ```IdiomasPelicula```: Asocia las películas con los idiomas en los que están disponibles y el tipo de traducción aplicado.
 - ```GenerosPelicula```: Establece la relación entre las películas y sus géneros correspondientes.
 - ```Usuarios```: Almacena información sobre los usuarios de la aplicación, incluyendo su nombre, clave (aplicando un hash con la librería ```bcrypt```), y rol asociado.
+- ```Premio```: Contiene información sobre los premios que se pueden otorgar a las películas. (Mejor película, mejor actor, mejor director, etc.)
+- ```Academias```: Almacena información sobre las academias que otorgan premios a las películas.
+- ```NominacionesPelicula```: Relaciona las películas con las nominaciones que han recibido en las academias.
+- ```NominacionesCineasta```: Asocia los cineastas con las nominaciones que han recibido en las academias.
 
 Script que crea las tablas e inserta valores: [init.sql](backend\data\init.sql)

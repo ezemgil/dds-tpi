@@ -1,6 +1,10 @@
 # Created by https://www.toptal.com/developers/gitignore/api/node,windows,visualstudiocode,linux
 # Edit at https://www.toptal.com/developers/gitignore?templates=node,windows,visualstudiocode,linux
 
+# Database
+*.db
+*.sqbpro
+
 ### Linux ###
 *~
 
@@ -157,6 +161,7 @@ dist
 .svelte-kit
 
 ### VisualStudioCode ###
+../vscode/
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
