@@ -27,6 +27,7 @@ export const update = async (id, idioma) => {
 // Eliminar un idioma
 export const remove = async (id) => {
     const result = await Idioma.findByPk(id);
+    console.log(result)
     if (result) {
         await result.destroy();
         return true;

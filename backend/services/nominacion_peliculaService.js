@@ -36,7 +36,7 @@ export const getNominacionPeliculaByPelicula = async (id_pelicula) => {
 
 
 // Actualizar una nominacion de pelicula
-export const update = async (id_academia, id_premio, id_pelicula, nominacion) => {
+export const updateNominacion = async (id_academia, id_premio, id_pelicula, nominacion) => {
   return await nominacion_peliculaRepository.update(id_academia, id_premio, id_pelicula, nominacion);
 };
 

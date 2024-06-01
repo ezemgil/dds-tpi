@@ -2,7 +2,6 @@ import Genero from "../models/generos.js";
 
 // Buscar todos los géneros
 export const findAll = async () => {
-  console.log(await Genero.findAll())
   return await Genero.findAll()
 };
 
