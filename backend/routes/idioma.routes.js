@@ -10,4 +10,4 @@ router.post("/idiomas", idiomaController.createIdioma);
 router.put("/idiomas/:id", idiomaController.updateIdioma);
 router.delete("idiomas/:id", idiomaController.deleteIdioma);
 
-export default router;
+export default router; 
