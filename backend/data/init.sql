@@ -1,43 +1,36 @@
--- Creación de la tabla Paises
-CREATE TABLE Paises (
+CREATE TABLE IF NOT EXISTS Paises (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     nombre TEXT,
     codigo TEXT
 );
 
--- Creación de la tabla Generos
-CREATE TABLE Generos (
+CREATE TABLE IF NOT EXISTS Generos (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     nombre TEXT NOT NULL
 );
 
--- Creación de la tabla TiposTraduccion
-CREATE TABLE TiposTraduccion (
+CREATE TABLE IF NOT EXISTS TiposTraduccion (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     nombre TEXT NOT NULL
 );
 
--- Creación de la tabla Idiomas
-CREATE TABLE Idiomas (
+CREATE TABLE IF NOT EXISTS Idiomas (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     nombre TEXT NOT NULL
 );
 
--- Creación de la tabla Clasificaciones
-CREATE TABLE Clasificaciones (
+CREATE TABLE IF NOT EXISTS Clasificaciones (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     nombre TEXT NOT NULL,
     descripcion TEXT
 );
 
--- Creación de la tabla TiposRol
-CREATE TABLE TiposRol (
+CREATE TABLE IF NOT EXISTS TiposRol (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     nombre TEXT NOT NULL
 );
 
--- Creación de la tabla Cineastas
-CREATE TABLE Cineastas (
+CREATE TABLE IF NOT EXISTS Cineastas (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     nombre TEXT,
     apellido TEXT,
@@ -47,8 +40,7 @@ CREATE TABLE Cineastas (
     FOREIGN KEY (nacionalidad) REFERENCES Paises(id)
 );
 
--- Creación de la tabla Peliculas
-CREATE TABLE Peliculas (
+CREATE TABLE IF NOT EXISTS Peliculas (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     titulo TEXT NOT NULL,
     descripcion TEXT,
@@ -60,8 +52,7 @@ CREATE TABLE Peliculas (
     FOREIGN KEY (id_clasificacion) REFERENCES Clasificaciones(id)
 );
 
--- Creación de la tabla RolesCineasta
-CREATE TABLE RolesCineasta (
+CREATE TABLE IF NOT EXISTS RolesCineasta (
     id_cineasta INTEGER,
     id_rol INTEGER,
     PRIMARY KEY (id_cineasta, id_rol),
@@ -69,8 +60,7 @@ CREATE TABLE RolesCineasta (
     FOREIGN KEY (id_rol) REFERENCES TiposRol(id)
 );
 
--- Creación de la tabla PeliculaCineastaRol
-CREATE TABLE PeliculaCineastaRol (
+CREATE TABLE IF NOT EXISTS PeliculaCineastaRol (
     id_pelicula INTEGER,
     id_cineasta INTEGER,
     id_rol INTEGER,
@@ -80,8 +70,7 @@ CREATE TABLE PeliculaCineastaRol (
     FOREIGN KEY (id_rol) REFERENCES TiposRol(id)
 );
 
--- Creación de la tabla IdiomasPelicula
-CREATE TABLE IdiomasPelicula (
+CREATE TABLE IF NOT EXISTS IdiomasPelicula (
     id_pelicula INTEGER,
     id_idioma INTEGER,
     tipo_traduccion INTEGER,
@@ -90,8 +79,7 @@ CREATE TABLE IdiomasPelicula (
     FOREIGN KEY (tipo_traduccion) REFERENCES TiposTraduccion(id)
 );
 
--- Creación de la tabla GenerosPelicula
-CREATE TABLE GenerosPelicula (
+CREATE TABLE IF NOT EXISTS GenerosPelicula (
     id_pelicula INTEGER,
     id_genero INTEGER,
     PRIMARY KEY (id_pelicula, id_genero),
@@ -99,21 +87,20 @@ CREATE TABLE GenerosPelicula (
     FOREIGN KEY (id_genero) REFERENCES Generos(id)
 );
 
--- Creacion de la tabla Academias
-CREATE TABLE Academias (
+
+CREATE TABLE IF NOT EXISTS Academias (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     nombre TEXT NOT NULL,
     fecha_fundacion DATE
 );
 
--- Creacion de la tabla Premios
-CREATE TABLE Premios (
+CREATE TABLE IF NOT EXISTS Premios (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     nombre TEXT NOT NULL
 );
 
--- Creacion de la tabla Nominaciones por pelicula
-CREATE TABLE NominacionesPelicula (
+
+CREATE TABLE IF NOT EXISTS NominacionesPelicula (
     id_academia INTEGER,
     id_premio INTEGER,
     id_pelicula INTEGER,
@@ -125,8 +112,7 @@ CREATE TABLE NominacionesPelicula (
     FOREIGN KEY (id_pelicula) REFERENCES Peliculas(id)
 );
 
--- Creacion de la tabla Nominaciones por cineasta
-CREATE TABLE NominacionesCineasta (
+CREATE TABLE IF NOT EXISTS NominacionesCineasta (
     id_academia INTEGER,
     id_premio INTEGER,
     id_pelicula INTEGER,
@@ -140,36 +126,22 @@ CREATE TABLE NominacionesCineasta (
     FOREIGN KEY (id_pelicula, id_cineasta, id_rol) REFERENCES PeliculaCineastaRol(id_pelicula, id_cineasta, id_rol)
 );
 
--- INSERSIÓN DE DATOS
--- Claficiaciones
 INSERT INTO Clasificaciones (nombre, descripcion) VALUES ('R', 'Restringida'), ('PG-13', 'Mayores de 13 años'), ('PG', 'Mayores de 7 años'), ('G', 'Todo público'), ('NR', 'No recomendada'), ('NC-17', 'Mayores de 17 años');
 
--- Tipos de Rol
 INSERT INTO TiposRol (nombre) VALUES ('Director'), ('Guionista'), ('Productor'), ('Actor/Actriz'), ('Narrador'), ('Doblaje'), ('Subtitulado'), ('Banda Sonora'), ('Cámara'), ('Edición'), ('Vestuario'), ('Maquillaje'), ('Animación'), ('Efectos Especiales'), ('Diseño de Producción'), ('Dirección de Arte'), ('Sonido'), ('Efectos de Sonido'), ('Efectos Visuales'), ('Stunt');
 
--- Generos
 INSERT INTO Generos (nombre) VALUES ('Drama'), ('Crimen'), ('Misterio'), ('Fantasía'), ('Aventura'), ('Biografía'), ('Comedia'), ('Romance'), ('Ciencia Ficción'), ('Terror'), ('Acción'), ('Musical'), ('Animación'), ('Documental'), ('Histórica'), ('Bélica'), ('Western'), ('Deportes'), ('Familiar'), ('Thriller'), ('Suspenso'), ('Infantil'), ('Erótica'), ('Adultos');
 
--- Paises
 INSERT INTO Paises (nombre, codigo) VALUES ('Alemania', 'DE'), ('Francia', 'FR'), ('Italia', 'IT'), ('Países Bajos', 'NL'), ('Dinamarca', 'DK'), ('Reino Unido', 'UK'), ('Grecia', 'GR'), ('España', 'ES'), ('Portugal', 'PT'), ('Finlandia', 'FI'), ('Suecia', 'SE'), ('República Checa', 'CZ'), ('Eslovaquia', 'SK'), ('Eslovenia', 'SI'), ('Estonia', 'EE'), ('Hungría', 'HU'), ('Letonia', 'LV'), ('Lituania', 'LT'), ('Malta', 'MT'), ('Polonia', 'PL'), ('Bulgaria', 'BG'), ('Irlanda', 'IE'), ('Rumanía', 'RO'), ('Croacia', 'HR'), ('Australia', 'AU'), ('Nueva Zelanda', 'NZ'), ('Estados Unidos', 'US'), ('Irlanda del Norte', 'UK-NIR');
 INSERT INTO Paises (nombre, codigo) VALUES ('Argentina', 'AR'), ('Bolivia', 'BO'), ('Brasil', 'BR'), ('Chile', 'CL'), ('Colombia', 'CO'), ('Costa Rica', 'CR'), ('Cuba', 'CU'), ('Ecuador', 'EC'), ('El Salvador', 'SV'), ('Guatemala', 'GT'), ('Honduras', 'HN'), ('México', 'MX'), ('Nicaragua', 'NI'), ('Panamá', 'PA'), ('Paraguay', 'PY'), ('Perú', 'PE'), ('Puerto Rico', 'PR'), ('República Dominicana', 'DO'), ('Uruguay', 'UY'), ('Venezuela', 'VE');
 
--- Tipos de Traducción
 INSERT INTO TiposTraduccion (nombre) VALUES ('Doblaje'), ('Subtitulado');
 
--- Idiomas
 INSERT INTO Idiomas (nombre) VALUES ('Alemán'), ('Francés'), ('Italiano'), ('Neerlandés'), ('Danés'), ('Inglés'), ('Griego'), ('Español'), ('Portugués'), ('Finés'), ('Sueco'), ('Checo'), ('Eslovaco'), ('Esloveno'), ('Estonio'), ('Húngaro'), ('Letón'), ('Lituano'), ('Maltés'), ('Polaco'), ('Búlgaro'), ('Irlandés'), ('Rumano'), ('Croata');
 
--- Academias
 INSERT INTO Academias (nombre, fecha_fundacion) VALUES ('Academia de Artes y Ciencias Cinematográficas', '1927-05-11'), ('Academia Británica de las Artes Cinematográficas y de la Televisión', '1947-04-16'), ('Academia de Cine Europeo', '1988-11-01'), ('Academia de las Artes y Ciencias Cinematográficas de España', '1986-01-08'), ('Academia Mexicana de Artes y Ciencias Cinematográficas', '1946-07-03'), ('Academia de Cine de Hong Kong', '1982-03-05'), ('Academia de Cine de Japón', '1978-01-01'), ('Academia de Cine de India', '1975-01-01'), ('Academia de Cine de Australia', '1958-08-18'), ('Academia de Cine de Canadá', '1980-01-01');
 
--- Premios 
 INSERT INTO Premios (nombre) VALUES ('Mejor Película'), ('Mejor Director'), ('Mejor Actor'), ('Mejor Actriz'), ('Mejor Guión'), ('Mejor Fotografía'), ('Mejor Diseño de Producción'), ('Mejor Edición'), ('Mejor Banda Sonora'), ('Mejor Sonido');
-    
--- Sueño de fuga
--- Dirección: Frank Darabont
--- Guionistas: Stephen King, Frank Darabont
--- Elenco: Tim Robbins, Morgan Freeman, Bob Gunton
 INSERT INTO Peliculas (titulo, descripcion, calificacion, duracion, fecha_estreno, titulo_original, id_clasificacion)
     VALUES ('Sueño de fuga', 'El banquero Andy Dufresne es arrestado por matar a su esposa y amante. Tras una dura adaptación, intenta mejorar las condiciones de la prisión y dar esperanza a sus compañeros.', 9.3, 142, '1994-10-14', 'The Shawshank Redemption', 1);
 INSERT INTO GenerosPelicula (id_pelicula, id_genero) VALUES (1, 1);
@@ -193,13 +165,7 @@ INSERT INTO PeliculaCineastaRol (id_pelicula, id_cineasta, id_rol) VALUES (1, 4,
 
 INSERT INTO Cineastas (nombre, apellido, fecha_nacimiento, nacionalidad) VALUES ('Bob', 'Gunton', '1945-11-15', 27);
 INSERT INTO RolesCineasta (id_cineasta, id_rol) VALUES (5, 4), (5, 8);
-INSERT INTO PeliculaCineastaRol (id_pelicula, id_cineasta, id_rol) VALUES (1, 5, 4);
-
-
--- El padrino
--- Dirección: Francis Ford Coppola
--- Guionistas: Mario Puzo, Francis Ford Coppola
--- Elenco: Marlon Brando, Al Pacino, James Caan    
+INSERT INTO PeliculaCineastaRol (id_pelicula, id_cineasta, id_rol) VALUES (1, 5, 4); 
 INSERT INTO Peliculas (titulo, descripcion, calificacion, duracion, fecha_estreno, titulo_original, id_clasificacion)
     VALUES ('El padrino', 'Don Vito Corleone, jefe de una de las cinco familias de la mafia de Nueva York, intenta sobrevivir y prosperar en medio de la violencia, la traición y la corrupción.', 9.2, 175, '1972-03-24', 'The Godfather', 1);
 INSERT INTO GenerosPelicula (id_pelicula, id_genero) VALUES (2, 1), (2, 2);
@@ -225,10 +191,6 @@ INSERT INTO Cineastas (nombre, apellido, fecha_nacimiento, nacionalidad) VALUES 
 INSERT INTO RolesCineasta (id_cineasta, id_rol) VALUES (10, 4), (10, 1), (10, 3);
 INSERT INTO PeliculaCineastaRol (id_pelicula, id_cineasta, id_rol) VALUES (2, 10, 4);
 
--- Batman: El caballero de la noche
--- Dirección: Christopher Nolan
--- Guionistas: Jonathan Nolan, Christopher Nolan, David S. Goyer
--- Elenco: Christian Bale, Heath Ledger, Aaron Eckhart
 INSERT INTO Peliculas (titulo, descripcion, calificacion, duracion, fecha_estreno, titulo_original, id_clasificacion)
     VALUES ('El caballero de la noche', 'Batman, Gordon y Harvey Dent se unen para enfrentar al caos desatado por un criminal conocido como el Joker, quien empuja a Gotham a la anarquía.', 9.0, 152, '2008-07-18', 'The Dark Knight', 2);
 INSERT INTO GenerosPelicula (id_pelicula, id_genero) VALUES (3, 11), (3, 2), (3, 1);
@@ -253,11 +215,6 @@ INSERT INTO PeliculaCineastaRol (id_pelicula, id_cineasta, id_rol) VALUES (3, 14
 INSERT INTO Cineastas (nombre, apellido, fecha_nacimiento, nacionalidad, nacionalidad2) VALUES ('Heath', 'Ledger', '1979-04-04', 25, 27);
 INSERT INTO RolesCineasta (id_cineasta, id_rol) VALUES (15, 4), (15, 1), (15, 3);
 INSERT INTO PeliculaCineastaRol (id_pelicula, id_cineasta, id_rol) VALUES (3, 15, 4);
-
--- El padrino: Parte II
--- Dirección: Francis Ford Coppola
--- Guionistas: Francis Ford Coppola, Mario Puzo
--- Elenco: Al Pacino, Robert De Niro, Robert Duvall
 INSERT INTO Peliculas (titulo, descripcion, calificacion, duracion, fecha_estreno, titulo_original, id_clasificacion)
     VALUES ('El padrino: Parte II', 'Michael Corleone expande su imperio criminal y mantiene el control de su familia, mientras se enfrenta a la traición y la venganza.', 9.0, 202, '1974-12-20', 'The Godfather: Part II', 1);
 INSERT INTO GenerosPelicula (id_pelicula, id_genero) VALUES (4, 1), (4, 2);
@@ -273,11 +230,6 @@ INSERT INTO Cineastas (nombre, apellido, fecha_nacimiento, nacionalidad) VALUES 
 INSERT INTO RolesCineasta (id_cineasta, id_rol) VALUES (17, 4), (17, 1), (17, 3);
 INSERT INTO PeliculaCineastaRol (id_pelicula, id_cineasta, id_rol) VALUES (4, 17, 4);
 
-
--- 12 hombres en pugna
--- Dirección: Sidney Lumet
--- Guionista: Reginald Rose
--- Elenco: Henry Fonda, Lee J. Cobb, Martin Balsam
 INSERT INTO Peliculas (titulo, descripcion, calificacion, duracion, fecha_estreno, titulo_original, id_clasificacion)
     VALUES ('12 hombres en pugna', 'Un jurado debe decidir si un joven es culpable de asesinato, pero un miembro disiente y trata de convencer a los demás de su inocencia.', 8.9, 96, '1957-04-10', '12 Angry Men', 4);
 INSERT INTO GenerosPelicula (id_pelicula, id_genero) VALUES (5, 1), (5, 2);
@@ -303,10 +255,6 @@ INSERT INTO Cineastas (nombre, apellido, fecha_nacimiento, nacionalidad) VALUES 
 INSERT INTO RolesCineasta (id_cineasta, id_rol) VALUES (22, 4), (22, 1), (22, 3);
 INSERT INTO PeliculaCineastaRol (id_pelicula, id_cineasta, id_rol) VALUES (5, 22, 4);
 
--- La lista de Schindler
--- Dirección: Steven Spielberg
--- Guionistas: Thomas Keneally, Steven Zaillian
--- Elenco: Liam Neeson, Ralph Fiennes, Ben Kingsley
 INSERT INTO Peliculas (titulo, descripcion, calificacion, duracion, fecha_estreno, titulo_original, id_clasificacion)
     VALUES ('La lista de Schindler', 'Oskar Schindler gasta toda su fortuna para salvar a más de mil judíos de ser asesinados en Auschwitz durante la Segunda Guerra Mundial.', 8.9, 195, '1993-12-15', 'Schindler''s List', 1);
 INSERT INTO GenerosPelicula (id_pelicula, id_genero) VALUES (6, 6), (6, 1), (6, 15);
@@ -336,10 +284,6 @@ INSERT INTO Cineastas (nombre, apellido, fecha_nacimiento, nacionalidad) VALUES 
 INSERT INTO RolesCineasta (id_cineasta, id_rol) VALUES (28, 4), (28, 1), (28, 3);
 INSERT INTO PeliculaCineastaRol (id_pelicula, id_cineasta, id_rol) VALUES (6, 28, 4);
 
--- El señor de los anillos: El retorno del rey
--- Dirección: Peter Jackson
--- Guionistas: J.R.R. Tolkien, Fran Walsh, Philippa Boyens
--- Elenco: Elijah Wood, Ian McKellen, Orlando Bloom
 INSERT INTO Peliculas (titulo, descripcion, calificacion, duracion, fecha_estreno, titulo_original, id_clasificacion)
     VALUES ('El señor de los anillos: El retorno del rey', 'Los ejércitos de Sauron han atacado Minas Tirith, la capital de Gondor. Nunca antes ha sido tan importante que Frodo y Sam lleguen a Mordor.', 8.9, 201, '2003-12-17', 'The Lord of the Rings: The Return of the King', 2);
 INSERT INTO GenerosPelicula (id_pelicula, id_genero) VALUES (7, 11), (7, 5), (7, 1);
@@ -373,10 +317,6 @@ INSERT INTO Cineastas (nombre, apellido, fecha_nacimiento, nacionalidad) VALUES 
 INSERT INTO RolesCineasta (id_cineasta, id_rol) VALUES (35, 4), (35, 1), (35, 3);
 INSERT INTO PeliculaCineastaRol (id_pelicula, id_cineasta, id_rol) VALUES (7, 35, 4);
 
--- Tiempos violentos
--- Dirección: Quentin Tarantino
--- Guionistas: Quentin Tarantino, Roger Avary
--- Elenco: John Travolta, Uma Thurman, Samuel L. Jackson
 INSERT INTO Peliculas (titulo, descripcion, calificacion, duracion, fecha_estreno, titulo_original, id_clasificacion)
     VALUES ('Tiempos violentos', 'Dos matones, un boxeador en decadencia y un gánster, se ven envueltos en una trama de traición y venganza en Los Ángeles de 1992.', 8.9, 154, '1994-10-14', 'Pulp Fiction', 1);
 INSERT INTO GenerosPelicula (id_pelicula, id_genero) VALUES (8, 1), (8, 2);
@@ -402,10 +342,6 @@ INSERT INTO Cineastas (nombre, apellido, fecha_nacimiento, nacionalidad) VALUES 
 INSERT INTO RolesCineasta (id_cineasta, id_rol) VALUES (40, 4), (40, 1), (40, 3);
 INSERT INTO PeliculaCineastaRol (id_pelicula, id_cineasta, id_rol) VALUES (8, 40, 4);
 
--- El señor de los anillos: La comunidad del anillo
--- Dirección: Peter Jackson
--- Guionistas: J.R.R. Tolkien, Fran Walsh, Philippa Boyens
--- Elenco: Elijah Wood, Viggo Mortensen, Ian McKellen
 INSERT INTO Peliculas (titulo, descripcion, calificacion, duracion, fecha_estreno, titulo_original, id_clasificacion)
     VALUES ('El señor de los anillos: La comunidad del anillo', 'Un joven hobbit llamado Frodo Bolsón es encargado con una tarea épica: destruir un anillo mágico de poder antes de que caiga en manos del malvado Sauron.', 8.8, 178, '2001-12-19', 'The Lord of the Rings: The Fellowship of the Ring', 2);
 INSERT INTO GenerosPelicula (id_pelicula, id_genero) VALUES (9, 11), (9, 5), (9, 1);
@@ -417,10 +353,6 @@ INSERT INTO Cineastas (nombre, apellido, fecha_nacimiento, nacionalidad, naciona
 INSERT INTO RolesCineasta (id_cineasta, id_rol) VALUES (41, 4), (41, 1), (41, 3);
 INSERT INTO PeliculaCineastaRol (id_pelicula, id_cineasta, id_rol) VALUES (9, 41, 4);
 
--- El bueno, el malo y el feo
--- Dirección: Sergio Leone
--- Guionistas: Luciano Vincenzoni, Sergio Leone, Agenore Incrocci
--- Elenco: Clint Eastwood, Eli Wallach, Lee Van Cleef
 INSERT INTO Peliculas (titulo, descripcion, calificacion, duracion, fecha_estreno, titulo_original, id_clasificacion)
     VALUES ('El bueno, el malo y el feo', 'Tres hombres buscan un tesoro escondido en un cementerio, pero cada uno tiene su propio plan para quedarse con él.', 8.8, 161, '1966-12-23', 'Il buono, il brutto, il cattivo', 1);
 INSERT INTO GenerosPelicula (id_pelicula, id_genero) VALUES (10, 1), (10, 5), (10, 17);
@@ -451,7 +383,6 @@ INSERT INTO RolesCineasta (id_cineasta, id_rol) VALUES (47, 4), (47, 1), (47, 3)
 INSERT INTO PeliculaCineastaRol (id_pelicula, id_cineasta, id_rol) VALUES (10, 47, 4);
 
 
--- NominacionesPelicula
 INSERT INTO NominacionesPelicula (id_academia, id_premio, id_pelicula, fecha_nominacion, fue_ganador) 
     VALUES (1, 1, 1, '1995-03-27', 1), 
         (7, 6, 1, '1995-03-27', 1), 
@@ -464,7 +395,6 @@ INSERT INTO NominacionesPelicula (id_academia, id_premio, id_pelicula, fecha_nom
         (3, 9, 1, '1995-03-27', 1), 
         (1, 10, 1, '1995-03-27', 1);
 
--- NominacionesCineasta
 INSERT INTO NominacionesCineasta (id_academia, id_premio, id_pelicula, id_cineasta, id_rol, fecha_nominacion, fue_ganador)
         VALUES (1, 9, 1, 1, 1, '1995-03-27', 0), 
             (5, 3, 1, 2, 2, '1995-03-27', 0), 
@@ -479,12 +409,10 @@ INSERT INTO NominacionesCineasta (id_academia, id_premio, id_pelicula, id_cineas
             (3, 2, 8, 40, 4, '1995-03-27', 0);
 
 
--- Creación de la tabla Usuarios
-CREATE TABLE Usuarios (
+CREATE TABLE IF NOT EXISTS Usuarios (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     nombre TEXT NOT NULL UNIQUE,
     clave TEXT NOT NULL,
     rol TEXT NOT NULL
 );
--- Usuarios
 INSERT INTO Usuarios (nombre, clave, rol) VALUES ('admin', '$2b$10$kXII2Vd5f3KOgUBbiJ7Oq.ChAHdEbszy4xHbzvQInvGBYc6rPQ3wS', 'admin'); 

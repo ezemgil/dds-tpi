@@ -15,6 +15,11 @@ import tipoTraduccionRoutes from "../routes/tipo_traduccion.routes.js";
 import academiaRoutes from "../routes/academia.routes.js";
 import nominacion_peliculaRoutes from "../routes/nominacion_pelicula.routes.js";
 import premioRoutes from "../routes/premio.routes.js";
+import cineastaRoutes from "../routes/cineasta.routes.js";
+import nominacionesCineastasRoutes from "../routes/nominacionesCineastas.routes.js";
+import paisRoutes from "../routes/pais.routes.js";
+import rolesCineastaRoutes from "../routes/rolesCineasta.routes.js";
+import tipoRolRoutes from "../routes/tipoRol.routes.js";
 
 // Crear aplicación express
 const app = express();
@@ -36,6 +41,11 @@ app.use(tipoTraduccionRoutes);
 app.use(academiaRoutes);
 app.use(nominacion_peliculaRoutes);
 app.use(premioRoutes);
+app.use(paisRoutes);
+app.use(cineastaRoutes);
+app.use(tipoRolRoutes);
+app.use(rolesCineastaRoutes);
+app.use(nominacionesCineastasRoutes);
 
 // Middlewares
 app.use(errorHandler);
