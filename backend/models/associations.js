@@ -4,6 +4,10 @@ import Premio from "./premios.js";
 import Pelicula from "../models/peliculas.js";
 import Clasificacion from "../models/clasificaciones.js";
 import Genero from "../models/generos.js";
+import Cineasta from "../cineastas.js";
+import Pais from "../pais.js";
+import RolesCineasta from "../rolesCineasta.js";
+import TipoRol from "../tiposRol.js";
 
 // Asociaciones
 
@@ -75,4 +79,39 @@ Genero.belongsToMany(Pelicula, {
   foreignKey: "id_genero",
   as: "peliculas",
   timestamps: false,
+});
+
+Cineasta.belongsTo(Pais, {
+  foreignKey: "nacionalidad",
+  as: "pais",
+});
+
+Pais.hasMany(Cineasta, {
+  foreignKey: "nacionalidad",
+  as: "cineastas",
+});
+
+Cineasta.belongsTo(Pais, {
+  foreignKey: "nacionalidad2",
+  as: "pais2",
+});
+
+RolesCineasta.belongsTo(Cineasta, {
+  foreignKey: "id_cineasta",
+  as: "cineasta",
+});
+
+RolesCineasta.belongsTo(TipoRol, {
+  foreignKey: "id_rol",
+  as: "rol",
+});
+
+Cineasta.hasMany(RolesCineasta, {
+  foreignKey: "id_cineasta",
+  as: "roles",
+});
+
+TipoRol.hasMany(RolesCineasta, {
+  foreignKey: "id_rol",
+  as: "roles",
 });
