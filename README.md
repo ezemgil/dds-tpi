@@ -127,4 +127,12 @@ La base de datos almacena información relacionada con películas, cineastas, cl
 - ```NominacionesPelicula```: Relaciona las películas con las nominaciones que han recibido en las academias.
 - ```NominacionesCineasta```: Asocia los cineastas con las nominaciones que han recibido en las academias.
 
-Script que crea las tablas e inserta valores: [init.sql](backend\data\init.sql)
+## Base de datos
+La base de datos utilizada es SQLite. Para crear la base de datos y cargar los datos iniciales:
+1. Asegurarse de haber instalado las dependencias necesarias: ```sqlite3```, ```aa-sqlite```, ```sequelize```.
+2. Ejecutar el script ```runSQL``` para crear las tablas y cargar los datos iniciales especificados en el script ubicado en ```backend/data/init.sql```:
+```bash
+$ cd backend
+$ node data/runSQL.js
+```
+3. Verificar que se haya creado el archivo ```peliculas.db``` en la carpeta ```backend/data/```.

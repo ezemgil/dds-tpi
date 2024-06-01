@@ -3,6 +3,7 @@
 
 # Database
 *.db
+./backend/data/peliculas.db
 *.sqbpro
 
 ### Linux ###
