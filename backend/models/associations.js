@@ -71,6 +71,8 @@ Pelicula.belongsToMany(Genero, {
   foreignKey: "id_pelicula",
   as: "generos",
   timestamps: false,
+  onDelete: "CASCADE",
+  onUpdate: "CASCADE",
 });
 
 // Un género tiene muchas películas
@@ -79,6 +81,8 @@ Genero.belongsToMany(Pelicula, {
   foreignKey: "id_genero",
   as: "peliculas",
   timestamps: false,
+  onDelete: "CASCADE",
+  onUpdate: "CASCADE",
 });
 
 Cineasta.belongsTo(Pais, {
