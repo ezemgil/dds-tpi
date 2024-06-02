@@ -35,7 +35,7 @@ const PeliculaCineastaRol = sequelize.define(
         }
     },
     {
-        tableName: 'PeliculaCineastaRoles',
+        tableName: 'PeliculaCineastaRol',
         timestamps: false,
     }
 )

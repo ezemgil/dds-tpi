@@ -37,7 +37,7 @@ export const getPeliculaCineastaRolById = async (req, res, next) => {
     }
   } catch (error) {
     logger.error(
-        `GET /peliculas_cineastas_roles/${req.paramas.id_pelicula}/${req.paramas.id_cineasta}/${req.paramas.id_rol} | ${req.headers['user-agent']} | ${error.message}`
+        `GET /peliculas_cineastas_roles/${req.id_pelicula}/${req.id_cineasta}/${req.id_rol} | ${req.headers['user-agent']} | ${error.message}`
         );
     next(error);
   }
@@ -87,7 +87,7 @@ export const updatePeliculaCineastaRol = async (req, res, next) => {
     }
   } catch (error) {
     logger.error(
-        `PUT /peliculas_cineastas_roles/${req.paramas.id_pelicula}/${req.paramas.id_cineasta}/${req.paramas.id_rol} | ${
+        `PUT /peliculas_cineastas_roles/${req.id_pelicula}/${req.id_cineasta}/${req.id_rol} | ${
             req.headers['user-agent']
         } | ${error.message}`
         );
@@ -107,7 +107,7 @@ export const deletePeliculaCineastaRol = async (req, res, next) => {
               req.headers['user-agent']
           } | Relación entre película, cineasta y rol ${id_pelicula}/${id_cineasta}/${id_rol} eliminada`
           );
-      res.json(peliculaCineastaRol);
+      res.status(204).send("peliculaCineastaRol eliminada");
     } else {
       logger.warn(
           `DELETE /peliculas_cineastas_roles/${id_pelicula}/${id_cineasta}/${id_rol} | ${
@@ -118,7 +118,7 @@ export const deletePeliculaCineastaRol = async (req, res, next) => {
     }
   } catch (error) {
     logger.error(
-        `DELETE /peliculas_cineastas_roles/${req.params.id_pelicula}/${req.params.id_cineasta}/${req.params.id_rol} | ${
+        `DELETE /peliculas_cineastas_roles/${req.id_pelicula}/${req.id_cineasta}/${req.id_rol} | ${
             req.headers['user-agent']
         } | ${error.message}`
         );

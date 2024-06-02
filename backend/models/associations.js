@@ -8,6 +8,8 @@ import Cineasta from "./cineastas.js";
 import Pais from "./pais.js";
 import RolesCineasta from "./rolesCineasta.js";
 import TipoRol from "./tiposRol.js";
+import NominacionCineasta from "./nominacionesCineasta.js";
+import PeliculaCineastaRol from "./peliculasCineastaRol.js";
 
 // Asociaciones
 
@@ -147,7 +149,7 @@ NominacionCineasta.belongsTo(Cineasta, {
 NominacionCineasta.belongsTo(TipoRol, {
   through: "PeliculaCineastRol",
   foreignKey: "id_rol",
-  as: "rol",
+  as: "tipoRol",
   timestamps: false,
   onDelete: "CASCADE",
   onUpdate: "CASCADE",
@@ -197,6 +199,6 @@ PeliculaCineastaRol.belongsTo(Cineasta, {
 // Una peliculaCineastaRol tiene un rol
 PeliculaCineastaRol.belongsTo(TipoRol, {
   foreignKey: "id_rol",
-  as: "rol",
+  as: "tipoRol",
   timestamps: false
 });

@@ -57,7 +57,7 @@ export const getNominacionPeliculaById = async (req, res, next) => {
     }
   } catch (error) {
     logger.error(
-      `GET /nominaciones_pelicula/${req.paramas.id_academia}/${id_premio}/${id_pelicula} | ${req.headers["user-agent"]} | ${error.message}`
+      `GET /nominaciones_pelicula/${req.id_academia}/${id_premio}/${id_pelicula} | ${req.headers["user-agent"]} | ${error.message}`
     );
     next(error);
   }
@@ -82,7 +82,7 @@ export const getNominacionPeliculaByAcademia = async (req, res, next) => {
     }
   } catch (error) {
     logger.error(
-      `GET /nominaciones_pelicula/${req.paramas.id_academia} | ${req.headers["user-agent"]} | ${error.message}`
+      `GET /nominaciones_pelicula/${req.id_academia} | ${req.headers["user-agent"]} | ${error.message}`
     );
     next(error);
   }
@@ -107,7 +107,7 @@ export const getNominacionPeliculaByPremio = async (req, res, next) => {
     }
   } catch (error) {
     logger.error(
-      `GET /nominaciones_pelicula/${req.paramas.id_premio} | ${req.headers["user-agent"]} | ${error.message}`
+      `GET /nominaciones_pelicula/${req.id_premio} | ${req.headers["user-agent"]} | ${error.message}`
     );
     next(error);
   }
@@ -132,7 +132,7 @@ export const getNominacionPeliculaByPelicula = async (req, res, next) => {
     }
   } catch (error) {
     logger.error(
-      `GET /nominaciones_pelicula/${req.paramas.id_pelicula} | ${req.headers["user-agent"]} | ${error.message}`
+      `GET /nominaciones_pelicula/${req.id_pelicula} | ${req.headers["user-agent"]} | ${error.message}`
     );
     next(error);
   }
@@ -167,7 +167,7 @@ export const updateNominacion = async (req, res, next) => {
     }
   } catch (error) {
     logger.error(
-      `PUT /nominaciones_pelicula/${req.params.id_academia}/${req.params.id_premio}/${req.params.id_pelicula} | ${
+      `PUT /nominaciones_pelicula/${req.id_academia}/${req.id_premio}/${req.id_pelicula} | ${
         req.headers["user-agent"]
       } | ${error.message}`
     );
@@ -203,7 +203,7 @@ export const deleteNominacionPelicula = async (req, res, next) => {
     }
   } catch (error) {
     logger.error(
-      `DELETE /nominaciones_pelicula/${req.paramas.id_academia}/${req.paramas.id_premio}/${req.paramas.id_pelicula} | ${
+      `DELETE /nominaciones_pelicula/${req.id_academia}/${req.id_premio}/${req.id_pelicula} | ${
         req.headers["user-agent"]
       } | ${error.message}`
     );
