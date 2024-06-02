@@ -57,7 +57,7 @@ export const getNominacionPeliculaById = async (req, res, next) => {
     }
   } catch (error) {
     logger.error(
-      `GET /nominaciones_pelicula/${req.id_academia}/${id_premio}/${id_pelicula} | ${req.headers["user-agent"]} | ${error.message}`
+      `GET /nominaciones_pelicula/${req.id_academia}/${req.id_premio}/${req.id_pelicula} | ${req.headers["user-agent"]} | ${error.message}`
     );
     next(error);
   }

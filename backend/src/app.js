@@ -21,6 +21,7 @@ import paisRoutes from "../routes/pais.routes.js";
 import rolesCineastaRoutes from "../routes/rolesCineasta.routes.js";
 import tipoRolRoutes from "../routes/tipoRol.routes.js";
 import peliculaCineastaRolRoutes from "../routes/peliculaCineastaRol.routes.js";
+import idiomaPeliculaRoutes from "../routes/idiomaPelicula.routes.js";
 
 // Crear aplicación express
 const app = express();
@@ -48,6 +49,7 @@ app.use(tipoRolRoutes);
 app.use(rolesCineastaRoutes);
 app.use(nominacionesCineastasRoutes);
 app.use(peliculaCineastaRolRoutes);
+app.use(idiomaPeliculaRoutes);
 
 // Middlewares
 app.use(errorHandler);
