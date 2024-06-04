@@ -1,6 +1,6 @@
 import express from "express";
 import errorHandler from "../middleware/errorHandler.js";
-import { logger } from "../utils/logger.js";
+import { authentificateJWT } from "../middleware/auth.js";
 
 // Relaciones de modelos
 import "../models/associations.js";
@@ -23,6 +23,7 @@ import tipoRolRoutes from "../routes/tipoRol.routes.js";
 import peliculaCineastaRolRoutes from "../routes/peliculaCineastaRol.routes.js";
 import idiomaPeliculaRoutes from "../routes/idiomaPelicula.routes.js";
 import roles_usuarioRoutes from "../routes/rolesUsuario.routes.js";
+import usuarioRoutes from "../routes/usuario.routes.js";
 
 // Crear aplicación express
 const app = express();
@@ -31,10 +32,6 @@ const app = express();
 app.use(express.json());
 
 // Rutas
-app.get("/", (req, res) => {
-  logger.info(`GET / | ${req.headers["user-agent"]}`);
-  res.send("Estado de la API: OK");
-});
 app.use(authRoutes);
 app.use(generoRoutes);
 app.use(peliculaRoutes);
@@ -52,8 +49,10 @@ app.use(nominacionesCineastasRoutes);
 app.use(peliculaCineastaRolRoutes);
 app.use(idiomaPeliculaRoutes);
 app.use(roles_usuarioRoutes);
+app.use(usuarioRoutes);
 
 // Middlewares
 app.use(errorHandler);
+app.use(authentificateJWT);
 
 export default app;

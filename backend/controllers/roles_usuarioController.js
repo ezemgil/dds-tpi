@@ -4,96 +4,125 @@ import { logger } from "../utils/logger.js";
 
 // Buscar todos los roles
 export const getRoles = async (req, res, next) => {
+  const { user } = res.locals;
+  console.log(user);
   try {
-    const roles = await roles_usuarioService.getRoles();
-    logger.info(
-      `GET /roles | ${req.headers["user-agent"]} | ${roles.length} registros encontrados`
-    );
-    res.json(roles);
+    if (user.rol === "Administrador" || user.rol === "Supervisor") {
+      const roles = await roles_usuarioService.getRoles();
+      res.json(roles);
+      logger.info(
+        `${res.locals.nombre} accedió al listado de roles de usuario`
+      );
+    } else {
+      logger.error(
+        `El usuario ${res.locals.nombre} no tiene permisos para obtener todos los roles`
+      );
+      next(new BadRequestError("No tiene permisos para realizar esta acción"));
+    }
   } catch (error) {
-    logger.error(
-      `GET /roles | ${req.headers["user-agent"]} | ${error.message}`
-    );
+    logger.error(`Error al obtener los roles: ${error.message}`);
     next(error);
   }
 };
 
 // Buscar rol por nombre
 export const getRolByName = async (req, res, next) => {
+  const { user } = res.locals;
   try {
-    const rol = await roles_usuarioService.getRolByName(req.query.nombre);
-    if (rol) {
-      logger.info(
-        `GET /roles/${req.query.nombre} | ${req.headers["user-agent"]} | Rol ${req.query.nombre} encontrado`
-      );
-      res.json(rol);
-    } else {
-      logger.warn(
-        `GET /roles/${req.query.nombre} | ${req.headers["user-agent"]} | Rol ${req.query.nombre} no encontrado`
-      );
-      next(new NotFoundError("Rol no encontrado"));
+    if (user.rol === "Administrador" || user.rol === "Supervisor") {
+      const rol = await roles_usuarioService.getRolByName(req.query.nombre);
+      if (rol) {
+        logger.info(
+          `El usuario ${res.locals.nombre} buscó el rol ${req.query.nombre}`
+        );
+        res.json(rol);
+      } else {
+        logger.error(
+          `El usuario ${res.locals.nombre} buscó el rol ${req.query.nombre}`
+        );
+        next(new NotFoundError("Rol no encontrado"));
+      }
     }
   } catch (error) {
-    logger.error(
-      `GET /roles/${req.query.nombre} | ${req.headers["user-agent"]} | ${error.message}`
-    );
+    logger.error(`Error al buscar el rol: ${error.message}`);
     next(error);
   }
 };
 
 // Crear un nuevo rol
 export const createRol = async (req, res, next) => {
+  const { user } = res.locals;
   try {
-    const rol = await roles_usuarioService.createRol(req.body);
-    logger.info(
-      `POST /roles | ${
-        req.headers["user-agent"]
-      } | Rol creado - ${JSON.stringify(rol)}`
-    );
-    res.status(201).json(rol);
+    if (user.rol === "Administrador") {
+      const rol = await roles_usuarioService.createRol(req.body);
+      logger.info(`El usuario ${res.locals.nombre} creó un nuevo rol`);
+      res.json(rol);
+    } else {
+      logger.error(
+        `El usuario ${res.locals.nombre} no tiene permisos para crear un rol`
+      );
+      next(new BadRequestError("No tiene permisos para realizar esta acción"));
+    }
   } catch (error) {
-    logger.error(
-      `POST /roles | ${req.headers["user-agent"]} | ${error.message}`
-    );
+    logger.error(`Error al crear el rol: ${error.message}`);
     next(error);
   }
 };
 
 // Actualizar un rol
 export const updateRol = async (req, res, next) => {
-  const { id } = req.params;
-  const { nombre } = req.body;
-  if (!nombre) {
-    logger.error(
-      `PUT /roles/${id} | ${req.headers["user-agent"]} | Nombre requerido`
-    );
-    next(new BadRequestError("Nombre requerido"));
+  const { user } = res.locals;
+  try {
+    if (user.rol === "Administrador") {
+      const { id } = req.params;
+      const result = await roles_usuarioService.updateRol(id, req.body);
+      if (!result) {
+        logger.error(
+          `El usuario ${res.locals.nombre} intentó actualizar un rol que no existe`
+        );
+        next(new NotFoundError("Rol no encontrado"));
+      }
+      logger.info(
+        `El usuario ${res.locals.nombre} actualizó el rol con id ${id}`
+      );
+      res.json(result);
+    } else {
+      logger.error(
+        `El usuario ${res.locals.nombre} no tiene permisos para actualizar un rol`
+      );
+      next(new BadRequestError("No tiene permisos para realizar esta acción"));
+    }
+  } catch (error) {
+    logger.error(`Error al actualizar el rol: ${error.message}`);
+    next(error);
   }
-  const result = await roles_usuarioService.updateRol(id, nombre);
-  if (!result) {
-    logger.warn(
-      `PUT /roles/${id} | ${req.headers["user-agent"]} | Rol no encontrado`
-    );
-    next(new NotFoundError("Rol no encontrado"));
-  }
-  logger.info(
-    `PUT /roles/${id} | ${req.headers["user-agent"]} | Rol actualizado`
-  );
-  res.json({ message: "Rol actualizado" });
 };
 
 // Eliminar un rol
 export const deleteRol = async (req, res, next) => {
-  const { id } = req.params;
-  const result = await roles_usuarioService.deleteRol(id);
-  if (!result) {
-    logger.warn(
-      `DELETE /roles/${id} | ${req.headers["user-agent"]} | Rol no encontrado`
-    );
-    next(new NotFoundError("Rol no encontrado"));
+  const { user } = res.locals;
+  try {
+    if (user.rol === "Administrador") {
+      const { id } = req.params;
+      const result = await roles_usuarioService.deleteRol(id);
+      if (!result) {
+        logger.error(
+          `El usuario ${res.locals.nombre} intentó eliminar un rol que no existe`
+        );
+        next(new NotFoundError("Rol no encontrado"));
+      }
+      logger.info(
+        `El usuario ${res.locals.nombre} eliminó el rol con id ${id}`
+      );
+      res.json(result);
+    } else {
+      logger.error(
+        `El usuario ${res.locals.nombre} no tiene permisos para eliminar un rol`
+      );
+      next(new BadRequestError("No tiene permisos para realizar esta acción"));
+    }
+  } catch (error) {
+    logger.error(`Error al eliminar el rol: ${error.message}`);
+    next(error);
   }
-  logger.info(
-    `DELETE /roles/${id} | ${req.headers["user-agent"]} | Rol eliminado`
-  );
-  res.json({ message: "Rol eliminado" });
 };

@@ -1,10 +1,10 @@
 import express from "express";
-import * as seguridadController from "../controllers/seguridadController.js";
+import * as authController from "../controllers/authController.js";
 const router = express.Router();
 
 // Rutas para la seguridad
-router.post("/login", seguridadController.login);
-router.post("/logout", seguridadController.logout);
-router.post("/token", seguridadController.token);
+router.post("/api/login", authController.login);
+router.post("/api/logout", authController.logout);
+router.post("/api/token", authController.refresh);
 
 export default router;

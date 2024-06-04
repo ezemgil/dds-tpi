@@ -21,10 +21,6 @@ const Usuario = sequelize.define(
     id_rol: {
       type: DataTypes.STRING,
       allowNull: false,
-      references: {
-        model: "RolesUsuario",
-        key: "id",
-      },
     },
   },
   {

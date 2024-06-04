@@ -13,6 +13,8 @@ import PeliculaCineastaRol from "./peliculasCineastaRol.js";
 import IdiomaPelicula from "./idiomasPelicula.js";
 import Idioma from "./idiomas.js";
 import TipoTraduccion from "./tipos_traduccion.js";
+import Usuario from "./usuarios.js";
+import RolUsuario from "./rolesUsuario.js";
 
 // Asociaciones
 
@@ -179,42 +181,42 @@ NominacionCineasta.belongsTo(TipoRol, {
 Pelicula.hasMany(PeliculaCineastaRol, {
   foreignKey: "id_pelicula",
   as: "peliculaCineastaRol",
-  timestamps: false
+  timestamps: false,
 });
 
 // Un Cineasta puede tener muhcas PeliculaCineastaRol
 Cineasta.hasMany(PeliculaCineastaRol, {
   foreignKey: "id_cineasta",
   as: "peliculaCineastaRol",
-  timestamps: false
+  timestamps: false,
 });
 
 // Un Rol puede tener muchas PeliculaCineastaRol
 TipoRol.hasMany(PeliculaCineastaRol, {
   foreignKey: "id_rol",
   as: "peliculaCineastaRol",
-  timestamps: false
+  timestamps: false,
 });
 
 // Una peliculaCineastaRol tiene una pelicula
 PeliculaCineastaRol.belongsTo(Pelicula, {
   foreignKey: "id_pelicula",
   as: "pelicula",
-  timestamps: false
+  timestamps: false,
 });
 
 // Una peliculaCineastaRol tiene un cineasta
 PeliculaCineastaRol.belongsTo(Cineasta, {
   foreignKey: "id_cineasta",
   as: "cineasta",
-  timestamps: false
+  timestamps: false,
 });
 
 // Una peliculaCineastaRol tiene un rol
 PeliculaCineastaRol.belongsTo(TipoRol, {
   foreignKey: "id_rol",
   as: "tipoRol",
-  timestamps: false
+  timestamps: false,
 });
 
 // Un idiomaPelicula tiene un idioma
@@ -250,4 +252,16 @@ Idioma.hasMany(IdiomaPelicula, {
   foreignKey: "id_idioma",
   as: "idiomasPelicula",
   timestamps: false,
+});
+
+// Un usuario tiene un rol
+Usuario.hasOne(RolUsuario, {
+  foreignKey: "id",
+  as: "rol",
+});
+
+// Un rol tiene muchos usuarios
+RolUsuario.hasMany(Usuario, {
+  foreignKey: "id_rol",
+  as: "usuarios",
 });

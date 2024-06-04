@@ -6,15 +6,15 @@ dotenv.config();
 
 const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET;
 const refreshTokenSecret = process.env.REFRESH_TOKEN_SECRET;
+const accessTokenExpiration = process.env.ACCESS_TOKEN_EXPIRATION;
 
 const authentificateJWT = (req, res, next) => {
   const authHeader = req.headers.authorization;
-
   if (authHeader) {
     const token = authHeader.split(" ")[1];
-    jwt.verify(token, accessTokenSecret, (err, user, next) => {
+    jwt.verify(token, accessTokenSecret, (err, user) => {
       if (err) {
-        next(new UnauthorizedError("Token inválido"));
+        return next(new UnauthorizedError("Token inválido"));
       }
       res.locals.user = user;
       next();
@@ -24,4 +24,9 @@ const authentificateJWT = (req, res, next) => {
   }
 };
 
-export { authentificateJWT, accessTokenSecret, refreshTokenSecret };
+export {
+  authentificateJWT,
+  accessTokenSecret,
+  refreshTokenSecret,
+  accessTokenExpiration,
+};

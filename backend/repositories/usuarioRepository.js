@@ -3,17 +3,11 @@ import RolUsuario from "../models/rolesUsuario.js";
 
 // Buscar usuario por nombre
 export const findByUsername = async (usuario) => {
-  return await Usuario.findOne(
-    {
-      where: {
-        nombre: usuario,
-      },
-    },
-    {
-      include: RolUsuario,
-      attributes: { exclude: ["id_rol"] },
-    }
-  );
+  return await Usuario.findOne({
+    where: { nombre: usuario },
+    include: [{ model: RolUsuario, as: "rol" }],
+    attributes: { exclude: ["id_rol"] },
+  });
 };
 
 // Crear un nuevo usuario
@@ -45,7 +39,7 @@ export const deleteUsuario = async (id) => {
 // Obtener todos los usuarios
 export const findAll = async () => {
   return await Usuario.findAll({
-    include: RolUsuario,
+    include: [{ model: RolUsuario, as: "rol" }],
     attributes: { exclude: ["id_rol"] },
   });
 };
