@@ -1,13 +1,32 @@
-import * as idiomaPeliculaController from "../controllers/idiomaPeliculaController.js";
 import express from "express";
+import * as idiomaPeliculaController from "../controllers/idiomaPeliculaController.js";
+import { authentificateJWT } from "../middleware/auth.js";
 
 const router = express.Router();
 
 // Rutas para los idiomas de peliculas
-router.get("/idiomas_pelicula", idiomaPeliculaController.getIdiomasPelicula);
-router.get("/idiomas_pelicula/:id_pelicula/:id_idioma/:id_tipo_traduccion", idiomaPeliculaController.getIdiomaPeliculaById);
-router.post("/idiomas_pelicula", idiomaPeliculaController.createIdiomaPelicula);
-router.put("/idiomas_pelicula/:id_pelicula/:id_idioma/:id_tipo_traduccion", idiomaPeliculaController.updateIdiomaPelicula);
-router.delete("/idiomas_pelicula/:id_pelicula/:id_idioma/:id_tipo_traduccion", idiomaPeliculaController.deleteIdiomaPelicula);
+router.get(
+  "/api/idiomas_pelicula",
+  idiomaPeliculaController.getIdiomasPelicula
+);
+router.get(
+  "/api/idiomas_pelicula/:id_pelicula/:id_idioma/:id_tipo_traduccion",
+  idiomaPeliculaController.getIdiomaPeliculaById
+);
+router.post(
+  "/api/idiomas_pelicula",
+  authentificateJWT,
+  idiomaPeliculaController.createIdiomaPelicula
+);
+router.put(
+  "/api/idiomas_pelicula/:id_pelicula/:id_idioma/:id_tipo_traduccion",
+  authentificateJWT,
+  idiomaPeliculaController.updateIdiomaPelicula
+);
+router.delete(
+  "/api/idiomas_pelicula/:id_pelicula/:id_idioma/:id_tipo_traduccion",
+  authentificateJWT,
+  idiomaPeliculaController.deleteIdiomaPelicula
+);
 
 export default router;

@@ -20,7 +20,7 @@ export const login = async (req, res, next) => {
   const usuario = await usuarioService.getUsuarioByName(nombre);
 
   // Verificar si el usuario existe y la contraseña es correcta
-  if (!usuario || !bcrypt.compareSync(clave, usuario.clave)) {
+  if (!usuario || !bcrypt.compare(clave, usuario.clave)) {
     return next(
       new BadRequestError("Nombre de usuario o contraseña incorrectos")
     );

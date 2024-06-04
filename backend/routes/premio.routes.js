@@ -1,13 +1,14 @@
-import express from  "express";
+import express from "express";
 import * as controller from "../controllers/premioController.js";
+import { authentificateJWT } from "../middleware/auth.js";
 
 const router = express.Router();
 
 // Rutas para los premios
-router.get("/premios", controller.getPremios);
-router.get("/premios/:id", controller.getPremioById);
-router.post("/premios", controller.createPremio);
-router.put("/premios/:id", controller.updatePremio);
-router.delete("/premios/:id", controller.deletePremio);
+router.get("/api/premios", authentificateJWT, controller.getPremios);
+router.get("/api/premios/:id", authentificateJWT, controller.getPremioById);
+router.post("/api/premios", authentificateJWT, controller.createPremio);
+router.put("/api/premios/:id", authentificateJWT, controller.updatePremio);
+router.delete("/api/premios/:id", authentificateJWT, controller.deletePremio);
 
 export default router;

@@ -112,3 +112,14 @@ $ cd backend
 $ node data/runSQL.js
 ```
 3. Verificar que se haya creado el archivo ```peliculas.db``` en la carpeta ```backend/data/```.
+
+## Seguridad
+Se ha implementado un sistema de autenticación basado en JWT (JSON Web Tokens) para proteger las rutas de la API.
+Existen 3 usuarios registrados en la base de datos, cada uno con un rol distinto:
+| Usuario | Clave | Rol | Permisos |
+|---------|-------|-----| -------- |
+|admin    |admin  |admin| Completo |
+|supervisor|supervisor|supervisor| Restringido a ciertas rutas |
+|usuario  |usuario|usuario| Sólo lectura |
+
+***Nota**: La clave de cada usuario se ha hasheado con `bcrypt` antes de ser almacenada en la base de datos.*
