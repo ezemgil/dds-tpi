@@ -9,7 +9,7 @@ import {
   authentificateJWT,
   accessTokenSecret,
   refreshTokenSecret,
-} from "../security/auth.js";
+} from "../middleware/auth.js";
 import bcrypt from "bcrypt";
 import { logger } from "../utils/logger.js";
 

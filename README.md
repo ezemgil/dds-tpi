@@ -46,11 +46,10 @@ dds-tpi/
     - ```config```: Configuración de la base de datos.
     - ```controllers```: Controladores de las rutas.
     - ```data```: Archivos SQL para inicializar la base de datos además de la base de datos.
-    - ```middleware```: middleware de manejo de errores.
+    - ```middleware```: middleware de manejo de errores y autenticación.
     - ```models```: Modelos de las tablas de la base de datos.
     - ```repositories```: Repositorios para acceder a los datos de la base de datos.
     - ```routes```: Rutas de la API.
-    - ```security```: Middlewares para la autenticación y autorización de usuarios.
     - ```services```: Servicios para la lógica de negocio.
     - ```src```: Archivos de configuración de la aplicación.
     - ```test```: Pruebas unitarias.
