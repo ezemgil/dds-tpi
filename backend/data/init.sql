@@ -131,7 +131,7 @@ INSERT INTO Clasificaciones (nombre, descripcion) VALUES ('R', 'Restringida'), (
 
 INSERT INTO TiposRol (nombre) VALUES ('Director'), ('Guionista'), ('Productor'), ('Actor/Actriz'), ('Narrador'), ('Doblaje'), ('Subtitulado'), ('Banda Sonora'), ('Cámara'), ('Edición'), ('Vestuario'), ('Maquillaje'), ('Animación'), ('Efectos Especiales'), ('Diseño de Producción'), ('Dirección de Arte'), ('Sonido'), ('Efectos de Sonido'), ('Efectos Visuales'), ('Stunt');
 
-INSERT INTO Generos (nombre) VALUES ('Drama'), ('Crimen'), ('Misterio'), ('Fantasía'), ('Aventura'), ('Biografía'), ('Comedia'), ('Romance'), ('Ciencia Ficción'), ('Terror'), ('Acción'), ('Musical'), ('Animación'), ('Documental'), ('Histórica'), ('Bélica'), ('Western'), ('Deportes'), ('Familiar'), ('Thriller'), ('Suspenso'), ('Infantil'), ('Erótica'), ('Adultos');
+INSERT INTO Generos (nombre) VALUES ('Drama'), ('Crimen'), ('Misterio'), ('Fantasía'), ('Aventura'), ('Biografía'), ('Comedia'), ('Romance'), ('Ciencia Ficción'), ('Terror'), ('Acción'), ('Musical'), ('Animación'), ('Documental'), ('Histórica'), ('Bélica'), ('Western'), ('Deportes'), ('Familiar'), ('Thriller'), ('Suspenso'), ('Infantil');
 
 INSERT INTO Paises (nombre, codigo) VALUES ('Alemania', 'DE'), ('Francia', 'FR'), ('Italia', 'IT'), ('Países Bajos', 'NL'), ('Dinamarca', 'DK'), ('Reino Unido', 'UK'), ('Grecia', 'GR'), ('España', 'ES'), ('Portugal', 'PT'), ('Finlandia', 'FI'), ('Suecia', 'SE'), ('República Checa', 'CZ'), ('Eslovaquia', 'SK'), ('Eslovenia', 'SI'), ('Estonia', 'EE'), ('Hungría', 'HU'), ('Letonia', 'LV'), ('Lituania', 'LT'), ('Malta', 'MT'), ('Polonia', 'PL'), ('Bulgaria', 'BG'), ('Irlanda', 'IE'), ('Rumanía', 'RO'), ('Croacia', 'HR'), ('Australia', 'AU'), ('Nueva Zelanda', 'NZ'), ('Estados Unidos', 'US'), ('Irlanda del Norte', 'UK-NIR');
 INSERT INTO Paises (nombre, codigo) VALUES ('Argentina', 'AR'), ('Bolivia', 'BO'), ('Brasil', 'BR'), ('Chile', 'CL'), ('Colombia', 'CO'), ('Costa Rica', 'CR'), ('Cuba', 'CU'), ('Ecuador', 'EC'), ('El Salvador', 'SV'), ('Guatemala', 'GT'), ('Honduras', 'HN'), ('México', 'MX'), ('Nicaragua', 'NI'), ('Panamá', 'PA'), ('Paraguay', 'PY'), ('Perú', 'PE'), ('Puerto Rico', 'PR'), ('República Dominicana', 'DO'), ('Uruguay', 'UY'), ('Venezuela', 'VE');
@@ -409,11 +409,21 @@ INSERT INTO NominacionesCineasta (id_academia, id_premio, id_pelicula, id_cineas
             (4, 1, 9, 29, 1, '1995-03-27', 0), 
             (3, 2, 8, 40, 4, '1995-03-27', 0);
 
+CREATE TABLE IF NOT EXISTS RolesUsuario (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nombre TEXT NOT NULL UNIQUE
+);
 
 CREATE TABLE IF NOT EXISTS Usuarios (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     nombre TEXT NOT NULL UNIQUE,
     clave TEXT NOT NULL,
-    rol TEXT NOT NULL
+    id_rol INTEGER NOT NULL,
+    FOREIGN KEY (id_rol) REFERENCES RolesUsuario (id)
 );
-INSERT INTO Usuarios (nombre, clave, rol) VALUES ('admin', '$2b$10$kXII2Vd5f3KOgUBbiJ7Oq.ChAHdEbszy4xHbzvQInvGBYc6rPQ3wS', 'admin'); 
+
+INSERT INTO RolesUsuario (nombre) VALUES ('Administrador'), ('Supervisor'), ('Usuario');
+
+INSERT INTO Usuarios (nombre, clave, id_rol) VALUES ('admin', '$2b$10$kXII2Vd5f3KOgUBbiJ7Oq.ChAHdEbszy4xHbzvQInvGBYc6rPQ3wS', 1); 
+INSERT INTO Usuarios (nombre, clave, id_rol) VALUES ('supervisor', '$2y$10$CYmo/g9Sy7wrjFm129rO1.l/y1yndt/89GL1mEMBE8dq/37CblJsK', 2);
+INSERT INTO Usuarios (nombre, clave, id_rol) VALUES ('usuario', '$2y$10$AnEZ7w7nGM9dTy1ListUJe6uigeQNHi1.v6HpLoqttqsU5C94t7oC', 3);
