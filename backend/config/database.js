@@ -5,7 +5,7 @@ dotenv.config();
 
 // Crear una instancia de Sequelize
 const sequelize = new Sequelize({
-  dialect: process.env.DB_DIALECT,
+  dialect: process.env.DB_DIALECT || 'sqlite',
   storage: process.env.DB_NAME,
 });
 
