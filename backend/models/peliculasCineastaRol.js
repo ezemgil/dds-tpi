@@ -8,9 +8,13 @@ import TipoRol from './tiposRol.js';
 const PeliculaCineastaRol = sequelize.define(
     'PeliculaCineastaRol',
     {
+        id: {
+            type: DataTypes.INTEGER,
+            autoIncrement: true,
+            primaryKey: true
+        },
         id_pelicula:{
             type: DataTypes.INTEGER,
-            primaryKey: true,
             references: {
                 model: Pelicula,
                 key: 'id'
@@ -18,16 +22,13 @@ const PeliculaCineastaRol = sequelize.define(
         },
         id_cineasta:{
             type: DataTypes.INTEGER,
-            primaryKey: true,
             references: {
                 model: Cineasta,
                 key: 'id'
-            
             }
         },
         id_rol:{
             type: DataTypes.INTEGER,
-            primaryKey: true,
             references: {
                 model: TipoRol,
                 key: 'id'

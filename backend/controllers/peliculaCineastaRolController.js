@@ -22,22 +22,21 @@ export const getPeliculaCineastaRoles = async (req, res, next) => {
 // Buscar una relación entre película, cineasta y rol por su id
 export const getPeliculaCineastaRolById = async (req, res, next) => {
   try {
-    const { id_pelicula, id_cineasta, id_rol } = req.params;
-    const peliculaCineastaRol = await peliculaCineastaRolService.getPeliculaCineastaRolById(id_pelicula, id_cineasta, id_rol);
+    const peliculaCineastaRol = await peliculaCineastaRolService.getPeliculaCineastaRolById(req.params.id);
     if (peliculaCineastaRol) {
       logger.info(
-          `GET /peliculas_cineastas_roles/${id_pelicula}/${id_cineasta}/${id_rol} | ${req.headers['user-agent']} | Relación entre película, cineasta y rol ${id_pelicula}/${id_cineasta}/${id_rol} encontrada`
+          `GET /peliculas_cineastas_roles/${req.params.id} | ${req.headers['user-agent']} | Relación entre película, cineasta y rol ${req.params.id} encontrada`
           );
       res.json(peliculaCineastaRol);
     } else {
       logger.warn(
-          `GET /peliculas_cineastas_roles/${id_pelicula}/${id_cineasta}/${id_rol} | ${req.headers['user-agent']} | Relación entre película, cineasta y rol ${id_pelicula}/${id_cineasta}/${id_rol} no encontrada`
+          `GET /peliculas_cineastas_roles/${req.params.id} | ${req.headers['user-agent']} | Relación entre película, cineasta y rol ${req.params.id} no encontrada`
           );
       throw new NotFoundError('Relación entre película, cineasta y rol no encontrada');
     }
   } catch (error) {
     logger.error(
-        `GET /peliculas_cineastas_roles/${req.id_pelicula}/${req.id_cineasta}/${req.id_rol} | ${req.headers['user-agent']} | ${error.message}`
+        `GET /peliculas_cineastas_roles/${req.params.id} | ${req.headers['user-agent']} | ${error.message}`
         );
     next(error);
   }
@@ -67,27 +66,25 @@ export const createPeliculaCineastaRol = async (req, res, next) => {
 // Actualizar una relación entre película, cineasta y rol
 export const updatePeliculaCineastaRol = async (req, res, next) => {
   try {
-    const { id_pelicula, id_cineasta, id_rol } = req.params;
-    const peliculaCineastaRol = req.body;
-    const updatedPeliculaCineastaRol = await peliculaCineastaRolService.updatePeliculaCineastaRol(id_pelicula, id_cineasta, id_rol, peliculaCineastaRol);
+    const updatedPeliculaCineastaRol = await peliculaCineastaRolService.updatePeliculaCineastaRol(req.params.id, req.body);
     if (updatedPeliculaCineastaRol) {
       logger.info(
-          `PUT /peliculas_cineastas_roles/${id_pelicula}/${id_cineasta}/${id_rol} | ${
+          `PUT /peliculas_cineastas_roles/${req.params.id} | ${
               req.headers['user-agent']
-          } | Relación entre película, cineasta y rol ${id_pelicula}/${id_cineasta}/${id_rol} actualizada - ${JSON.stringify(updatedPeliculaCineastaRol)}`
+          } | Relación entre película, cineasta y rol ${req.params.id} actualizada - ${JSON.stringify(updatedPeliculaCineastaRol)}`
           );
       res.json(updatedPeliculaCineastaRol);
     } else {
       logger.warn(
-          `PUT /peliculas_cineastas_roles/${id_pelicula}/${id_cineasta}/${id_rol} | ${
+          `PUT /peliculas_cineastas_roles/${req.params.id} | ${
               req.headers['user-agent']
-          } | Relación entre película, cineasta y rol ${id_pelicula}/${id_cineasta}/${id_rol} no encontrada`
+          } | Relación entre película, cineasta y rol ${req.params.id} no encontrada`
           );
       throw new NotFoundError('Relación entre película, cineasta y rol no encontrada');
     }
   } catch (error) {
     logger.error(
-        `PUT /peliculas_cineastas_roles/${req.id_pelicula}/${req.id_cineasta}/${req.id_rol} | ${
+        `PUT /peliculas_cineastas_roles/${req.params.id} | ${
             req.headers['user-agent']
         } | ${error.message}`
         );
@@ -99,26 +96,25 @@ export const updatePeliculaCineastaRol = async (req, res, next) => {
 // Eliminar una relación entre película, cineasta y rol
 export const deletePeliculaCineastaRol = async (req, res, next) => {
   try {
-    const { id_pelicula, id_cineasta, id_rol } = req.params;
-    const peliculaCineastaRol = await peliculaCineastaRolService.deletePeliculaCineastaRol(id_pelicula, id_cineasta, id_rol);
+    const peliculaCineastaRol = await peliculaCineastaRolService.deletePeliculaCineastaRol(req.params.id);
     if (peliculaCineastaRol) {
       logger.info(
-          `DELETE /peliculas_cineastas_roles/${id_pelicula}/${id_cineasta}/${id_rol} | ${
+          `DELETE /peliculas_cineastas_roles/${req.params.id} | ${
               req.headers['user-agent']
-          } | Relación entre película, cineasta y rol ${id_pelicula}/${id_cineasta}/${id_rol} eliminada`
+          } | Relación entre película, cineasta y rol ${req.params.id} eliminada`
           );
       res.status(204).send("peliculaCineastaRol eliminada");
     } else {
       logger.warn(
-          `DELETE /peliculas_cineastas_roles/${id_pelicula}/${id_cineasta}/${id_rol} | ${
+          `DELETE /peliculas_cineastas_roles/${req.params.id} | ${
               req.headers['user-agent']
-          } | Relación entre película, cineasta y rol ${id_pelicula}/${id_cineasta}/${id_rol} no encontrada`
+          } | Relación entre película, cineasta y rol ${req.params.id} no encontrada`
           );
       throw new NotFoundError('Relación entre película, cineasta y rol no encontrada');
     }
   } catch (error) {
     logger.error(
-        `DELETE /peliculas_cineastas_roles/${req.id_pelicula}/${req.id_cineasta}/${req.id_rol} | ${
+        `DELETE /peliculas_cineastas_roles/${req.params.id} | ${
             req.headers['user-agent']
         } | ${error.message}`
         );

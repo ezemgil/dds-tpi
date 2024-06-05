@@ -13,6 +13,7 @@ const IdiomaPelicula = sequelize.define(
         },
         id_pelicula: {
             type: DataTypes.INTEGER,
+            allowNull: false, 
             references: {
                 model: Pelicula,
                 key: 'id'
@@ -20,6 +21,7 @@ const IdiomaPelicula = sequelize.define(
         },
         id_idioma: {
             type: DataTypes.INTEGER,
+            allowNull: false,
             references: {
                 model: Idioma,
                 key: 'id'
@@ -27,6 +29,7 @@ const IdiomaPelicula = sequelize.define(
         },
         id_tipo_traduccion: {
             type: DataTypes.INTEGER,
+            allowNull: false,
             references: {
                 model: TipoTraduccion,
                 key: 'id'

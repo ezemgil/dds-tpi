@@ -11,37 +11,19 @@ export const createNominacionPelicula = async (nominacion) => {
 };
 
 
-// Buscar una nominacion de pelicula por sus id's
-export const getNominacionPeliculaById = async (id_academia, id_premio, id_pelicula) => {
-  return await nominacion_peliculaRepository.findById(id_academia, id_premio, id_pelicula);
-};
-
-
-// Buscar una nominacion de pelicula por su id_academia
-export const getNominacionPeliculaByAcademia = async (id_academia) => {
-  return await nominacion_peliculaRepository.findByAcademia(id_academia);
-};
-
-
-// Buscar una nominacion de pelicula por su id_premio
-export const getNominacionPeliculaByPremio = async (id_premio) => {
-  return await nominacion_peliculaRepository.findByPremio(id_premio);
-};
-
-
-// Buscar una nominacion de pelicula por su id_pelicula
-export const getNominacionPeliculaByPelicula = async (id_pelicula) => {
-  return await nominacion_peliculaRepository.findByPelicula(id_pelicula);
+// Buscar una nominacion de pelicula por sus id
+export const getNominacionPeliculaById = async (id) => {
+  return await nominacion_peliculaRepository.findById(id);
 };
 
 
 // Actualizar una nominacion de pelicula
-export const updateNominacion = async (id_academia, id_premio, id_pelicula, nominacion) => {
-  return await nominacion_peliculaRepository.update(id_academia, id_premio, id_pelicula, nominacion);
+export const updateNominacion = async (id, nominacion) => {
+  return await nominacion_peliculaRepository.update(id, nominacion);
 };
 
 
 // Eliminar una nominacion de pelicula
-export const deleteNominacion = async (id_academia, id_premio, id_pelicula) => {
-  return await nominacion_peliculaRepository.remove(id_academia, id_premio, id_pelicula);
+export const deleteNominacion = async (id) => {
+  return await nominacion_peliculaRepository.remove(id);
 };

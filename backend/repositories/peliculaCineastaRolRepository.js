@@ -10,12 +10,8 @@ export const findAll = async () => {
 
 
 // Buscar una relación entre película, cineasta y rol por su id
-export const findById = async (id_pelicula, id_cineasta, id_rol) => {
-  return await PeliculaCineastaRol.findOne({
-    where: {
-     id_pelicula: id_pelicula,
-     id_cineasta: id_cineasta,
-     id_rol: id_rol},
+export const findById = async (id) => {
+  return await PeliculaCineastaRol.findByPk(id, {
      include: [
         {
             model: Pelicula,
@@ -42,14 +38,8 @@ export const create = async (peliculaCineastaRol) => {
 
 
 // Actualizar una relación entre película, cineasta y rol
-export const update = async (id_pelicula, id_cineasta, id_rol, peliculaCineastaRol) => {
-  const result = await PeliculaCineastaRol.findOne({
-    where: {
-        id_pelicula: id_pelicula,
-        id_cineasta: id_cineasta,
-        id_rol: id_rol 
-        }
-    });
+export const update = async (id, peliculaCineastaRol) => {
+  const result = await PeliculaCineastaRol.findBy(id);
     if (result) {
         return await result.update(peliculaCineastaRol);
   }
@@ -58,14 +48,8 @@ export const update = async (id_pelicula, id_cineasta, id_rol, peliculaCineastaR
 
 
 // Eliminar una relación entre película, cineasta y rol
-export const remove = async (id_pelicula, id_cineasta, id_rol) => {
-  const result = await PeliculaCineastaRol.findOne({
-    where: {
-        id_pelicula: id_pelicula,
-        id_cineasta: id_cineasta,
-        id_rol: id_rol 
-        }
-    });
+export const remove = async (id) => {
+  const result = await PeliculaCineastaRol.findByPk(id);
   if (result) {
     await result.destroy();
     return true;
