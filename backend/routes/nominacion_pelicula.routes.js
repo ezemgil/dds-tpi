@@ -10,20 +10,8 @@ router.get(
   nominacion_peliculaController.getNominacionesPelicula
 );
 router.get(
-  "/api/nominaciones_pelicula/:id_academia/:id_premio/:id_pelicula",
+  "/api/nominaciones_pelicula/:id",
   nominacion_peliculaController.getNominacionPeliculaById
-);
-router.get(
-  "/api/nominaciones_pelicula/academia/:id_academia",
-  nominacion_peliculaController.getNominacionPeliculaByAcademia
-);
-router.get(
-  "/api/nominaciones_pelicula/premio/:id_premio",
-  nominacion_peliculaController.getNominacionPeliculaByPremio
-);
-router.get(
-  "/api/nominaciones_pelicula/pelicula/:id_pelicula",
-  nominacion_peliculaController.getNominacionPeliculaByPelicula
 );
 router.post(
   "/api/nominaciones_pelicula",
@@ -31,12 +19,12 @@ router.post(
   nominacion_peliculaController.createNominacionPelicula
 );
 router.put(
-  "/api/nominaciones_pelicula/:id_academia/:id_premio/:id_pelicula",
+  "/api/nominaciones_pelicula/:id",
   authentificateJWT,
   nominacion_peliculaController.updateNominacion
 );
 router.delete(
-  "/api/nominaciones_pelicula/:id_academia/:id_premio/:id_pelicula",
+  "/api/nominaciones_pelicula/:id",
   authentificateJWT,
   nominacion_peliculaController.deleteNominacionPelicula
 );
