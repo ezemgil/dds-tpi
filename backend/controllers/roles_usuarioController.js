@@ -5,17 +5,14 @@ import { logger } from "../utils/logger.js";
 // Buscar todos los roles
 export const getRoles = async (req, res, next) => {
   const { user } = res.locals;
-  console.log(user);
   try {
     if (user.rol === "Administrador" || user.rol === "Supervisor") {
       const roles = await roles_usuarioService.getRoles();
       res.json(roles);
-      logger.info(
-        `${res.locals.user.nombre} accedió al listado de roles de usuario`
-      );
+      logger.info(`${user.usuario} accedió al listado de roles de usuario`);
     } else {
       logger.error(
-        `El usuario ${res.locals.user.nombre} no tiene permisos para obtener todos los roles`
+        `El usuario ${user.usuario} no tiene permisos para obtener todos los roles`
       );
       next(new BadRequestError("No tiene permisos para realizar esta acción"));
     }
@@ -33,12 +30,12 @@ export const getRolByName = async (req, res, next) => {
       const rol = await roles_usuarioService.getRolByName(req.query.nombre);
       if (rol) {
         logger.info(
-          `El usuario ${res.locals.user.nombre} buscó el rol ${req.query.nombre}`
+          `El usuario ${user.usuario} buscó el rol ${req.query.nombre}`
         );
         res.json(rol);
       } else {
         logger.error(
-          `El usuario ${res.locals.user.nombre} buscó el rol ${req.query.nombre}`
+          `El usuario ${user.usuario} buscó el rol ${req.query.nombre}`
         );
         next(new NotFoundError("Rol no encontrado"));
       }
@@ -55,11 +52,11 @@ export const createRol = async (req, res, next) => {
   try {
     if (user.rol === "Administrador") {
       const rol = await roles_usuarioService.createRol(req.body);
-      logger.info(`El usuario ${res.locals.user.nombre} creó un nuevo rol`);
+      logger.info(`El usuario ${user.usuario} creó un nuevo rol`);
       res.json(rol);
     } else {
       logger.error(
-        `El usuario ${res.locals.user.nombre} no tiene permisos para crear un rol`
+        `El usuario ${user.usuario} no tiene permisos para crear un rol`
       );
       next(new BadRequestError("No tiene permisos para realizar esta acción"));
     }
@@ -78,17 +75,15 @@ export const updateRol = async (req, res, next) => {
       const result = await roles_usuarioService.updateRol(id, req.body);
       if (!result) {
         logger.error(
-          `El usuario ${res.locals.user.nombre} intentó actualizar un rol que no existe`
+          `El usuario ${user.usuario} intentó actualizar un rol que no existe`
         );
         next(new NotFoundError("Rol no encontrado"));
       }
-      logger.info(
-        `El usuario ${res.locals.user.nombre} actualizó el rol con id ${id}`
-      );
+      logger.info(`El usuario ${user.usuario} actualizó el rol con id ${id}`);
       res.json(result);
     } else {
       logger.error(
-        `El usuario ${res.locals.user.nombre} no tiene permisos para actualizar un rol`
+        `El usuario ${user.usuario} no tiene permisos para actualizar un rol`
       );
       next(new BadRequestError("No tiene permisos para realizar esta acción"));
     }
@@ -107,17 +102,15 @@ export const deleteRol = async (req, res, next) => {
       const result = await roles_usuarioService.deleteRol(id);
       if (!result) {
         logger.error(
-          `El usuario ${res.locals.user.nombre} intentó eliminar un rol que no existe`
+          `El usuario ${user.usuario} intentó eliminar un rol que no existe`
         );
         next(new NotFoundError("Rol no encontrado"));
       }
-      logger.info(
-        `El usuario ${res.locals.user.nombre} eliminó el rol con id ${id}`
-      );
+      logger.info(`El usuario ${user.usuario} eliminó el rol con id ${id}`);
       res.json(result);
     } else {
       logger.error(
-        `El usuario ${res.locals.user.nombre} no tiene permisos para eliminar un rol`
+        `El usuario ${user.usuario} no tiene permisos para eliminar un rol`
       );
       next(new BadRequestError("No tiene permisos para realizar esta acción"));
     }
