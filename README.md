@@ -77,6 +77,7 @@ DB_DIALECT=sqlite
 # JWT
 ACCESS_TOKEN_SECRET=accesstokensecret
 REFRESH_TOKEN_SECRET=refreshtokensecret
+ACCESS_TOKEN_EXPIRATION=15m
 
 ```
 
