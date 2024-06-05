@@ -7,8 +7,8 @@ export async function getIdiomasPelicula() {
 
 
 // Buscar un idioma de pelicula por sus id's
-export const getIdiomaPeliculaById = async (id_pelicula, id_idioma, id_tipo_traduccion) => {
-  return await idiomaPeliculaRepository.findById(id_pelicula, id_idioma, id_tipo_traduccion);
+export const getIdiomaPeliculaById = async (id) => {
+  return await idiomaPeliculaRepository.findById(id);
 };
 
 
@@ -19,12 +19,12 @@ export const createIdiomaPelicula = async (idiomaPelicula) => {
 
 
 // Actualizar un idioma de pelicula
-export const updateIdiomaPelicula = async (id_pelicula, id_idioma, id_tipo_traduccion, idiomaPelicula) => {
-  return await idiomaPeliculaRepository.update(id_pelicula, id_idioma, id_tipo_traduccion, idiomaPelicula);
+export const updateIdiomaPelicula = async (id, idiomaPelicula) => {
+  return await idiomaPeliculaRepository.update(id, idiomaPelicula);
 };
 
 
 // Eliminar un idioma de pelicula
-export const deleteIdiomaPelicula = async (id_pelicula, id_idioma, id_tipo_traduccion) => {
-  return await idiomaPeliculaRepository.remove(id_pelicula, id_idioma, id_tipo_traduccion);
+export const deleteIdiomaPelicula = async (id) => {
+  return await idiomaPeliculaRepository.remove(id);
 };

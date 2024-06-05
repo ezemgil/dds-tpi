@@ -71,10 +71,10 @@ CREATE TABLE IF NOT EXISTS PeliculaCineastaRol (
 );
 
 CREATE TABLE IF NOT EXISTS IdiomasPelicula (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     id_pelicula INTEGER,
     id_idioma INTEGER,
     id_tipo_traduccion INTEGER,
-    PRIMARY KEY (id_pelicula, id_idioma, id_tipo_traduccion),
     FOREIGN KEY (id_pelicula) REFERENCES Peliculas(id),
     FOREIGN KEY (id_idioma) REFERENCES Idiomas(id),
     FOREIGN KEY (id_tipo_traduccion) REFERENCES TiposTraduccion(id)
@@ -102,12 +102,12 @@ CREATE TABLE IF NOT EXISTS Premios (
 
 
 CREATE TABLE IF NOT EXISTS NominacionesPelicula (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     id_academia INTEGER,
     id_premio INTEGER,
     id_pelicula INTEGER,
     fecha_nominacion DATE,
-    fue_ganador INTEGER,
-    PRIMARY KEY (id_academia, id_premio, id_pelicula, fecha_nominacion),
+    fue_ganador INTEGER CHECK(fue_ganador IN (0, 1)),
     FOREIGN KEY (id_academia) REFERENCES Academias(id),
     FOREIGN KEY (id_premio) REFERENCES Premios(id),
     FOREIGN KEY (id_pelicula) REFERENCES Peliculas(id)

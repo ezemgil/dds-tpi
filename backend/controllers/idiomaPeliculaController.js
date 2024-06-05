@@ -22,22 +22,21 @@ export const getIdiomasPelicula = async (req, res, next) => {
 // Buscar un idioma de pelicula por sus id's
 export const getIdiomaPeliculaById = async (req, res, next) => {
   try {
-    const { id_pelicula, id_idioma, id_tipo_traduccion } = req.params;
-    const idiomaPelicula = await idiomaPeliculaService.getIdiomaPeliculaById(id_pelicula, id_idioma, id_tipo_traduccion);
+    const idiomaPelicula = await idiomaPeliculaService.getIdiomaPeliculaById(req.params.id);
     if (idiomaPelicula) {
       logger.info(
-        `GET /idiomas_pelicula/${id_pelicula}/${id_idioma}/${id_tipo_traduccion} | ${req.headers["user-agent"]} | Idioma de pelicula ${id_pelicula}/${id_idioma}/${id_tipo_traduccion} encontrado`
+        `GET /idiomas_pelicula/${req.params.id} | ${req.headers["user-agent"]} | Idioma de pelicula ${req.params.id} encontrado`
       );
       res.json(idiomaPelicula).status(200);
     } else {
       logger.warn(
-        `GET /idiomas_pelicula/${id_pelicula}/${id_idioma}/${id_tipo_traduccion} | ${req.headers["user-agent"]} | Idioma de pelicula ${id_pelicula}/${id_idioma}/${id_tipo_traduccion} no encontrado`
+        `GET /idiomas_pelicula/${req.params.id} | ${req.headers["user-agent"]} | Idioma de pelicula ${req.params.id}no encontrado`
       );
       next(new NotFoundError("Idioma de pelicula no encontrado"));
     }
   } catch (error) {
     logger.error(
-      `GET /idiomas_pelicula/${req.id_pelicula}/${req.id_idioma}/${req.id_tipo_traduccion} | ${req.headers["user-agent"]} | ${error.message}`
+      `GET /idiomas_pelicula/${req.params.id} | ${req.headers["user-agent"]} | ${error.message}`
     );
     next(error);
   }
@@ -66,26 +65,26 @@ export const createIdiomaPelicula = async (req, res, next) => {
 // Actualizar un idioma de pelicula
 export const updateIdiomaPelicula = async (req, res, next) => {
   try {
-    const { id_pelicula, id_idioma, id_tipo_traduccion } = req.params;
-    const idiomaPelicula = await idiomaPeliculaService.updateIdiomaPelicula(id_pelicula, id_idioma, id_tipo_traduccion, req.body);
+    const idiomaPelicula = await idiomaPeliculaService.updateIdiomaPelicula(
+      req.params.id,
+      req.body
+    );
     if (idiomaPelicula) {
       logger.info(
-        `PUT /idiomas_pelicula/${id_pelicula}/${id_idioma}/${id_tipo_traduccion} | ${
+        `PUT /idiomas_pelicula/${req.params.id} | ${
           req.headers["user-agent"]
         } | Idioma de pelicula actualizado - ${JSON.stringify(idiomaPelicula)}`
       );
       res.json(idiomaPelicula).status(200);
     } else {
       logger.warn(
-        `PUT /idiomas_pelicula/${id_pelicula}/${id_idioma}/${id_tipo_traduccion} | ${
-          req.headers["user-agent"]
-        } | Idioma de pelicula ${id_pelicula}/${id_idioma}/${id_tipo_traduccion} no encontrado`
+        `PUT /idiomas_pelicula/${req.params.id} | ${req.headers["user-agent"]} | Idioma de pelicula ${req.params.id} no encontrado`
       );
       next(new NotFoundError("Idioma de pelicula no encontrado"));
     }
   } catch (error) {
     logger.error(
-      `PUT /idiomas_pelicula/${req.id_pelicula}/${req.id_idioma}/${req.id_tipo_traduccion} | ${req.headers["user-agent"]} | ${error.message}`
+      `PUT /idiomas_pelicula/${req.params.id} | ${req.headers["user-agent"]} | ${error.message}`
     );
     next(error);
   }
@@ -95,26 +94,25 @@ export const updateIdiomaPelicula = async (req, res, next) => {
 // Eliminar un idioma de pelicula
 export const deleteIdiomaPelicula = async (req, res, next) => {
   try {
-    const { id_pelicula, id_idioma, id_tipo_traduccion } = req.params;
-    const deletedIdiomaPelicula = await idiomaPeliculaService.deleteIdiomaPelicula(id_pelicula, id_idioma, id_tipo_traduccion);
+    const deletedIdiomaPelicula = await idiomaPeliculaService.deleteIdiomaPelicula(req.params.id);
     if (deletedIdiomaPelicula) {
       logger.info(
-        `DELETE /idiomas_pelicula/${id_pelicula}/${id_idioma}/${id_tipo_traduccion} | ${
+        `DELETE /idiomas_pelicula/${req.params.id} | ${
           req.headers["user-agent"]
-        } | Idioma de pelicula ${id_pelicula}/${id_idioma}/${id_tipo_traduccion} eliminado`
+        } | Idioma de pelicula ${req.params.id} eliminado`
       );
       res.status(204).end();
     } else {
       logger.warn(
-        `DELETE /idiomas_pelicula/${id_pelicula}/${id_idioma}/${id_tipo_traduccion} | ${
+        `DELETE /idiomas_pelicula/${req.params.id} | ${
           req.headers["user-agent"]
-        } | Idioma de pelicula ${id_pelicula}/${id_idioma}/${id_tipo_traduccion} no encontrado`
+        } | Idioma de pelicula ${req.params.id} no encontrado`
       );
       next(new NotFoundError("Idioma de pelicula no encontrado"));
     }
   } catch (error) {
     logger.error(
-      `DELETE /idiomas_pelicula/${req.id_pelicula}/${req.id_idioma}/${req.id_tipo_traduccion} | ${req.headers["user-agent"]} | ${error.message}`
+      `DELETE /idiomas_pelicula/${req.params.id} | ${req.headers["user-agent"]} | ${error.message}`
     );
     next(error);
   }

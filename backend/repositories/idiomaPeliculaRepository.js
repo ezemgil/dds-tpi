@@ -35,13 +35,8 @@ export const create = async (idiomaPelicula) => {
 
 
 // Buscar un idioma de pelicula por sus id's
-export const findById = async (id_pelicula, id_idioma, id_tipo_traduccion) => {
-    return await IdiomaPelicula.findOne({
-        where: {
-            id_pelicula: id_pelicula,
-            id_idioma: id_idioma,
-            id_tipo_traduccion: id_tipo_traduccion
-        },
+export const findById = async (id) => {
+    return await IdiomaPelicula.findByPk(id, {
         include: [
             {
                 model: Pelicula,
@@ -64,14 +59,8 @@ export const findById = async (id_pelicula, id_idioma, id_tipo_traduccion) => {
 
 
 // Actualizar un idioma de pelicula
-export const update = async (id_pelicula, id_idioma, id_tipo_traduccion, idiomaPelicula) => {
-    const result = await IdiomaPelicula.findOne({
-        where: {
-            id_pelicula: id_pelicula,
-            id_idioma: id_idioma,
-            id_tipo_traduccion: id_tipo_traduccion
-        }
-    });
+export const update = async (id, idiomaPelicula) => {
+    const result = await IdiomaPelicula.findByPk(id);
     if (result) {
         return await result.update(idiomaPelicula);
      }
@@ -80,14 +69,8 @@ export const update = async (id_pelicula, id_idioma, id_tipo_traduccion, idiomaP
 
 
 // Eliminar un idioma de pelicula
-export const remove = async (id_pelicula, id_idioma, id_tipo_traduccion) => {
-    const result = await IdiomaPelicula.findOne({
-        where: {
-            id_pelicula: id_pelicula,
-            id_idioma: id_idioma,
-            id_tipo_traduccion: id_tipo_traduccion
-        }
-    });
+export const remove = async (id) => {
+    const result = await IdiomaPelicula.findByPk(id);
     if (result) {
         return await result.destroy();
         return true;
