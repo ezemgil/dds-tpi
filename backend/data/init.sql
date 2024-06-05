@@ -61,20 +61,20 @@ CREATE TABLE IF NOT EXISTS RolesCineasta (
 );
 
 CREATE TABLE IF NOT EXISTS PeliculaCineastaRol (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     id_pelicula INTEGER,
     id_cineasta INTEGER,
     id_rol INTEGER,
-    PRIMARY KEY (id_pelicula, id_cineasta, id_rol),
     FOREIGN KEY (id_pelicula) REFERENCES Peliculas(id),
     FOREIGN KEY (id_cineasta) REFERENCES Cineastas(id),
     FOREIGN KEY (id_rol) REFERENCES TiposRol(id)
 );
 
 CREATE TABLE IF NOT EXISTS IdiomasPelicula (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     id_pelicula INTEGER,
     id_idioma INTEGER,
     id_tipo_traduccion INTEGER,
-    PRIMARY KEY (id_pelicula, id_idioma, id_tipo_traduccion),
     FOREIGN KEY (id_pelicula) REFERENCES Peliculas(id),
     FOREIGN KEY (id_idioma) REFERENCES Idiomas(id),
     FOREIGN KEY (id_tipo_traduccion) REFERENCES TiposTraduccion(id)
@@ -102,29 +102,27 @@ CREATE TABLE IF NOT EXISTS Premios (
 
 
 CREATE TABLE IF NOT EXISTS NominacionesPelicula (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     id_academia INTEGER,
     id_premio INTEGER,
     id_pelicula INTEGER,
     fecha_nominacion DATE,
-    fue_ganador INTEGER,
-    PRIMARY KEY (id_academia, id_premio, id_pelicula, fecha_nominacion),
+    fue_ganador INTEGER CHECK(fue_ganador IN (0, 1)),
     FOREIGN KEY (id_academia) REFERENCES Academias(id),
     FOREIGN KEY (id_premio) REFERENCES Premios(id),
     FOREIGN KEY (id_pelicula) REFERENCES Peliculas(id)
 );
 
 CREATE TABLE IF NOT EXISTS NominacionesCineasta (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     id_academia INTEGER,
     id_premio INTEGER,
-    id_pelicula INTEGER,
-    id_cineasta INTEGER,
-    id_rol INTEGER,
+    id_peliculaCineastaRol INTEGER,
     fecha_nominacion DATE,
-    fue_ganador INTEGER,
-    PRIMARY KEY (id_academia, id_premio, id_pelicula, id_cineasta, id_rol, fecha_nominacion),
+    fue_ganador INTEGER CHECK(fue_ganador IN (0, 1)),
     FOREIGN KEY (id_academia) REFERENCES Academias(id),
     FOREIGN KEY (id_premio) REFERENCES Premios(id),
-    FOREIGN KEY (id_pelicula, id_cineasta, id_rol) REFERENCES PeliculaCineastaRol(id_pelicula, id_cineasta, id_rol)
+    FOREIGN KEY (id_peliculaCineastaRol) REFERENCES PeliculaCineastaRol(id)
 );
 
 INSERT INTO Clasificaciones (nombre, descripcion) VALUES ('R', 'Restringida'), ('PG-13', 'Mayores de 13 años'), ('PG', 'Mayores de 7 años'), ('G', 'Todo público'), ('NR', 'No recomendada'), ('NC-17', 'Mayores de 17 años');
@@ -396,18 +394,18 @@ INSERT INTO NominacionesPelicula (id_academia, id_premio, id_pelicula, fecha_nom
         (3, 9, 1, '1995-03-27', 1), 
         (1, 10, 1, '1995-03-27', 1);
 
-INSERT INTO NominacionesCineasta (id_academia, id_premio, id_pelicula, id_cineasta, id_rol, fecha_nominacion, fue_ganador)
-        VALUES (1, 9, 1, 1, 1, '1995-03-27', 0), 
-            (5, 3, 1, 2, 2, '1995-03-27', 0), 
-            (4, 5, 2, 6, 1, '1995-03-27', 0), 
-            (7, 8, 3, 11, 1, '1995-03-27', 0), 
-            (9, 3, 3, 14, 4, '1995-03-27', 0), 
-            (6, 2, 4, 17, 4, '1995-03-27', 0), 
-            (1, 9, 5, 18, 1, '1995-03-27', 0), 
-            (9, 9, 6, 24, 2, '1995-03-27', 0), 
-            (8, 7, 7, 35, 4, '1995-03-27', 0), 
-            (4, 1, 9, 29, 1, '1995-03-27', 0), 
-            (3, 2, 8, 40, 4, '1995-03-27', 0);
+INSERT INTO NominacionesCineasta (id_academia, id_premio, id_peliculaCineastaRol, fecha_nominacion, fue_ganador)
+        VALUES (1, 9, 1, '1995-03-27', 0), 
+            (5, 3, 1, '2001-03-27', 1), 
+            (4, 5, 2, '1990-03-27', 1), 
+            (7, 8, 3, '1997-03-27', 0), 
+            (9, 3, 3, '1995-03-27', 1), 
+            (6, 2, 4, '2007-03-27', 0), 
+            (1, 9, 5, '1989-03-27', 0), 
+            (9, 9, 6, '1901-03-27', 1), 
+            (8, 7, 7, '1981-03-27', 0), 
+            (4, 1, 9, '1900-03-27', 0), 
+            (3, 2, 8, '2020-03-27', 1);
 
 CREATE TABLE IF NOT EXISTS RolesUsuario (
     id INTEGER PRIMARY KEY AUTOINCREMENT,

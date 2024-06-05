@@ -6,9 +6,14 @@ import TipoTraduccion from "./tipos_traduccion.js";
 
 const IdiomaPelicula = sequelize.define(
     'IdiomaPelicula', {
+        id: {
+            type: DataTypes.INTEGER,
+            autoIncrement: true,
+            primaryKey: true
+        },
         id_pelicula: {
             type: DataTypes.INTEGER,
-            primaryKey: true,
+            allowNull: false, 
             references: {
                 model: Pelicula,
                 key: 'id'
@@ -16,7 +21,7 @@ const IdiomaPelicula = sequelize.define(
         },
         id_idioma: {
             type: DataTypes.INTEGER,
-            primaryKey: true,
+            allowNull: false,
             references: {
                 model: Idioma,
                 key: 'id'
@@ -24,7 +29,7 @@ const IdiomaPelicula = sequelize.define(
         },
         id_tipo_traduccion: {
             type: DataTypes.INTEGER,
-            primaryKey: true,
+            allowNull: false,
             references: {
                 model: TipoTraduccion,
                 key: 'id'

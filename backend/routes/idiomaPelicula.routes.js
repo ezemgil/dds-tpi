@@ -10,7 +10,7 @@ router.get(
   idiomaPeliculaController.getIdiomasPelicula
 );
 router.get(
-  "/api/idiomas_pelicula/:id_pelicula/:id_idioma/:id_tipo_traduccion",
+  "/api/idiomas_pelicula/:id",
   idiomaPeliculaController.getIdiomaPeliculaById
 );
 router.post(
@@ -19,12 +19,12 @@ router.post(
   idiomaPeliculaController.createIdiomaPelicula
 );
 router.put(
-  "/api/idiomas_pelicula/:id_pelicula/:id_idioma/:id_tipo_traduccion",
+  "/api/idiomas_pelicula/:id",
   authentificateJWT,
   idiomaPeliculaController.updateIdiomaPelicula
 );
 router.delete(
-  "/api/idiomas_pelicula/:id_pelicula/:id_idioma/:id_tipo_traduccion",
+  "/api/idiomas_pelicula/:id",
   authentificateJWT,
   idiomaPeliculaController.deleteIdiomaPelicula
 );

@@ -10,7 +10,7 @@ router.get(
   peliculaCineastaRolController.getPeliculaCineastaRoles
 );
 router.get(
-  "/api/peliculas_cineastas_roles/:id_pelicula/:id_cineasta/:id_rol",
+  "/api/peliculas_cineastas_roles/:id",
   peliculaCineastaRolController.getPeliculaCineastaRolById
 );
 router.post(
@@ -19,12 +19,12 @@ router.post(
   peliculaCineastaRolController.createPeliculaCineastaRol
 );
 router.put(
-  "/api/peliculas_cineastas_roles/:id_pelicula/:id_cineasta/:id_rol",
+  "/api/peliculas_cineastas_roles/:id",
   authentificateJWT,
   peliculaCineastaRolController.updatePeliculaCineastaRol
 );
 router.delete(
-  "/api/peliculas_cineastas_roles/:id_pelicula/:id_cineasta/:id_rol",
+  "/api/peliculas_cineastas_roles/:id",
   authentificateJWT,
   peliculaCineastaRolController.deletePeliculaCineastaRol
 );
