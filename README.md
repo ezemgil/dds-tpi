@@ -18,52 +18,30 @@ Las APIs implementan los métodos CRUD (Create, Read, Update, Delete) y se han r
 |89768   | Gutiérrez Agustin Ioime |
 |97848   | Witt Facundo            |
 
-## Estructura del Proyecto
-
-```
-dds-tpi/
-├── backend
-│   ├── config
-│   ├── controllers
-│   ├── data
-│   ├── middleware
-│   ├── models
-│   ├── repositories
-│   ├── routes
-│   ├── security
-│   ├── services
-│   ├── src
-│   ├── test
-│   ├── utils
-│   ├── server.js
-│   ├── package-lock.json
-│   └── package.json
-└── frontend
-    └── ...
-```
-### Descripción
-- ```backend```: Contiene el código fuente del backend.
-    - ```config```: Configuración de la base de datos.
-    - ```controllers```: Controladores de las rutas.
-    - ```data```: Archivos SQL para inicializar la base de datos además de la base de datos.
-    - ```middleware```: middleware de manejo de errores y autenticación.
-    - ```models```: Modelos de las tablas de la base de datos.
-    - ```repositories```: Repositorios para acceder a los datos de la base de datos.
-    - ```routes```: Rutas de la API.
-    - ```services```: Servicios para la lógica de negocio.
-    - ```src```: Archivos de configuración de la aplicación.
-    - ```test```: Pruebas unitarias.
-    - ```utils```: Funciones de utilidad.
-    - ```server.js```: Archivo principal del backend.
-- ```frontend```: Contiene el código fuente del frontend.
 
 # Backend
 
-## Dependencias
+## Instalar dependencias
 ```bash
 $ cd backend
-$ npm install express nodemon cors dotenv sqlite3 aa-sqlite sequelize jsonwebtoken jest supertest @babel/core @babel/preset-env babel-jest bcrypt winston
+$ npm install
 ```
+- **express**: Framework web rápido, sin opiniones y minimalista para Node.js.
+- **nodemon**: Herramienta que reinicia automáticamente la aplicación Node.js cuando se detectan cambios en los archivos.
+- **cors**: Middleware de Express para habilitar el acceso a recursos de diferentes dominios o puertos.
+- **dotenv**: Módulo que carga variables de entorno desde un archivo .env en el proceso de Node.js.
+- **sqlite3**: Controlador de base de datos SQLite para Node.js.
+- **aa-sqlite**: Módulo que proporciona una interfaz de promesas para SQLite.
+- **sequelize**: ORM (Object-Relational Mapping) basado en promesas para Node.js que admite varios dialectos de bases de datos.
+- **jsonwebtoken**: Implementación de JSON Web Tokens (JWT) para Node.js.
+- **jest**: Framework de pruebas unitarias para JavaScript.
+- **supertest**: Biblioteca para realizar pruebas de integración HTTP en Node.js.
+- **@babel/core**: Núcleo de Babel, un compilador de JavaScript.
+- **@babel/preset-env**: Conjunto de plugins de Babel para habilitar características de JavaScript según el entorno de destino.
+- **babel-jest**: Transformador de Babel para Jest, permitiendo utilizar características de JavaScript moderno en las pruebas.
+- **bcrypt**: Librería para el hashing de contraseñas en Node.js.
+- **winston**: Biblioteca de registro para Node.js con múltiples opciones de transporte y formato de registro.
+
 
 ## Variables de entorno
 ```env
@@ -124,3 +102,31 @@ Existen 3 usuarios registrados en la base de datos, cada uno con un rol distinto
 |usuario  |usuario|usuario| Sólo lectura |
 
 ***Nota**: La clave de cada usuario se ha hasheado con `bcrypt` antes de ser almacenada en la base de datos.*
+
+# Frontend
+
+## Instalar dependencias
+```bash
+$ cd frontend
+$ npm install
+```
+
+### Librerías utilizadas
+- **@fortawesome/fontawesome-free**: Conjunto de iconos de FontAwesome.
+- **axios**: Cliente HTTP para realizar peticiones a servidores.
+- **bootstrap**: Framework de CSS para el diseño de la interfaz de usuario.
+- **dotenv**: Carga variables de entorno desde un archivo .env.
+- **moment**: Librería para manipular y formatear fechas y horas.
+- **react**: Biblioteca de JavaScript para construir interfaces de usuario.
+- **react-bootstrap**: Implementación de Bootstrap para React.
+- **react-dom**: Renderizador de React para la web.
+- **react-helmet**: Componente de React para manipular el encabezado del documento HTML.
+- **react-hook-form**: Librería para manejar formularios en React.
+- **react-router-dom**: Enrutador para aplicaciones de React.
+
+## Variables de entorno
+```env
+# Configuración del servidor
+SERVER_URL=http://localhost
+PORT=3000
+```
