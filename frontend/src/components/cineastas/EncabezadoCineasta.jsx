@@ -9,26 +9,30 @@ const EncabezadoCineasta = ({ Cineasta }) => {
           <div className="col-lg-5 mb-4 mb-lg-0">
             <img
               src="https://via.placeholder.com/500"
-              alt={`Foto de ${Cineasta.nombre} ${Cineasta.apellido}`}
+              alt={`Foto de ${Cineasta?.nombre} ${Cineasta?.apellido}`}
               className="img-fluid rounded shadow"
             />
           </div>
           <div className="col-lg-7">
             <div className="d-flex justify-content-between align-items-center">
               <div className="d-flex gap-3 align-items-center">
-                <span className="fw-bold mb-1 fs-1">{`${Cineasta.nombre} ${Cineasta.apellido}`}</span>
+                <span className="fw-bold mb-1 fs-1">{`${Cineasta?.nombre} ${Cineasta?.apellido}`}</span>
               </div>
               <div className="d-flex align-items-center gap-1 fs-3">
-                {Cineasta.nacionalidad.map((nacion, index) => (
+                <span
+                  className={`flag flag-${Cineasta?.pais?.codigo?.toLowerCase()}`}
+                ></span>
+                {Cineasta.pais2 !== null ? (
                   <span
-                    key={index}
-                    className={`flag flag-${nacion.codigo.toLowerCase()}`}
+                    className={`flag flag-${Cineasta?.pais2?.codigo.toLowerCase()}`}
                   ></span>
-                ))}
+                ) : (
+                  ""
+                )}
               </div>
             </div>
             <div className="mb-1 fs-5">
-              {Cineasta.roles.map((rol) => (
+              {Cineasta?.roles?.map((rol) => (
                 <span
                   key={rol.id}
                   className="badge bg-warning-subtle border border-warning-subtle text-warning-emphasis rounded-pill me-1"
@@ -38,7 +42,7 @@ const EncabezadoCineasta = ({ Cineasta }) => {
               ))}
             </div>
             <div className="my-2">
-              <p className="">{Cineasta.biografia}</p>
+              <p className="">{Cineasta?.biografia || "Sin bibliografía"}</p>
             </div>
             <div className="mb-3">
               <div className="fs-5 text-light">
@@ -55,14 +59,16 @@ const EncabezadoCineasta = ({ Cineasta }) => {
                   {moment(Cineasta.fechaNacimiento).format("L")}
                 </li>
                 <li className="list-group-item bg-body-subtle text-secondary-emphasis">
-                  {Cineasta.nacionalidad.length === 1 ? (
-                    <b>Nacionalidad:</b>
+                  {Cineasta.pais2 === null ? (
+                    <>
+                      <b>Nacionalidad:</b> {Cineasta?.pais?.nombre}
+                    </>
                   ) : (
-                    <b>Nacionalidades:</b>
-                  )}{" "}
-                  {Cineasta.nacionalidad
-                    .map((nacion) => nacion.nombre)
-                    .join(", ")}
+                    <>
+                      <b>Nacionalidades:</b>{" "}
+                      {Cineasta?.pais?.nombre + ", " + Cineasta?.pais2?.nombre}
+                    </>
+                  )}
                 </li>
               </ul>
             </div>

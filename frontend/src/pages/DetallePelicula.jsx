@@ -1,24 +1,24 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
+import { useParams } from "react-router-dom";
+
+import peliculaService from "../services/pelicula.service";
+
 import ElencoPelicula from "../components/peliculas/ElencoPelicula";
 import EncabezadoPelicula from "../components/peliculas/EncabezadoPelicula";
 import Nominaciones from "../components/Nominaciones";
 
 const DetallePelicula = () => {
-  const peli = {
-    titulo: "El secreto de sus tests",
-    descripcion:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus repellendus beatae atque tenetur at facere porro excepturi unde adipisci dolores quo id natus voluptatibus ut, autem distinctio alias sapiente fugiat esse quia sit est. Quae aliquam hic deserunt tenetur dicta repellendus, iste cum exercitationem ex minima laborum dolorem soluta corporis!",
-    duracion: 69,
-    fechaEstreno: "2024-06-21",
-    tituloOriginal: "The secret of their tests",
-    clasificacion: {
-      nombre: "NC-17",
-      descripcion: "Restringida",
-    },
-    generos: ["Test", "Pruebas unitarias", "Pruebas de integración"],
-    calificacion: 8.9,
-  };
+  const { id } = useParams();
+  const [Pelicula, setPelicula] = useState({});
+
+  useEffect(() => {
+    peliculaService.getById(id).then((response) => {
+      console.log(response.data);
+      console.log(response.data);
+      setPelicula(response.data);
+    });
+  }, [id]);
 
   const nominaciones = [
     {
@@ -132,10 +132,10 @@ const DetallePelicula = () => {
   return (
     <>
       <Helmet>
-        <title>{peli.titulo || "Película sin título"}</title>
+        <title>{Pelicula.titulo || "Película sin título"}</title>
       </Helmet>
 
-      <EncabezadoPelicula Pelicula={peli} />
+      <EncabezadoPelicula Pelicula={Pelicula} />
       <ElencoPelicula Elenco={elenco} />
       <Nominaciones Nominaciones={nominaciones} />
     </>

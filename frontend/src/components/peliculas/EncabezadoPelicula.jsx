@@ -27,11 +27,11 @@ const EncabezadoPelicula = ({ Pelicula }) => {
               <span
                 className={
                   "badge bg-" +
-                  clasificacionColor[Pelicula.clasificacion.nombre] +
+                  clasificacionColor[Pelicula?.clasificacion?.nombre] +
                   " fs-4"
                 }
               >
-                {Pelicula.clasificacion.nombre}
+                {Pelicula?.clasificacion?.nombre}
               </span>
             </div>
             <div className="d-flex align-items-center gap-1 fs-3">
@@ -47,7 +47,7 @@ const EncabezadoPelicula = ({ Pelicula }) => {
             </div>
             <ul className="list-group">
               <li className="list-group-item bg-body-subtle text-secondary-emphasis">
-                <b>Título original:</b> {Pelicula.tituloOriginal}
+                <b>Título original:</b> {Pelicula.titulo_original}
               </li>
               <li className="list-group-item bg-body-subtle text-secondary-emphasis">
                 <b>Duración:</b> {Pelicula.duracion} minutos
@@ -57,8 +57,8 @@ const EncabezadoPelicula = ({ Pelicula }) => {
                 {moment(Pelicula.fechaEstreno).format("L")}
               </li>
               <li className="list-group-item bg-body-subtle text-secondary-emphasis">
-                <b>Calificación:</b> {Pelicula.clasificacion.nombre}{" "}
-                {"(" + Pelicula.clasificacion.descripcion + ")"}
+                <b>Calificación:</b> {Pelicula?.clasificacion?.nombre}{" "}
+                {"(" + Pelicula?.clasificacion?.descripcion + ")"}
               </li>
             </ul>
           </div>
@@ -68,23 +68,15 @@ const EncabezadoPelicula = ({ Pelicula }) => {
               <span>Géneros</span>
             </div>
             <div className="d-flex flex-wrap gap-2 fs-5">
-              {Pelicula.generos.length > 0
-                ? Pelicula.generos.map((genero, i) => (
-                    <span
-                      key={i}
-                      className="badge bg-danger-subtle border border-danger-subtle text-danger-emphasis rounded-pill"
-                    >
-                      {genero}
-                    </span>
-                  ))
-                : peli.generos.map((genero, i) => (
-                    <span
-                      key={i}
-                      className="badge bg-danger-subtle border border-danger-subtle text-danger-emphasis rounded-pill"
-                    >
-                      {genero}
-                    </span>
-                  ))}
+              {Pelicula?.generos?.length > 0 &&
+                Pelicula.generos.map((genero, i) => (
+                  <span
+                    key={i}
+                    className="badge bg-danger-subtle border border-danger-subtle text-danger-emphasis rounded-pill"
+                  >
+                    {genero.nombre}
+                  </span>
+                ))}
             </div>
           </div>
         </div>

@@ -1,7 +1,9 @@
 import React from "react";
 import moment from "moment";
+import { useNavigate } from "react-router-dom";
 
 const PeliculaCard = ({
+  Id,
   Titulo,
   Calificacion,
   Generos,
@@ -9,9 +11,21 @@ const PeliculaCard = ({
   Duracion,
   Imagen,
 }) => {
+  let navigate = useNavigate();
+  const handleClick = () => {
+    // console.log("Click en la película", Id);
+    // Aquí puedes redirigir al componente de detalle de la película
+    // Pasando los datos correspondientes como props o utilizando una ruta dinámica
+    // Por ejemplo:
+    // history.push(`/detalle-pelicula/${Id}`);
+    // O
+    // <Lin to={`/pelicula/${Id}`}>Ver detalle</Link>
+    navigate(`/pelicula/${Id}`);
+  };
+
   return (
     <div className="col mb-4">
-      <div className="card">
+      <div className="card" onClick={handleClick}>
         <img
           src={Imagen}
           className="bd-placeholder-img card-img-top"
@@ -19,7 +33,7 @@ const PeliculaCard = ({
           height="300"
           alt={Titulo}
         />
-        <div className="card-body d-flex justify-content-around align-items-center">
+        <div className="card-body d-flex justify-content-between align-items-center">
           <div>
             <h5 className="card-title">{Titulo}</h5>
             <div className="d-flex gap-1 flex-wrap my-1">

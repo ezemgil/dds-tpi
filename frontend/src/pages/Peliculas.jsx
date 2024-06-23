@@ -1,16 +1,18 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import Listado from "../components/Listado";
 import PeliculaCard from "../components/card/PeliculaCard";
 import { Link } from "react-router-dom";
 
+import peliculaService from "../services/pelicula.service";
+
 const Peliculas = () => {
-  // Cambiar
-  const tituloPeli = "El secreto de sus tests";
-  const generos = ["Si", "Test", "Pruebas unitarias", "Pruebas de integración"];
-  const fecha = "2024-06-21";
-  const duracion = 69; // jiji
-  const img = "https://via.placeholder.com/300";
+  const [Peliculas, setPeliculas] = useState([]);
+  useEffect(() => {
+    peliculaService.getAll().then((response) => {
+      setPeliculas(response.data);
+    });
+  }, []);
 
   return (
     <>
@@ -25,14 +27,19 @@ const Peliculas = () => {
             <span>Películas en tendencia</span>
           </>
         }
-        Card={Array.from({ length: 19 }).map((_, i) => (
+        Card={Peliculas.map((pelicula) => (
           <PeliculaCard
-            key={i}
-            Titulo={tituloPeli}
-            Generos={generos}
-            FechaEstreno={fecha}
-            Duracion={duracion}
-            Imagen={img}
+            key={pelicula.id}
+            Id={pelicula.id}
+            Titulo={pelicula.titulo}
+            FechaEstreno={pelicula.fecha_estreno}
+            Duracion={pelicula.duracion}
+            Imagen={
+              pelicula.imagen
+                ? pelicula.imagen
+                : "https://via.placeholder.com/300"
+            }
+            Generos={pelicula.generos.map((genero) => genero.nombre)}
           />
         ))}
         Boton={

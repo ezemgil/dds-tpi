@@ -1,9 +1,14 @@
 import React from "react";
 import moment from "moment";
+import { useNavigate } from "react-router-dom";
 
-const CineastaCard = ({ Nombre, FechaNacimiento, Roles, Imagen }) => {
+const CineastaCard = ({ Id, Nombre, FechaNacimiento, Roles, Imagen }) => {
+  let navigate = useNavigate();
+  const handleClick = () => {
+    navigate(`/cineasta/${Id}`);
+  };
   return (
-    <div className="col mb-4">
+    <div className="col mb-4" onClick={handleClick}>
       <div className="card h-100 bg-dark text-white">
         <img
           src={Imagen}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 
 import Encabezado from "../components/home/Encabezado";
@@ -7,18 +7,22 @@ import PeliculaCard from "../components/card/PeliculaCard";
 import CineastaCard from "../components/card/CineastaCard";
 import { Link } from "react-router-dom";
 
-const Inicio = () => {
-  // Cambiar
-  const tituloPeli = "El secreto de sus tests";
-  const generos = ["Si", "Test", "Pruebas unitarias", "Pruebas de integración"];
-  const fecha = "2024-06-21";
-  const duracion = 69; // jiji
-  const img = "https://via.placeholder.com/300";
+// Servicios
+import peliculaService from "../services/pelicula.service";
+import cineastaService from "../services/cineasta.service";
 
-  const nombre = "Cineasta de prueba";
-  const fechac = "1992-06-21";
-  const roles = ["Tester", "Productor", "Guionista"];
-  const imgc = "https://via.placeholder.com/300";
+const Inicio = () => {
+  const [PeliculasTendencia, setPeliculasTendencia] = useState([]);
+  const [CineastasPopulares, setCineastasPopulares] = useState([]);
+
+  useEffect(() => {
+    peliculaService.getAll().then((response) => {
+      setPeliculasTendencia(response.data);
+    });
+    cineastaService.getAll().then((response) => {
+      setCineastasPopulares(response.data);
+    });
+  }, []);
 
   return (
     <div>
@@ -44,16 +48,20 @@ const Inicio = () => {
         />
 
         {/* Galería */}
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4">
-          {/* En su lugar, usar un ForEach */}
-          {Array.from({ length: 6 }).map((_, i) => (
+        <div className="row row-cols-1 row-cols-md-2 row-cols-lg-4">
+          {PeliculasTendencia.map((pelicula) => (
             <PeliculaCard
-              key={i}
-              Titulo={tituloPeli}
-              Generos={generos}
-              FechaEstreno={fecha}
-              Duracion={duracion}
-              Imagen={img}
+              // key={pelicula.id}
+              Id={pelicula.id}
+              Titulo={pelicula.titulo}
+              FechaEstreno={pelicula.fecha_estreno}
+              Duracion={pelicula.duracion}
+              Imagen={
+                pelicula.imagen
+                  ? pelicula.imagen
+                  : "https://via.placeholder.com/300"
+              }
+              Generos={pelicula.generos.map((genero) => genero.nombre)}
             />
           ))}
         </div>
@@ -74,15 +82,15 @@ const Inicio = () => {
           }
         />
 
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4">
-          {/* En su lugar, usar un ForEach */}
-          {Array.from({ length: 6 }).map((_, i) => (
+        <div className="row row-cols-1 row-cols-md-2 row-cols-lg-4">
+          {CineastasPopulares.map((cineasta) => (
             <CineastaCard
-              key={i}
-              Nombre={nombre}
-              FechaNacimiento={fechac}
-              Roles={roles}
-              Imagen={imgc}
+              key={cineasta.id}
+              Id={cineasta.id}
+              Nombre={`${cineasta.nombre} ${cineasta.apellido}`}
+              FechaNacimiento={cineasta?.fecha_nacimiento}
+              Roles={cineasta?.rol?.map((rol) => rol.nombre)}
+              Imagen={cineasta.imagen || "https://via.placeholder.com/300"}
             />
           ))}
         </div>

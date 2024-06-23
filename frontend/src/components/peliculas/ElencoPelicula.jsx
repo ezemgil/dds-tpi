@@ -24,7 +24,7 @@ const ElencoPelicula = ({ Elenco }) => {
               key={cineasta.id}
               Nombre={`${cineasta.nombre} ${cineasta.apellido}`}
               FechaNacimiento={cineasta.fechaNacimiento}
-              Roles={cineasta.rol?.map((rol) => rol.nombre)}
+              Roles={cineasta.rol.map((rol) => rol.nombre)}
               Imagen={cineasta.imagen}
             />
           ))}

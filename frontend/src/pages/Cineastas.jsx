@@ -1,15 +1,18 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import Listado from "../components/Listado";
 import CineastaCard from "../components/card/CineastaCard";
 import { Link } from "react-router-dom";
 
+import cineastaService from "../services/cineasta.service";
+
 const Cineastas = () => {
-  // Cambiar
-  const nombre = "Cineasta de prueba";
-  const fecha = "1992-06-21";
-  const roles = ["Tester", "Productor", "Guionista"];
-  const img = "https://via.placeholder.com/300";
+  const [Cineastas, setCineastas] = useState([]);
+  useEffect(() => {
+    cineastaService.getAll().then((response) => {
+      setCineastas(response.data);
+    });
+  }, []);
 
   return (
     <>
@@ -24,13 +27,15 @@ const Cineastas = () => {
             <span>Cineastas populares</span>
           </>
         }
-        Card={Array.from({ length: 19 }).map((_, i) => (
+        Card={Cineastas.map((cineasta) => (
           <CineastaCard
-            key={i}
-            Nombre={nombre}
-            FechaNacimiento={fecha}
-            Roles={roles}
-            Imagen={img}
+            key={cineasta.id}
+            Id={cineasta.id}
+            Nombre={cineasta.nombre}
+            FechaNacimiento={cineasta.fecha_nacimiento}
+            // Roles={cineasta.roles.map((rol) => rol.nombre)} //implementar en backend
+            // Biografia={cineasta.biografia}
+            Imagen="https://via.placeholder.com/300"
           />
         ))}
         Boton={
