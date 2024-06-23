@@ -10,7 +10,6 @@ const Footer = () => {
           <Link to="/peliculas">Películas</Link> |{" "}
           <Link to="/cineastas">Cineastas</Link> |{" "}
           <Link to="/acerca-de">Acerca del proyecto</Link> |{" "}
-          <Link to="/acerca-de">Acerca del proyecto</Link> |{" "}
           <a href="https://github.com/ezemgil/dds-tpi" target="_blank">
             Repositorio GitHub <i className="fa-brands fa-github"></i>
           </a>
