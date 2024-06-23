@@ -12,6 +12,7 @@ const Cineastas = () => {
     cineastaService.getAll().then((response) => {
       setCineastas(response.data);
     });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
 
   return (
@@ -31,7 +32,7 @@ const Cineastas = () => {
           <CineastaCard
             key={cineasta.id}
             Id={cineasta.id}
-            Nombre={cineasta.nombre}
+            Nombre={`${cineasta.nombre} ${cineasta.apellido}`}
             FechaNacimiento={cineasta.fecha_nacimiento}
             // Roles={cineasta.roles.map((rol) => rol.nombre)} //implementar en backend
             // Biografia={cineasta.biografia}

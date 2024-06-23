@@ -14,9 +14,9 @@ const DetallePelicula = () => {
 
   useEffect(() => {
     peliculaService.getById(id).then((response) => {
-      console.log(response.data);
-      console.log(response.data);
+      // console.log(response.data);
       setPelicula(response.data);
+      window.scrollTo({ top: 0, behavior: "smooth" });
     });
   }, [id]);
 
@@ -134,6 +134,17 @@ const DetallePelicula = () => {
       <Helmet>
         <title>{Pelicula.titulo || "Película sin título"}</title>
       </Helmet>
+
+      {/* Botón de volver */}
+      <div className="container">
+        <button
+          className="btn btn-warning mt-3 float-end"
+          onClick={() => window.history.back()}
+        >
+          <i className="fa-solid fa-arrow-left me-2"></i>
+          Volver
+        </button>
+      </div>
 
       <EncabezadoPelicula Pelicula={Pelicula} />
       <ElencoPelicula Elenco={elenco} />

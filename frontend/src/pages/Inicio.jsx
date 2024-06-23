@@ -22,6 +22,7 @@ const Inicio = () => {
     cineastaService.getAll().then((response) => {
       setCineastasPopulares(response.data);
     });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
 
   return (

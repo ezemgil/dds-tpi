@@ -12,6 +12,7 @@ const Peliculas = () => {
     peliculaService.getAll().then((response) => {
       setPeliculas(response.data);
     });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
 
   return (

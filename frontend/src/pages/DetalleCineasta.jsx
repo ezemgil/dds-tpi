@@ -14,8 +14,9 @@ const DetalleCineasta = () => {
 
   useEffect(() => {
     cineastaService.getById(id).then((response) => {
-      console.log(response.data);
+      // console.log(response.data);
       setCineasta(response.data);
+      window.scrollTo({ top: 0, behavior: "smooth" });
     });
   }, [id]);
 
@@ -78,6 +79,18 @@ const DetalleCineasta = () => {
       <Helmet>
         <title>{`${Cineasta.nombre} ${Cineasta.apellido}`}</title>
       </Helmet>
+
+      {/* Botón de volver */}
+      <div className="container">
+        <button
+          className="btn btn-warning mt-3 float-end"
+          onClick={() => window.history.back()}
+        >
+          <i className="fa-solid fa-arrow-left me-2"></i>
+          Volver
+        </button>
+      </div>
+
       <EncabezadoCineasta Cineasta={Cineasta} />
       <ParticipacionesCineasta Peliculas={participaciones} />
       <Nominaciones Nominaciones={nomin.peliculas} />
