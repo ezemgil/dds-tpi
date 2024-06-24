@@ -34,7 +34,7 @@ const Cineastas = () => {
             Id={cineasta.id}
             Nombre={`${cineasta.nombre} ${cineasta.apellido}`}
             FechaNacimiento={cineasta.fecha_nacimiento}
-            // Roles={cineasta.roles.map((rol) => rol.nombre)} //implementar en backend
+            Roles={cineasta.roles.map((rol) => rol.nombre)}
             // Biografia={cineasta.biografia}
             Imagen="https://via.placeholder.com/300"
           />

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
+import { Link } from "react-router-dom";
 
 import Encabezado from "../components/home/Encabezado";
 import SectionTitle from "../components/home/SectionTitle";
 import PeliculaCard from "../components/card/PeliculaCard";
 import CineastaCard from "../components/card/CineastaCard";
-import { Link } from "react-router-dom";
 
 // Servicios
 import peliculaService from "../services/pelicula.service";
@@ -90,7 +90,7 @@ const Inicio = () => {
               Id={cineasta.id}
               Nombre={`${cineasta.nombre} ${cineasta.apellido}`}
               FechaNacimiento={cineasta?.fecha_nacimiento}
-              Roles={cineasta?.rol?.map((rol) => rol.nombre)}
+              Roles={cineasta?.roles?.map((rol) => rol.nombre)}
               Imagen={cineasta.imagen || "https://via.placeholder.com/300"}
             />
           ))}

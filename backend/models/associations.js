@@ -127,24 +127,42 @@ Cineasta.belongsTo(Pais, {
   as: "pais2",
 });
 
-RolesCineasta.belongsTo(Cineasta, {
-  foreignKey: "id_cineasta",
-  as: "cineasta",
-});
+// RolesCineasta.belongsTo(Cineasta, {
+//   foreignKey: "id_cineasta",
+//   as: "cineasta",
+// });
 
-RolesCineasta.belongsTo(TipoRol, {
-  foreignKey: "id_rol",
-  as: "rol",
-});
+// RolesCineasta.belongsTo(TipoRol, {
+//   foreignKey: "id_rol",
+//   as: "rol",
+// });
 
-Cineasta.hasMany(RolesCineasta, {
+// Cineasta.hasMany(RolesCineasta, {
+//   foreignKey: "id_cineasta",
+//   as: "roles",
+// });
+
+// TipoRol.hasMany(RolesCineasta, {
+//   foreignKey: "id_rol",
+//   as: "roles",
+// });
+
+Cineasta.belongsToMany(TipoRol, {
+  through: "RolesCineasta",
   foreignKey: "id_cineasta",
   as: "roles",
+  timestamps: false,
+  onDelete: "CASCADE",
+  onUpdate: "CASCADE",
 });
 
-TipoRol.hasMany(RolesCineasta, {
+TipoRol.belongsToMany(Cineasta, {
+  through: "RolesCineasta",
   foreignKey: "id_rol",
-  as: "roles",
+  as: "cineastas",
+  timestamps: false,
+  onDelete: "CASCADE",
+  onUpdate: "CASCADE",
 });
 
 // Una NominacionCineasta tiene una pelicula
@@ -182,6 +200,8 @@ Pelicula.hasMany(PeliculaCineastaRol, {
   foreignKey: "id_pelicula",
   as: "peliculaCineastaRol",
   timestamps: false,
+  onDelete: "CASCADE",
+  onUpdate: "CASCADE",
 });
 
 // Un Cineasta puede tener muhcas PeliculaCineastaRol
@@ -189,6 +209,8 @@ Cineasta.hasMany(PeliculaCineastaRol, {
   foreignKey: "id_cineasta",
   as: "peliculaCineastaRol",
   timestamps: false,
+  onDelete: "CASCADE",
+  onUpdate: "CASCADE",
 });
 
 // Un Rol puede tener muchas PeliculaCineastaRol
@@ -196,6 +218,8 @@ TipoRol.hasMany(PeliculaCineastaRol, {
   foreignKey: "id_rol",
   as: "peliculaCineastaRol",
   timestamps: false,
+  onDelete: "CASCADE",
+  onUpdate: "CASCADE",
 });
 
 // Una peliculaCineastaRol tiene una pelicula

@@ -14,7 +14,6 @@ const DetalleCineasta = () => {
 
   useEffect(() => {
     cineastaService.getById(id).then((response) => {
-      // console.log(response.data);
       setCineasta(response.data);
       window.scrollTo({ top: 0, behavior: "smooth" });
     });

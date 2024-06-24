@@ -1,4 +1,5 @@
 import Cineasta from "../models/cineastas.js";
+import TiposRol from "../models/tiposRol.js";
 
 // Buscar todos los cineastas
 export const findAll = async () => {
@@ -12,6 +13,13 @@ export const findAll = async () => {
         association: "pais2",
         attributes: ["id", "nombre", "codigo"],
       },
+      {
+        model: TiposRol,
+        as: "roles",
+        through: {
+          attributes: [],
+        },
+      },
     ],
     attributes: { exclude: ["nacionalidad", "nacionalidad2"] },
   });
@@ -20,25 +28,30 @@ export const findAll = async () => {
 // Crear un nuevo cineasta
 export const create = async (cineasta) => {
   return await Cineasta.create(cineasta);
-
 };
 
 // Buscar un cineasta por su id
 export const findById = async (id) => {
-  return await Cineasta.findByPk(id,
-    {
-      include: [
-        {
-          association: "pais",
-          attributes: ["id", "nombre", "codigo"],
+  return await Cineasta.findByPk(id, {
+    include: [
+      {
+        association: "pais",
+        attributes: ["id", "nombre", "codigo"],
+      },
+      {
+        association: "pais2",
+        attributes: ["id", "nombre", "codigo"],
+      },
+      {
+        model: TiposRol,
+        as: "roles",
+        through: {
+          attributes: [],
         },
-        {
-          association: "pais2",
-          attributes: ["id", "nombre", "codigo"],
-        },
-      ],
-      attributes: { exclude: ["nacionalidad", "nacionalidad2"] },
-    });
+      },
+    ],
+    attributes: { exclude: ["nacionalidad", "nacionalidad2"] },
+  });
 };
 
 // Actualizar un cineasta

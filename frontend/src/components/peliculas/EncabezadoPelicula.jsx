@@ -28,7 +28,7 @@ const EncabezadoPelicula = ({ Pelicula }) => {
                 className={
                   "badge bg-" +
                   clasificacionColor[Pelicula?.clasificacion?.nombre] +
-                  " fs-4"
+                  " fs-4 me-2"
                 }
               >
                 {Pelicula?.clasificacion?.nombre}
