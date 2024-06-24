@@ -3,7 +3,13 @@ import { NavLink } from "react-router-dom";
 
 import Logo from "../../assets/img/logo/logo-01.svg";
 
+import peliculaService from "../../services/pelicula.service";
+
 const Navbar = () => {
+  const handleClick = async () => {
+    const peliculas = await peliculaService.getNu();
+    console.log(peliculas);
+  };
   return (
     <nav className="px-3 navbar navbar-expand-lg navbar-dark bg-dark">
       <NavLink className="navbar-brand d-flex align-items-center" to="/inicio">

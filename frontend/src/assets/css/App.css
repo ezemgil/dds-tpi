@@ -134,3 +134,15 @@ body {
 input[type="text"].placeholder-light::placeholder {
   color: #818181;
 }
+
+.nav-link {
+  color: white;
+}
+
+.nav-link.active {
+  color: #ffc107; /* warning color */
+}
+
+.nav-link:hover {
+  color: #dc3545; /* danger color */
+}

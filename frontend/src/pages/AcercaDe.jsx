@@ -172,7 +172,7 @@ const AcercaDe = () => {
                   href="https://github.com/agusgut"
                   className="text-warning text-decoration-none"
                 >
-                  ezemgil <i className="fa-brands fa-github"></i>
+                  agusgut <i className="fa-brands fa-github"></i>
                 </a>
               </span>
             </li>
@@ -184,7 +184,7 @@ const AcercaDe = () => {
                   href="https://github.com/witt97848"
                   className="text-warning text-decoration-none"
                 >
-                  ezemgil <i className="fa-brands fa-github"></i>
+                  witt97848 <i className="fa-brands fa-github"></i>
                 </a>
               </span>
             </li>
