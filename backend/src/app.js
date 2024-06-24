@@ -1,6 +1,7 @@
 import express from "express";
 import errorHandler from "../middleware/errorHandler.js";
 import { authentificateJWT } from "../middleware/auth.js";
+import cors from "cors";
 
 // Relaciones de modelos
 import "../models/associations.js";
@@ -30,6 +31,7 @@ const app = express();
 
 // Configurar express para recibir JSON en el body de las peticiones
 app.use(express.json());
+app.use(cors());
 
 // Rutas
 app.use(authRoutes);
