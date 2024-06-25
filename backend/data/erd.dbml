@@ -1,0 +1,99 @@
+Table Paises {
+  id INTEGER [pk, increment, not null]
+  nombre TEXT [not null]
+  codigo TEXT [not null]
+}
+
+Table Generos {
+  id INTEGER [pk, increment, not null]
+  nombre TEXT [not null]
+}
+
+
+Table Idiomas {
+  id INTEGER [pk, increment, not null]
+  nombre TEXT [not null]
+}
+
+Table Clasificaciones {
+  id INTEGER [pk, increment, not null]
+  nombre TEXT [not null]
+  descripcion TEXT
+}
+
+Table TiposRol {
+  id INTEGER [pk, increment, not null]
+  nombre TEXT [not null]
+}
+
+Table Cineastas {
+  id INTEGER [pk, increment, not null]
+  nombre TEXT [not null]
+  apellido TEXT [not null]
+  fecha_nacimiento DATE [not null]
+  fecha_fallecimiento DATE
+  bibliografia TEXT
+  imagen BLOB
+  nacionalidad INTEGER [ref: < Paises.id, not null]
+  nacionalidad2 INTEGER [ref: < Paises.id]
+}
+
+Table Peliculas {
+  id INTEGER [pk, increment, not null]
+  titulo TEXT [not null]
+  descripcion TEXT
+  calificacion REAL
+  duracion INTEGER [not null]
+  fecha_estreno DATE [not null, default: "now"]
+  titulo_original TEXT [not null]
+  imagen BLOB 
+  id_clasificacion INTEGER [ref: < Clasificaciones.id]
+}
+
+Table RolesCineasta {
+  id_cineasta INTEGER [pk, ref: < Cineastas.id]
+  id_rol INTEGER [pk, ref: < TiposRol.id]
+}
+
+Table PeliculaCineastaRol {
+  id_pelicula INTEGER [pk, ref: < Peliculas.id]
+  id_cineasta INTEGER [pk, ref: < Cineastas.id]
+  id_rol INTEGER [pk, ref: < TiposRol.id]
+}
+
+Table IdiomasPelicula {
+  id_pelicula INTEGER [pk, ref: < Peliculas.id] 
+  id_idioma INTEGER [pk, ref: < Idiomas.id]
+}
+
+Table GenerosPelicula {
+  id_pelicula INTEGER [pk, ref: < Peliculas.id] 
+  id_genero INTEGER [pk, ref: < Generos.id]
+}
+
+Table Usuarios {
+  id INTEGER [pk, increment]
+  nombre TEXT [not null]
+  clave TEXT [not null]
+  id_rol INTEGER [ref: < RolesUsuario.id]
+}
+
+Table Premios {
+  id INTEGER [pk, increment, not null ]
+  nombre TEXT [not null]
+}
+
+Table NominacionesPelicula {
+  id INTEGER [pk, not null]
+  id_premio INTEGER [ref: < Premios.id, not null]
+  id_pelicula INTEGER [ref: < Peliculas.id, not null]
+  fecha_nominacion DATE [not null]
+  fue_ganador INTEGER(1) [not null, default: 0]
+}
+
+Table RolesUsuario {
+  id INTEGER [pk, increment, not null]
+  rol TEXT [not null, unique]
+}
+
+Ref: "Idiomas"."nombre" < "IdiomasPelicula"."id_pelicula"
