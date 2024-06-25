@@ -9,6 +9,7 @@ export const getPeliculas = async (req, res, next) => {
     res.json(peliculas);
     log(req, `GET /peliculas ${peliculas.length} registros encontrados`);
   } catch (error) {
+    log(req, `Error: ${error.message}`);
     next(error);
   }
 };
@@ -24,6 +25,7 @@ export const getPeliculaById = async (req, res, next) => {
       next(new NotFoundError("Película no encontrada"));
     }
   } catch (error) {
+    log(req, `Error: ${error.message}`);
     next(error);
   }
 };
@@ -38,6 +40,7 @@ export const getPeliculaByNombre = async (req, res, next) => {
       `GET /peliculas?nombre=${req.query.nombre} ${peliculas.length} registros encontrados`
     );
   } catch (error) {
+    log(req, `Error: ${error.message}`);
     next(error);
   }
 };
@@ -48,6 +51,7 @@ export const createPelicula = async (req, res, next) => {
     const pelicula = await service.create(req.body);
     res.status(201).json(pelicula);
   } catch (error) {
+    log(req, `Error: ${error.message}`);
     next(error);
   }
 };
@@ -62,6 +66,7 @@ export const updatePelicula = async (req, res, next) => {
       next(new NotFoundError("Película no encontrada"));
     }
   } catch (error) {
+    log(req, `Error: ${error.message}`);
     next(error);
   }
 };
@@ -76,6 +81,7 @@ export const deletePelicula = async (req, res, next) => {
       next(new NotFoundError("Película no encontrada"));
     }
   } catch (error) {
+    log(req, `Error: ${error.message}`);
     next(error);
   }
 };

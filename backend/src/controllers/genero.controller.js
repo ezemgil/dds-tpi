@@ -1,12 +1,15 @@
 import * as service from "../services/genero.service.js";
 import { NotFoundError, BadRequestError } from "../utils/errors.js";
+import { log } from "../utils/logger.js";
 
 // Buscar todos los géneros
 export const getGeneros = async (req, res, next) => {
   try {
     const generos = await service.findAll();
     res.json(generos);
+    log(req, `GET /generos ${generos.length} registros encontrados`);
   } catch (error) {
+    log(req, `Error en getGeneros: ${error.message}`);
     next(error);
   }
 };
@@ -21,6 +24,7 @@ export const getGeneroById = async (req, res, next) => {
       next(new NotFoundError("Género no encontrado"));
     }
   } catch (error) {
+    log(req, `Error en getGeneroById: ${error.message}`);
     next(error);
   }
 };
@@ -31,6 +35,7 @@ export const getGeneroByNombre = async (req, res, next) => {
     const generos = await service.findByName(req.query.nombre);
     res.json(generos);
   } catch (error) {
+    log(req, `Error en getGeneroByNombre: ${error.message}`);
     next(error);
   }
 };
@@ -41,6 +46,7 @@ export const createGenero = async (req, res, next) => {
     const genero = await service.create(req.body);
     res.status(201).json(genero);
   } catch (error) {
+    log(req, `Error en createGenero: ${error.message}`);
     next(error);
   }
 };
@@ -55,6 +61,7 @@ export const updateGenero = async (req, res, next) => {
       next(new NotFoundError("Género no encontrado"));
     }
   } catch (error) {
+    log(req, `Error en updateGenero: ${error.message}`);
     next(error);
   }
 };
@@ -69,6 +76,7 @@ export const deleteGenero = async (req, res, next) => {
       next(new NotFoundError("Género no encontrado"));
     }
   } catch (error) {
+    log(req, `Error en deleteGenero: ${error.message}`);
     next(error);
   }
 };

@@ -31,7 +31,7 @@ const Cineasta = sequelize.define(
       allowNull: true,
     },
     imagen: {
-      type: DataTypes.BLOB,
+      type: DataTypes.TEXT,
       allowNull: true,
     },
     nacionalidad: {

@@ -1,12 +1,18 @@
 import * as service from "../services/nominacionPelicula.service.js";
 import { NotFoundError, BadRequestError } from "../utils/errors.js";
+import { log } from "../utils/logger.js";
 
 // Buscar todas las nominaciones de peliculas
 export const getNominacionesPelicula = async (req, res, next) => {
   try {
     const nominaciones = await service.findAll();
     res.json(nominaciones);
+    log(
+      req,
+      `GET /nominacionesPelicula ${nominaciones.length} registros encontrados`
+    );
   } catch (error) {
+    log(req, `Error en getNominacionesPelicula: ${error.message}`);
     next(error);
   }
 };
@@ -18,6 +24,7 @@ export const createNominacionPelicula = async (req, res, next) => {
     const nuevaNominacion = await service.create(nominacion);
     res.status(201).json(nuevaNominacion);
   } catch (error) {
+    log(req, `Error en createNominacionPelicula: ${error.message}`);
     next(error);
   }
 };
@@ -32,6 +39,7 @@ export const getNominacionPeliculaById = async (req, res, next) => {
       throw new NotFoundError("Nominacion de pelicula no encontrada");
     }
   } catch (error) {
+    log(req, `Error en getNominacionPeliculaById: ${error.message}`);
     next(error);
   }
 };
@@ -46,6 +54,7 @@ export const updateNominacion = async (req, res, next) => {
       throw new NotFoundError("Nominacion de pelicula no encontrada");
     }
   } catch (error) {
+    log(req, `Error en updateNominacion: ${error.message}`);
     next(error);
   }
 };
@@ -60,6 +69,7 @@ export const deleteNominacionPelicula = async (req, res, next) => {
       throw new NotFoundError("Nominacion de pelicula no encontrada");
     }
   } catch (error) {
+    log(req, `Error en deleteNominacionPelicula: ${error.message}`);
     next(error);
   }
 };

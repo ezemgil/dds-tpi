@@ -12,6 +12,7 @@ export const getCineastasByName = async (req, res, next) => {
       `GET /cineastas?nombre=${req.query.nombre} ${cineastas.length} registros encontrados`
     );
   } catch (error) {
+    log(req, `Error en getCineastasByName: ${error.message}`);
     next(error);
   }
 };
@@ -23,6 +24,7 @@ export const getCineastas = async (req, res, next) => {
     res.json(cineastas);
     log(req, `GET /cineastas ${cineastas.length} registros encontrados`);
   } catch (error) {
+    log(req, `Error en getCineastas: ${error.message}`);
     next(error);
   }
 };
@@ -38,6 +40,7 @@ export const getCineastaById = async (req, res, next) => {
       next(new NotFoundError("Cineasta no encontrado"));
     }
   } catch (error) {
+    log(req, `Error en getCineastaById: ${error.message}`);
     next(error);
   }
 };
@@ -46,9 +49,10 @@ export const getCineastaById = async (req, res, next) => {
 export const createCineasta = async (req, res, next) => {
   try {
     const cineasta = await service.create(req.body);
-    console.log(cineasta);
+    log(req, `POST /cineastas ${cineasta.id}`);
     res.status(201).json(cineasta);
   } catch (error) {
+    log(req, `Error en createCineasta: ${error.message}`);
     next(error);
   }
 };
@@ -59,10 +63,12 @@ export const updateCineasta = async (req, res, next) => {
     const cineasta = await service.update(req.params.id, req.body);
     if (cineasta) {
       res.json(cineasta);
+      log(req, `PUT /cineastas/${req.params.id}`);
     } else {
       next(new NotFoundError("Cineasta no encontrado"));
     }
   } catch (error) {
+    log(req, `Error en updateCineasta: ${error.message}`);
     next(error);
   }
 };
@@ -77,6 +83,7 @@ export const deleteCineasta = async (req, res, next) => {
       next(new NotFoundError("Cineasta no encontrado"));
     }
   } catch (error) {
+    log(req, `Error en deleteCineasta: ${error.message}`);
     next(error);
   }
 };

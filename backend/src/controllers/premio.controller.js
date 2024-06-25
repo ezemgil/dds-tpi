@@ -28,7 +28,7 @@ export const getPremioById = async (req, res, next) => {
 // Buscar un premio por su nombre
 export const getPremioByName = async (req, res, next) => {
   try {
-    const premio = await service.findByName(req.params.nombre);
+    const premio = await service.findByName(req.query.nombre);
     if (premio) {
       res.json(premio);
     } else {

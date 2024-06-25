@@ -1,12 +1,18 @@
 import * as service from "../services/clasificacion.service.js";
 import { NotFoundError } from "../utils/errors.js";
+import { log } from "../utils/logger.js";
 
 // Buscar todas las clasificaciones
 export const getClasificaciones = async (req, res, next) => {
   try {
     const clasificaciones = await service.findAll();
     res.json(clasificaciones).status(200);
+    log(
+      req,
+      `GET /clasificaciones ${clasificaciones.length} registros encontrados`
+    );
   } catch (error) {
+    log(req, `Error en getClasificaciones: ${error.message}`);
     next(error);
   }
 };
@@ -21,6 +27,7 @@ export const getClasificacionById = async (req, res, next) => {
       next(new NotFoundError("Clasificación no encontrada"));
     }
   } catch (error) {
+    log(req, `Error en getClasificacionById: ${error.message}`);
     next(error);
   }
 };
@@ -31,6 +38,7 @@ export const getClasificacionByNombre = async (req, res, next) => {
     const clasificacion = await service.findByName(req.query.nombre);
     res.json(clasificacion).status(200);
   } catch (error) {
+    log(req, `Error en getClasificacionByNombre: ${error.message}`);
     next(error);
   }
 };
@@ -41,6 +49,7 @@ export const createClasificacion = async (req, res, next) => {
     const clasificacion = await service.create(req.body);
     res.status(201).json(clasificacion);
   } catch (error) {
+    log(req, `Error en createClasificacion: ${error.message}`);
     next(error);
   }
 };
@@ -55,6 +64,7 @@ export const updateClasificacion = async (req, res, next) => {
       next(new NotFoundError("Clasificación no encontrada"));
     }
   } catch (error) {
+    log(req, `Error en updateClasificacion: ${error.message}`);
     next(error);
   }
 };
@@ -69,6 +79,7 @@ export const deleteClasificacion = async (req, res, next) => {
       next(new NotFoundError("Clasificación no encontrada"));
     }
   } catch (error) {
+    log(req, `Error en deleteClasificacion: ${error.message}`);
     next(error);
   }
 };
