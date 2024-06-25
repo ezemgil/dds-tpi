@@ -2,6 +2,7 @@ import { Sequelize, Op } from "sequelize";
 import Cineasta from "../models/cineastas.js";
 import TipoRol from "../models/tiposRol.js";
 import Paises from "../models/paises.js";
+import Pelicula from "../models/peliculas.js";
 
 // GET ALL
 export const findAll = async () => {
@@ -83,6 +84,25 @@ export const findByName = async (nombre) => {
       },
     ],
     attributes: { exclude: ["nacionalidad", "nacionalidad2"] },
+  });
+};
+
+// Get Peliculas by cineasta
+export const findPeliculasByCineasta = async (id_cineasta) => {
+  return await Pelicula.findAll({
+    include: [
+      {
+        model: Cineasta,
+        as: "cineastas",
+        where: {
+          id: id_cineasta,
+        },
+        attributes: [],
+        through: {
+          attributes: [],
+        },
+      },
+    ],
   });
 };
 

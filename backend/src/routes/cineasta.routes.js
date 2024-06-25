@@ -5,6 +5,7 @@ import * as controller from "../controllers/cineasta.controller.js";
 const router = express.Router();
 
 router.get("/api/cineastas/buscar", controller.getCineastasByName);
+router.get("/api/cineastas/:id/peliculas", controller.getPeliculasByCineasta);
 router.get("/api/cineastas/random", controller.getCineastasAleatorios);
 router.get("/api/cineastas", controller.getCineastas);
 router.get("/api/cineastas/:id", controller.getCineastaById);

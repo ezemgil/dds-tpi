@@ -32,6 +32,18 @@ export const getCineastasAleatorios = async (req, res, next) => {
   }
 };
 
+// Obtener las películas de un cineasta
+export const getPeliculasByCineasta = async (req, res, next) => {
+  try {
+    const peliculas = await service.findPeliculasByCineasta(req.params.id);
+    res.json(peliculas);
+    log(req, `GET /cineasta/${req.params.id}/peliculas`);
+  } catch (error) {
+    log(req, `Error en getPeliculasByCineasta: ${error.message}`);
+    next(error);
+  }
+};
+
 // Buscar todos los cineastas
 export const getCineastas = async (req, res, next) => {
   try {
