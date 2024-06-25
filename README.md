@@ -3,9 +3,7 @@
 ## Descripción del Proyecto
 Este proyecto grupal tiene como objetivo implementar un conjunto de Web APIs o REST APIs utilizando Node.js, Express y Sequelize. 
 
-Se ha desarrollado un sistema de gestión de películas que permite a los usuarios registrados acceder a información sobre películas, cineastas, premios y academias.
-
-Además, los usuarios pueden realizar búsquedas de películas por título, género, idioma, país, clasificación y fecha de estreno.
+Se ha desarrollado un sistema de gestión de películas que permite a los usuarios registrados acceder a información sobre películas, cineastas y premios .
 
 Las APIs implementan los métodos CRUD (Create, Read, Update, Delete) y se han realizado pruebas unitarias para asegurar su correcto funcionamiento.
 
@@ -17,45 +15,6 @@ Las APIs implementan los métodos CRUD (Create, Read, Update, Delete) y se han r
 |89765   | Gil Matías Ezequiel     |
 |89768   | Gutiérrez Agustin Ioime |
 |97848   | Witt Facundo            |
-
-## Estructura del Proyecto
-
-```
-dds-tpi/
-├── backend
-│   ├── config
-│   ├── controllers
-│   ├── data
-│   ├── middleware
-│   ├── models
-│   ├── repositories
-│   ├── routes
-│   ├── security
-│   ├── services
-│   ├── src
-│   ├── test
-│   ├── utils
-│   ├── server.js
-│   ├── package-lock.json
-│   └── package.json
-└── frontend
-    └── ...
-```
-### Descripción
-- ```backend```: Contiene el código fuente del backend.
-    - ```config```: Configuración de la base de datos.
-    - ```controllers```: Controladores de las rutas.
-    - ```data```: Archivos SQL para inicializar la base de datos además de la base de datos.
-    - ```middleware```: middleware de manejo de errores y autenticación.
-    - ```models```: Modelos de las tablas de la base de datos.
-    - ```repositories```: Repositorios para acceder a los datos de la base de datos.
-    - ```routes```: Rutas de la API.
-    - ```services```: Servicios para la lógica de negocio.
-    - ```src```: Archivos de configuración de la aplicación.
-    - ```test```: Pruebas unitarias.
-    - ```utils```: Funciones de utilidad.
-    - ```server.js```: Archivo principal del backend.
-- ```frontend```: Contiene el código fuente del frontend.
 
 # Backend
 
@@ -99,9 +58,7 @@ ACCESS_TOKEN_EXPIRATION=15m
 - **GenerosPelicula**: Relación de películas con sus géneros.
 - **Usuarios**: Información de usuarios (nombre, clave con hash `bcrypt`, rol).
 - **Premio**: Información sobre premios (Mejor película, mejor actor, mejor director, etc.).
-- **Academias**: Información sobre academias que otorgan premios.
 - **NominacionesPelicula**: Relación de películas con nominaciones recibidas en academias.
-- **NominacionesCineasta**: Asociación de cineastas con nominaciones recibidas en academias.
 
 
 ## Base de datos
