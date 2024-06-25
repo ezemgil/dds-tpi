@@ -1,8 +1,8 @@
-import httpService from "./http.service";
 import SERVER_CONFIG from "../config/server.config";
+import httpService from "./http.service";
 
 // Configuración de la URL base de la API
-const GENERO_API_URL = `${SERVER_CONFIG.SERVER_API_URL}/genero`;
+const GENERO_API_URL = `${SERVER_CONFIG.SERVER_API_URL}/generos`;
 
 async function getAll() {
   try {
@@ -49,10 +49,14 @@ async function remove(id) {
   }
 }
 
-export default generoService = {
+
+const generoService = {
   getAll,
   getById,
   create,
   update,
   remove,
 };
+
+
+export default  generoService;

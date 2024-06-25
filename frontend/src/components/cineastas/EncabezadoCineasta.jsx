@@ -1,5 +1,5 @@
-import React from "react";
 import moment from "moment";
+import React from "react";
 
 const EncabezadoCineasta = ({ Cineasta }) => {
   return (
@@ -7,11 +7,11 @@ const EncabezadoCineasta = ({ Cineasta }) => {
       <div className="container my-4">
         {console.log(Cineasta)}
         <div className="row">
-          <div className="col-lg-5 mb-4 mb-lg-0">
+          <div className="col-lg-5 mb-4 mb-lg-0 fit-content text-center">
             <img
-              src="https://via.placeholder.com/500"
+              src={Cineasta?.imagen}
               alt={`Foto de ${Cineasta?.nombre} ${Cineasta?.apellido}`}
-              className="img-fluid rounded shadow"
+              className="img-fluid rounded shadow card-img"
             />
           </div>
           <div className="col-lg-7">

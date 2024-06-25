@@ -146,3 +146,10 @@ input[type="text"].placeholder-light::placeholder {
 .nav-link:hover {
   color: #dc3545; /* danger color */
 }
+
+.card-img {
+  max-height: 500px;
+  max-width: fit-content;
+  object-fit: contain;
+  object-position: top;
+}
