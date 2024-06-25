@@ -20,6 +20,8 @@ import usuarioRoutes from "./routes/usuario.routes.js";
 
 // Crear aplicación express
 const app = express();
+app.use(cors());
+app.use(express.json());
 
 // Rutas
 app.use(authRoutes);
@@ -34,13 +36,11 @@ app.use(premioRoutes);
 app.use(rolesUsuarioRoutes);
 app.use(usuarioRoutes);
 
-app.get("/api/stauts", (req, res) => {
+app.get("/api/status", (req, res) => {
   res.json({ status: "API en funcionamiento" });
 });
 
 // Configuración de express y middlewares
-app.use(express.json());
-app.use(cors());
 app.use(errorHandler);
 
 export default app;

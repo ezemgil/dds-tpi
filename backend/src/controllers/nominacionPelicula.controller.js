@@ -17,6 +17,21 @@ export const getNominacionesPelicula = async (req, res, next) => {
   }
 };
 
+// Buscar todas las nominaciones de peliculas de una pelicula
+export const getNominacionesByPelicula = async (req, res, next) => {
+  try {
+    const nominaciones = await service.findAllByPelicula(req.params.id);
+    res.json(nominaciones);
+    log(
+      req,
+      `GET /nominacionesPelicula/pelicula/${req.params.id} ${nominaciones.length} registros encontrados`
+    );
+  } catch (error) {
+    log(req, `Error en getNominacionesPeliculaByPelicula: ${error.message}`);
+    next(error);
+  }
+};
+
 // Crear una nueva nominacion de pelicula
 export const createNominacionPelicula = async (req, res, next) => {
   try {

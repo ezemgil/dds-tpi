@@ -17,6 +17,21 @@ export const getCineastasByName = async (req, res, next) => {
   }
 };
 
+// Obtener X cineastas aleatorios
+export const getCineastasAleatorios = async (req, res, next) => {
+  try {
+    const cineastas = await service.findRandom(req.query.cantidad);
+    res.json(cineastas);
+    log(
+      req,
+      `GET /cineastas/aleatorios?cantidad=${req.query.cantidad} ${cineastas.length} registros encontrados`
+    );
+  } catch (error) {
+    log(req, `Error en getCineastasAleatorios: ${error.message}`);
+    next(error);
+  }
+};
+
 // Buscar todos los cineastas
 export const getCineastas = async (req, res, next) => {
   try {

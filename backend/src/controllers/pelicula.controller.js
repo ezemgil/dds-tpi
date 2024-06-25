@@ -14,6 +14,33 @@ export const getPeliculas = async (req, res, next) => {
   }
 };
 
+// Obtener X películas aleatorias
+export const getPeliculasAleatorias = async (req, res, next) => {
+  try {
+    const peliculas = await service.findRandom(req.query.cantidad);
+    res.json(peliculas);
+    log(
+      req,
+      `GET /peliculas/aleatorias?cantidad=${req.query.cantidad} ${peliculas.length} registros encontrados`
+    );
+  } catch (error) {
+    log(req, `Error: ${error.message}`);
+    next(error);
+  }
+};
+
+// Obtener la lista de actores de una película
+export const getElenco = async (req, res, next) => {
+  try {
+    const elenco = await service.getElenco(req.params.id);
+    res.json(elenco);
+    log(req, `GET /peliculas/${req.params.id}/actores`);
+  } catch (error) {
+    log(req, `Error: ${error.message}`);
+    next(error);
+  }
+};
+
 // Buscar una película por su id
 export const getPeliculaById = async (req, res, next) => {
   try {
