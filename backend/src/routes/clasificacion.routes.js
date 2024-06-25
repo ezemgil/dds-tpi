@@ -4,7 +4,7 @@ import { authentificateJWT } from "../middleware/auth.js";
 
 const router = express.Router();
 
-// Rutas para las clasificaciones
+router.get("/api/clasificaciones/buscar", controller.getClasificacionByNombre);
 router.get("/api/clasificaciones", controller.getClasificaciones);
 router.get("/api/clasificaciones/:id", controller.getClasificacionById);
 router.post(

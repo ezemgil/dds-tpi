@@ -35,6 +35,20 @@ export const createTipoRol = async (req, res, next) => {
   }
 };
 
+// Buscar un tipo de rol por su nombre
+export const getTipoRolByName = async (req, res, next) => {
+  try {
+    const tipoRol = await service.findByName(req.params.nombre);
+    if (tipoRol) {
+      res.json(tipoRol);
+    } else {
+      next(new NotFoundError("Tipo de rol no encontrado"));
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
 // Actualizar un tipo de rol
 export const updateTipoRol = async (req, res, next) => {
   try {

@@ -4,7 +4,7 @@ import { authentificateJWT } from "../middleware/auth.js";
 
 const router = express.Router();
 
-// Rutas para los paises
+router.get("/api/paises/buscar", controller.getPaisByNombre);
 router.get("/api/paises", controller.getPaises);
 router.get("/api/paises/:id", controller.getPaisById);
 router.post("/api/paises", authentificateJWT, controller.createPais);

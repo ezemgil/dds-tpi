@@ -1,3 +1,4 @@
+import { Op } from "sequelize";
 import Pelicula from "../models/peliculas.js";
 import Clasificacion from "../models/clasificaciones.js";
 import Genero from "../models/generos.js";
@@ -30,6 +31,27 @@ export const create = async (pelicula) => {
 // Buscar una película por su id
 export const findById = async (id) => {
   return await Pelicula.findByPk(id, {
+    include: [
+      {
+        model: Clasificacion,
+        as: "clasificacion",
+      },
+      {
+        model: Genero,
+        as: "generos",
+        through: {
+          attributes: [],
+        },
+      },
+    ],
+    attributes: { exclude: ["id_clasificacion"] },
+  });
+};
+
+// Buscar una película por su nombre
+export const findByName = async (nombre) => {
+  return await Pelicula.findAll({
+    where: { titulo: { [Op.like]: `%${nombre}%` } },
     include: [
       {
         model: Clasificacion,

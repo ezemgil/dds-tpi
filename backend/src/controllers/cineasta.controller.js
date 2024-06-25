@@ -2,18 +2,26 @@ import * as service from "../services/cineasta.service.js";
 import { NotFoundError } from "../utils/errors.js";
 import { log } from "../utils/logger.js";
 
+// Buscar cineastas por nombre
+export const getCineastasByName = async (req, res, next) => {
+  try {
+    const cineastas = await service.findByName(req.query.nombre);
+    res.json(cineastas);
+    log(
+      req,
+      `GET /cineastas?nombre=${req.query.nombre} ${cineastas.length} registros encontrados`
+    );
+  } catch (error) {
+    next(error);
+  }
+};
+
 // Buscar todos los cineastas
 export const getCineastas = async (req, res, next) => {
   try {
     const cineastas = await service.findAll();
     res.json(cineastas);
-    log(
-      1,
-      req.headers["user-agent"],
-      "GET / cineastas",
-      cineastas.length,
-      "registros encontrados"
-    );
+    log(req, `GET /cineastas ${cineastas.length} registros encontrados`);
   } catch (error) {
     next(error);
   }
@@ -25,6 +33,7 @@ export const getCineastaById = async (req, res, next) => {
     const cineasta = await service.findById(req.params.id);
     if (cineasta) {
       res.json(cineasta);
+      log(req, `GET /cineasta/${req.params.id}`);
     } else {
       next(new NotFoundError("Cineasta no encontrado"));
     }

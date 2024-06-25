@@ -4,7 +4,6 @@ import { authentificateJWT } from "../middleware/auth.js";
 
 const router = express.Router();
 
-// Rutas para los roles de usuario
 router.get("/api/roles_usuario", authentificateJWT, controller.getRoles);
 router.get(
   "/api/roles_usuario/buscar",

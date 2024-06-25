@@ -1,3 +1,4 @@
+import { Op } from "sequelize";
 import Pais from "../models/paises.js";
 
 // Buscar todos los países
@@ -13,6 +14,13 @@ export const create = async (pais) => {
 // Buscar un país por su id
 export const findById = async (id) => {
   return await Pais.findByPk(id);
+};
+
+// Buscar un país por su nombre
+export const findByName = async (nombre) => {
+  return await Pais.findAll({
+    where: { nombre: { [Op.like]: `%${nombre}%` } },
+  });
 };
 
 // Actualizar un país

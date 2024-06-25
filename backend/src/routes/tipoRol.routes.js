@@ -4,7 +4,11 @@ import { authentificateJWT } from "../middleware/auth.js";
 
 const router = express.Router();
 
-// Rutas para los tipos de rol
+router.get(
+  "/api/tipos_rol/buscar",
+  authentificateJWT,
+  controller.getTipoRolByName
+);
 router.get("/api/tipos_rol", authentificateJWT, controller.getTiposRol);
 router.get("/api/tipos_rol/:id", authentificateJWT, controller.getTipoRolById);
 router.post("/api/tipos_rol", authentificateJWT, controller.createTipoRol);

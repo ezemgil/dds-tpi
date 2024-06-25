@@ -1,3 +1,4 @@
+import { Op } from "sequelize";
 import Clasificacion from "../models/clasificaciones.js";
 
 // Buscar todas las clasificaciones
@@ -13,6 +14,13 @@ export const create = async (clasificacion) => {
 // Buscar una clasificación por su id
 export const findById = async (id) => {
   return await Clasificacion.findByPk(id);
+};
+
+// Buscar una clasificación por su nombre
+export const findByName = async (nombre) => {
+  return await Clasificacion.findOne({
+    where: { nombre: { [Op.like]: `%${nombre}%` } },
+  });
 };
 
 // Actualizar una clasificación

@@ -25,6 +25,16 @@ export const getGeneroById = async (req, res, next) => {
   }
 };
 
+// Buscar un género por su nombre
+export const getGeneroByNombre = async (req, res, next) => {
+  try {
+    const generos = await service.findByName(req.query.nombre);
+    res.json(generos);
+  } catch (error) {
+    next(error);
+  }
+};
+
 // Crear un nuevo género
 export const createGenero = async (req, res, next) => {
   try {

@@ -25,6 +25,16 @@ export const getPaisById = async (req, res, next) => {
   }
 };
 
+// Buscar un país por su nombre
+export const getPaisByNombre = async (req, res, next) => {
+  try {
+    const paises = await service.findByName(req.query.nombre);
+    res.json(paises);
+  } catch (error) {
+    next(error);
+  }
+};
+
 // Crear un nuevo país
 export const createPais = async (req, res, next) => {
   try {

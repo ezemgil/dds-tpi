@@ -1,3 +1,4 @@
+import { Op } from "sequelize";
 import Cineasta from "../models/cineastas.js";
 import TipoRol from "../models/tiposRol.js";
 import Paises from "../models/paises.js";
@@ -58,7 +59,9 @@ export const findById = async (id) => {
 export const findByName = async (nombre) => {
   return await Cineasta.findAll({
     where: {
-      nombre: nombre,
+      nombre: {
+        [Op.like]: `%${nombre}%`,
+      },
     },
     include: [
       {

@@ -2,10 +2,11 @@ import { createLogger, format, transports } from "winston";
 
 const logger = createLogger({
   format: format.combine(
-    format.timestamp(),
-    format.simple(),
+    format.timestamp({ format: "YYYY-MM-DD HH:mm:ss:ms" }),
     format.printf((info) => {
-      return `${info.timestamp} - ${info.level}: ${info.message}`;
+      return `${info.level.toUpperCase()} | ${info.timestamp} | ${
+        info.message
+      }`;
     })
   ),
   transports: [
@@ -18,22 +19,14 @@ const logger = createLogger({
   ],
 });
 
-function log(level, user, uri, resource, message) {
-  const messageToLog = `${user} | ${uri} | ${resource} ${message}`;
-  switch (level) {
-    case 1:
-      logger.info(messageToLog);
-      break;
-    case 2:
-      logger.warn(messageToLog);
-      break;
-    case 3:
-      logger.error(messageToLog);
-      break;
-    default:
-      logger.info(messageToLog);
-      break;
-  }
-}
+const log = (req, resource) => {
+  const message = `Ip: ${req.ip} | Method: ${req.method} | User-agent: ${req.headers["user-agent"]} | Resource: ${resource}`;
+  logger.info(message);
+};
 
-export { log };
+const logError = (req, resource, error) => {
+  const message = `Ip: ${req.ip} | Method: ${req.method} | User-agent: ${req.headers["user-agent"]} | Resource: ${resource} | Error: ${error.message}`;
+  logger.error(message);
+};
+
+export { logger, log, logError };

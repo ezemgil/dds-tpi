@@ -4,7 +4,6 @@ import { authentificateJWT } from "../middleware/auth.js";
 
 const router = express.Router();
 
-// Rutas para las nominaciones de peliculas
 router.get("/api/nominaciones_pelicula", controller.getNominacionesPelicula);
 router.get(
   "/api/nominaciones_pelicula/:id",

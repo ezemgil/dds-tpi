@@ -25,6 +25,16 @@ export const getClasificacionById = async (req, res, next) => {
   }
 };
 
+// Buscar una clasificación por su nombre
+export const getClasificacionByNombre = async (req, res, next) => {
+  try {
+    const clasificacion = await service.findByName(req.query.nombre);
+    res.json(clasificacion).status(200);
+  } catch (error) {
+    next(error);
+  }
+};
+
 // Crear una nueva clasificación
 export const createClasificacion = async (req, res, next) => {
   try {

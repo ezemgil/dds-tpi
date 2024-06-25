@@ -1,11 +1,13 @@
 import * as service from "../services/pelicula.service.js";
 import { NotFoundError, BadRequestError } from "../utils/errors.js";
+import { log } from "../utils/logger.js";
 
 // Obtener todas las películas
 export const getPeliculas = async (req, res, next) => {
   try {
     const peliculas = await service.findAll();
     res.json(peliculas);
+    log(req, `GET /peliculas ${peliculas.length} registros encontrados`);
   } catch (error) {
     next(error);
   }
@@ -17,9 +19,24 @@ export const getPeliculaById = async (req, res, next) => {
     const pelicula = await service.findById(req.params.id);
     if (pelicula) {
       res.json(pelicula);
+      log(req, `GET /peliculas/${req.params.id}`);
     } else {
       next(new NotFoundError("Película no encontrada"));
     }
+  } catch (error) {
+    next(error);
+  }
+};
+
+// Buscar una película por su nombre
+export const getPeliculaByNombre = async (req, res, next) => {
+  try {
+    const peliculas = await service.findByName(req.query.nombre);
+    res.json(peliculas);
+    log(
+      req,
+      `GET /peliculas?nombre=${req.query.nombre} ${peliculas.length} registros encontrados`
+    );
   } catch (error) {
     next(error);
   }

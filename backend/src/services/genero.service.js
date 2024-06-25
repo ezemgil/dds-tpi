@@ -1,8 +1,9 @@
+import { Op } from "sequelize";
 import Genero from "../models/generos.js";
 
 // Buscar todos los géneros
 export const findAll = async () => {
-  return await Genero.findAll()
+  return await Genero.findAll();
 };
 
 // Crear un nuevo género
@@ -13,6 +14,13 @@ export const create = async (genero) => {
 // Buscar un género por su id
 export const findById = async (id) => {
   return await Genero.findByPk(id);
+};
+
+// Buscar un género por su nombre
+export const findByName = async (nombre) => {
+  return await Genero.findAll({
+    where: { nombre: { [Op.like]: `%${nombre}%` } },
+  });
 };
 
 // Actualizar un género

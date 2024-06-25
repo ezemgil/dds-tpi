@@ -4,7 +4,7 @@ import { authentificateJWT } from "../middleware/auth.js";
 
 const router = express.Router();
 
-// Rutas para los premios
+router.get("/api/premios/buscar", controller.getPremioByName);
 router.get("/api/premios", controller.getPremios);
 router.get("/api/premios/:id", controller.getPremioById);
 router.post("/api/premios", authentificateJWT, controller.createPremio);

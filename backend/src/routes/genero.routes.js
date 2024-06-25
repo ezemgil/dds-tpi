@@ -4,7 +4,7 @@ import { authentificateJWT } from "../middleware/auth.js";
 
 const router = express.Router();
 
-// Rutas para los géneros
+router.get("/api/generos/buscar", controller.getGeneroByNombre);
 router.get("/api/generos", controller.getGeneros);
 router.get("/api/generos/:id", controller.getGeneroById);
 router.post("/api/generos", authentificateJWT, controller.createGenero);

@@ -1,3 +1,4 @@
+import { Op } from "sequelize";
 import NominacionPelicula from "../models/nominacionesPelicula.js";
 import Premio from "../models/premios.js";
 import Pelicula from "../models/peliculas.js";

@@ -14,6 +14,6 @@ describe("GET /", () => {
   it("should return API status", async () => {
     const res = await request(app).get("/");
     expect(res.status).toBe(200);
-    expect(res.text).toBe("Estado de la API: OK");
+    expect(res.text).toBe("API en funcionamiento");
   });
 });

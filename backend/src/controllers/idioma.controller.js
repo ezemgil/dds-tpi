@@ -25,6 +25,16 @@ export const getIdiomaById = async (req, res, next) => {
   }
 };
 
+// Buscar idioma por nombre
+export const getIdiomaByNombre = async (req, res, next) => {
+  try {
+    const idiomas = await service.findByName(req.query.nombre);
+    res.json(idiomas);
+  } catch (error) {
+    next(error);
+  }
+};
+
 // Crear idioma
 export const createIdioma = async (req, res, next) => {
   try {
