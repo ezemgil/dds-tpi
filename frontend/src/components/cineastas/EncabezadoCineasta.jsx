@@ -57,8 +57,14 @@ const EncabezadoCineasta = ({ Cineasta }) => {
                 </li>
                 <li className="list-group-item bg-body-subtle text-secondary-emphasis">
                   <b>Fecha de Nacimiento:</b>{" "}
-                  {moment(Cineasta.fechaNacimiento).format("L")}
+                  {moment(Cineasta.fecha_nacimiento).format("L")}
                 </li>
+                {Cineasta.fecha_fallecimiento && (
+                  <li className="list-group-item bg-body-subtle text-secondary-emphasis">
+                    <b>Fecha de Fallecimiento:</b>{" "}
+                    {moment(Cineasta.fecha_fallecimiento).format("L")}
+                  </li>
+                )}
                 <li className="list-group-item bg-body-subtle text-secondary-emphasis">
                   {Cineasta.pais2 === null ? (
                     <>

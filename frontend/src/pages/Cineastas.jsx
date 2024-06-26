@@ -34,6 +34,7 @@ const Cineastas = () => {
             Id={cineasta.id}
             Nombre={`${cineasta.nombre} ${cineasta.apellido}`}
             FechaNacimiento={cineasta.fecha_nacimiento}
+            FechaFallecimiento={cineasta.fecha_fallecimiento}
             Roles={cineasta.roles.map((rol) => rol.nombre)}
             // Biografia={cineasta.biografia}
             Imagen="https://via.placeholder.com/300"
