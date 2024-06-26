@@ -74,7 +74,7 @@ TipoRol.belongsToMany(Cineasta, {
 
 // Pelicula <....> Cineasta (Roles)
 Pelicula.belongsToMany(Cineasta, {
-  through: "PeliculaCineastaRol",
+  through: "PeliculaCineasta",
   foreignKey: "id_pelicula",
   timestamps: false,
   onDelete: "CASCADE",
@@ -83,33 +83,13 @@ Pelicula.belongsToMany(Cineasta, {
 });
 
 Cineasta.belongsToMany(Pelicula, {
-  through: "PeliculaCineastaRol",
+  through: "PeliculaCineasta",
   foreignKey: "id_cineasta",
   timestamps: false,
   onDelete: "CASCADE",
   onUpdate: "CASCADE",
   // as: "peliculas",
 });
-
-// Cineasta <....> TiposRol
-Cineasta.belongsToMany(TipoRol, {
-  through: "PeliculaCineastaRol",
-  foreignKey: "id_cineasta",
-  timestamps: false,
-  onDelete: "CASCADE",
-  onUpdate: "CASCADE",
-  // as: "cineastaRoles",
-});
-
-TipoRol.belongsToMany(Cineasta, {
-  through: "PeliculaCineastaRol",
-  foreignKey: "id_rol",
-  timestamps: false,
-  onDelete: "CASCADE",
-  onUpdate: "CASCADE",
-  // as: "tipoRoles",
-});
-
 //////////////////////////////////////// TABLAS PRINCIPALES ////////////////////////////////////////
 
 // Usuario <..-> RolesUsuario

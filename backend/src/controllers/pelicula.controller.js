@@ -120,3 +120,42 @@ export const deletePelicula = async (req, res, next) => {
     next(error);
   }
 };
+
+// Agregar cineastas a una película
+export const addCineastas = async (req, res, next) => {
+  try {
+    const { cineastas } = req.body;
+    const result = await service.addCineastas(req.params.id, cineastas);
+    if (result) {
+      res.status(201).send("Cineastas agregados");
+    } else {
+      next(new BadRequestError("No se pudieron agregar los cineastas"));
+    }
+  } catch (error) {
+    log(req, `Error: ${error.message}`);
+    next(error);
+  }
+};
+
+// Quitar un cineasta de una película
+export const removeCineasta = async (req, res, next) => {
+  try {
+    if (!req.params.id || !req.params.cineasta) {
+      throw new BadRequestError("Datos de la solicitud incompletos");
+    }
+
+    const result = await service.removeCineasta(
+      req.params.id,
+      req.params.cineasta
+    );
+
+    if (result) {
+      res.status(204).send("Cineasta eliminado");
+    } else {
+      next(new NotFoundError("Cineasta no encontrado"));
+    }
+  } catch (error) {
+    log(req, `Error: ${error.message}`);
+    next(error);
+  }
+};

@@ -166,3 +166,30 @@ export const remove = async (id) => {
     throw error;
   }
 };
+
+// Agregar un cineasta a una película
+export const addCineastas = async (id, cineastas) => {
+  try {
+    console.log(cineastas);
+    const movie = await Pelicula.findByPk(id);
+    if (movie) {
+      await movie.addCineasta(cineastas);
+      return true;
+    }
+  } catch (error) {
+    throw error;
+  }
+};
+
+// Quitar un cineasta de una película
+export const removeCineasta = async (id, cineasta) => {
+  try {
+    const movie = await Pelicula.findByPk(id);
+    if (movie) {
+      await movie.removeCineasta(cineasta);
+      return true;
+    }
+  } catch (error) {
+    throw error;
+  }
+};
