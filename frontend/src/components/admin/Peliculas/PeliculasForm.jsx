@@ -23,11 +23,9 @@ const PeliculasForm = ({itemPelicula, Volver, Grabar}) => {
         });
     }, []);
 
-    console.log("aeoianeoginaoieg"+ itemPelicula.calificacion);
-
     return (
-        <div className="d-flex justify-content-center p-2">
-            <form className="form mt-3 bg-color-red col-lg-7 col-md-6 col-sm-6" action="" onSubmit={handleSubmit(onSubmit)}>
+        <div className="d-flex justify-content-center p-2 col-lg-12 col-md-12 col-sm-0">
+            <form className="form col-lg-12 col-md-12" action="" onSubmit={handleSubmit(onSubmit)}>
                 <div className="container-fluid ">
                     
                     {/* Campo titulo */}
@@ -130,12 +128,12 @@ const PeliculasForm = ({itemPelicula, Volver, Grabar}) => {
 
 
                     <div className="d-flex justify-content-center">
-                        <button type="submit" className="btn btn-primary mx-2">Guardar</button>
-                        <button className='btn btn-secondary px-2 mx-2' onClick={() => Volver()}>Volver</button>
+                        <button type="submit" className="btn btn-primary mx-2 text-dark"><i class="fa-regular fa-floppy-disk me-2"></i>Guardar</button>
+                        <button className='btn btn-dark border border-secondary px-2 mx-2 ' onClick={() => Volver()}>Volver</button>
                     </div>
                 </div>
             </form>
-        </div>            
+        </div>
     )
 }
 

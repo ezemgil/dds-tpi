@@ -1,20 +1,21 @@
 import React, { useEffect, useState } from "react";
 import peliculaService from "../../../services/pelicula.service";
-import PeliculasForm from "./PeliculasForm";
+import PeliculasFormModal from "./PeliculasFormModal";
 import PeliculasLista from "./PeliculasLista";
+
 
 const Peliculas = () => {
 
     const TituloCRUD = {
         RA: "(Listado)",
-        C: "(Crear Pelicula)",
-        U: "(Editar Pelicula)",
-        D: "(Eliminar Pelicula)",
+        C: "(Crear)",
+        U: "(Editar)",
     }
 
     const [Peliculas, setPeliculas] = useState([]);
     const [AccionCRUD, setAccionCRUD] = useState("RA");
     const [itemPelicula, setItemPelicula] = useState(null);
+    const [modalShow, setModalShow] = useState(false);
 
     // Create
     // Remove
@@ -45,6 +46,7 @@ const Peliculas = () => {
     }
 
     const Editar = (itemPelicula) => {
+        setModalShow(true);
         BuscarPorId(itemPelicula, "U")
     }
     const Eliminar = () => {}
@@ -56,26 +58,30 @@ const Peliculas = () => {
 
     return (
         <div>
-            <h1>Peliculas <small>{TituloCRUD[AccionCRUD]}</small></h1>
+            <h1>Peliculas</h1>
+            <form className="d-flex">
+                <input type="text" className="input form-control form  me-3"></input>
+                <button className="btn btn-warning"> <i class="fa-solid fa-magnifying-glass"></i></button>
+            </form>
 
 
-            {AccionCRUD === "RA" && (
-                <PeliculasLista Peliculas={Peliculas}
-                    Editar={Editar}
-                    Eliminar={Eliminar}
-                />
-            )}
+            <PeliculasLista
+                Peliculas={Peliculas}
+                Editar={Editar}
+                Eliminar={Eliminar}
+            />
             
 
             {AccionCRUD === "U" && (
-                <PeliculasForm 
-                    Volver={Volver}
+                <PeliculasFormModal
+                    show={modalShow}
+                    onHide={() => setModalShow(false)}
                     itemPelicula={itemPelicula}
-                />
+                    Grabar={Grabar}
+                    Titulo={'Peliculas ' + TituloCRUD[AccionCRUD]}>
+                </PeliculasFormModal>
             )}
         </div>
-
-        
     );
 }
 
