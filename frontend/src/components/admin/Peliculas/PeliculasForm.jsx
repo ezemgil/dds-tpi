@@ -15,13 +15,15 @@ const PeliculasForm = ({itemPelicula, Volver, Grabar}) => {
     }
 
     const [clasificaciones, setClasificaciones] = React.useState([]);
-    const [clasificacionSelec, setClasificacion] = React.useState(itemPelicula.clasificacion);
 
     React.useEffect(() => {
         clasificacionService.getAll().then((response) => {
             setClasificaciones(response.data);
         });
     }, []);
+
+    // console.log('itemPelicula', itemPelicula);
+
 
     return (
         <div className="d-flex justify-content-center p-2 col-lg-12 col-md-12 col-sm-0">
@@ -31,9 +33,9 @@ const PeliculasForm = ({itemPelicula, Volver, Grabar}) => {
                     {/* Campo titulo */}
                     <div className="mb-3">
                         <label htmlFor="titulo" className="form-label">Titulo</label>
-                        <input type="text" className="form-control bg-dark text-light border-secondary" id="titulo" name="titulo" {...register('titulo', {
-                                required: { value: true, message: 'Campo requerido' }
-                            })}/>
+                        <input type="text" className="form-control bg-dark text-light border-secondary" id="titulo" name="titulo" 
+                            {...register('titulo', {required: { value: true, message: 'Campo requerido' }})}
+                        />
                     </div>
 
                     {/* Campo descripcion */}
@@ -48,14 +50,14 @@ const PeliculasForm = ({itemPelicula, Volver, Grabar}) => {
                     <div className="row ">
                         <div className="mb-3">
                             <label htmlFor="calificacion" className="col-form-label">Calificacion</label>
-                            <input type="number" id="calificacion" name="calificacion"
+                            <input type="number" id="calificacion" name="calificacion" step={0.1}
                                 {...register('calificacion', {
                                     required: { value: true, message: 'Campo requerido' },
                                     min: { value: 0, message: 'Puntuacion minima: 0' },
                                     max: { value: 10, message: 'Puntuacion maxima: 10' }
                                 })}
                                 className={'bg-dark text-light border-secondary form-control' + (errors?.calificacion ? ' is-invalid' : '')}
-                                />
+                            />
                             <div className="invalid-feedback">{errors?.calificacion?.message}</div>
                         </div>
                     </div>
@@ -67,7 +69,7 @@ const PeliculasForm = ({itemPelicula, Volver, Grabar}) => {
                             <input type="number" id="duracion" name="duracion"
                                 {...register('duracion', {
                                     required: { value: true, message: 'Campo requerido' },
-                                    min: { value: 0, message: 'Duracion minima: 0' }
+                                    min: { value: 0, message: 'Duracion minima: 0' } 
                                 })}
                                 className={'bg-dark text-light border-secondary form-control' + (errors?.duracion ? ' is-invalid' : '')}
                                 />
@@ -92,11 +94,11 @@ const PeliculasForm = ({itemPelicula, Volver, Grabar}) => {
                         <label htmlFor="clasificacion" className="col-form-label">Clasificacion</label>
                         <div className="mb-3 d-flex">
                             <span className="badge d-flex p-2 me-3 align-items-center text-bg-warning rounded-pill">
-                                <span className="px-1">{clasificacionSelec.nombre}</span>
+                                <span className="px-1">{itemPelicula.clasificacion.nombre}</span>
                             </span>
                             <select className="form-select bg-dark text-light border-secondary" id="clasificacion" name="clasificacion">
                                 {
-                                    clasificaciones.map((clas) => (
+                                    clasificaciones?.map((clas) => (
                                         <option value={clas.id}>
                                             <span className="py-4">{clas.nombre} / {clas.descripcion}</span>
                                         </option>
@@ -115,12 +117,12 @@ const PeliculasForm = ({itemPelicula, Volver, Grabar}) => {
                                 {itemPelicula.generos.map((genero) => (
                                     <span className="badge d-flex p-2 align-items-center text-bg-warning rounded-pill">
                                         <span className="px-1">{genero.nombre}</span>
-                                        <i class="fs-6 fa-solid fa-circle-xmark text-tertiary"></i>
+                                        <i className="fs-6 fa-solid fa-circle-xmark text-tertiary"></i>
                                     </span>
                                 ))}
                                 <span className="badge d-flex p-2 align-items-center text-bg-dark border border-warning rounded-pill">
-                                    <i class="fa-solid fa-plus me-2"></i>
-                                    <i class="fa-solid fa-chevron-down"></i>
+                                    <i className="fa-solid fa-plus me-2"></i>
+                                    <i className="fa-solid fa-chevron-down"></i>
                                 </span>
                             </div>
                         </div>
@@ -128,7 +130,7 @@ const PeliculasForm = ({itemPelicula, Volver, Grabar}) => {
 
 
                     <div className="d-flex justify-content-center">
-                        <button type="submit" className="btn btn-primary mx-2 text-dark"><i class="fa-regular fa-floppy-disk me-2"></i>Guardar</button>
+                        <button type="submit" className="btn btn-primary mx-2 text-dark"><i className="fa-regular fa-floppy-disk me-2"></i>Guardar</button>
                         <button className='btn btn-dark border border-secondary px-2 mx-2 ' onClick={() => Volver()}>Volver</button>
                     </div>
                 </div>

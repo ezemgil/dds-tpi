@@ -3,7 +3,6 @@ import peliculaService from "../../../services/pelicula.service";
 import PeliculasFormModal from "./PeliculasFormModal";
 import PeliculasLista from "./PeliculasLista";
 
-
 const Peliculas = () => {
 
     const TituloCRUD = {
@@ -14,7 +13,7 @@ const Peliculas = () => {
 
     const [Peliculas, setPeliculas] = useState([]);
     const [AccionCRUD, setAccionCRUD] = useState("RA");
-    const [itemPelicula, setItemPelicula] = useState(null);
+    const [itemPelicula, setItemPelicula] = useState({});
     const [modalShow, setModalShow] = useState(false);
 
     // Create
@@ -25,15 +24,17 @@ const Peliculas = () => {
 
     const BuscarPorId = async (idPelicula, accion) => {
         const resPelicula = await peliculaService.getById(idPelicula);
-        
         setItemPelicula(resPelicula.data);
         setAccionCRUD(accion);
     }
 
+    // const BuscarPorNombre = async (nombrePelicula) => {
+    //     const resPelicula = await peliculaService.getByNombre(nombrePelicula);
+    //     setPeliculas(resPelicula)
+    // }
+
     useEffect(() => {
-        peliculaService.getAll().then((response) => {
-            setPeliculas(response.data);
-        });
+        peliculaService.getAll().then((response) => setPeliculas(response.data))
     }, []);
 
     const Grabar = (itemPelicula) => {
@@ -45,13 +46,32 @@ const Peliculas = () => {
         setAccionCRUD("RA");
     }
 
-    const Editar = (itemPelicula) => {
+    const Agregar = () => {
         setModalShow(true);
-        BuscarPorId(itemPelicula, "U")
+        setItemPelicula({
+            titulo: "",
+            descripcion: "",
+            calificacion: 0,
+            duracion: 0,
+            fecha_estreno: new Date(),
+            clasificacion: {
+                nombre: "",
+                descripcion: ""
+            },
+            generos: []
+        })
+        setAccionCRUD("C");
     }
+    
+    const Editar = (idPelicula) => {
+        BuscarPorId(idPelicula, "U")
+        setModalShow(true);
+    }
+
     const Eliminar = () => {}
 
     const Volver = () => {
+        setModalShow(false);
         setAccionCRUD("RA");
     }
 
@@ -59,10 +79,9 @@ const Peliculas = () => {
     return (
         <div>
             <h1>Peliculas</h1>
-            <form className="d-flex">
-                <input type="text" className="input form-control form  me-3"></input>
-                <button className="btn btn-warning"> <i class="fa-solid fa-magnifying-glass"></i></button>
-            </form>
+            <button className="badge d-flex p-2 align-items-center text-bg-dark border border-warning rounded-pill" onClick={() => {Agregar()}}>
+                <i className="fa-solid fa-plus me-2"></i> Agregar pelicula
+            </button>
 
 
             <PeliculasLista
@@ -70,9 +89,8 @@ const Peliculas = () => {
                 Editar={Editar}
                 Eliminar={Eliminar}
             />
-            
 
-            {AccionCRUD === "U" && (
+            {AccionCRUD !== "RA" && (
                 <PeliculasFormModal
                     show={modalShow}
                     onHide={() => setModalShow(false)}
@@ -81,6 +99,17 @@ const Peliculas = () => {
                     Titulo={'Peliculas ' + TituloCRUD[AccionCRUD]}>
                 </PeliculasFormModal>
             )}
+
+            {/* {AccionCRUD === "C" && (
+                <PeliculasFormModal
+                    show={modalShow}
+                    onHide={() => setModalShow(false)}
+                    itemPelicula={itemPelicula}
+                    Grabar={Grabar}
+                    Titulo={'Peliculas ' + TituloCRUD[AccionCRUD]}>
+                </PeliculasFormModal>
+            )} */}
+
         </div>
     );
 }
