@@ -75,9 +75,10 @@ export const getCineastaById = async (req, res, next) => {
 // Crear un nuevo cineasta
 export const createCineasta = async (req, res, next) => {
   try {
-    const cineasta = await service.create(req.body);
-    log(req, `POST /cineastas ${cineasta.id}`);
-    res.status(201).json(cineasta);
+    const { roles, ...cineasta } = req.body;
+    const newCineasta = await service.create(cineasta, roles);
+    res.status(201).json(newCineasta);
+    log(req, `POST /cineastas`);
   } catch (error) {
     log(req, `Error en createCineasta: ${error.message}`);
     next(error);
@@ -87,9 +88,14 @@ export const createCineasta = async (req, res, next) => {
 // Actualizar un cineasta
 export const updateCineasta = async (req, res, next) => {
   try {
-    const cineasta = await service.update(req.params.id, req.body);
-    if (cineasta) {
-      res.json(cineasta);
+    const { roles, ...cineasta } = req.body;
+    const updatedCineasta = await service.update(
+      req.params.id,
+      cineasta,
+      roles
+    );
+    if (updatedCineasta) {
+      res.json(updatedCineasta);
       log(req, `PUT /cineastas/${req.params.id}`);
     } else {
       next(new NotFoundError("Cineasta no encontrado"));

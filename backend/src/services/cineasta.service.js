@@ -135,25 +135,45 @@ export const findRandom = async (amount) => {
 };
 
 // POST
-export const create = async (cineasta) => {
-  return await Cineasta.create(cineasta);
+export const create = async (cineasta, roles) => {
+  try {
+    const result = await Cineasta.create(cineasta);
+    if (result) {
+      if (roles && roles.length > 0) {
+        await result.setRoles(roles);
+      }
+      return result;
+    }
+  } catch (error) {
+    return null;
+  }
 };
 
 // PUT
-export const update = async (id, cineasta) => {
-  const result = await Cineasta.findByPk(id);
-  if (result) {
-    return await result.update(cineasta);
+export const update = async (id, cineasta, roles) => {
+  try {
+    const result = await Pelicula.update(cineasta, { where: { id } });
+    if (result) {
+      const filmmaker = await Cineasta.findByPk(id);
+      if (roles && roles.length > 0) {
+        await filmmaker.setRoles(roles);
+      }
+    }
+    return result;
+  } catch (error) {
+    return null;
   }
-  return null;
 };
 
 // DELETE
 export const remove = async (id) => {
-  const result = await Cineasta.findByPk(id);
-  if (result) {
-    await result.destroy();
-    return true;
+  try {
+    return await Cineasta.destroy({
+      where: {
+        id,
+      },
+    });
+  } catch (error) {
+    return null;
   }
-  return false;
 };

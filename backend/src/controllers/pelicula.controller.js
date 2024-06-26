@@ -75,9 +75,9 @@ export const getPeliculaByNombre = async (req, res, next) => {
 // Crear una nueva película
 export const createPelicula = async (req, res, next) => {
   try {
-    const { pelicula, generos, idiomas } = req.body;
-    console.log(pelicula, generos, idiomas);
+    const { generos, idiomas, ...pelicula } = req.body;
     const newPelicula = await service.create(pelicula, generos, idiomas);
+    log(req, `POST /peliculas`);
     res.status(201).json(newPelicula);
   } catch (error) {
     log(req, `Error: ${error.message}`);
@@ -88,8 +88,7 @@ export const createPelicula = async (req, res, next) => {
 // Actualizar una película
 export const updatePelicula = async (req, res, next) => {
   try {
-    const { pelicula, generos, idiomas } = req.body;
-    console.log(`pelicula ${pelicula}, genero: ${generos}, lang: ${idiomas}`);
+    const { generos, idiomas, ...pelicula } = req.body;
     const updatedPelicula = await service.update(
       req.params.id,
       pelicula,
