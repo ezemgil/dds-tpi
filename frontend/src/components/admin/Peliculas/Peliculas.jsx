@@ -99,17 +99,6 @@ const Peliculas = () => {
                     Titulo={'Peliculas ' + TituloCRUD[AccionCRUD]}>
                 </PeliculasFormModal>
             )}
-
-            {/* {AccionCRUD === "C" && (
-                <PeliculasFormModal
-                    show={modalShow}
-                    onHide={() => setModalShow(false)}
-                    itemPelicula={itemPelicula}
-                    Grabar={Grabar}
-                    Titulo={'Peliculas ' + TituloCRUD[AccionCRUD]}>
-                </PeliculasFormModal>
-            )} */}
-
         </div>
     );
 }
