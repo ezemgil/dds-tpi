@@ -4,19 +4,21 @@ import moment from "moment";
 const NominacionCard = ({ Nominacion }) => {
   return (
     <div className="d-flex align-items-center justify-content-start gap-3">
+      {console.log(Nominacion)}
       <div className="d-flex justify-content-start align-items-center gap-3">
-        <img
-          src={Nominacion.imagen}
-          alt={Nominacion.nombre}
-          className="img-fluid"
-        />
+        <i
+          class={
+            "fa-solid fa-award fs-1 " +
+            (Nominacion.fue_ganador === 0 ? "text-secondary" : "text-warning")
+          }
+        ></i>
         <div>
           <div className="d-flex gap-2 align-items-center">
             <span className="fs-6">
               <b>Año: </b>
               {moment(Nominacion.fechaNominacion).format("YYYY")}
             </span>
-            {Nominacion.ganador ? (
+            {Nominacion.fue_ganador ? (
               <span className="badge bg-warning-subtle border border-warning-subtle text-warning-emphasis rounded-pill    ">
                 Ganador
               </span>
@@ -26,8 +28,7 @@ const NominacionCard = ({ Nominacion }) => {
               </span>
             )}
           </div>
-          <h4 className="fs-4 card-title">{Nominacion.nombre}</h4>
-          <span className="card-text">{Nominacion.academia}</span>
+          <h4 className="fs-4 card-title">{Nominacion.premio.nombre}</h4>
         </div>
       </div>
     </div>

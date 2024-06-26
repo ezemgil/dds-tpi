@@ -18,6 +18,7 @@ const ParticipacionesCineasta = ({ Peliculas }) => {
           {Peliculas.map((pelicula) => (
             <PeliculaCard
               key={pelicula.id}
+              Id={pelicula.id}
               Titulo={pelicula.titulo}
               Calificacion={pelicula.calificacion}
               Generos={pelicula.generos}

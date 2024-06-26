@@ -13,13 +13,6 @@ const PeliculaCard = ({
 }) => {
   let navigate = useNavigate();
   const handleClick = () => {
-    // console.log("Click en la película", Id);
-    // Aquí puedes redirigir al componente de detalle de la película
-    // Pasando los datos correspondientes como props o utilizando una ruta dinámica
-    // Por ejemplo:
-    // history.push(`/detalle-pelicula/${Id}`);
-    // O
-    // <Lin to={`/pelicula/${Id}`}>Ver detalle</Link>
     navigate(`/pelicula/${Id}`);
   };
 

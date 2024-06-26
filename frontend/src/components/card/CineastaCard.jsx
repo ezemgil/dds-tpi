@@ -31,10 +31,10 @@ const CineastaCard = ({ Id, Nombre, FechaNacimiento, Roles, Imagen }) => {
               Roles?.length > 0 &&
               Roles.map((rol) => (
                 <span
-                  key={rol}
+                  key={rol.id}
                   className="badge bg-danger-subtle border border-danger-subtle text-danger-emphasis rounded-pill"
                 >
-                  {rol}
+                  {rol.nombre}
                 </span>
               ))}
           </div>

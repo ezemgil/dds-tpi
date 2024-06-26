@@ -5,7 +5,6 @@ const EncabezadoCineasta = ({ Cineasta }) => {
   return (
     <>
       <div className="container my-4">
-        {console.log(Cineasta)}
         <div className="row">
           <div className="col-lg-5 mb-4 mb-lg-0 fit-content text-center">
             <img

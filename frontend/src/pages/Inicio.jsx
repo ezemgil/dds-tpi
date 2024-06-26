@@ -15,11 +15,13 @@ const Inicio = () => {
   const [PeliculasTendencia, setPeliculasTendencia] = useState([]);
   const [CineastasPopulares, setCineastasPopulares] = useState([]);
 
+  const cantidad = 8;
+
   useEffect(() => {
-    peliculaService.getAll().then((response) => {
+    peliculaService.getRandom(cantidad).then((response) => {
       setPeliculasTendencia(response.data);
     });
-    cineastaService.getAll().then((response) => {
+    cineastaService.getRandom(cantidad).then((response) => {
       setCineastasPopulares(response.data);
     });
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -52,7 +54,7 @@ const Inicio = () => {
         <div className="row row-cols-1 row-cols-md-2 row-cols-lg-4">
           {PeliculasTendencia.map((pelicula) => (
             <PeliculaCard
-              // key={pelicula.id}
+              key={pelicula.id}
               Id={pelicula.id}
               Titulo={pelicula.titulo}
               FechaEstreno={pelicula.fecha_estreno}

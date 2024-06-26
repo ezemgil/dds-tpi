@@ -15,7 +15,7 @@ const EncabezadoPelicula = ({ Pelicula }) => {
       <div className="row">
         <div className="col-lg-5 mb-4 mb-lg-0">
           <img
-            src="https://via.placeholder.com/500"
+            src={Pelicula.imagen}
             alt="Póster de la película"
             className="img-fluid rounded shadow"
           />

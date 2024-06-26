@@ -49,12 +49,39 @@ async function remove(id) {
   }
 }
 
+async function getRandom(cantidad) {
+  try {
+    return await httpService.get(
+      `${CINEASTA_API_URL}/random?cantidad=${cantidad}`
+    );
+  } catch (error) {
+    console.error(`Error al buscar cineasta con nombre ${nombre}:`, error);
+    throw new Error(`Error al buscar cineasta con nombre ${nombre}.`);
+  }
+}
+
+async function getParticipaciones(id) {
+  try {
+    return await httpService.get(`${CINEASTA_API_URL}/${id}/peliculas`);
+  } catch (error) {
+    console.error(
+      `Error al buscar participaciones del cineasta con ID ${id}:`,
+      error
+    );
+    throw new Error(
+      `Error al buscar participaciones del cineasta con ID ${id}.`
+    );
+  }
+}
+
 const cineastaService = {
   getAll,
   getById,
   create,
   update,
   remove,
+  getRandom,
+  getParticipaciones,
 };
 
 export default cineastaService;

@@ -5,12 +5,6 @@ const PELICULA_API_URL = `${SERVER_CONFIG.SERVER_API_URL}/peliculas`;
 
 async function getAll() {
   try {
-    // const response = await Promise.race([
-    //   httpService.get(PELICULA_API_URL),
-    //   new Promise((_, reject) =>
-    //     setTimeout(() => reject(new Error("Request timeout")), 10000)
-    //   ),
-    // ]);
     const response = await httpService.get(PELICULA_API_URL);
     return response;
   } catch (error) {
@@ -61,8 +55,8 @@ async function getRandom(cantidad) {
       `${PELICULA_API_URL}/random?cantidad=${cantidad}`
     );
   } catch (error) {
-    console.error(`Error al buscar película con nombre ${name}:`, error);
-    throw new Error(`Error al buscar película con nombre ${name}.`);
+    console.error(`Error al buscar película con nombre ${nombre}:`, error);
+    throw new Error(`Error al buscar película con nombre ${nombre}.`);
   }
 }
 
@@ -75,7 +69,14 @@ async function getElenco(id) {
   }
 }
 
-
+async function getByName(nombre) {
+  try {
+    return await httpService.get(`${PELICULA_API_URL}/buscar?nombre=${nombre}`);
+  } catch (error) {
+    console.error(`Error al buscar película con nombre ${nombre}:`, error);
+    throw new Error(`Error al buscar película con nombre ${nombre}.`);
+  }
+}
 
 const peliculaService = {
   getAll,
@@ -84,14 +85,8 @@ const peliculaService = {
   create,
   update,
   remove,
-  //
   getRandom,
   getElenco,
-  //
 };
-
-
-
-
 
 export default peliculaService;

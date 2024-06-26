@@ -49,7 +49,6 @@ async function remove(id) {
   }
 }
 
-
 const generoService = {
   getAll,
   getById,
@@ -58,5 +57,4 @@ const generoService = {
   remove,
 };
 
-
-export default  generoService;
+export default generoService;
