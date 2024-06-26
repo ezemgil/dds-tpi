@@ -79,6 +79,24 @@ const EncabezadoPelicula = ({ Pelicula }) => {
                 ))}
             </div>
           </div>
+          <div>
+            <div className=" d-flex align-items-center mb-2 fs-4 gap-2">
+              <i className="fa fa-language" aria-hidden="true"></i>
+              <span>Idiomas disponibles</span>
+            </div>
+            <div className="d-flex flex-wrap gap-2 fs-5">
+              {Pelicula?.idiomas?.length > 0 &&
+                Pelicula.idiomas.map((idioma, i) => (
+                  <span
+                    key={i}
+                    className="badge bg-danger-subtle border border-danger-subtle text-danger-emphasis rounded-pill"
+                  >
+                    {idioma.nombre}
+                  </span>
+                ))}
+
+            </div>
+          </div>
         </div>
       </div>
     </div>

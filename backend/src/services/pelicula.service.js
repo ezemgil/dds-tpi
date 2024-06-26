@@ -4,6 +4,7 @@ import Clasificacion from "../models/clasificaciones.js";
 import Genero from "../models/generos.js";
 import Cineasta from "../models/cineastas.js";
 import TipoRol from "../models/tiposRol.js";
+import Idioma from "../models/idiomas.js";
 
 // Buscar todas las películas
 export const findAll = async (page = undefined, size = undefined) => {
@@ -16,6 +17,13 @@ export const findAll = async (page = undefined, size = undefined) => {
       {
         model: Genero,
         as: "generos",
+        through: {
+          attributes: [],
+        },
+      },
+      {
+        model: Idioma,
+        as: "idiomas",
         through: {
           attributes: [],
         },
@@ -90,6 +98,13 @@ export const findById = async (id) => {
           attributes: [],
         },
       },
+      {
+        model: Idioma,
+        as: "idiomas",
+        through: {
+          attributes: [],
+        },
+      },
     ],
     attributes: { exclude: ["id_clasificacion"] },
   });
@@ -107,6 +122,13 @@ export const findByName = async (nombre) => {
       {
         model: Genero,
         as: "generos",
+        through: {
+          attributes: [],
+        },
+      },
+      {
+        model: Idioma,
+        as: "idiomas",
         through: {
           attributes: [],
         },

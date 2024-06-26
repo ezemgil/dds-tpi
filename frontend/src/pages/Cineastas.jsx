@@ -34,6 +34,7 @@ const Cineastas = () => {
             Id={cineasta.id}
             Nombre={`${cineasta.nombre} ${cineasta.apellido}`}
             FechaNacimiento={cineasta.fecha_nacimiento}
+            FechaFallecimiento={cineasta.fecha_fallecimiento}
             Roles={cineasta.roles}
             Biografia={cineasta.biografia}
             Imagen={cineasta.imagen}

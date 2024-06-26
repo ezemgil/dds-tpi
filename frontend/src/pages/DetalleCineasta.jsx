@@ -6,6 +6,7 @@ import cineastaService from "../services/cineasta.service";
 
 import EncabezadoCineasta from "../components/cineastas/EncabezadoCineasta";
 import ParticipacionesCineasta from "../components/cineastas/ParticipacionesCineasta";
+import Nominaciones from "../components/Nominaciones";
 
 const DetalleCineasta = () => {
   const { id } = useParams();

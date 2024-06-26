@@ -52,6 +52,7 @@ export const getCineastas = async (req, res, next) => {
     const cineastas = await service.findAll(page, size);
     res.json(cineastas);
     log(req, `GET /cineastas ${cineastas.length} registros encontrados`);
+
   } catch (error) {
     log(req, `Error en getCineastas: ${error.message}`);
     next(error);

@@ -366,7 +366,7 @@ INSERT INTO RolesCineasta (id_cineasta, id_rol) VALUES (47, 4), (47, 1), (47, 3)
 INSERT INTO PeliculaCineasta (id_pelicula, id_cineasta) VALUES (10, 47);
 
 
-INSERT INTO NominacionesPelicula (id_premio, id_pelicula, fecha_nominacion, fue_ganador) VALUES (1, 1, '1995-03-27', 0), (2, 1, '1995-03-27', 0), (3, 1, '1995-03-27', 0), (4, 1, '1995-03-27', 0), (5, 1, '1995-03-27', 0), (6, 1, '1995-03-27', 0), (7, 1, '1995-03-27', 0), (8, 1, '1995-03-27', 0), (9, 1, '1995-03-27', 0), (10, 1, '1995-03-27', 0);
+INSERT INTO NominacionesPelicula (id_premio, id_pelicula, fecha_nominacion, fue_ganador) VALUES (1, 2, '2002-10-3', 1), (2, 10, '1999-12-31', 1), (3, 9, '1998-04-05', 0), (4, 2, '1995-03-27', 0), (5, 1, '2001-05-15', 0), (6, 10, '1980-10-09', 0), (7, 4, '2007-06-14', 0), (8, 4, '1988-12-23', 0), (9, 4, '1993-11-08', 1), (10, 5, '1985-04-19', 0);
 
 INSERT INTO RolesUsuario (rol) VALUES ('Administrador'), ('Usuario');
 

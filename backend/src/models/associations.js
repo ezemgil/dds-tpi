@@ -50,7 +50,7 @@ Idioma.belongsToMany(Pelicula, {
   timestamps: false,
   onDelete: "CASCADE",
   onUpdate: "CASCADE",
-  // as: "peliculas",
+  as: "peliculas",
 });
 
 // Cineasta <....> TiposRol

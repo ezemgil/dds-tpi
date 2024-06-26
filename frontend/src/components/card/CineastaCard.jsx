@@ -2,7 +2,7 @@ import React from "react";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
 
-const CineastaCard = ({ Id, Nombre, FechaNacimiento, Roles, Imagen }) => {
+const CineastaCard = ({ Id, Nombre, FechaNacimiento, FechaFallecimiento, Roles, Imagen }) => {
   let navigate = useNavigate();
   const handleClick = () => {
     navigate(`/cineasta/${Id}`);
@@ -20,7 +20,13 @@ const CineastaCard = ({ Id, Nombre, FechaNacimiento, Roles, Imagen }) => {
         <div className="card-body">
           <div className="d-flex justify-content-between align-items-center mb-2">
             <h5 className="card-title mb-0">{Nombre}</h5>
-            {FechaNacimiento && (
+            {FechaFallecimiento && (
+              <span className="text-warning">
+                {FechaFallecimiento
+                  ? `${moment(FechaFallecimiento).diff(FechaNacimiento, "years")} años (fallecido)`:""}
+              </span>
+            )}
+            {FechaNacimiento && !FechaFallecimiento && (
               <span className="text-warning">
                 {moment().diff(FechaNacimiento, "years")} años
               </span>
