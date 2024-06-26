@@ -1,5 +1,5 @@
-import httpService from "./http.service";
 import SERVER_CONFIG from "../config/server.config";
+import httpService from "./http.service";
 
 const PELICULA_API_URL = `${SERVER_CONFIG.SERVER_API_URL}/peliculas`;
 
@@ -55,12 +55,43 @@ async function remove(id) {
   }
 }
 
+async function getRandom(cantidad) {
+  try {
+    return await httpService.get(
+      `${PELICULA_API_URL}/random?cantidad=${cantidad}`
+    );
+  } catch (error) {
+    console.error(`Error al buscar película con nombre ${name}:`, error);
+    throw new Error(`Error al buscar película con nombre ${name}.`);
+  }
+}
+
+async function getElenco(id) {
+  try {
+    return await httpService.get(`${PELICULA_API_URL}/${id}/elenco`);
+  } catch (error) {
+    console.error(`Error al buscar elenco de la película con ID ${id}:`, error);
+    throw new Error(`Error al buscar elenco de la película con ID ${id}.`);
+  }
+}
+
+
+
 const peliculaService = {
   getAll,
   getById,
+  getByName,
   create,
   update,
   remove,
+  //
+  getRandom,
+  getElenco,
+  //
 };
+
+
+
+
 
 export default peliculaService;
