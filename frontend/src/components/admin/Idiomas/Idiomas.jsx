@@ -6,15 +6,28 @@ import IdiomasLista from "./IdiomasLista";
 
 const Idiomas = () => {
 
+    const TituloCRUD = {
+        C: "(Create)",
+        R: "(Read)",
+        U: "(Update)",
+        D: "(Delete)",
+    };
+    const [AccionCRUD, setAccionCRUD] = useState("R");
+
     const [Idiomas, setIdiomas] = useState([]);
-    useEffect(() => {
+    useEffect (() => {
         idiomaService.getAll().then((response) => {
             setIdiomas(response.data);
         });
     }, []);
+    
 
     function Editar() {
         console.log("Editar");
+        useEffect(() => {
+            setAccionCRUD("U")
+        })
+        console.log(AccionCRUD)
     };
 
     function Eliminar() {

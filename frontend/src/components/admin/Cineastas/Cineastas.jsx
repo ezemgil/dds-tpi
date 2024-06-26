@@ -7,8 +7,16 @@ import paisService from "../../../services/pais.service";
 
 const Cineastas = () => {
 
+    const TituloCRUD = {
+        C: "Create",
+        R: "Read",
+        U: "Update",
+        D: "Delete",
+    };
+    const [AccionCRUD, setAccionCRUD] = useState("R");
+
     const [Paises, setPaises] = useState(null);
-    // cargar al montar el componente, solo la primera vez por la dependencia
+    // cargar al montar el componente, solo la primera vez por la dependencia entre paises y cineastas
     useEffect(() => {
         async function cargarPaises() {
             let data = await paisService.getAll();
@@ -42,8 +50,13 @@ const Cineastas = () => {
     }
 
     function Eliminar() {
-        console.log("Eliminar");
-    }
+        window.alert("Esta seguro que desea eliminar el cineasta?");
+        async () => {
+            await cineastaService.remove(Cineasta.id);
+            cargarPaises()
+            };
+        }
+    
 
     return (
         <div className="container-fluid">
