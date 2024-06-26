@@ -2,8 +2,11 @@ import { Op } from "sequelize";
 import TipoRol from "../models/tiposRol.js";
 
 // Buscar todos los tipos de rol
-export const findAll = async () => {
-  return await TipoRol.findAll();
+export const findAll = async (page = undefined, size = undefined) => {
+  return await TipoRol.findAll({
+    offset: page && size ? page * size : undefined,
+    limit: size ? size : undefined,
+  });
 };
 
 // Crear un nuevo tipo de rol

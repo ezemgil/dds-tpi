@@ -2,8 +2,11 @@ import { Op } from "sequelize";
 import Premio from "../models/premios.js";
 
 // Buscar todos los premios
-export const findAll = async () => {
-  return await Premio.findAll();
+export const findAll = async (page = undefined, size = undefined) => {
+  return await Premio.findAll({
+    offset: page && size ? page * size : undefined,
+    limit: size ? size : undefined,
+  });
 };
 
 // Crear un nuevo premio

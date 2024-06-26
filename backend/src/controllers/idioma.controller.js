@@ -5,7 +5,9 @@ import { log } from "../utils/logger.js";
 // Buscar todos los idiomas
 export const getIdiomas = async (req, res, next) => {
   try {
-    const idiomas = await service.findAll();
+    const page = req.query.page;
+    const size = req.query.size;
+    const idiomas = await service.findAll(page, size);
     res.json(idiomas);
     log(req, `GET /idiomas ${idiomas.length} registros encontrados`);
   } catch (error) {

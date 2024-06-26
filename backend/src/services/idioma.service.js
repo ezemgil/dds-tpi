@@ -2,8 +2,11 @@ import { Op } from "sequelize";
 import Idioma from "../models/idiomas.js";
 
 // Buscar todos los idiomas
-export const findAll = async () => {
-  return await Idioma.findAll();
+export const findAll = async (page = undefined, size = undefined) => {
+  return await Idioma.findAll({
+    offset: page && size ? page * size : undefined,
+    limit: size ? size : undefined,
+  });
 };
 
 // Crear un nuevo idioma

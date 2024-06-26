@@ -5,7 +5,9 @@ import { log } from "../utils/logger.js";
 // Buscar todos los géneros
 export const getGeneros = async (req, res, next) => {
   try {
-    const generos = await service.findAll();
+    const page = req.query.page;
+    const size = req.query.size;
+    const generos = await service.findAll(page, size);
     res.json(generos);
     log(req, `GET /generos ${generos.length} registros encontrados`);
   } catch (error) {

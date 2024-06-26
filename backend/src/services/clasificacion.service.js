@@ -2,8 +2,11 @@ import { Op } from "sequelize";
 import Clasificacion from "../models/clasificaciones.js";
 
 // Buscar todas las clasificaciones
-export const findAll = async () => {
-  return await Clasificacion.findAll();
+export const findAll = async (page = undefined, size = undefined) => {
+  return await Clasificacion.findAll({
+    offset: page && size ? page * size : undefined,
+    limit: size ? size : undefined,
+  });
 };
 
 // Crear una nueva clasificación

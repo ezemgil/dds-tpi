@@ -2,8 +2,11 @@ import { Op } from "sequelize";
 import Pais from "../models/paises.js";
 
 // Buscar todos los países
-export const findAll = async () => {
-  return await Pais.findAll();
+export const findAll = async (page = undefined, size = undefined) => {
+  return await Pais.findAll({
+    offset: page && size ? page * size : undefined,
+    limit: size ? size : undefined,
+  });
 };
 
 // Crear un nuevo país

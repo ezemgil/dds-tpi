@@ -6,7 +6,7 @@ import Cineasta from "../models/cineastas.js";
 import TipoRol from "../models/tiposRol.js";
 
 // Buscar todas las películas
-export const findAll = async () => {
+export const findAll = async (page = undefined, size = undefined) => {
   return await Pelicula.findAll({
     include: [
       {
@@ -22,6 +22,8 @@ export const findAll = async () => {
       },
     ],
     attributes: { exclude: ["id_clasificacion"] },
+    offset: page && size ? page * size : undefined,
+    limit: size ? size : undefined,
   });
 };
 

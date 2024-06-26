@@ -2,8 +2,11 @@ import { Op } from "sequelize";
 import Genero from "../models/generos.js";
 
 // Buscar todos los géneros
-export const findAll = async () => {
-  return await Genero.findAll();
+export const findAll = async (page = undefined, size = undefined) => {
+  return await Genero.findAll({
+    offset: page && size ? page * size : undefined,
+    limit: size ? size : undefined,
+  });
 };
 
 // Crear un nuevo género

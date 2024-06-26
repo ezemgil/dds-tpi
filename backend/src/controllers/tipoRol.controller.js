@@ -5,7 +5,9 @@ import { log } from "../utils/logger.js";
 // Buscar todos los tipos de rol
 export const getTiposRol = async (req, res, next) => {
   try {
-    const tiposRol = await service.findAll();
+    const page = req.query.page;
+    const size = req.query.size;
+    const tiposRol = await service.findAll(page, size);
     res.json(tiposRol);
     log(req, `GET /tipos-rol ${tiposRol.length} registros encontrados`);
   } catch (error) {

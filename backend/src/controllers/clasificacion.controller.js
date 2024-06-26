@@ -5,7 +5,9 @@ import { log } from "../utils/logger.js";
 // Buscar todas las clasificaciones
 export const getClasificaciones = async (req, res, next) => {
   try {
-    const clasificaciones = await service.findAll();
+    const page = req.query.page;
+    const size = req.query.size;
+    const clasificaciones = await service.findAll(page, size);
     res.json(clasificaciones).status(200);
     log(
       req,

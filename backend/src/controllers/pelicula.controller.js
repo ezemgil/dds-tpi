@@ -5,7 +5,9 @@ import { log } from "../utils/logger.js";
 // Obtener todas las películas
 export const getPeliculas = async (req, res, next) => {
   try {
-    const peliculas = await service.findAll();
+    const page = req.query.page;
+    const size = req.query.size;
+    const peliculas = await service.findAll(page, size);
     res.json(peliculas);
     log(req, `GET /peliculas ${peliculas.length} registros encontrados`);
   } catch (error) {

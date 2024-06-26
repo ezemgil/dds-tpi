@@ -1,8 +1,11 @@
 import RolUsuario from "../models/rolesUsuario.js";
 
 // Buscar todos los roles
-export const findAll = async () => {
-  return await RolUsuario.findAll();
+export const findAll = async (page = undefined, size = undefined) => {
+  return await RolUsuario.findAll({
+    offset: page && size ? page * size : undefined,
+    limit: size ? size : undefined,
+  });
 };
 
 // Buscar rol por nombre

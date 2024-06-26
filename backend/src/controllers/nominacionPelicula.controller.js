@@ -5,7 +5,9 @@ import { log } from "../utils/logger.js";
 // Buscar todas las nominaciones de peliculas
 export const getNominacionesPelicula = async (req, res, next) => {
   try {
-    const nominaciones = await service.findAll();
+    const page = req.query.page;
+    const size = req.query.size;
+    const nominaciones = await service.findAll(page, size);
     res.json(nominaciones);
     log(
       req,

@@ -5,7 +5,9 @@ import { log } from "../utils/logger.js";
 // Buscar todos los países
 export const getPaises = async (req, res, next) => {
   try {
-    const paises = await service.findAll();
+    const page = req.query.page;
+    const size = req.query.size;
+    const paises = await service.findAll(page, size);
     res.json(paises);
     log(req, `GET /paises ${paises.length} registros encontrados`);
   } catch (error) {

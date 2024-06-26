@@ -5,7 +5,7 @@ import Paises from "../models/paises.js";
 import Pelicula from "../models/peliculas.js";
 
 // GET ALL
-export const findAll = async () => {
+export const findAll = async (page = undefined, size = undefined) => {
   return await Cineasta.findAll({
     include: [
       {
@@ -27,6 +27,8 @@ export const findAll = async () => {
       },
     ],
     attributes: { exclude: ["nacionalidad", "nacionalidad2"] },
+    offset: page && size ? page * size : undefined,
+    limit: size ? size : undefined,
   });
 };
 

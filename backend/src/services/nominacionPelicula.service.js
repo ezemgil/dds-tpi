@@ -4,7 +4,7 @@ import Premio from "../models/premios.js";
 import Pelicula from "../models/peliculas.js";
 
 // Buscar todas las nominaciones de peliculas
-export const findAll = async () => {
+export const findAll = async (page = undefined, size = undefined) => {
   return await NominacionPelicula.findAll({
     include: [
       {
@@ -19,6 +19,8 @@ export const findAll = async () => {
     attributes: {
       exclude: ["id_premio", "id_pelicula"],
     },
+    offset: page && size ? page * size : undefined,
+    limit: size ? size : undefined,
   });
 };
 

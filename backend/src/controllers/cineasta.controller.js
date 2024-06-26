@@ -47,7 +47,9 @@ export const getPeliculasByCineasta = async (req, res, next) => {
 // Buscar todos los cineastas
 export const getCineastas = async (req, res, next) => {
   try {
-    const cineastas = await service.findAll();
+    const page = req.query.page;
+    const size = req.query.size;
+    const cineastas = await service.findAll(page, size);
     res.json(cineastas);
     log(req, `GET /cineastas ${cineastas.length} registros encontrados`);
   } catch (error) {
