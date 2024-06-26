@@ -1,0 +1,148 @@
+@font-face {
+  font-family: "Roboto";
+  src: url("../fonts/Roboto-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Roboto-Bold";
+  src: url("../fonts/Roboto-Bold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Roboto-Thin";
+  src: url("../fonts/Roboto-Thin.ttf") format("truetype");
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+  background-color: #1a1a1a;
+  color: #ffffff;
+}
+
+.navbar {
+  background-color: #333333;
+}
+
+.navbar-brand span {
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.navbar-nav .nav-link {
+  color: #ffffff;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #ffc107;
+}
+
+.navbar .form-control {
+  max-width: 300px;
+  background-color: #222;
+  border: 1px solid #444;
+  color: #fff;
+}
+
+.navbar .btn-warning {
+  background-color: #ffc107;
+  border-color: #ffc107;
+}
+
+.navbar .btn-warning:hover {
+  background-color: #e0a800;
+}
+
+.btn-primary {
+  background-color: #ffc107;
+  border-color: #ffc107;
+}
+
+.btn-primary:hover {
+  background-color: #e0a800;
+}
+
+.btn-outline-secondary {
+  border-color: #ffc107;
+  color: #ffc107;
+}
+
+.btn-outline-secondary:hover {
+  background-color: #ffc107;
+  color: #121212;
+}
+
+.card-img-top {
+  height: 300px;
+  object-fit: cover;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.section-title h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.section-title .btn {
+  background-color: #ffc107;
+  border-color: #ffc107;
+}
+
+.section-title .btn:hover {
+  background-color: #e0a800;
+}
+
+.card {
+  background-color: #222;
+  border: 1px solid #444;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+  margin-bottom: 20px;
+}
+
+.card-title {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.card-text {
+  font-size: 0.9rem;
+  color: #cccccc;
+}
+
+.footer {
+  background-color: #333333;
+  color: #ffffff;
+  padding: 20px 0;
+}
+
+.footer a {
+  color: #dba400;
+  text-decoration: none;
+}
+
+.footer a:hover {
+  color: #bb8c00;
+}
+
+input[type="text"].placeholder-light::placeholder {
+  color: #818181;
+}
+
+.nav-link {
+  color: white;
+}
+
+.nav-link.active {
+  color: #ffc107; /* warning color */
+}
+
+.nav-link:hover {
+  color: #dc3545; /* danger color */
+}
