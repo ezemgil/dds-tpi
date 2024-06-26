@@ -1,12 +1,15 @@
 import * as service from "../services/pais.service.js";
 import { NotFoundError } from "../utils/errors.js";
+import { log } from "../utils/logger.js";
 
 // Buscar todos los países
 export const getPaises = async (req, res, next) => {
   try {
     const paises = await service.findAll();
     res.json(paises);
+    log(req, `GET /paises ${paises.length} registros encontrados`);
   } catch (error) {
+    log(req, `Error en getPaises: ${error.message}`);
     next(error);
   }
 };
@@ -21,6 +24,7 @@ export const getPaisById = async (req, res, next) => {
       next(new NotFoundError("País no encontrado"));
     }
   } catch (error) {
+    log(req, `Error en getPaisById: ${error.message}`);
     next(error);
   }
 };
@@ -31,6 +35,7 @@ export const getPaisByNombre = async (req, res, next) => {
     const paises = await service.findByName(req.query.nombre);
     res.json(paises);
   } catch (error) {
+    log(req, `Error en getPaisByNombre: ${error.message}`);
     next(error);
   }
 };
@@ -41,6 +46,7 @@ export const createPais = async (req, res, next) => {
     const pais = await service.create(req.body);
     res.status(201).json(pais);
   } catch (error) {
+    log(req, `Error en createPais: ${error.message}`);
     next(error);
   }
 };
@@ -55,6 +61,7 @@ export const updatePais = async (req, res, next) => {
       next(new NotFoundError("País no encontrado"));
     }
   } catch (error) {
+    log(req, `Error en updatePais: ${error.message}`);
     next(error);
   }
 };
@@ -69,6 +76,7 @@ export const deletePais = async (req, res, next) => {
       next(new NotFoundError("País no encontrado"));
     }
   } catch (error) {
+    log(req, `Error en deletePais: ${error.message}`);
     next(error);
   }
 };

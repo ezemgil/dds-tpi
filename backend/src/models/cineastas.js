@@ -26,12 +26,12 @@ const Cineasta = sequelize.define(
       type: DataTypes.DATE,
       allowNull: true,
     },
-    bibliografia: {
+    biografia: {
       type: DataTypes.TEXT,
       allowNull: true,
     },
     imagen: {
-      type: DataTypes.BLOB,
+      type: DataTypes.TEXT,
       allowNull: true,
     },
     nacionalidad: {

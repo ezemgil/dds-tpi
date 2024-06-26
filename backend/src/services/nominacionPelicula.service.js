@@ -22,6 +22,24 @@ export const findAll = async () => {
   });
 };
 
+// Dado un id de pelicula, obtener todas las nominaciones de esa pelicula
+export const findAllByPelicula = async (id_pelicula) => {
+  return await NominacionPelicula.findAll({
+    where: {
+      id_pelicula,
+    },
+    include: [
+      {
+        model: Premio,
+        as: "premio",
+      },
+    ],
+    attributes: {
+      exclude: ["id_premio"],
+    },
+  });
+};
+
 // Crear una nueva nominacion de pelicula
 export const create = async (nominacion) => {
   return await NominacionPelicula.create(nominacion);

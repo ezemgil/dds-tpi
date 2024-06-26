@@ -1,5 +1,6 @@
 import * as service from "../services/rolesUsuario.service.js";
 import { NotFoundError, BadRequestError } from "../utils/errors.js";
+import { log } from "../utils/logger.js";
 
 // Buscar todos los roles
 export const getRoles = async (req, res, next) => {
@@ -8,10 +9,12 @@ export const getRoles = async (req, res, next) => {
     if (user.rol === "Administrador" || user.rol === "Supervisor") {
       const roles = await service.findAll();
       res.json(roles);
+      log(req, `GET /roles ${roles.length} registros encontrados`);
     } else {
       next(new BadRequestError("No tiene permisos para realizar esta acción"));
     }
   } catch (error) {
+    log(req, `Error en getRoles: ${error.message}`);
     next(error);
   }
 };
@@ -29,6 +32,7 @@ export const getRolByName = async (req, res, next) => {
       }
     }
   } catch (error) {
+    log(req, `Error en getRolByName: ${error.message}`);
     next(error);
   }
 };
@@ -44,6 +48,7 @@ export const createRol = async (req, res, next) => {
       next(new BadRequestError("No tiene permisos para realizar esta acción"));
     }
   } catch (error) {
+    log(req, `Error en createRol: ${error.message}`);
     next(error);
   }
 };
@@ -63,6 +68,7 @@ export const updateRol = async (req, res, next) => {
       next(new BadRequestError("No tiene permisos para realizar esta acción"));
     }
   } catch (error) {
+    log(req, `Error en updateRol: ${error.message}`);
     next(error);
   }
 };
@@ -83,6 +89,7 @@ export const deleteRol = async (req, res, next) => {
       next(new BadRequestError("No tiene permisos para realizar esta acción"));
     }
   } catch (error) {
+    log(req, `Error en deleteRol: ${error.message}`);
     next(error);
   }
 };

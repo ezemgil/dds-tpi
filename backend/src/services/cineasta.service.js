@@ -1,7 +1,8 @@
-import { Op } from "sequelize";
+import { Sequelize, Op } from "sequelize";
 import Cineasta from "../models/cineastas.js";
 import TipoRol from "../models/tiposRol.js";
 import Paises from "../models/paises.js";
+import Pelicula from "../models/peliculas.js";
 
 // GET ALL
 export const findAll = async () => {
@@ -63,6 +64,53 @@ export const findByName = async (nombre) => {
         [Op.like]: `%${nombre}%`,
       },
     },
+    include: [
+      {
+        model: Paises,
+        as: "pais",
+        attributes: ["id", "nombre", "codigo"],
+      },
+      {
+        model: Paises,
+        as: "pais2",
+        attributes: ["id", "nombre", "codigo"],
+      },
+      {
+        model: TipoRol,
+        as: "roles",
+        through: {
+          attributes: [],
+        },
+      },
+    ],
+    attributes: { exclude: ["nacionalidad", "nacionalidad2"] },
+  });
+};
+
+// Get Peliculas by cineasta
+export const findPeliculasByCineasta = async (id_cineasta) => {
+  return await Pelicula.findAll({
+    include: [
+      {
+        model: Cineasta,
+        as: "cineastas",
+        where: {
+          id: id_cineasta,
+        },
+        attributes: [],
+        through: {
+          attributes: [],
+        },
+      },
+    ],
+  });
+};
+
+// Get X random cineastas
+export const findRandom = async (amount) => {
+  return await Cineasta.findAll({
+    order: Sequelize.literal("random()"),
+    limit: amount,
     include: [
       {
         model: Paises,

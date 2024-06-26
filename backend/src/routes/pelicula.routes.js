@@ -5,6 +5,8 @@ import { authentificateJWT } from "../middleware/auth.js";
 const router = express.Router();
 
 router.get("/api/peliculas/buscar", controller.getPeliculaByNombre);
+router.get("/api/peliculas/random", controller.getPeliculasAleatorias);
+router.get("/api/peliculas/:id/elenco", controller.getElenco);
 router.get("/api/peliculas", controller.getPeliculas);
 router.get("/api/peliculas/:id", controller.getPeliculaById);
 router.post("/api/peliculas", authentificateJWT, controller.createPelicula);

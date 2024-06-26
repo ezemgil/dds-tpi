@@ -6,6 +6,10 @@ const router = express.Router();
 
 router.get("/api/nominaciones_pelicula", controller.getNominacionesPelicula);
 router.get(
+  "/api/nominaciones_pelicula/pelicula/:id",
+  controller.getNominacionesByPelicula
+);
+router.get(
   "/api/nominaciones_pelicula/:id",
   controller.getNominacionPeliculaById
 );

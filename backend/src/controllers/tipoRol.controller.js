@@ -1,12 +1,15 @@
 import * as service from "../services/tipoRol.service.js";
 import { NotFoundError } from "../utils/errors.js";
+import { log } from "../utils/logger.js";
 
 // Buscar todos los tipos de rol
 export const getTiposRol = async (req, res, next) => {
   try {
     const tiposRol = await service.findAll();
     res.json(tiposRol);
+    log(req, `GET /tipos-rol ${tiposRol.length} registros encontrados`);
   } catch (error) {
+    log(req, `Error en getTiposRol: ${error.message}`);
     next(error);
   }
 };
@@ -21,6 +24,7 @@ export const getTipoRolById = async (req, res, next) => {
       next(new NotFoundError("Tipo de rol no encontrado"));
     }
   } catch (error) {
+    log(req, `Error en getTipoRolById: ${error.message}`);
     next(error);
   }
 };
@@ -31,6 +35,7 @@ export const createTipoRol = async (req, res, next) => {
     const tipoRol = await service.create(req.body);
     res.status(201).json(tipoRol);
   } catch (error) {
+    log(req, `Error en createTipoRol: ${error.message}`);
     next(error);
   }
 };
@@ -45,6 +50,7 @@ export const getTipoRolByName = async (req, res, next) => {
       next(new NotFoundError("Tipo de rol no encontrado"));
     }
   } catch (error) {
+    log(req, `Error en getTipoRolByName: ${error.message}`);
     next(error);
   }
 };
@@ -59,6 +65,7 @@ export const updateTipoRol = async (req, res, next) => {
       next(new NotFoundError("Tipo de rol no encontrado"));
     }
   } catch (error) {
+    log(req, `Error en updateTipoRol: ${error.message}`);
     next(error);
   }
 };
@@ -73,6 +80,7 @@ export const deleteTipoRol = async (req, res, next) => {
       next(new NotFoundError("Tipo de rol no encontrado"));
     }
   } catch (error) {
+    log(req, `Error en deleteTipoRol: ${error.message}`);
     next(error);
   }
 };

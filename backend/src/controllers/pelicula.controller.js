@@ -9,6 +9,34 @@ export const getPeliculas = async (req, res, next) => {
     res.json(peliculas);
     log(req, `GET /peliculas ${peliculas.length} registros encontrados`);
   } catch (error) {
+    log(req, `Error: ${error.message}`);
+    next(error);
+  }
+};
+
+// Obtener X películas aleatorias
+export const getPeliculasAleatorias = async (req, res, next) => {
+  try {
+    const peliculas = await service.findRandom(req.query.cantidad);
+    res.json(peliculas);
+    log(
+      req,
+      `GET /peliculas/aleatorias?cantidad=${req.query.cantidad} ${peliculas.length} registros encontrados`
+    );
+  } catch (error) {
+    log(req, `Error: ${error.message}`);
+    next(error);
+  }
+};
+
+// Obtener la lista de actores de una película
+export const getElenco = async (req, res, next) => {
+  try {
+    const elenco = await service.getElenco(req.params.id);
+    res.json(elenco);
+    log(req, `GET /peliculas/${req.params.id}/actores`);
+  } catch (error) {
+    log(req, `Error: ${error.message}`);
     next(error);
   }
 };
@@ -24,6 +52,7 @@ export const getPeliculaById = async (req, res, next) => {
       next(new NotFoundError("Película no encontrada"));
     }
   } catch (error) {
+    log(req, `Error: ${error.message}`);
     next(error);
   }
 };
@@ -38,6 +67,7 @@ export const getPeliculaByNombre = async (req, res, next) => {
       `GET /peliculas?nombre=${req.query.nombre} ${peliculas.length} registros encontrados`
     );
   } catch (error) {
+    log(req, `Error: ${error.message}`);
     next(error);
   }
 };
@@ -48,6 +78,7 @@ export const createPelicula = async (req, res, next) => {
     const pelicula = await service.create(req.body);
     res.status(201).json(pelicula);
   } catch (error) {
+    log(req, `Error: ${error.message}`);
     next(error);
   }
 };
@@ -62,6 +93,7 @@ export const updatePelicula = async (req, res, next) => {
       next(new NotFoundError("Película no encontrada"));
     }
   } catch (error) {
+    log(req, `Error: ${error.message}`);
     next(error);
   }
 };
@@ -76,6 +108,7 @@ export const deletePelicula = async (req, res, next) => {
       next(new NotFoundError("Película no encontrada"));
     }
   } catch (error) {
+    log(req, `Error: ${error.message}`);
     next(error);
   }
 };
