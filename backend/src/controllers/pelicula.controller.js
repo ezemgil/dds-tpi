@@ -98,7 +98,7 @@ export const updatePelicula = async (req, res, next) => {
     if (updatedPelicula) {
       res.json(updatedPelicula);
     } else {
-      throw new NotFoundError("Película no encontrada");
+      next(new NotFoundError("Película no encontrada"));
     }
   } catch (error) {
     log(req, `Error: ${error.message}`);
