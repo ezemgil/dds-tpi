@@ -11,7 +11,11 @@ router.get("/api/peliculas/:id/elenco", controller.getElenco);
 router.get("/api/peliculas", controller.getPeliculas);
 router.get("/api/peliculas/:id", controller.getPeliculaById);
 router.post("/api/peliculas", authentificateJWT, controller.createPelicula);
-router.post("/api/peliculas/:id/cineastas", controller.addCineastas);
+router.post(
+  "/api/peliculas/:id/cineastas",
+  authentificateJWT,
+  controller.addCineastas
+);
 router.put("/api/peliculas/:id", authentificateJWT, controller.updatePelicula);
 router.delete(
   "/api/peliculas/:id/cineastas/:cineasta",
