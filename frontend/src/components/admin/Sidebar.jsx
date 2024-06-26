@@ -23,15 +23,6 @@ const Sidebar = ({ handleElementoActual }) => {
           className="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
           id="menu"
         >
-          <li className="nav-item">
-            <button
-              onClick={() => handleElementoActual("Academias")}
-              className="nav-link align-middle px-0 text-white d-flex align-items-center"
-            >
-              <i className="fa-solid fa-building-columns"></i>
-              <span className="ms-2 d-none d-sm-inline">Academias</span>
-            </button>
-          </li>
           <li>
             <button
               onClick={() => handleElementoActual("Generos")}
@@ -95,15 +86,6 @@ const Sidebar = ({ handleElementoActual }) => {
             >
               <i className="fa-solid fa-photo-film"></i>
               <span className="ms-2 d-none d-sm-inline">Películas</span>
-            </button>
-          </li>
-          <li>
-            <button
-              onClick={() => handleElementoActual("Usuarios")}
-              className="nav-link px-0 align-middle text-white d-flex align-items-center"
-            >
-              <i className="fa-solid fa-users"></i>
-              <span className="ms-2 d-none d-sm-inline">Usuarios</span>
             </button>
           </li>
         </ul>

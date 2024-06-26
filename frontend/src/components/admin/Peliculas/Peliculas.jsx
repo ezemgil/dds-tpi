@@ -25,7 +25,7 @@ const Peliculas = () => {
     const BuscarPorId = async (idPelicula, accion) => {
         const resPelicula = await peliculaService.getById(idPelicula);
         setItemPelicula(resPelicula.data);
-        setAccionCRUD(accion);
+        setAccionCRUD(accion)
     }
 
     // const BuscarPorNombre = async (nombrePelicula) => {
@@ -64,8 +64,8 @@ const Peliculas = () => {
     }
     
     const Editar = (idPelicula) => {
-        BuscarPorId(idPelicula, "U")
         setModalShow(true);
+        BuscarPorId(idPelicula, "U")
     }
 
     const Eliminar = () => {}
@@ -90,10 +90,22 @@ const Peliculas = () => {
                 Eliminar={Eliminar}
             />
 
-            {AccionCRUD !== "RA" && (
+            {AccionCRUD === "C" && (
                 <PeliculasFormModal
                     show={modalShow}
                     onHide={() => setModalShow(false)}
+                    itemPelicula={itemPelicula}
+                    Grabar={Grabar}
+                    Titulo={'Peliculas ' + TituloCRUD[AccionCRUD]}>
+                </PeliculasFormModal>
+            )}
+
+            {AccionCRUD === "U" && (
+                <PeliculasFormModal
+                    show={modalShow}
+                    onHide={() => {
+                        setModalShow(false);
+                        setAccionCRUD("RA");}}
                     itemPelicula={itemPelicula}
                     Grabar={Grabar}
                     Titulo={'Peliculas ' + TituloCRUD[AccionCRUD]}>
