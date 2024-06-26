@@ -26,8 +26,22 @@ export const findAll = async () => {
 };
 
 // Crear una nueva película
-export const create = async (pelicula) => {
-  return await Pelicula.create(pelicula);
+export const create = async (pelicula, generos, idiomas) => {
+  try {
+    const result = await Pelicula.create(pelicula);
+    if (result) {
+      if (generos && generos.length > 0) {
+        await result.setGeneros(generos);
+      }
+      if (idiomas && idiomas.length > 0) {
+        await result.setIdiomas(idiomas);
+      }
+      return result;
+    }
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
 };
 
 // Obtener la lista de cineastas de una película
@@ -123,20 +137,32 @@ export const findRandom = async (amount) => {
 };
 
 // Actualizar una película
-export const update = async (id, pelicula) => {
-  const result = await Pelicula.findByPk(id);
-  if (result) {
-    return await result.update(pelicula);
+export const update = async (id, pelicula, generos, idiomas) => {
+  try {
+    const result = await Pelicula.update(pelicula, { where: { id } });
+    if (result) {
+      const movie = await Pelicula.findByPk(id);
+      if (movie && generos && generos.length > 0) {
+        await movie.setGeneros(generos);
+      }
+      if (movie && idiomas && idiomas.length > 0) {
+        await movie.setIdiomas(idiomas);
+      }
+      return movie;
+    }
+  } catch (error) {
+    throw error;
   }
-  return null;
 };
 
 // Eliminar una película
 export const remove = async (id) => {
-  const result = await Pelicula.findByPk(id);
-  if (result) {
-    await result.destroy();
-    return true;
+  try {
+    const result = await Pelicula.destroy({ where: { id } });
+    if (result) {
+      return true;
+    }
+  } catch (error) {
+    throw error;
   }
-  return false;
 };

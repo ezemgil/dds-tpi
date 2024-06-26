@@ -75,8 +75,10 @@ export const getPeliculaByNombre = async (req, res, next) => {
 // Crear una nueva película
 export const createPelicula = async (req, res, next) => {
   try {
-    const pelicula = await service.create(req.body);
-    res.status(201).json(pelicula);
+    const { pelicula, generos, idiomas } = req.body;
+    console.log(pelicula, generos, idiomas);
+    const newPelicula = await service.create(pelicula, generos, idiomas);
+    res.status(201).json(newPelicula);
   } catch (error) {
     log(req, `Error: ${error.message}`);
     next(error);
@@ -86,11 +88,18 @@ export const createPelicula = async (req, res, next) => {
 // Actualizar una película
 export const updatePelicula = async (req, res, next) => {
   try {
-    const pelicula = await service.update(req.params.id, req.body);
-    if (pelicula) {
-      res.json(pelicula);
+    const { pelicula, generos, idiomas } = req.body;
+    console.log(`pelicula ${pelicula}, genero: ${generos}, lang: ${idiomas}`);
+    const updatedPelicula = await service.update(
+      req.params.id,
+      pelicula,
+      generos,
+      idiomas
+    );
+    if (updatedPelicula) {
+      res.json(updatedPelicula);
     } else {
-      next(new NotFoundError("Película no encontrada"));
+      throw new NotFoundError("Película no encontrada");
     }
   } catch (error) {
     log(req, `Error: ${error.message}`);

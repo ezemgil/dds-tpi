@@ -55,8 +55,8 @@ CREATE TABLE IF NOT EXISTS RolesCineasta (
     id_cineasta INTEGER,
     id_rol INTEGER,
     PRIMARY KEY (id_cineasta, id_rol),
-    FOREIGN KEY (id_cineasta) REFERENCES Cineastas(id),
-    FOREIGN KEY (id_rol) REFERENCES TiposRol(id)
+    FOREIGN KEY (id_cineasta) REFERENCES Cineastas(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (id_rol) REFERENCES TiposRol(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS PeliculaCineastaRol (
@@ -64,26 +64,27 @@ CREATE TABLE IF NOT EXISTS PeliculaCineastaRol (
     id_cineasta INTEGER,
     id_rol INTEGER,
     PRIMARY KEY (id_pelicula, id_cineasta, id_rol),
-    FOREIGN KEY (id_pelicula) REFERENCES Peliculas(id),
-    FOREIGN KEY (id_cineasta) REFERENCES Cineastas(id),
-    FOREIGN KEY (id_rol) REFERENCES TiposRol(id)
+    FOREIGN KEY (id_pelicula) REFERENCES Peliculas(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (id_cineasta) REFERENCES Cineastas(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (id_rol) REFERENCES TiposRol(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS IdiomasPelicula (
     id_pelicula INTEGER,
     id_idioma INTEGER,
     PRIMARY KEY (id_pelicula, id_idioma),
-    FOREIGN KEY (id_pelicula) REFERENCES Peliculas(id),
-    FOREIGN KEY (id_idioma) REFERENCES Idiomas(id)
+    FOREIGN KEY (id_pelicula) REFERENCES Peliculas(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (id_idioma) REFERENCES Idiomas(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS GenerosPelicula (
     id_pelicula INTEGER,
     id_genero INTEGER,
     PRIMARY KEY (id_pelicula, id_genero),
-    FOREIGN KEY (id_pelicula) REFERENCES Peliculas(id),
-    FOREIGN KEY (id_genero) REFERENCES Generos(id)
+    FOREIGN KEY (id_pelicula) REFERENCES Peliculas(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (id_genero) REFERENCES Generos(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
 
 CREATE TABLE IF NOT EXISTS Usuarios (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
