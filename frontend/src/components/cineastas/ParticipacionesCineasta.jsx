@@ -22,7 +22,7 @@ const ParticipacionesCineasta = ({ Peliculas }) => {
               Titulo={pelicula.titulo}
               Calificacion={pelicula.calificacion}
               Generos={pelicula.generos}
-              FechaEstreno={pelicula.fechaEstreno}
+              FechaEstreno={pelicula.fecha_estreno}
               Duracion={pelicula.duracion}
               Imagen={pelicula.imagen}
             />
