@@ -432,3 +432,7 @@ WHERE nombre = 'Eli' AND apellido = 'Wallach';
 UPDATE Cineastas
 SET fecha_fallecimiento = '1989-01-01'
 WHERE nombre = 'Lee' AND apellido = 'Van Cleef';
+
+UPDATE Cineastas
+SET fecha_fallecimiento = '1973-01-01'
+WHERE nombre = 'J.R.R.' AND apellido = 'Tolkien';

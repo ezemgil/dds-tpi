@@ -45,16 +45,13 @@ const Peliculas = () => {
             idiomas: itemPelicula.idiomas.map((i) => i.id),
             imagen: itemPelicula.imagen
         }
-        console.log('Pelicula a crear: ' + peliculaEndpoint);
 
         if (AccionCRUD === "C") {
             peliculaService.create(peliculaEndpoint).then((response) => {
-                console.log(response);
                 peliculaService.getAll().then((response) => setPeliculas(response.data))
             })
         } else {
             peliculaService.update(itemPelicula.id, peliculaEndpoint).then((response) => {
-                console.log(response);
                 peliculaService.getAll().then((response) => setPeliculas(response.data))
             })
         }
@@ -91,7 +88,6 @@ const Peliculas = () => {
 
     const Eliminar = (id_pelicula) => {
         peliculaService.remove(id_pelicula).then((response) => {
-            console.log(response);
             peliculaService.getAll().then((response) => setPeliculas(response.data))
         })
         setAccionCRUD("RA");

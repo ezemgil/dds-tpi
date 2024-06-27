@@ -85,12 +85,6 @@ const PeliculasForm = ({itemPelicula, Volver, Grabar}) => {
         });
     }, []);
 
-
-    // console.log('clasificaciones', clasificaciones);
-
-    
-
-
     return (
         <div className="d-flex justify-content-center p-2 col-lg-12 col-md-12 col-sm-0">
             <form className="form col-lg-12 col-md-12" action="" onSubmit={handleSubmit(onSubmit)}>
