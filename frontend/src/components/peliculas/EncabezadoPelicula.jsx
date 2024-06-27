@@ -84,7 +84,7 @@ const EncabezadoPelicula = ({ Pelicula }) => {
               <i className="fa fa-language" aria-hidden="true"></i>
               <span>Idiomas disponibles</span>
             </div>
-            <div className="d-flex flex-wrap gap-2 fs-5">
+            <div className="d-flex flex-wrap gap-2 fs-5 mt-2">
               {Pelicula?.idiomas?.length > 0 &&
                 Pelicula.idiomas.map((idioma, i) => (
                   <span
@@ -94,7 +94,6 @@ const EncabezadoPelicula = ({ Pelicula }) => {
                     {idioma.nombre}
                   </span>
                 ))}
-
             </div>
           </div>
         </div>

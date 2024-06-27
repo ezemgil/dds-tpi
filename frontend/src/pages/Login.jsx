@@ -1,27 +1,33 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Helmet } from "react-helmet";
 import { Link, useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
 import authService from "../services/auth.service";
-
 import Logo from "../assets/img/logo/logo-01.svg";
 
 const Login = () => {
-  const [usuario, setUsuario] = useState("");
-  const [clave, setClave] = useState("");
   const navigate = useNavigate();
 
   const navigateToComponent = () => {
     navigate("/admin");
   };
 
-  const handleSubmit = async () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, touchedFields, isValid, isSubmitted },
+    setValue,
+  } = useForm();
+
+  const onSubmit = async (data) => {
+    const { usuario, clave } = data;
     authService.login(usuario, clave, navigateToComponent);
   };
 
   useEffect(() => {
     authService.logout();
-  });
+  }, []);
 
   return (
     <>
@@ -35,38 +41,45 @@ const Login = () => {
         </div>
         <div className="container-fluid col-lg-4 col-md-6 col-sm-6">
           <h2 className="text-center mt-4">Iniciar sesión</h2>
-          <form className="mt-4">
+          <form className="mt-4" onSubmit={handleSubmit(onSubmit)}>
             <div className="mb-3">
-              <label htmlFor="text" className="form-label">
+              <label htmlFor="usuario" className="form-label">
                 Nombre de usuario
               </label>
               <input
                 type="text"
-                className="form-control"
+                className={
+                  "form-control " + (errors?.usuario ? "is-invalid" : "")
+                }
                 placeholder="Nombre de usuario"
-                value={usuario}
-                onChange={(e) => setUsuario(e.target.value)}
+                {...register("usuario", {
+                  required: "El nombre de usuario es requerido",
+                })}
                 autoFocus
               />
+              {errors.usuario && (
+                <div className="invalid-feedback">{errors.usuario.message}</div>
+              )}
             </div>
             <div className="mb-3">
-              <label htmlFor="password" className="form-label">
+              <label htmlFor="clave" className="form-label">
                 Contraseña
               </label>
               <input
                 type="password"
-                className="form-control"
+                className={
+                  "form-control " + (errors?.clave ? "is-invalid" : "")
+                }
                 placeholder="Contraseña"
-                value={clave}
-                onChange={(e) => setClave(e.target.value)}
-                autoFocus
+                {...register("clave", {
+                  required: "La contraseña es requerida",
+                })}
               />
+              {errors.clave && (
+                <div className="invalid-feedback">{errors.clave.message}</div>
+              )}
             </div>
-            <button
-              type="button"
-              className="btn btn-primary w-100"
-              onClick={(e) => handleSubmit()}
-            >
+            <button type="submit" className="btn btn-warning w-100">
               Iniciar sesión
             </button>
             <div className="text-center mt-3 ">
@@ -74,6 +87,15 @@ const Login = () => {
                 Volver al inicio
               </Link>
             </div>
+
+            {isSubmitted && !isValid && (
+              <div className="text-center mt-3">
+                <i className="fa-solid fa-exclamation-circle me-2"></i>
+                <span className="badge bg-danger me-2 p-2">
+                  Por favor, revisa los campos del formulario.
+                </span>
+              </div>
+            )}
           </form>
         </div>
       </div>
