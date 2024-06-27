@@ -62,9 +62,18 @@ export const findById = async (id) => {
 export const findByName = async (nombre) => {
   return await Cineasta.findAll({
     where: {
-      nombre: {
-        [Op.like]: `%${nombre}%`,
-      },
+      [Op.or]: [
+        {
+          nombre: {
+            [Op.like]: `%${nombre}%`,
+          },
+        },
+        {
+          apellido: {
+            [Op.like]: `%${nombre}%`,
+          },
+        },
+      ],
     },
     include: [
       {

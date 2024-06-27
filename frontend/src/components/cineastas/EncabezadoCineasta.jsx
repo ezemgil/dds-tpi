@@ -42,7 +42,7 @@ const EncabezadoCineasta = ({ Cineasta }) => {
               ))}
             </div>
             <div className="my-2">
-              <p className="">{Cineasta?.biografia || "Sin bibliografía"}</p>
+              <p className="">{Cineasta?.biografia || "Sin biografía"}</p>
             </div>
             <div className="mb-3">
               <div className="fs-5 text-light">

@@ -74,6 +74,15 @@ async function getParticipaciones(id) {
   }
 }
 
+async function getByName(nombre) {
+  try {
+    return await httpService.get(`${CINEASTA_API_URL}/buscar?nombre=${nombre}`);
+  } catch (error) {
+    console.error(`Error al buscar cineasta con nombre ${nombre}:`, error);
+    throw new Error(`Error al buscar cineasta con nombre ${nombre}.`);
+  }
+}
+
 const cineastaService = {
   getAll,
   getById,
@@ -82,6 +91,7 @@ const cineastaService = {
   remove,
   getRandom,
   getParticipaciones,
+  getByName,
 };
 
 export default cineastaService;

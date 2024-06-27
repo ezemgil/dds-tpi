@@ -1,15 +1,19 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import authService from "../../services/auth.service";
 
 import Logo from "../../assets/img/logo/logo-01.svg";
 
 import peliculaService from "../../services/pelicula.service";
 
 const Navbar = () => {
+  const usuario = authService.getUsuarioLogueado();
+
   const handleClick = async () => {
     const peliculas = await peliculaService.getNu();
     console.log(peliculas);
   };
+
   return (
     <nav className="px-3 navbar navbar-expand-lg navbar-dark bg-dark">
       <NavLink className="navbar-brand d-flex align-items-center" to="/inicio">
@@ -51,65 +55,21 @@ const Navbar = () => {
             </NavLink>
           </li>
         </ul>
-        <form className="d-flex align-items-center">
-          <div className="input-group me-3">
-            <input
-              type="text"
-              className="form-control bg-dark text-white placeholder-light"
-              placeholder="Buscar película..."
-              aria-label="Buscar película"
-              aria-describedby="button-addon2"
-            ></input>
-            <button
-              className="btn btn-warning"
-              type="button"
-              id="button-addon2"
-            >
-              <i className="fas fa-search"></i>
-            </button>
-          </div>
-          {/* Si el usuario no está logueado: */}
-          <NavLink className="btn btn-warning text-nowrap" to="/login">
-            Iniciar sesión
-          </NavLink>
-          {/* Si el usuario está logueado: */}
-          {/* <div className="dropdown">
-            <NavLink
-              to="/"
-              className="d-block link-body-emphasis text-decoration-none dropdown-toggle"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              <img
-                src="https://github.com/arcba.png"
-                alt="profile"
-                width="32"
-                height="32"
-                className="rounded-circle"
-              />
+
+        {usuario === "admin" ? (
+          <>
+            <NavLink className="btn btn-info text-nowrap" to="/admin">
+              Panel de administración{" "}
+              <i class="fa-solid fa-screwdriver-wrench"></i>
             </NavLink>
-            <ul className="dropdown-menu dropdown-menu-end text-small">
-              <li>
-                <NavLink className="dropdown-item" to="/">
-                  Nuevo...
-                </NavLink>
-              </li>
-              <li>
-                <NavLink className="dropdown-item" to="/profile">
-                  Perfil
-                </NavLink>
-              </li>
-              <li>
-                <hr className="dropdown-divider" />
-              </li>
-              <li>
-                <NavLink className="dropdown-item" to="/logout">
-                  Cerrar sesión
-                </NavLink>
-              </li>
-            </ul>
-          </div> */}
-        </form>
+          </>
+        ) : (
+          <>
+            <NavLink className="btn btn-warning text-nowrap" to="/login">
+              Iniciar sesión
+            </NavLink>
+          </>
+        )}
       </div>
     </nav>
   );

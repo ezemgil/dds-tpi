@@ -19,11 +19,11 @@ const Cineasta = sequelize.define(
       allowNull: false,
     },
     fecha_nacimiento: {
-      type: DataTypes.DATE,
+      type: DataTypes.DATEONLY,
       allowNull: false,
     },
     fecha_fallecimiento: {
-      type: DataTypes.DATE,
+      type: DataTypes.DATEONLY,
       allowNull: true,
     },
     biografia: {
