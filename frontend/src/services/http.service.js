@@ -51,4 +51,35 @@ httpService.interceptors.response.use(
   }
 );
 
+// Función para solicitar un nuevo token de acceso
+// async function refreshToken() {
+//   const refreshToken = sessionStorage.getItem("refreshToken");
+//   const response = await axios.post("/token", { refreshToken });
+//   const { accessToken } = response.data;
+//   sessionStorage.setItem("accessToken", accessToken);
+//   return accessToken;
+// }
+
+// httpService.interceptors.response.use(
+//   (response) => {
+//     return response;
+//   },
+//   async (error) => {
+//     const originalRequest = error.config;
+//     if (error.response.status === 401 && !originalRequest._retry) {
+//       originalRequest._retry = true;
+//       try {
+//         const newAccessToken = await refreshToken();
+//         axios.defaults.headers.common["Authorization"] =
+//           "Bearer " + newAccessToken;
+//         originalRequest.headers["Authorization"] = "Bearer " + newAccessToken;
+//         return httpService(originalRequest);
+//       } catch (refreshError) {
+//         return Promise.reject(refreshError);
+//       }
+//     }
+//     return Promise.reject(error);
+//   }
+// );
+
 export default httpService;

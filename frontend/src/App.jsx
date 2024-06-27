@@ -29,7 +29,7 @@ function App() {
         <Route path="/pelicula/:id" element={<DetallePelicula />} />
         <Route path="/cineasta/:id" element={<DetalleCineasta />} />
         <Route
-          path="/admin/*"
+          path="/admin"
           element={
             <RequireAuth>
               <Admin />
