@@ -1,7 +1,10 @@
 import React from "react";
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
 import { useForm } from "react-hook-form";
 import clasificacionService from "../../../services/clasificacion.service";
-
+import generosService from "../../../services/genero.service";
+import idiomaService from "../../../services/idioma.service";
 
 const PeliculasForm = ({itemPelicula, Volver, Grabar}) => {
     const {
@@ -11,16 +14,77 @@ const PeliculasForm = ({itemPelicula, Volver, Grabar}) => {
     } = useForm({defaultValues: itemPelicula});
 
     const onSubmit = (data) => {
+        data.generos = generosItem;
+        data.clasificacion = clasificacionItem;
+        data.imagen = urlImagen;
+        data.idiomas = idiomasItem;
+
         Grabar(data);
     }
 
     const [clasificaciones, setClasificaciones] = React.useState([]);
+    const [clasificacionItem, setClasificacionItem] = React.useState({});
+    const [urlImagen, setImagen] = React.useState('');
+    
+    const [generos, setGeneros] = React.useState([]);
+    const [generosItem, setGenerosItem] = React.useState([{}]);
+    const [generoModalShow, setGeneroModalShow] = React.useState(false);
+
+    const [idiomas, setIdiomas] = React.useState([]);
+    const [idiomasItem, setIdiomasItem] = React.useState([{}]);
+    const [idiomaModalShow, setIdiomaModalShow] = React.useState(false);
+    
+
+
+    const handleGenerosModal = () => {
+        setGeneroModalShow(!generoModalShow);
+    }
+    
+    const handleIdiomaModal = () => {
+        setIdiomaModalShow(!idiomaModalShow);
+    }
+
+
+    const agregarGenero = (genero) => {
+        let listaGeneros = [];
+        listaGeneros = generosItem.concat(genero);
+        setGenerosItem(listaGeneros);
+    }
+
+    const agregarIdioma = (idioma) => {
+        let listaIdiomas = [];
+        listaIdiomas = idiomasItem.concat(idioma);
+        setIdiomasItem(listaIdiomas);
+    }
+
+    const retirarIdioma = (idiomaId) => {
+        let listaIdiomas = [];
+        listaIdiomas = idiomasItem.filter(idioma => idioma.id !== idiomaId);
+        setIdiomasItem(listaIdiomas);
+    }
+
+    const retirarGenero = (generoId) => {
+        let listaGeneros = [];
+        listaGeneros = generosItem.filter(genero => genero.id !== generoId);
+        setGenerosItem(listaGeneros);
+    }
 
     React.useEffect(() => {
+        setImagen(itemPelicula.imagen);
+        setClasificacionItem(itemPelicula.clasificacion);
+        setGenerosItem(itemPelicula.generos);
+        setIdiomasItem(itemPelicula.idiomas);
         clasificacionService.getAll().then((response) => {
             setClasificaciones(response.data);
         });
+        generosService.getAll().then((response) => {
+            setGeneros(response.data);
+        });
+        idiomaService.getAll().then((response) => {
+            setIdiomas(response.data);
+        });
     }, []);
+
 
     // console.log('itemPelicula', itemPelicula);
 
@@ -38,6 +102,14 @@ const PeliculasForm = ({itemPelicula, Volver, Grabar}) => {
                         />
                     </div>
 
+                    {/* Campo titulo_original */}
+                    <div className="mb-3">
+                        <label htmlFor="titulo_original" className="form-label">Titulo Original</label>
+                        <input type="text" className="form-control bg-dark text-light border-secondary" id="titulo_original" name="titulo_original" 
+                            {...register('titulo_original', {required: { value: true, message: 'Campo requerido' }})}
+                        />
+                    </div>
+
                     {/* Campo descripcion */}
                     <div className="mb-3">
                         <label htmlFor="descripcion" className="form-label">Descripcion</label>
@@ -45,38 +117,6 @@ const PeliculasForm = ({itemPelicula, Volver, Grabar}) => {
                             {...register('descripcion', {})}>
                         </textarea>
                     </div>
-
-                    {/* Campo calificacion */}
-                    <div className="row ">
-                        <div className="mb-3">
-                            <label htmlFor="calificacion" className="col-form-label">Calificacion</label>
-                            <input type="number" id="calificacion" name="calificacion" step={0.1}
-                                {...register('calificacion', {
-                                    required: { value: true, message: 'Campo requerido' },
-                                    min: { value: 0, message: 'Puntuacion minima: 0' },
-                                    max: { value: 10, message: 'Puntuacion maxima: 10' }
-                                })}
-                                className={'bg-dark text-light border-secondary form-control' + (errors?.calificacion ? ' is-invalid' : '')}
-                            />
-                            <div className="invalid-feedback">{errors?.calificacion?.message}</div>
-                        </div>
-                    </div>
-
-                    {/* Campo duracion */}
-                    <div className="row">
-                        <div className="mb-3">
-                            <label htmlFor="duracion" className="col-form-label">Duracion</label>
-                            <input type="number" id="duracion" name="duracion"
-                                {...register('duracion', {
-                                    required: { value: true, message: 'Campo requerido' },
-                                    min: { value: 0, message: 'Duracion minima: 0' } 
-                                })}
-                                className={'bg-dark text-light border-secondary form-control' + (errors?.duracion ? ' is-invalid' : '')}
-                                />
-                            <div className="invalid-feedback">{errors?.duracion?.message}</div>
-                        </div>
-                    </div>
-
                     {/* Campo fecha_estreno */}
                     <div className="row">
                         <div className="mb-3">
@@ -88,22 +128,21 @@ const PeliculasForm = ({itemPelicula, Volver, Grabar}) => {
                         </div>
                     </div>
 
-                    {/* Campo clasificacion */}
+                    {/* Campo clasificacion setClasificacionItem(clasificaciones[(e.value) - 1])*/}
 
                     <div className="row">
                         <label htmlFor="clasificacion" className="col-form-label">Clasificacion</label>
                         <div className="mb-3 d-flex">
-                            <span className="badge d-flex p-2 me-3 align-items-center text-bg-warning rounded-pill">
-                                <span className="px-1">{itemPelicula.clasificacion.nombre}</span>
+                            <span className="badge d-flex p-2 me-3 fs-5 align-items-center text-bg-warning rounded-pill">
+                                <span className="px-1">{clasificacionItem.nombre}</span>
                             </span>
-                            <select className="form-select bg-dark text-light border-secondary" id="clasificacion" name="clasificacion">
-                                {
-                                    clasificaciones?.map((clas) => (
-                                        <option value={clas.id}>
-                                            <span className="py-4">{clas.nombre} / {clas.descripcion}</span>
-                                        </option>
-                                    ))
-                                }
+                            {/*setClasificacionItem(clasificaciones.find(clasi => clasi.id == e.target.value)) */}
+                            <select onChange={(e) => setClasificacionItem(clasificaciones.find(clasi => clasi.id == e.target.value))} className="form-select bg-dark text-light border-secondary" id="clasificacion" name="clasificacion">
+                                {clasificaciones?.map((clas) => (
+                                    <option key={clas.id} defaultValue={clasificacionItem.id === clas.id} value={clas.id}>
+                                        <span className="py-4">{clas.nombre} / {clas.descripcion}</span>
+                                    </option>
+                                ))}
                             </select>
                         </div>
                     </div>
@@ -111,24 +150,151 @@ const PeliculasForm = ({itemPelicula, Volver, Grabar}) => {
                     {/* Campo generos */}
                     <div className="row">
                         <div className="mb-3">
-                            <label htmlFor="">Generos</label>
+                            <label htmlFor="generos">Generos</label>
                             
-                            <div className="d-flex gap-2 justify-content-left form-control bg-dark border-dark">
-                                {itemPelicula.generos.map((genero) => (
+                            <div className="d-flex flex-wrap gap-2 justify-content-left">
+                                {generosItem.map((genero) => (
                                     <span className="badge d-flex p-2 align-items-center text-bg-warning rounded-pill">
                                         <span className="px-1">{genero.nombre}</span>
-                                        <i className="fs-6 fa-solid fa-circle-xmark text-tertiary"></i>
+                                        <div className="p-1" onClick={() => retirarGenero(genero.id)}>
+                                            <i className="fs-6 fa-solid fa-circle-xmark text-tertiary"></i>
+                                        </div>
                                     </span>
                                 ))}
-                                <span className="badge d-flex p-2 align-items-center text-bg-dark border border-warning rounded-pill">
+                                <span className="btn badge d-flex p-2 align-items-center text-bg-dark border border-warning rounded-pill" onClick={() => handleGenerosModal()}>
                                     <i className="fa-solid fa-plus me-2"></i>
                                     <i className="fa-solid fa-chevron-down"></i>
                                 </span>
                             </div>
+
+                            <Modal show={generoModalShow} onHide={handleGenerosModal}>
+                                <Modal.Header className="bg-dark">
+                                    <Modal.Title>Añadir géneros</Modal.Title>
+                                </Modal.Header>
+                                <Modal.Body className="bg-dark">
+                                    <div className="rounded d-flex flex-wrap w-100">
+                                        {generos.map((genero) => (
+                                            generosItem.find((g) => g.id == genero.id) ? null :
+                                            <button 
+                                                key={genero.id}
+                                                onClick={() => agregarGenero(generos.find((g) => g.id == genero.id))} 
+                                                className="btn bg-dark d-flex badge m-1 p-2 border border-warning rounded-pill">
+                                                <span className="px-1">{genero.nombre}</span>
+                                            </button>
+                                        ))}
+                                    </div>
+                                </Modal.Body>
+                                <Modal.Footer className="bg-dark">
+                                    <Button variant="secondary" onClick={handleGenerosModal}>
+                                        Cerrar
+                                    </Button>
+                                </Modal.Footer>
+                            </Modal>
+                        </div>
+                    </div>
+
+                    {/* Campo idiomas */}
+                    <div className="row">
+                        <div className="mb-3">
+                            <label htmlFor="Idiomas">Idiomas</label>
+                            
+                            <div className="d-flex flex-wrap gap-2 justify-content-left">
+                                {idiomasItem.map((idioma) => (
+                                    <span className="badge d-flex p-2 align-items-center text-bg-warning rounded-pill">
+                                        <span className="px-1">{idioma.nombre}</span>
+                                        <div className="p-1" onClick={() => retirarIdioma(idioma.id)}>
+                                            <i className="fs-6 fa-solid fa-circle-xmark text-tertiary"></i>
+                                        </div>
+                                    </span>
+                                ))}
+                                <span className="btn badge d-flex p-2 align-items-center text-bg-dark border border-warning rounded-pill" onClick={() => handleIdiomaModal()}>
+                                    <i className="fa-solid fa-plus me-2"></i>
+                                    <i className="fa-solid fa-chevron-down"></i>
+                                </span>
+                            </div>
+
+                            <Modal show={idiomaModalShow} onHide={handleIdiomaModal}>
+                                <Modal.Header className="bg-dark">
+                                    <Modal.Title>Añadir idiomas</Modal.Title>
+                                </Modal.Header>
+                                <Modal.Body className="bg-dark">
+                                    <div className="rounded d-flex flex-wrap w-100">
+                                        {idiomas.map((idioma) => (
+                                            idiomasItem.find((g) => g.id == idioma.id) ? null :
+                                            <button 
+                                                key={idioma.id}
+                                                onClick={() => agregarIdioma(idiomas.find((g) => g.id == idioma.id))} 
+                                                className="btn bg-dark d-flex badge m-1 p-2 border border-warning rounded-pill">
+                                                <span className="px-1">{idioma.nombre}</span>
+                                            </button>
+                                        ))}
+                                    </div>
+                                </Modal.Body>
+                                <Modal.Footer className="bg-dark">
+                                    <Button variant="secondary" onClick={handleIdiomaModal}>
+                                        Cerrar
+                                    </Button>
+                                </Modal.Footer>
+                            </Modal>
                         </div>
                     </div>
 
 
+
+                    {/* Campo imagen y calificacion y duracion */}
+                    <div className="row align-items-center">
+                        <div className="col-sm-6  flex-column justify-content-center ">
+                            
+                            <div><label htmlFor="imagen" className="col-form-label">Imagen de portada</label></div>
+                            <input type="text" id="imagen" name="imagen" onKeyUp={(e) => setImagen(e.target.value)} 
+                            {...register('imagen', {required: { value: true, message: 'Campo requerido' }})}
+                            className={'bg-dark text-light border-secondary form-control mb-2' + (errors?.fecha_estreno ? ' is-invalid' : '')}/>
+
+                            <img  src={urlImagen !== '' ? urlImagen : 'https://via.placeholder.com/300'} 
+                            alt="Poster de la pelicula" 
+                            className="img-fluid rounded shadow col-lg-5 col-5 mb-3 mb-lg-3" /> 
+                            
+                            
+                            <div className="invalid-feedback">{errors?.fecha_estreno?.message}</div>
+                        </div>
+
+                        <div className="col">
+                            {/* Campo calificacion */}
+                            <div className="row">
+                                <div className="mb-3">
+                                    <label htmlFor="calificacion" className="col-form-label">Calificacion</label>
+                                    <input type="number" id="calificacion" name="calificacion" step={0.1}
+                                        {...register('calificacion', {
+                                            required: { value: true, message: 'Campo requerido' },
+                                            min: { value: 0, message: 'Puntuacion minima: 0' },
+                                            max: { value: 10, message: 'Puntuacion maxima: 10' }
+                                        })}
+                                        className={'bg-dark text-light border-secondary form-control' + (errors?.calificacion ? ' is-invalid' : '')}
+                                    />
+                                    <div className="invalid-feedback">{errors?.calificacion?.message}</div>
+                                </div>
+                            </div>
+
+                            {/* Campo duracion */}
+                            <div className="row">
+                                <div className="mb-3">
+                                    <label htmlFor="duracion" className="col-form-label">Duracion</label>
+                                    <input type="number" id="duracion" name="duracion"
+                                        {...register('duracion', {
+                                            required: { value: true, message: 'Campo requerido' },
+                                            min: { value: 0, message: 'Duracion minima: 0' }
+                                        })}
+                                        className={'bg-dark text-light border-secondary form-control' + (errors?.duracion ? ' is-invalid' : '')}
+                                        />
+                                    <div className="invalid-feedback">{errors?.duracion?.message}</div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                    {/* Botones de accion */}
                     <div className="d-flex justify-content-center">
                         <button type="submit" className="btn btn-primary mx-2 text-dark"><i className="fa-regular fa-floppy-disk me-2"></i>Guardar</button>
                         <button className='btn btn-dark border border-secondary px-2 mx-2 ' onClick={() => Volver()}>Volver</button>

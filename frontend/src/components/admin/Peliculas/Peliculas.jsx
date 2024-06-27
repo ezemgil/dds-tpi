@@ -33,15 +33,36 @@ const Peliculas = () => {
     //     setPeliculas(resPelicula)
     // }
 
+
+
     useEffect(() => {
         peliculaService.getAll().then((response) => setPeliculas(response.data))
     }, []);
 
+
     const Grabar = (itemPelicula) => {
+        const peliculaEndpoint = {
+            titulo: itemPelicula.titulo,
+            descripcion: itemPelicula.descripcion,
+            calificacion: itemPelicula.calificacion,
+            duracion: itemPelicula.duracion,
+            fecha_estreno: itemPelicula.fecha_estreno,
+            clasificacion: itemPelicula.clasificacion,
+            generos: itemPelicula.generos.map((g) => g.id),
+            idiomas: itemPelicula.idiomas.map((i) => i.id),
+            imagen: itemPelicula.imagen
+        }
+
         if (AccionCRUD === "C") {
-            peliculaService.create(itemPelicula);
+            peliculaService.create(peliculaEndpoint).then((response) => {
+                console.log(response);
+                peliculaService.getAll().then((response) => setPeliculas(response.data))
+            })
         } else {
-            peliculaService.update(itemPelicula.id, itemPelicula);
+            peliculaService.update(itemPelicula.id, peliculaEndpoint).then((response) => {
+                console.log(response);
+                peliculaService.getAll().then((response) => setPeliculas(response.data))
+            })
         }
         setAccionCRUD("RA");
     }
@@ -58,7 +79,10 @@ const Peliculas = () => {
                 nombre: "",
                 descripcion: ""
             },
-            generos: []
+            generos: [],
+            idiomas: [],
+            imagen: "https://via.placeholder.com/150"
+
         })
         setAccionCRUD("C");
     }
