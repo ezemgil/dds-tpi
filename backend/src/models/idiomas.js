@@ -13,6 +13,14 @@ const Idioma = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    activo: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        isIn: [[0, 1]],
+      },
+      defaultValue: 0,
+    },
   },
   {
     tableName: "Idiomas",

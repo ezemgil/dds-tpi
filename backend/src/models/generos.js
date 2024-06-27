@@ -13,6 +13,14 @@ const Genero = sequelize.define(
       type: DataTypes.TEXT,
       allowNull: false,
     },
+    activo: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        isIn: [[0, 1]],
+      },
+      defaultValue: 0,
+    },
   },
   {
     tableName: "Generos",

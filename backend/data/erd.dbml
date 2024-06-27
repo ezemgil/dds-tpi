@@ -7,18 +7,21 @@ Table Paises {
 Table Generos {
   id INTEGER [pk, increment, not null]
   nombre TEXT [not null]
+  activo INTEGER (1) [not null]
 }
 
 
 Table Idiomas {
   id INTEGER [pk, increment, not null]
   nombre TEXT [not null]
+  activo INTEGER (1) [not null]
 }
 
 Table Clasificaciones {
   id INTEGER [pk, increment, not null]
   nombre TEXT [not null]
   descripcion TEXT
+  activo INTEGER (1) [not null]
 }
 
 Table TiposRol {
@@ -55,10 +58,9 @@ Table RolesCineasta {
   id_rol INTEGER [pk, ref: < TiposRol.id]
 }
 
-Table PeliculaCineastaRol {
+Table PeliculaCineasta {
   id_pelicula INTEGER [pk, ref: < Peliculas.id]
   id_cineasta INTEGER [pk, ref: < Cineastas.id]
-  id_rol INTEGER [pk, ref: < TiposRol.id]
 }
 
 Table IdiomasPelicula {
@@ -95,5 +97,3 @@ Table RolesUsuario {
   id INTEGER [pk, increment, not null]
   rol TEXT [not null, unique]
 }
-
-Ref: "Idiomas"."nombre" < "IdiomasPelicula"."id_pelicula"
