@@ -28,13 +28,13 @@ const PaisesLista = ({ Paises, Editar, Eliminar }) => {
                                         <td>{pais.codigo}</td>
                                         <td className="d-flex gap-2 justify-content-center">
                                             <button
-                                                className="btn btn-warning btn-sm"
+                                                className="btn btn-warning btn-sm rounded-pill"
                                                 onClick={() => Editar(pais.id)}
                                             >
                                                 <i className="fa-solid fa-pencil"></i>
                                             </button>
                                             <button
-                                                className="btn btn-danger btn-sm"
+                                                className="btn btn-danger btn-sm rounded-pill"
                                                 onClick={() => Eliminar(pais.id)}
                                             >
                                                 <i className="fa-solid fa-trash-can"></i>
