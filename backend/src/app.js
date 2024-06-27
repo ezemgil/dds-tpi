@@ -1,6 +1,7 @@
 import cors from "cors";
 import express from "express";
 import errorHandler from "./middleware/errorHandler.js";
+import { authentificateJWT } from "./middleware/auth.js";
 
 // Relaciones de modelos
 import "./models/associations.js";

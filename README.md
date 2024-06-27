@@ -93,7 +93,6 @@ Existen 3 usuarios registrados en la base de datos, cada uno con un rol distinto
 | Usuario | Clave | Rol | Permisos |
 |---------|-------|-----| -------- |
 |admin    |admin  |admin| Completo |
-|supervisor|supervisor|supervisor| Restringido a ciertas rutas |
 |usuario  |usuario|usuario| Sólo lectura |
 
 ***Nota**: La clave de cada usuario se ha hasheado con `bcrypt` antes de ser almacenada en la base de datos.*

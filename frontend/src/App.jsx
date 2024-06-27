@@ -2,6 +2,7 @@ import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import Footer from "./components/common/Footer";
 import Navbar from "./components/common/Navbar";
 
+import RequireAuth from "./components/RequireAuth";
 import AcercaDe from "./pages/AcercaDe";
 import Admin from "./pages/Admin";
 import Cineastas from "./pages/Cineastas";
@@ -28,6 +29,14 @@ function App() {
         <Route path="/pelicula/:id" element={<DetallePelicula />} />
         <Route path="/cineasta/:id" element={<DetalleCineasta />} />
         <Route path="/admin" element={<Admin />} />
+        <Route
+          path="/admin"
+          element={
+            <RequireAuth>
+              <Admin />
+            </RequireAuth>
+          }
+        />
         <Route path="*" element={<Navigate to="/" />} />
 
       </Routes>

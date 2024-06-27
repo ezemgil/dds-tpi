@@ -12,7 +12,7 @@ import Nominaciones from "../components/admin/Nominaciones/Nominaciones";
 
 const Admin = () => {
   const [ElementoActual, setElementoActual] = useState("Peliculas");
-  
+
   return (
     <>
       <div className="container-fluid">
@@ -32,5 +32,7 @@ const Admin = () => {
     </>
   );
 };
+
+Admin.ComponenteNoOfuscado = "Admin";
 
 export default Admin;
