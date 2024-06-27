@@ -17,11 +17,26 @@ let refreshTokens = [];
 export const login = async (req, res, next) => {
   const { nombre, clave } = req.body;
 
-  // Buscar el usuario en la base de datos
+  if (!nombre || !clave) {
+    log(
+      req,
+      "Error en login: Nombre de usuario o contraseña no proporcionados"
+    );
+    return next(
+      new BadRequestError("Nombre de usuario o contraseña no proporcionados")
+    );
+  }
+
+  // Buscar el usuario
   const usuario = await service.findByUsername(nombre);
 
+  // Verificar la contraseña
+  const claveCorrecta = usuario
+    ? await bcrypt.compare(clave, usuario.clave)
+    : false;
+
   // Verificar si el usuario existe y la contraseña es correcta
-  if (!usuario || !bcrypt.compare(clave, usuario.clave)) {
+  if (!usuario || !claveCorrecta) {
     log(req, "Error en login: Nombre de usuario o contraseña incorrectos");
     return next(
       new BadRequestError("Nombre de usuario o contraseña incorrectos")

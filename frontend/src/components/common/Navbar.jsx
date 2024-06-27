@@ -1,15 +1,19 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import authService from "../../services/auth.service";
 
 import Logo from "../../assets/img/logo/logo-01.svg";
 
 import peliculaService from "../../services/pelicula.service";
 
 const Navbar = () => {
+  const usuario = authService.getUsuarioLogueado();
+
   const handleClick = async () => {
     const peliculas = await peliculaService.getNu();
     console.log(peliculas);
   };
+
   return (
     <nav className="px-3 navbar navbar-expand-lg navbar-dark bg-dark">
       <NavLink className="navbar-brand d-flex align-items-center" to="/inicio">
@@ -68,47 +72,21 @@ const Navbar = () => {
               <i className="fas fa-search"></i>
             </button>
           </div>
-          {/* Si el usuario no está logueado: */}
-          <NavLink className="btn btn-warning text-nowrap" to="/login">
-            Iniciar sesión
-          </NavLink>
-          {/* Si el usuario está logueado: */}
-          {/* <div className="dropdown">
-            <NavLink
-              to="/"
-              className="d-block link-body-emphasis text-decoration-none dropdown-toggle"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              <img
-                src="https://github.com/arcba.png"
-                alt="profile"
-                width="32"
-                height="32"
-                className="rounded-circle"
-              />
-            </NavLink>
-            <ul className="dropdown-menu dropdown-menu-end text-small">
-              <li>
-                <NavLink className="dropdown-item" to="/">
-                  Nuevo...
-                </NavLink>
-              </li>
-              <li>
-                <NavLink className="dropdown-item" to="/profile">
-                  Perfil
-                </NavLink>
-              </li>
-              <li>
-                <hr className="dropdown-divider" />
-              </li>
-              <li>
-                <NavLink className="dropdown-item" to="/logout">
-                  Cerrar sesión
-                </NavLink>
-              </li>
-            </ul>
-          </div> */}
+
+          {usuario === "admin" ? (
+            <>
+              <NavLink className="btn btn-info text-nowrap" to="/admin">
+                Panel de administración{" "}
+                <i class="fa-solid fa-screwdriver-wrench"></i>
+              </NavLink>
+            </>
+          ) : (
+            <>
+              <NavLink className="btn btn-warning text-nowrap" to="/login">
+                Iniciar sesión
+              </NavLink>
+            </>
+          )}
         </form>
       </div>
     </nav>

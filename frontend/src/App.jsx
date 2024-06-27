@@ -10,6 +10,7 @@ import Cineastas from "./pages/Cineastas";
 import DetallePelicula from "./pages/DetallePelicula";
 import DetalleCineasta from "./pages/DetalleCineasta";
 import Admin from "./pages/Admin";
+import RequireAuth from "./components/RequireAuth";
 
 function App() {
   const location = useLocation();
@@ -27,8 +28,14 @@ function App() {
         <Route path="/cineastas" element={<Cineastas />} />
         <Route path="/pelicula/:id" element={<DetallePelicula />} />
         <Route path="/cineasta/:id" element={<DetalleCineasta />} />
-        {/* <Route path="/admin/*" element={<Navigate to="/login" />} /> */}
-        <Route path="/admin/*" element={<Admin />} />
+        <Route
+          path="/admin/*"
+          element={
+            <RequireAuth>
+              <Admin />
+            </RequireAuth>
+          }
+        />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
       {!excludedRoutes.includes(location.pathname) ? <Footer /> : null}

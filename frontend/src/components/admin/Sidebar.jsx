@@ -2,6 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Logo from "../../assets/img/logo/logo-01.svg";
 
+import authService from "../../services/auth.service";
+
 const Sidebar = ({ handleElementoActual }) => {
   return (
     <div className="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
@@ -96,36 +98,18 @@ const Sidebar = ({ handleElementoActual }) => {
           <i className="fa-solid fa-house"></i>
           <span className="ms-2 d-none d-sm-inline ">Inicio</span>
         </Link>
+        <Link
+          onClick={authService.logout}
+          to="/inicio"
+          className="btn btn-danger w-100 d-flex align-items-center justify-content-center text-white mt-4 text-decoration-none fw-bold py-2 border-0 bg-gradient bg-gradient-danger"
+        >
+          <i className="fa-solid fa-sign-out"></i>
+          <span className="ms-2 d-none d-sm-inline ">Cerrar sesión</span>
+        </Link>
         <hr />
-        <div className="dropdown mb-4 w-100 p-2 rounded">
-          <a
-            href="#"
-            className="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
-            id="dropdownUser1"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            <img
-              src="https://github.com/arcba.png"
-              alt="hugenerd"
-              width="30"
-              height="30"
-              className="rounded-circle"
-            />
-            <span className="d-none d-sm-inline mx-1">Admin</span>
-          </a>
-          <ul className="dropdown-menu dropdown-menu-dark text-small shadow">
-            <li>
-              <a className="dropdown-item" href="#">
-                Cerrar sesión
-              </a>
-            </li>
-          </ul>
-        </div>
       </div>
     </div>
   );
 };
 
 export default Sidebar;
-``;

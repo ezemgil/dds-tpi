@@ -1,10 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
+import authService from "../services/auth.service";
 
 import Logo from "../assets/img/logo/logo-01.svg";
 
 const Login = () => {
+  const [usuario, setUsuario] = useState("");
+  const [clave, setClave] = useState("");
+  const navigate = useNavigate();
+
+  const navigateToComponent = () => {
+    navigate("/admin");
+  };
+
+  const handleSubmit = async () => {
+    authService.login(usuario, clave, navigateToComponent);
+  };
+
+  useEffect(() => {
+    authService.logout();
+  });
+
   return (
     <>
       <Helmet>
@@ -26,6 +44,9 @@ const Login = () => {
                 type="text"
                 className="form-control"
                 placeholder="Nombre de usuario"
+                value={usuario}
+                onChange={(e) => setUsuario(e.target.value)}
+                autoFocus
               />
             </div>
             <div className="mb-3">
@@ -36,14 +57,21 @@ const Login = () => {
                 type="password"
                 className="form-control"
                 placeholder="Contraseña"
+                value={clave}
+                onChange={(e) => setClave(e.target.value)}
+                autoFocus
               />
             </div>
-            <button type="submit" className="btn btn-primary w-100">
+            <button
+              type="button"
+              className="btn btn-primary w-100"
+              onClick={(e) => handleSubmit()}
+            >
               Iniciar sesión
             </button>
             <div className="text-center mt-3 ">
-              <Link to="/register" className="text-warning">
-                Registrarse
+              <Link to="/inicio" className="text-warning">
+                Volver al inicio
               </Link>
             </div>
           </form>

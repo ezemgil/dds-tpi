@@ -375,7 +375,7 @@ INSERT INTO NominacionesPelicula (id_premio, id_pelicula, fecha_nominacion, fue_
 INSERT INTO RolesUsuario (rol) VALUES ('Administrador'), ('Usuario');
 
 INSERT INTO Usuarios (nombre, clave, id_rol) VALUES ('admin', '$2b$10$kXII2Vd5f3KOgUBbiJ7Oq.ChAHdEbszy4xHbzvQInvGBYc6rPQ3wS', 1); 
-INSERT INTO Usuarios (nombre, clave, id_rol) VALUES ('usuario', '$2y$10$AnEZ7w7nGM9dTy1ListUJe6uigeQNHi1.v6HpLoqttqsU5C94t7oC', 2);
+INSERT INTO Usuarios (nombre, clave, id_rol) VALUES ('usuario', '$2b$10$4H82aRCITwhn/fRa/nI3x.TBRxB3oomH7WUutc25sr7Qu3DvrSWG6', 2);
 
 UPDATE Cineastas
 SET fecha_fallecimiento = '1999-01-01'
