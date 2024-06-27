@@ -1,3 +1,4 @@
+import moment from "moment";
 import React, { useEffect, useState } from "react";
 import peliculaService from "../../../services/pelicula.service";
 import PeliculasFormModal from "./PeliculasFormModal";
@@ -15,11 +16,8 @@ const Peliculas = () => {
     const [AccionCRUD, setAccionCRUD] = useState("RA");
     const [itemPelicula, setItemPelicula] = useState({});
     const [modalShow, setModalShow] = useState(false);
+    const [deleteModal, setDeleteModal] = useState(false);
 
-    // Create
-    // Remove
-    // Update
-    // Delete
 
 
     const BuscarPorId = async (idPelicula, accion) => {
@@ -27,12 +25,6 @@ const Peliculas = () => {
         setItemPelicula(resPelicula.data);
         setAccionCRUD(accion)
     }
-
-    // const BuscarPorNombre = async (nombrePelicula) => {
-    //     const resPelicula = await peliculaService.getByNombre(nombrePelicula);
-    //     setPeliculas(resPelicula)
-    // }
-
 
 
     useEffect(() => {
@@ -43,15 +35,17 @@ const Peliculas = () => {
     const Grabar = (itemPelicula) => {
         const peliculaEndpoint = {
             titulo: itemPelicula.titulo,
+            titulo_original: itemPelicula.titulo_original,
             descripcion: itemPelicula.descripcion,
             calificacion: itemPelicula.calificacion,
             duracion: itemPelicula.duracion,
             fecha_estreno: itemPelicula.fecha_estreno,
-            clasificacion: itemPelicula.clasificacion,
+            id_clasificacion: itemPelicula.clasificacion,
             generos: itemPelicula.generos.map((g) => g.id),
             idiomas: itemPelicula.idiomas.map((i) => i.id),
             imagen: itemPelicula.imagen
         }
+        console.log('Pelicula a crear: ' + peliculaEndpoint);
 
         if (AccionCRUD === "C") {
             peliculaService.create(peliculaEndpoint).then((response) => {
@@ -71,10 +65,11 @@ const Peliculas = () => {
         setModalShow(true);
         setItemPelicula({
             titulo: "",
+            titulo_original: "",
             descripcion: "",
             calificacion: 0,
             duracion: 0,
-            fecha_estreno: new Date(),
+            fecha_estreno: moment().format("YYYY-MM-DD"),
             clasificacion: {
                 nombre: "",
                 descripcion: ""
@@ -92,13 +87,17 @@ const Peliculas = () => {
         BuscarPorId(idPelicula, "U")
     }
 
-    const Eliminar = () => {}
 
-    const Volver = () => {
-        setModalShow(false);
+
+    const Eliminar = (id_pelicula) => {
+        peliculaService.remove(id_pelicula).then((response) => {
+            console.log(response);
+            peliculaService.getAll().then((response) => setPeliculas(response.data))
+        })
         setAccionCRUD("RA");
     }
 
+    
 
     return (
         <div>

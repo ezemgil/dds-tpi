@@ -1,7 +1,7 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../../config/database.js";
-import Premio from "./premios.js";
 import Pelicula from "./peliculas.js";
+import Premio from "./premios.js";
 
 const NominacionPelicula = sequelize.define(
   "NominacionPelicula",
@@ -28,7 +28,7 @@ const NominacionPelicula = sequelize.define(
       },
     },
     fecha_nominacion: {
-      type: DataTypes.DATE,
+      type: DataTypes.DATEONLY,
       allowNull: false,
     },
     fue_ganador: {

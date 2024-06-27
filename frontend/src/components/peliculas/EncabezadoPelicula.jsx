@@ -54,7 +54,7 @@ const EncabezadoPelicula = ({ Pelicula }) => {
               </li>
               <li className="list-group-item bg-body-subtle text-secondary-emphasis">
                 <b>Fecha de estreno:</b>{" "}
-                {moment(Pelicula.fechaEstreno).format("L")}
+                {moment(Pelicula.fecha_estreno).format("L")}
               </li>
               <li className="list-group-item bg-body-subtle text-secondary-emphasis">
                 <b>Calificación:</b> {Pelicula?.clasificacion?.nombre}{" "}

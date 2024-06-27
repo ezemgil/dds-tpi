@@ -7,6 +7,20 @@ import generosService from "../../../services/genero.service";
 import idiomaService from "../../../services/idioma.service";
 
 const PeliculasForm = ({itemPelicula, Volver, Grabar}) => {
+    
+    const [clasificaciones, setClasificaciones] = React.useState([]);
+    const [clasificacionItem, setClasificacionItem] = React.useState({});
+    const [urlImagen, setImagen] = React.useState('');
+    
+    const [generos, setGeneros] = React.useState([]);
+    const [generosItem, setGenerosItem] = React.useState([{}]);
+    const [generoModalShow, setGeneroModalShow] = React.useState(false);
+    
+    const [idiomas, setIdiomas] = React.useState([]);
+    const [idiomasItem, setIdiomasItem] = React.useState([{}]);
+    const [idiomaModalShow, setIdiomaModalShow] = React.useState(false);
+    
+    
     const {
         register,
         handleSubmit,
@@ -15,26 +29,12 @@ const PeliculasForm = ({itemPelicula, Volver, Grabar}) => {
 
     const onSubmit = (data) => {
         data.generos = generosItem;
-        data.clasificacion = clasificacionItem;
+        data.clasificacion = clasificacionItem.id;
         data.imagen = urlImagen;
         data.idiomas = idiomasItem;
 
         Grabar(data);
     }
-
-    const [clasificaciones, setClasificaciones] = React.useState([]);
-    const [clasificacionItem, setClasificacionItem] = React.useState({});
-    const [urlImagen, setImagen] = React.useState('');
-    
-    const [generos, setGeneros] = React.useState([]);
-    const [generosItem, setGenerosItem] = React.useState([{}]);
-    const [generoModalShow, setGeneroModalShow] = React.useState(false);
-
-    const [idiomas, setIdiomas] = React.useState([]);
-    const [idiomasItem, setIdiomasItem] = React.useState([{}]);
-    const [idiomaModalShow, setIdiomaModalShow] = React.useState(false);
-    
-
 
     const handleGenerosModal = () => {
         setGeneroModalShow(!generoModalShow);
@@ -86,7 +86,9 @@ const PeliculasForm = ({itemPelicula, Volver, Grabar}) => {
     }, []);
 
 
-    // console.log('itemPelicula', itemPelicula);
+    // console.log('clasificaciones', clasificaciones);
+
+    
 
 
     return (
@@ -134,15 +136,15 @@ const PeliculasForm = ({itemPelicula, Volver, Grabar}) => {
                         <label htmlFor="clasificacion" className="col-form-label">Clasificacion</label>
                         <div className="mb-3 d-flex">
                             <span className="badge d-flex p-2 me-3 fs-5 align-items-center text-bg-warning rounded-pill">
-                                <span className="px-1">{clasificacionItem.nombre}</span>
+                                {clasificacionItem.nombre}
+                                {/* {clasificacionItem.nombre == '' ? 'N/A' : clasificacionItem.nombre} */}
                             </span>
-                            {/*setClasificacionItem(clasificaciones.find(clasi => clasi.id == e.target.value)) */}
-                            <select onChange={(e) => setClasificacionItem(clasificaciones.find(clasi => clasi.id == e.target.value))} className="form-select bg-dark text-light border-secondary" id="clasificacion" name="clasificacion">
-                                {clasificaciones?.map((clas) => (
-                                    <option key={clas.id} defaultValue={clasificacionItem.id === clas.id} value={clas.id}>
-                                        <span className="py-4">{clas.nombre} / {clas.descripcion}</span>
-                                    </option>
-                                ))}
+                            <select value={clasificacionItem?.id || ''} onChange={(e) => setClasificacionItem(clasificaciones.find(clasi => clasi.id == e.target.value))}
+                                className="form-select bg-dark text-light border-secondary" id="clasificacion" name="clasificacion">
+                                    <option disabled={true} key={''} value={''}>Seleccione un campo</option>
+                                    {clasificaciones?.map((clas) => (
+                                        <option key={clas.id} value={clas.id}> {clas.nombre} | {clas.descripcion} </option>
+                                    ))}
                             </select>
                         </div>
                     </div>
@@ -247,12 +249,17 @@ const PeliculasForm = ({itemPelicula, Volver, Grabar}) => {
                             
                             <div><label htmlFor="imagen" className="col-form-label">Imagen de portada</label></div>
                             <input type="text" id="imagen" name="imagen" onKeyUp={(e) => setImagen(e.target.value)} 
-                            {...register('imagen', {required: { value: true, message: 'Campo requerido' }})}
+                            {...register('imagen', {
+                                required: {value: true, message: 'Campo requerido' }
+                                }
+                            )}
                             className={'bg-dark text-light border-secondary form-control mb-2' + (errors?.fecha_estreno ? ' is-invalid' : '')}/>
 
-                            <img  src={urlImagen !== '' ? urlImagen : 'https://via.placeholder.com/300'} 
-                            alt="Poster de la pelicula" 
-                            className="img-fluid rounded shadow col-lg-5 col-5 mb-3 mb-lg-3" /> 
+                            <div className="w-auto d-flex justify-content-center">
+                                <img  src={urlImagen !== '' ? urlImagen : 'https://via.placeholder.com/300'} 
+                                alt="Poster de la pelicula" 
+                                className="img-fluid rounded shadow col-lg-5 col-5 mb-3 mb-lg-3" /> 
+                            </div>
                             
                             
                             <div className="invalid-feedback">{errors?.fecha_estreno?.message}</div>
@@ -281,8 +288,8 @@ const PeliculasForm = ({itemPelicula, Volver, Grabar}) => {
                                     <label htmlFor="duracion" className="col-form-label">Duracion</label>
                                     <input type="number" id="duracion" name="duracion"
                                         {...register('duracion', {
-                                            required: { value: true, message: 'Campo requerido' },
-                                            min: { value: 0, message: 'Duracion minima: 0' }
+                                            required: { value: true, message: 'El campo duracion es obligatorio' },
+                                            min: { value: 1, message: 'Duracion minima: 1' }
                                         })}
                                         className={'bg-dark text-light border-secondary form-control' + (errors?.duracion ? ' is-invalid' : '')}
                                         />

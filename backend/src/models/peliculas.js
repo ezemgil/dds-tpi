@@ -27,7 +27,7 @@ const Pelicula = sequelize.define(
       allowNull: false,
     },
     fecha_estreno: {
-      type: DataTypes.DATE,
+      type: DataTypes.DATEONLY,
       allowNull: false,
       defaultValue: DataTypes.NOW,
     },

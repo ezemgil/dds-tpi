@@ -28,7 +28,6 @@ function App() {
         <Route path="/cineastas" element={<Cineastas />} />
         <Route path="/pelicula/:id" element={<DetallePelicula />} />
         <Route path="/cineasta/:id" element={<DetalleCineasta />} />
-        <Route path="/admin" element={<Admin />} />
         <Route
           path="/admin"
           element={
@@ -37,6 +36,7 @@ function App() {
             </RequireAuth>
           }
         />
+
         <Route path="*" element={<Navigate to="/" />} />
 
       </Routes>
