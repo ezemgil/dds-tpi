@@ -3,11 +3,19 @@ import { Helmet } from "react-helmet";
 import Listado from "../components/Listado";
 import CineastaCard from "../components/card/CineastaCard";
 import { Link } from "react-router-dom";
+import SearchBar from "../components/SearchBar";
 
 import cineastaService from "../services/cineasta.service";
 
 const Cineastas = () => {
   const [Cineastas, setCineastas] = useState([]);
+  const [busqueda, setBusqueda] = useState("");
+
+  async function buscar() {
+    const response = await cineastaService.getByName(busqueda);
+    setCineastas(response.data);
+  }
+
   useEffect(() => {
     cineastaService.getAll().then((response) => {
       setCineastas(response.data);
@@ -20,6 +28,15 @@ const Cineastas = () => {
       <Helmet>
         <title>Listado de cineastas</title>
       </Helmet>
+
+      <div className="container mt-4">
+        <SearchBar
+          Placeholder="Buscar cineastas..."
+          busqueda={busqueda}
+          setBusqueda={setBusqueda}
+          buscar={buscar}
+        />
+      </div>
 
       <Listado
         Titulo={

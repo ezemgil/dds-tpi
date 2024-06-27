@@ -55,39 +55,21 @@ const Navbar = () => {
             </NavLink>
           </li>
         </ul>
-        <form className="d-flex align-items-center">
-          <div className="input-group me-3">
-            <input
-              type="text"
-              className="form-control bg-dark text-white placeholder-light"
-              placeholder="Buscar película..."
-              aria-label="Buscar película"
-              aria-describedby="button-addon2"
-            ></input>
-            <button
-              className="btn btn-warning"
-              type="button"
-              id="button-addon2"
-            >
-              <i className="fas fa-search"></i>
-            </button>
-          </div>
 
-          {usuario === "admin" ? (
-            <>
-              <NavLink className="btn btn-info text-nowrap" to="/admin">
-                Panel de administración{" "}
-                <i class="fa-solid fa-screwdriver-wrench"></i>
-              </NavLink>
-            </>
-          ) : (
-            <>
-              <NavLink className="btn btn-warning text-nowrap" to="/login">
-                Iniciar sesión
-              </NavLink>
-            </>
-          )}
-        </form>
+        {usuario === "admin" ? (
+          <>
+            <NavLink className="btn btn-info text-nowrap" to="/admin">
+              Panel de administración{" "}
+              <i class="fa-solid fa-screwdriver-wrench"></i>
+            </NavLink>
+          </>
+        ) : (
+          <>
+            <NavLink className="btn btn-warning text-nowrap" to="/login">
+              Iniciar sesión
+            </NavLink>
+          </>
+        )}
       </div>
     </nav>
   );
