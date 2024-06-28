@@ -5,215 +5,235 @@ import Genero from "../models/generos.js";
 import Cineasta from "../models/cineastas.js";
 import TipoRol from "../models/tiposRol.js";
 import Idioma from "../models/idiomas.js";
+import { DatabaseValidationError } from "../utils/errors.js";
 
 // Buscar todas las películas
 export const findAll = async (page = undefined, size = undefined) => {
-  return await Pelicula.findAll({
-    include: [
-      {
-        model: Clasificacion,
-        as: "clasificacion",
-      },
-      {
-        model: Genero,
-        as: "generos",
-        through: {
-          attributes: [],
-        },
-      },
-      {
-        model: Idioma,
-        as: "idiomas",
-        through: {
-          attributes: [],
-        },
-      },
-    ],
-    attributes: { exclude: ["id_clasificacion"] },
-    offset: page && size ? page * size : undefined,
-    limit: size ? size : undefined,
-  });
+    try {
+        return await Pelicula.findAll({
+            include: [
+                {
+                    model: Clasificacion,
+                    as: "clasificacion",
+                },
+                {
+                    model: Genero,
+                    as: "generos",
+                    through: {
+                        attributes: [],
+                    },
+                },
+                {
+                    model: Idioma,
+                    as: "idiomas",
+                    through: {
+                        attributes: [],
+                    },
+                },
+            ],
+            attributes: { exclude: ["id_clasificacion"] },
+            offset: page && size ? page * size : undefined,
+            limit: size ? size : undefined,
+        });
+    } catch (error) {
+        throw new DatabaseValidationError(error.message);
+    }
 };
 
 // Crear una nueva película
 export const create = async (pelicula, generos, idiomas) => {
-  try {
-    const result = await Pelicula.create(pelicula);
-    if (result) {
-      if (generos && generos.length > 0) {
-        await result.setGeneros(generos);
-      }
-      if (idiomas && idiomas.length > 0) {
-        await result.setIdiomas(idiomas);
-      }
-      return result;
+    try {
+        const result = await Pelicula.create(pelicula);
+        if (result) {
+            if (generos && generos.length > 0) {
+                await result.setGeneros(generos);
+            }
+            if (idiomas && idiomas.length > 0) {
+                await result.setIdiomas(idiomas);
+            }
+            return result;
+        }
+    } catch (error) {
+        throw new DatabaseValidationError(error.message);
     }
-  } catch (error) {
-    console.log(error);
-    throw error;
-  }
 };
 
 // Obtener la lista de cineastas de una película
 export const getElenco = async (id) => {
-  const pelicula = await Pelicula.findByPk(id, {
-    include: [
-      {
-        model: Cineasta,
-        as: "cineastas",
-        through: {
-          attributes: [],
-        },
-        include: [
-          {
-            model: TipoRol,
-            as: "roles",
-            through: {
-              attributes: [],
-            },
-          },
-        ],
-      },
-    ],
-  });
+    try {
+        const pelicula = await Pelicula.findByPk(id, {
+            include: [
+                {
+                    model: Cineasta,
+                    as: "cineastas",
+                    through: {
+                        attributes: [],
+                    },
+                    include: [
+                        {
+                            model: TipoRol,
+                            as: "roles",
+                            through: {
+                                attributes: [],
+                            },
+                        },
+                    ],
+                },
+            ],
+        });
 
-  if (pelicula) {
-    return pelicula.cineastas;
-  }
-  return null;
+        if (pelicula) {
+            return pelicula.cineastas;
+        }
+        return null;
+    } catch (error) {
+        throw new DatabaseValidationError(error.message);
+    }
 };
 
 // Buscar una película por su id
 export const findById = async (id) => {
-  return await Pelicula.findByPk(id, {
-    include: [
-      {
-        model: Clasificacion,
-        as: "clasificacion",
-      },
-      {
-        model: Genero,
-        as: "generos",
-        through: {
-          attributes: [],
-        },
-      },
-      {
-        model: Idioma,
-        as: "idiomas",
-        through: {
-          attributes: [],
-        },
-      },
-    ],
-    attributes: { exclude: ["id_clasificacion"] },
-  });
+    try {
+        return await Pelicula.findByPk(id, {
+            include: [
+                {
+                    model: Clasificacion,
+                    as: "clasificacion",
+                },
+                {
+                    model: Genero,
+                    as: "generos",
+                    through: {
+                        attributes: [],
+                    },
+                },
+                {
+                    model: Idioma,
+                    as: "idiomas",
+                    through: {
+                        attributes: [],
+                    },
+                },
+            ],
+            attributes: { exclude: ["id_clasificacion"] },
+        });
+    } catch (error) {
+        throw new DatabaseValidationError(error.message);
+    }
 };
 
 // Buscar una película por su nombre
 export const findByName = async (nombre) => {
-  return await Pelicula.findAll({
-    where: { titulo: { [Op.like]: `%${nombre}%` } },
-    include: [
-      {
-        model: Clasificacion,
-        as: "clasificacion",
-      },
-      {
-        model: Genero,
-        as: "generos",
-        through: {
-          attributes: [],
-        },
-      },
-      {
-        model: Idioma,
-        as: "idiomas",
-        through: {
-          attributes: [],
-        },
-      },
-    ],
-    attributes: { exclude: ["id_clasificacion"] },
-  });
+    try {
+        return await Pelicula.findAll({
+            where: { titulo: { [Op.like]: `%${nombre}%` } },
+            include: [
+                {
+                    model: Clasificacion,
+                    as: "clasificacion",
+                },
+                {
+                    model: Genero,
+                    as: "generos",
+                    through: {
+                        attributes: [],
+                    },
+                },
+                {
+                    model: Idioma,
+                    as: "idiomas",
+                    through: {
+                        attributes: [],
+                    },
+                },
+            ],
+            attributes: { exclude: ["id_clasificacion"] },
+        });
+    } catch (error) {
+        throw new DatabaseValidationError(error.message);
+    }
 };
 
 // Buscar X películas aleatorias
 export const findRandom = async (amount) => {
-  return await Pelicula.findAll({
-    order: Sequelize.literal("random()"),
-    limit: amount,
-    include: [
-      {
-        model: Clasificacion,
-        as: "clasificacion",
-      },
-      {
-        model: Genero,
-        as: "generos",
-        through: {
-          attributes: [],
-        },
-      },
-    ],
-    attributes: { exclude: ["id_clasificacion"] },
-  });
+    try {
+        return await Pelicula.findAll({
+            order: Sequelize.literal("random()"),
+            limit: amount,
+            include: [
+                {
+                    model: Clasificacion,
+                    as: "clasificacion",
+                },
+                {
+                    model: Genero,
+                    as: "generos",
+                    through: {
+                        attributes: [],
+                    },
+                },
+            ],
+            attributes: { exclude: ["id_clasificacion"] },
+        });
+    } catch (error) {
+        throw new DatabaseValidationError(error.message);
+    }
 };
 
 // Actualizar una película
 export const update = async (id, pelicula, generos, idiomas) => {
-  try {
-    const result = await Pelicula.update(pelicula, { where: { id } });
-    if (result) {
-      const movie = await Pelicula.findByPk(id);
-      if (movie && generos && generos.length > 0) {
-        await movie.setGeneros(generos);
-      }
-      if (movie && idiomas && idiomas.length > 0) {
-        await movie.setIdiomas(idiomas);
-      }
-      return movie;
+    try {
+        const result = await Pelicula.update(pelicula, { where: { id } });
+        if (result) {
+            const movie = await Pelicula.findByPk(id);
+            if (movie && generos && generos.length > 0) {
+                await movie.setGeneros(generos);
+            }
+            if (movie && idiomas && idiomas.length > 0) {
+                await movie.setIdiomas(idiomas);
+            }
+            return movie;
+        }
+    } catch (error) {
+        throw new DatabaseValidationError(error.message);
     }
-  } catch (error) {
-    throw error;
-  }
 };
 
 // Eliminar una película
 export const remove = async (id) => {
-  try {
-    const result = await Pelicula.destroy({ where: { id } });
-    if (result) {
-      return true;
+    try {
+        const result = await Pelicula.destroy({ where: { id } });
+        if (result) {
+            return true;
+        }
+    } catch (error) {
+        throw new DatabaseValidationError(error.message);
     }
-  } catch (error) {
-    throw error;
-  }
 };
 
 // Agregar un cineasta a una película
 export const addCineastas = async (id, cineastas) => {
-  try {
-    console.log(cineastas);
-    const movie = await Pelicula.findByPk(id);
-    if (movie) {
-      await movie.addCineasta(cineastas);
-      return true;
+    try {
+        console.log(cineastas);
+        const movie = await Pelicula.findByPk(id);
+        if (movie) {
+            await movie.addCineasta(cineastas);
+            return true;
+        }
+    } catch (error) {
+        throw new DatabaseValidationError(error.message);
     }
-  } catch (error) {
-    throw error;
-  }
 };
 
 // Quitar un cineasta de una película
 export const removeCineasta = async (id, cineasta) => {
-  try {
-    const movie = await Pelicula.findByPk(id);
-    if (movie) {
-      await movie.removeCineasta(cineasta);
-      return true;
+    try {
+        const movie = await Pelicula.findByPk(id);
+        if (movie) {
+            await movie.removeCineasta(cineasta);
+            return true;
+        }
+    } catch (error) {
+        throw new DatabaseValidationError(error.message);
     }
-  } catch (error) {
-    throw error;
-  }
 };
