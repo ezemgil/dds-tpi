@@ -1,46 +1,71 @@
 import { Op } from "sequelize";
 import Premio from "../models/premios.js";
+import { DatabaseValidationError } from "../utils/errors.js";
 
 // Buscar todos los premios
 export const findAll = async (page = undefined, size = undefined) => {
-  return await Premio.findAll({
-    offset: page && size ? page * size : undefined,
-    limit: size ? size : undefined,
-  });
+    try {
+        return await Premio.findAll({
+            offset: page && size ? page * size : undefined,
+            limit: size ? size : undefined,
+        });
+    } catch (error) {
+        throw new DatabaseValidationError(error.message);
+    }
 };
 
 // Crear un nuevo premio
 export const create = async (premio) => {
-  return await Premio.create(premio);
+    try {
+        return await Premio.create(premio);
+    } catch (error) {
+        throw new DatabaseValidationError(error.message);
+    }
 };
 
 // Buscar un premio por su id
 export const findById = async (id) => {
-  return await Premio.findByPk(id);
+    try {
+        return await Premio.findByPk(id);
+    } catch (error) {
+        throw new DatabaseValidationError(error.message);
+    }
 };
 
 // Buscar un premio por su nombre
 export const findByName = async (nombre) => {
-  return await Premio.findAll({
-    where: { nombre: { [Op.like]: `%${nombre}%` } },
-  });
+    try {
+        return await Premio.findAll({
+            where: { nombre: { [Op.like]: `%${nombre}%` } },
+        });
+    } catch (error) {
+        throw new DatabaseValidationError(error.message);
+    }
 };
 
 // Actualizar un premio
 export const update = async (id, premio) => {
-  const result = await Premio.findByPk(id);
-  if (result) {
-    return await result.update(premio);
-  }
-  return null;
+    try {
+        const result = await Premio.findByPk(id);
+        if (result) {
+            return await result.update(premio);
+        }
+        return null;
+    } catch (error) {
+        throw new DatabaseValidationError(error.message);
+    }
 };
 
 // Eliminar un premio
 export const remove = async (id) => {
-  const result = await Premio.findByPk(id);
-  if (result) {
-    await result.destroy();
-    return true;
-  }
-  return false;
+    try {
+        const result = await Premio.findByPk(id);
+        if (result) {
+            await result.destroy();
+            return true;
+        }
+        return false;
+    } catch (error) {
+        throw new DatabaseValidationError(error.message);
+    }
 };

@@ -1,6 +1,7 @@
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import Footer from "./components/common/Footer";
 import Navbar from "./components/common/Navbar";
+import ModalDialog from "./components/ModalDialog";
 
 import RequireAuth from "./components/RequireAuth";
 import AcercaDe from "./pages/AcercaDe";
@@ -11,39 +12,52 @@ import DetallePelicula from "./pages/DetallePelicula";
 import Inicio from "./pages/Inicio";
 import Login from "./pages/Login";
 import Peliculas from "./pages/Peliculas";
+import Offline from "./pages/Offline";
+
+import { useEffect, useState } from "react";
+import getStatus from "./services/status.service";
 
 
 function App() {
-  const location = useLocation();
-  const excludedRoutes = ["/login", "/admin"];
+    const [Status, setStatus] = useState(null);
 
-  return (
-    <div className="d-flex flex-column vh-100">
-      {!excludedRoutes.includes(location.pathname) ? <Navbar /> : null}
-      <Routes>
-        <Route path="/" element={<Navigate to="/inicio" />} />
-        <Route path="/inicio" element={<Inicio />} />
-        <Route path="/acerca-de" element={<AcercaDe />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/peliculas" element={<Peliculas />} />
-        <Route path="/cineastas" element={<Cineastas />} />
-        <Route path="/pelicula/:id" element={<DetallePelicula />} />
-        <Route path="/cineasta/:id" element={<DetalleCineasta />} />
-        <Route
-          path="/admin"
-          element={
-            <RequireAuth>
-              <Admin />
-            </RequireAuth>
-          }
-        />
+    const fetchStatus = async () => {
+        const response = await getStatus();
+        setStatus(response.status);
+    };
 
-        <Route path="*" element={<Navigate to="/" />} />
+    useEffect(() => {
+        fetchStatus();
+    });
+    const location = useLocation();
+    const excludedRoutes = ["/login", "/admin"];
 
-      </Routes>
-      {!excludedRoutes.includes(location.pathname) ? <Footer /> : null}
-    </div>
-  );
+    return (
+        <div className="d-flex flex-column vh-100">
+            <ModalDialog />
+            {!excludedRoutes.includes(location.pathname) ? <Navbar /> : null}
+            <Routes>
+                <Route path="/" element={<Navigate to="/inicio" />} />
+                <Route path="/inicio" element={Status === 200 ? <Inicio /> : <Offline />} />
+                <Route path="/acerca-de" element={<AcercaDe />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/peliculas" element={<Peliculas />} />
+                <Route path="/cineastas" element={<Cineastas />} />
+                <Route path="/pelicula/:id" element={<DetallePelicula />} />
+                <Route path="/cineasta/:id" element={<DetalleCineasta />} />
+                <Route
+                    path="/admin"
+                    element={
+                        <RequireAuth>
+                            <Admin />
+                        </RequireAuth>
+                    }
+                />
+                <Route path="*" element={<Navigate to="/" />} />
+            </Routes>
+            {!excludedRoutes.includes(location.pathname) ? <Footer /> : null}
+        </div>
+    );
 }
 
 export default App;
