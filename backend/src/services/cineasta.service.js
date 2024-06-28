@@ -1,8 +1,8 @@
-import { Sequelize, Op } from "sequelize";
+import { Op, Sequelize } from "sequelize";
 import Cineasta from "../models/cineastas.js";
-import TipoRol from "../models/tiposRol.js";
 import Paises from "../models/paises.js";
 import Pelicula from "../models/peliculas.js";
+import TipoRol from "../models/tiposRol.js";
 
 // GET ALL
 export const findAll = async (page = undefined, size = undefined) => {
@@ -163,7 +163,9 @@ export const create = async (cineasta, roles) => {
 // PUT
 export const update = async (id, cineasta, roles) => {
   try {
-    const result = await Pelicula.update(cineasta, { where: { id } });
+    // comprobacion de que nac1 y nac2 sean diferentes
+    if (cineasta.nacionalidad == cineasta.nacionalidad2) return null;
+    const result = await Cineasta.update(cineasta, { where: { id } });
     if (result) {
       const filmmaker = await Cineasta.findByPk(id);
       if (roles && roles.length > 0) {

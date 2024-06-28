@@ -48,7 +48,7 @@ const Cineasta = sequelize.define(
       references: {
         model: Paises,
         key: "id",
-      },
+      }
     },
   },
   {

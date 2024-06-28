@@ -92,6 +92,7 @@ export const createCineasta = async (req, res, next) => {
 export const updateCineasta = async (req, res, next) => {
   try {
     const { roles, ...cineasta } = req.body;
+    
     const updatedCineasta = await service.update(
       req.params.id,
       cineasta,
