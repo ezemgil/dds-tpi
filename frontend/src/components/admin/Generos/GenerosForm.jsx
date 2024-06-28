@@ -42,9 +42,12 @@ const GenerosForm = (props) => {
                 className="form-control bg-dark text-light border-secondary"
                 name="nombre"
                 {...register("nombre", {
-                  required: { value: true, message: "Campo requerido" },
+                  required: { value: true, message: "Nombre es requerido" },
                 })}
               />
+              {errors.nombre && (
+                <span className="text-danger">{errors.nombre.message}</span>
+              )}
             </div>
             <div className="d-flex justify-content-center mt-3">
               <button type="submit" className="btn btn-primary mx-2 text-dark">

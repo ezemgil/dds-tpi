@@ -5,7 +5,10 @@ const PAISES_API_URL = `${SERVER_CONFIG.SERVER_API_URL}/paises`;
 
 async function getAll(page, size) {
   try {
-    const response = await httpService.get(`${PAISES_API_URL}?page=${page}&size=${size}`);
+    if (!page && !size) return await httpService.get(PAISES_API_URL);
+    const response = await httpService.get(
+      `${PAISES_API_URL}?page=${page}&size=${size}`
+    );
     return response.data;
   } catch (error) {
     console.error("Error al obtener todos los paises:", error);
