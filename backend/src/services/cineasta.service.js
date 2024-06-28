@@ -2,8 +2,8 @@ import { Op, Sequelize } from "sequelize";
 import Cineasta from "../models/cineastas.js";
 import Paises from "../models/paises.js";
 import Pelicula from "../models/peliculas.js";
-import { DatabaseValidationError } from "../utils/errors.js";
 import TipoRol from "../models/tiposRol.js";
+import { DatabaseValidationError } from "../utils/errors.js";
 
 // GET ALL
 export const findAll = async (page = undefined, size = undefined) => {
@@ -184,7 +184,7 @@ export const create = async (cineasta, roles) => {
 // PUT
 export const update = async (id, cineasta, roles) => {
     try {
-        const result = await Pelicula.update(cineasta, { where: { id } });
+        const result = await Cineasta.update(cineasta, { where: { id } });
         if (result) {
             const filmmaker = await Cineasta.findByPk(id);
             if (roles && roles.length > 0) {

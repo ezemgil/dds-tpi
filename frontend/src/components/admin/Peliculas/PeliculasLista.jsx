@@ -3,9 +3,6 @@ import { Link } from "react-router-dom";
 
 
 const PeliculasLista = ({ Peliculas, Editar, Eliminar }) => {
-
-    
-
     return (
         <div className="row flex-nowrap ">
             <div className="col py-3">
