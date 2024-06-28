@@ -1,5 +1,5 @@
 import * as service from "../services/nominacionPelicula.service.js";
-import { NotFoundError, BadRequestError } from "../utils/errors.js";
+import { NotFoundError, BadRequestError, ForbiddenError } from "../utils/errors.js";
 import { log } from "../utils/logger.js";
 
 // Buscar todas las nominaciones de peliculas
@@ -36,7 +36,7 @@ export const createNominacionPelicula = async (req, res, next) => {
             const nuevaNominacion = await service.create(nominacion);
             res.status(201).json(nuevaNominacion);
         } else {
-            next(new BadRequestError("No tiene permiso para realizar esta acción"));
+            next(new ForbiddenError("No tiene permiso para realizar esta acción"));
         }
     } catch (error) {
         log(req, `Error en createNominacionPelicula: ${error.message}`);
@@ -51,7 +51,7 @@ export const getNominacionPeliculaById = async (req, res, next) => {
         if (nominacion) {
             res.json(nominacion);
         } else {
-            throw new NotFoundError("Nominacion de pelicula no encontrada");
+            throw new ForbiddenError("Nominacion de pelicula no encontrada");
         }
     } catch (error) {
         log(req, `Error en getNominacionPeliculaById: ${error.message}`);
@@ -70,7 +70,7 @@ export const updateNominacion = async (req, res, next) => {
                 throw new NotFoundError("Nominacion de pelicula no encontrada");
             }
         } else {
-            next(new BadRequestError("No tiene permiso para realizar esta acción"));
+            next(new ForbiddenError("No tiene permiso para realizar esta acción"));
         }
     } catch (error) {
         log(req, `Error en updateNominacion: ${error.message}`);

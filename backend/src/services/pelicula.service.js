@@ -36,6 +36,7 @@ export const findAll = async (page = undefined, size = undefined) => {
             limit: size ? size : undefined,
         });
     } catch (error) {
+        console.log(error);
         throw new DatabaseValidationError(error.message);
     }
 };

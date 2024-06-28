@@ -1,5 +1,5 @@
 import * as service from "../services/pelicula.service.js";
-import { NotFoundError, BadRequestError } from "../utils/errors.js";
+import { NotFoundError, BadRequestError, ForbiddenError } from "../utils/errors.js";
 import { log } from "../utils/logger.js";
 
 // Obtener todas las películas
@@ -77,7 +77,7 @@ export const createPelicula = async (req, res, next) => {
             log(req, `POST /peliculas`);
             res.status(201).json(newPelicula);
         } else {
-            next(new BadRequestError("No tiene permiso para realizar esta acción"));
+            next(new ForbiddenError("No tiene permiso para realizar esta acción"));
         }
     } catch (error) {
         log(req, `Error: ${error.message}`);
@@ -97,7 +97,7 @@ export const updatePelicula = async (req, res, next) => {
                 next(new NotFoundError("Película no encontrada"));
             }
         } else {
-            next(new BadRequestError("No tiene permiso para realizar esta acción"));
+            next(new ForbiddenError("No tiene permiso para realizar esta acción"));
         }
     } catch (error) {
         log(req, `Error: ${error.message}`);
@@ -116,7 +116,7 @@ export const deletePelicula = async (req, res, next) => {
                 next(new NotFoundError("Película no encontrada"));
             }
         } else {
-            next(new BadRequestError("No tiene permiso para realizar esta acción"));
+            next(new ForbiddenError("No tiene permiso para realizar esta acción"));
         }
     } catch (error) {
         log(req, `Error: ${error.message}`);
@@ -136,7 +136,7 @@ export const addCineastas = async (req, res, next) => {
                 next(new BadRequestError("No se pudieron agregar los cineastas"));
             }
         } else {
-            next(new BadRequestError("No tiene permiso para realizar esta acción"));
+            next(new ForbiddenError("No tiene permiso para realizar esta acción"));
         }
     } catch (error) {
         log(req, `Error: ${error.message}`);
@@ -155,7 +155,7 @@ export const removeCineasta = async (req, res, next) => {
                 next(new NotFoundError("Cineasta no encontrado"));
             }
         } else {
-            next(new BadRequestError("No tiene permiso para realizar esta acción"));
+            next(new ForbiddenError("No tiene permiso para realizar esta acción"));
         }
     } catch (error) {
         log(req, `Error: ${error.message}`);

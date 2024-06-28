@@ -1,5 +1,5 @@
 import * as service from "../services/genero.service.js";
-import { NotFoundError, BadRequestError } from "../utils/errors.js";
+import { NotFoundError, BadRequestError, ForbiddenError } from "../utils/errors.js";
 import { log } from "../utils/logger.js";
 
 // Buscar todos los géneros
@@ -50,7 +50,7 @@ export const createGenero = async (req, res, next) => {
             log(req, `Género ${genero.nombre} creado por ${res.locals.user.usuario}`);
             res.status(201).json(genero);
         } else {
-            next(new BadRequestError("No tiene permiso para realizar esta acción"));
+            next(new ForbiddenError("No tiene permiso para realizar esta acción"));
         }
     } catch (error) {
         log(req, `Error en createGenero: ${error.message}`);
@@ -69,7 +69,7 @@ export const updateGenero = async (req, res, next) => {
                 next(new NotFoundError("Género no encontrado"));
             }
         } else {
-            next(new BadRequestError("No tiene permiso para realizar esta acción"));
+            next(new ForbiddenError("No tiene permiso para realizar esta acción"));
         }
     } catch (error) {
         log(req, `Error en updateGenero: ${error.message}`);
@@ -88,7 +88,7 @@ export const deleteGenero = async (req, res, next) => {
                 next(new NotFoundError("Género no encontrado"));
             }
         } else {
-            next(new BadRequestError("No tiene permiso para realizar esta acción"));
+            next(new ForbiddenError("No tiene permiso para realizar esta acción"));
         }
     } catch (error) {
         log(req, `Error en deleteGenero: ${error.message}`);

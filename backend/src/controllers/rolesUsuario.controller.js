@@ -1,5 +1,5 @@
 import * as service from "../services/rolesUsuario.service.js";
-import { NotFoundError, BadRequestError } from "../utils/errors.js";
+import { NotFoundError, BadRequestError, ForbiddenError } from "../utils/errors.js";
 import { log } from "../utils/logger.js";
 
 // Buscar todos los roles
@@ -11,7 +11,7 @@ export const getRoles = async (req, res, next) => {
             res.json(roles);
             log(req, `GET /roles ${roles.length} registros encontrados`);
         } else {
-            next(new BadRequestError("No tiene permisos para realizar esta acción"));
+            next(new ForbiddenError("No tiene permisos para realizar esta acción"));
         }
     } catch (error) {
         log(req, `Error en getRoles: ${error.message}`);
@@ -45,7 +45,7 @@ export const createRol = async (req, res, next) => {
             const rol = await service.createRol(req.body);
             res.json(rol);
         } else {
-            next(new BadRequestError("No tiene permisos para realizar esta acción"));
+            next(new ForbiddenError("No tiene permisos para realizar esta acción"));
         }
     } catch (error) {
         log(req, `Error en createRol: ${error.message}`);
@@ -65,7 +65,7 @@ export const updateRol = async (req, res, next) => {
             }
             res.json(result);
         } else {
-            next(new BadRequestError("No tiene permisos para realizar esta acción"));
+            next(new ForbiddenError("No tiene permisos para realizar esta acción"));
         }
     } catch (error) {
         log(req, `Error en updateRol: ${error.message}`);
@@ -86,7 +86,7 @@ export const deleteRol = async (req, res, next) => {
 
             res.json(result);
         } else {
-            next(new BadRequestError("No tiene permisos para realizar esta acción"));
+            next(new ForbiddenError("No tiene permisos para realizar esta acción"));
         }
     } catch (error) {
         log(req, `Error en deleteRol: ${error.message}`);

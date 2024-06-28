@@ -5,29 +5,9 @@ import { DatabaseValidationError } from "../utils/errors.js";
 // Buscar todas las clasificaciones
 export const findAll = async (page = undefined, size = undefined) => {
     try {
-        return await Cineasta.findAll({
-            order: Sequelize.literal("random()"),
-            limit: amount,
-            include: [
-                {
-                    model: Paises,
-                    as: "pais",
-                    attributes: ["id", "nombre", "codigo"],
-                },
-                {
-                    model: Paises,
-                    as: "pais2",
-                    attributes: ["id", "nombre", "codigo"],
-                },
-                {
-                    model: TipoRol,
-                    as: "roles",
-                    through: {
-                        attributes: [],
-                    },
-                },
-            ],
-            attributes: { exclude: ["nacionalidad", "nacionalidad2"] },
+        return await Clasificacion.findAll({
+            offset: page && size ? page * size : undefined,
+            limit: size ? size : undefined,
         });
     } catch (error) {
         throw new DatabaseValidationError(error.message);

@@ -1,5 +1,5 @@
 import * as service from "../services/clasificacion.service.js";
-import { NotFoundError } from "../utils/errors.js";
+import { NotFoundError, ForbiddenError } from "../utils/errors.js";
 import { log } from "../utils/logger.js";
 
 // Buscar todas las clasificaciones

@@ -1,5 +1,5 @@
 import * as service from "../services/idioma.service.js";
-import { NotFoundError, BadRequestError } from "../utils/errors.js";
+import { NotFoundError, BadRequestError, ForbiddenError } from "../utils/errors.js";
 import { log } from "../utils/logger.js";
 
 // Buscar todos los idiomas
@@ -50,7 +50,7 @@ export const createIdioma = async (req, res, next) => {
             log(req, `Idioma ${idioma.nombre} creado por ${res.locals.user.usuario}`);
             res.status(201).json(idioma);
         } else {
-            next(new BadRequestError("No tiene permiso para realizar esta acción"));
+            next(new ForbiddenError("No tiene permiso para realizar esta acción"));
         }
     } catch (error) {
         log(req, `Error en createIdioma: ${error.message}`);
@@ -69,7 +69,7 @@ export const updateIdioma = async (req, res, next) => {
                 next(new NotFoundError("Idioma no encontrado"));
             }
         } else {
-            next(new BadRequestError("No tiene permiso para realizar esta acción"));
+            next(new ForbiddenError("No tiene permiso para realizar esta acción"));
         }
     } catch (error) {
         log(req, `Error en updateIdioma: ${error.message}`);
@@ -89,7 +89,7 @@ export const deleteIdioma = async (req, res, next) => {
                 next(new NotFoundError("Idioma no encontrado"));
             }
         } else {
-            next(new BadRequestError("No tiene permiso para realizar esta acción"));
+            next(new ForbiddenError("No tiene permiso para realizar esta acción"));
         }
     } catch (error) {
         log(req, `Error en deleteIdioma: ${error.message}`);

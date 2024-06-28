@@ -1,5 +1,5 @@
 import * as service from "../services/premio.service.js";
-import { NotFoundError, BadRequestError } from "../utils/errors.js";
+import { NotFoundError, BadRequestError, ForbiddenError } from "../utils/errors.js";
 
 // Buscar todos los premios
 export const getPremios = async (req, res, next) => {
@@ -48,7 +48,7 @@ export const createPremio = async (req, res, next) => {
             const premio = await service.create(req.body);
             res.status(201).json(premio);
         } else {
-            next(new BadRequestError("No tiene permiso para realizar esta acción"));
+            next(new ForbiddenError("No tiene permiso para realizar esta acción"));
         }
     } catch (error) {
         next(error);
@@ -66,7 +66,7 @@ export const updatePremio = async (req, res, next) => {
                 next(new NotFoundError("Premio no encontrado"));
             }
         } else {
-            next(new BadRequestError("No tiene permiso para realizar esta acción"));
+            next(new ForbiddenError("No tiene permiso para realizar esta acción"));
         }
     } catch (error) {
         next(error);
@@ -84,7 +84,7 @@ export const deletePremio = async (req, res, next) => {
                 next(new NotFoundError("Premio no encontrado"));
             }
         } else {
-            next(new BadRequestError("No tiene permiso para realizar esta acción"));
+            next(new ForbiddenError("No tiene permiso para realizar esta acción"));
         }
     } catch (error) {
         next(error);
