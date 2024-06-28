@@ -12,6 +12,7 @@ const Idioma = sequelize.define(
     nombre: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
     },
     activo: {
       type: DataTypes.INTEGER,

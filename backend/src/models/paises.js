@@ -12,6 +12,7 @@ const Paises = sequelize.define(
     nombre: {
       type: DataTypes.TEXT,
       allowNull: false,
+      unique: true,
     },
     codigo: {
       type: DataTypes.TEXT,

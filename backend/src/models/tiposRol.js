@@ -12,6 +12,7 @@ const TipoRol = sequelize.define(
     nombre: {
       type: DataTypes.TEXT,
       allowNull: false,
+      unique: true,
     },
   },
   {

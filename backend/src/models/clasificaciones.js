@@ -12,6 +12,7 @@ const Clasificacion = sequelize.define(
     nombre: {
       type: DataTypes.TEXT,
       allowNull: false,
+      unique: true,
     },
     descripcion: {
       type: DataTypes.TEXT,

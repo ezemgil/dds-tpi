@@ -30,6 +30,7 @@ httpService.interceptors.response.use(
     // loguear el error
     console.log("error en axios response ", error);
     // modalService.BloquearPantalla(false);
+    window.alert("No se pudo conectar con el servidor");
 
     if (error.response.status === 401) {
       // no auntenticado
@@ -43,6 +44,7 @@ httpService.interceptors.response.use(
         "Actualmente tenemos inconvenientes en el servidor, por favor intente más tarde";
     }
     // modalService.Alert(error.message);
+    window.alert(error.message);
 
     return Promise.reject(error);
 

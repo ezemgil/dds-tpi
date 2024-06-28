@@ -12,6 +12,7 @@ const Genero = sequelize.define(
     nombre: {
       type: DataTypes.TEXT,
       allowNull: false,
+      unique: true,
     },
     activo: {
       type: DataTypes.INTEGER,
