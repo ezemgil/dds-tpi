@@ -1,5 +1,6 @@
 import axios from "axios";
 import authService from "./auth.service";
+import modalService from "./modal.service";
 
 const httpService = axios.create({
     headers: {
@@ -9,7 +10,7 @@ const httpService = axios.create({
 
 httpService.interceptors.request.use(
     (request) => {
-        // modalService.BloquearPantalla(true);
+        // modalService.ScreenLock(true);
         const accessToken = sessionStorage.getItem("accessToken");
         if (accessToken) {
             request.headers["Authorization"] = "Bearer " + accessToken;
@@ -24,12 +25,12 @@ httpService.interceptors.request.use(
 
 httpService.interceptors.response.use(
     (response) => {
-        // modalService.BloquearPantalla(false);
+        // modalService.ScreenLock(false);
         return response;
     },
     async (error) => {
         console.log("Error al hacer la petición: ", error);
-        // modalService.BloquearPantalla(false);
+        // modalService.ScreenLock(false);
 
         switch (error.response.status) {
             case 401:
@@ -40,25 +41,21 @@ httpService.interceptors.response.use(
                     return httpService(request);
                 } catch (refreshError) {
                     console.log("Error refreshing access token:", refreshError);
-                    window.alert("Su sesión ha expirado. Por favor, vuelva a iniciar sesión.");
+                    modalService.Alert("Su sesión ha expirado, por favor vuelva a iniciar sesión");
                 }
             case 403:
-                // error.message = "usuario no autorizado para acceder a esta funcionalidad";
-                window.alert("usuario no autorizado para acceder a esta funcionalidad");
+                console.log(error.message);
+                modalService.Alert("No tiene permisos para realizar esta acción");
                 break;
             case 422:
-                // error.message = "Error de validación de la base de datos";
-                // window.alert("Ya existe un registro con los datos ingresados");
+                error.message = "Ya existe un registro con los datos ingresados";
+                modalService.Alert(error.message);
                 break;
             default:
-                // Si no hay errores, no se hace nada
                 break;
         }
 
         return Promise.reject(error);
-
-        //return error
-        //throw new Error(error?.response?.data?.Message ?? 'Ocurrio un error');
     }
 );
 
@@ -71,26 +68,26 @@ httpService.interceptors.response.use(
 //     return accessToken;
 // }
 
-httpService.interceptors.response.use(
-    (response) => {
-        return response;
-    },
-    async (error) => {
-        const originalRequest = error.config;
-        if (error.response.status === 401 && !originalRequest._retry) {
-            originalRequest._retry = true;
-            try {
-                const newAccessToken = await refreshToken();
-                httpService.defaults.headers.common["Authorization"] = "Bearer " + newAccessToken;
-                originalRequest.headers["Authorization"] = "Bearer " + newAccessToken;
-                return httpService(originalRequest);
-            } catch (refreshError) {
-                return Promise.reject(refreshError);
-            }
-        }
-        return Promise.reject(error);
-    }
-);
+// httpService.interceptors.response.use(
+//     (response) => {
+//         return response;
+//     },
+//     async (error) => {
+//         const originalRequest = error.config;
+//         if (error.response.status === 401 && !originalRequest._retry) {
+//             originalRequest._retry = true;
+//             try {
+//                 const newAccessToken = await refreshToken();
+//                 httpService.defaults.headers.common["Authorization"] = "Bearer " + newAccessToken;
+//                 originalRequest.headers["Authorization"] = "Bearer " + newAccessToken;
+//                 return httpService(originalRequest);
+//             } catch (refreshError) {
+//                 return Promise.reject(refreshError);
+//             }
+//         }
+//         return Promise.reject(error);
+//     }
+// );
 
 // async function requestNewToken() {
 //     try {

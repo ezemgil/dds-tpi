@@ -1,5 +1,6 @@
 import httpService from "./http.service";
 import SERVER_CONFIG from "../config/server.config";
+import modalService from "./modal.service";
 
 const LOGIN_API_URL = `${SERVER_CONFIG.SERVER_API_URL}/login`;
 
@@ -9,21 +10,22 @@ async function login(usuario, clave, redirect) {
         clave: clave,
     };
 
-    let response = await httpService.post(LOGIN_API_URL, body);
+    try {
+        let response = await httpService.post(LOGIN_API_URL, body);
 
-    if (response.data?.accessToken) {
-        sessionStorage.setItem("accessToken", response.data.accessToken);
-        sessionStorage.setItem("refreshToken", response.data.refreshToken);
-        sessionStorage.setItem("usuario", usuario);
+        if (response.data?.accessToken) {
+            sessionStorage.setItem("accessToken", response.data.accessToken);
+            sessionStorage.setItem("refreshToken", response.data.refreshToken);
+            sessionStorage.setItem("usuario", usuario);
 
-        if (CambioUsuarioLogueado) CambioUsuarioLogueado(usuario);
-        {
+            if (CambioUsuarioLogueado) CambioUsuarioLogueado(usuario);
             redirect();
+        } else {
+            throw new Error("No se recibió el token de acceso");
         }
-    } else {
+    } catch (error) {
         if (CambioUsuarioLogueado) CambioUsuarioLogueado(null);
-        alert("Usuario o clave incorrectos");
-        // modalService.Alert("Usuario o clave incorrectos");
+        modalService.Alert("Usuario o contraseña incorrectos");
     }
 }
 

@@ -10,17 +10,14 @@ import CineastaCard from "../components/card/CineastaCard";
 // Servicios
 import peliculaService from "../services/pelicula.service";
 import cineastaService from "../services/cineasta.service";
-import getStatus from "../services/status.service";
 
 const Inicio = () => {
     const [PeliculasTendencia, setPeliculasTendencia] = useState([]);
     const [CineastasPopulares, setCineastasPopulares] = useState([]);
-    const [Status, setStatus] = useState(null);
 
     const cantidad = 8;
 
     useEffect(() => {
-        fetchStatus();
         peliculaService.getRandom(cantidad).then((response) => {
             setPeliculasTendencia(response.data);
         });
@@ -29,11 +26,6 @@ const Inicio = () => {
         });
         window.scrollTo({ top: 0, behavior: "smooth" });
     }, []);
-
-    const fetchStatus = async () => {
-        const response = await getStatus();
-        setStatus(response.status);
-    };
 
     return (
         <div>
@@ -56,14 +48,6 @@ const Inicio = () => {
                         </Link>
                     }
                 />
-                {Status !== 200 ? (
-                    <div className="alert alert-danger" role="alert">
-                        <h4 className="alert-heading">¡Atención!</h4>
-                        <p>El servicio no está disponible en este momento.</p>
-                        <hr />
-                        <p className="mb-0">Intente nuevamente más tarde.</p>
-                    </div>
-                ) : null}
 
                 <div className="row row-cols-1 row-cols-md-2 row-cols-lg-4">
                     {PeliculasTendencia.map((pelicula) => (
