@@ -36,13 +36,14 @@ httpService.interceptors.response.use(
             case 401:
                 // Solicitar un nuevo token de acceso
                 try {
-                    const newAccessToken = await authService.refreshToken();
-                    request.headers["Authorization"] = "Bearer " + newAccessToken;
-                    return httpService(request);
+                    const accessToken = await authService.refreshToken();
+                    error.config.headers["Authorization"] = "Bearer " + accessToken;
+                    return httpService.request(error.config); // Reintentar la petición
                 } catch (refreshError) {
                     console.log("Error refreshing access token:", refreshError);
                     modalService.Alert("Su sesión ha expirado, por favor vuelva a iniciar sesión");
                 }
+                break;
             case 403:
                 console.log(error.message);
                 modalService.Alert("No tiene permisos para realizar esta acción");
@@ -58,44 +59,5 @@ httpService.interceptors.response.use(
         return Promise.reject(error);
     }
 );
-
-// Función para solicitar un nuevo token de acceso
-// async function refreshToken() {
-//     const refreshToken = sessionStorage.getItem("refreshToken");
-//     const response = await axios.post("/token", { refreshToken });
-//     const { accessToken } = response.data;
-//     sessionStorage.setItem("accessToken", accessToken);
-//     return accessToken;
-// }
-
-// httpService.interceptors.response.use(
-//     (response) => {
-//         return response;
-//     },
-//     async (error) => {
-//         const originalRequest = error.config;
-//         if (error.response.status === 401 && !originalRequest._retry) {
-//             originalRequest._retry = true;
-//             try {
-//                 const newAccessToken = await refreshToken();
-//                 httpService.defaults.headers.common["Authorization"] = "Bearer " + newAccessToken;
-//                 originalRequest.headers["Authorization"] = "Bearer " + newAccessToken;
-//                 return httpService(originalRequest);
-//             } catch (refreshError) {
-//                 return Promise.reject(refreshError);
-//             }
-//         }
-//         return Promise.reject(error);
-//     }
-// );
-
-// async function requestNewToken() {
-//     try {
-//         const newAccessToken = await refreshToken();
-//         httpService.defaults.headers.common["Authorization"] = "Bearer " + newAccessToken;
-//     } catch (error) {
-//         console.log("Error refreshing access token:", error);
-//     }
-// }
 
 export default httpService;
