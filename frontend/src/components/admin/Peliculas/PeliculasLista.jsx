@@ -22,6 +22,7 @@ const PeliculasLista = ({ Peliculas, Editar, Eliminar }) => {
                     <tbody>
                     {Peliculas.length > 0 ? (
                         Peliculas?.map((Pelicula) => (
+                            
                             <tr key={Pelicula.id}>
                                 <td>{Pelicula.id}</td>
                                 <td>{Pelicula.titulo}</td>
@@ -31,14 +32,14 @@ const PeliculasLista = ({ Peliculas, Editar, Eliminar }) => {
                                 
                                 <td className="d-flex gap-2 justify-content-center">
                                     <button
-                                    className="btn badge text-light btn-sm border rounded-pill btn-custom-light"
-                                    onClick={console.log("Add cineastas")}>
+                                    className="btn badge btn-dark border-secondary text-light btn-sm rounded-pill btn-custom-light"
+                                        onClick={() => console.log("Add bof")}>
                                         <i class="fa-solid fa-user-plus"></i>
                                     </button>
 
                                     <button
-                                    className="btn btn-sm btn-success text-success-emphasis border border-success rounded-pill"
-                                    onClick={console.log("Add cineastas")}>
+                                    className="btn btn-sm btn-success text-dark  rounded-pill"
+                                        onClick={() => console.log("anashe")}>
                                         <i class="shadow fa-solid fa-trophy"></i>
                                     </button>
 
@@ -62,6 +63,7 @@ const PeliculasLista = ({ Peliculas, Editar, Eliminar }) => {
                                     </button>
                                 </td>
                             </tr>
+                            
                         ))
                     )
                     : (<tr><td colSpan="6">No hay peliculas</td></tr>)}
