@@ -4,9 +4,12 @@ import httpService from "./http.service";
 // Configuración de la URL base de la API
 const GENERO_API_URL = `${SERVER_CONFIG.SERVER_API_URL}/generos`;
 
-async function getAll() {
+async function getAll(page, size) {
   try {
-    return await httpService.get(GENERO_API_URL);
+    const response = await httpService.get(
+      `${GENERO_API_URL}?page=${page}&size=${size}`
+    );
+    return response.data;
   } catch (error) {
     console.error("Error al obtener todos los géneros:", error);
     throw new Error("Error al obtener todos los géneros.");

@@ -3,10 +3,16 @@ import Genero from "../models/generos.js";
 
 // Buscar todos los géneros
 export const findAll = async (page = undefined, size = undefined) => {
-  return await Genero.findAll({
+  const options = {
     offset: page && size ? page * size : undefined,
     limit: size ? size : undefined,
-  });
+  };
+  const { count, rows } = await Genero.findAndCountAll(options);
+
+  return {
+    totalGeneros: count,
+    generos: rows,
+  };
 };
 
 // Crear un nuevo género

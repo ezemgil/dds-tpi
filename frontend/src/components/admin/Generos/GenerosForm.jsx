@@ -10,7 +10,7 @@ const GenerosForm = (props) => {
   } = useForm({ defaultValues: props.Genero });
 
   const onSubmit = (data) => {
-    Guardar(data);
+    props.Guardar(data);
   };
 
   return (
@@ -23,7 +23,7 @@ const GenerosForm = (props) => {
     >
       <Modal.Header closeButton className="bg-dark">
         <Modal.Title id="contained-modal-title-vcenter">
-          Editar género
+          {props.AccionCRUD === "C" ? "Agregar género" : "Editar género"}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body className="bg-dark ">
@@ -46,18 +46,18 @@ const GenerosForm = (props) => {
                 })}
               />
             </div>
+            <div className="d-flex justify-content-center mt-3">
+              <button type="submit" className="btn btn-primary mx-2 text-dark">
+                <i className="fa-regular fa-floppy-disk me-2"></i>Guardar
+              </button>
+              <button
+                className="btn btn-dark border border-secondary px-2 mx-2"
+                onClick={props.onHide}
+              >
+                Volver
+              </button>
+            </div>
           </form>
-        </div>
-        <div className="d-flex justify-content-center">
-          <button type="submit" className="btn btn-primary mx-2 text-dark">
-            <i className="fa-regular fa-floppy-disk me-2"></i>Guardar
-          </button>
-          <button
-            className="btn btn-dark border border-secondary px-2 mx-2 "
-            onClick={() => props.Volver()}
-          >
-            Volver
-          </button>
         </div>
       </Modal.Body>
     </Modal>
