@@ -1,5 +1,5 @@
-import React from "react";
 import moment from "moment";
+import React from "react";
 
 const EncabezadoPelicula = ({ Pelicula }) => {
   const clasificacionColor = {
@@ -45,7 +45,7 @@ const EncabezadoPelicula = ({ Pelicula }) => {
               <i className="fa-solid fa-circle-info me-2"></i>
               <span>Información de la película</span>
             </div>
-            <ul className="list-group">
+            <ul className="list-group shadow">
               <li className="list-group-item bg-body-subtle text-secondary-emphasis">
                 <b>Título original:</b> {Pelicula.titulo_original}
               </li>
@@ -54,7 +54,7 @@ const EncabezadoPelicula = ({ Pelicula }) => {
               </li>
               <li className="list-group-item bg-body-subtle text-secondary-emphasis">
                 <b>Fecha de estreno:</b>{" "}
-                {moment(Pelicula.fechaEstreno).format("L")}
+                {moment(Pelicula.fecha_estreno).format("L")}
               </li>
               <li className="list-group-item bg-body-subtle text-secondary-emphasis">
                 <b>Calificación:</b> {Pelicula?.clasificacion?.nombre}{" "}
@@ -62,7 +62,7 @@ const EncabezadoPelicula = ({ Pelicula }) => {
               </li>
             </ul>
           </div>
-          <div>
+          <div className="container w-100 mb-4 rounded">
             <div className=" d-flex align-items-center mb-2 fs-4 gap-2">
               <i className="fa-solid fa-masks-theater text-light"></i>
               <span>Géneros</span>
@@ -79,7 +79,7 @@ const EncabezadoPelicula = ({ Pelicula }) => {
                 ))}
             </div>
           </div>
-          <div>
+          <div className="container w-100">
             <div className=" d-flex align-items-center mb-2 fs-4 gap-2">
               <i className="fa fa-language" aria-hidden="true"></i>
               <span>Idiomas disponibles</span>

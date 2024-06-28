@@ -1,16 +1,16 @@
-import { Route, Routes, Navigate, useLocation } from "react-router-dom";
-import Navbar from "./components/common/Navbar";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import Footer from "./components/common/Footer";
+import Navbar from "./components/common/Navbar";
 
-import Login from "./pages/Login";
-import Inicio from "./pages/Inicio";
-import AcercaDe from "./pages/AcercaDe";
-import Peliculas from "./pages/Peliculas";
-import Cineastas from "./pages/Cineastas";
-import DetallePelicula from "./pages/DetallePelicula";
-import DetalleCineasta from "./pages/DetalleCineasta";
-import Admin from "./pages/Admin";
 import RequireAuth from "./components/RequireAuth";
+import AcercaDe from "./pages/AcercaDe";
+import Admin from "./pages/Admin";
+import Cineastas from "./pages/Cineastas";
+import DetalleCineasta from "./pages/DetalleCineasta";
+import DetallePelicula from "./pages/DetallePelicula";
+import Inicio from "./pages/Inicio";
+import Login from "./pages/Login";
+import Peliculas from "./pages/Peliculas";
 
 function App() {
   const location = useLocation();
@@ -36,7 +36,9 @@ function App() {
             </RequireAuth>
           }
         />
+
         <Route path="*" element={<Navigate to="/" />} />
+
       </Routes>
       {!excludedRoutes.includes(location.pathname) ? <Footer /> : null}
     </div>

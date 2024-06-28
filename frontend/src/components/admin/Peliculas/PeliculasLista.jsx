@@ -1,7 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+
 const PeliculasLista = ({ Peliculas, Editar, Eliminar }) => {
+
+    
 
     return (
         <div className="row flex-nowrap ">
@@ -36,14 +39,14 @@ const PeliculasLista = ({ Peliculas, Editar, Eliminar }) => {
                                         </button>
                                     </Link>
                                     <button
-                                    className="btn btn-warning btn-sm rounded-pill"
-                                    onClick={() => Editar(Pelicula.id)}
+                                        className="btn btn-warning btn-sm rounded-pill"
+                                        onClick={() => Editar(Pelicula.id)}
                                     >
                                     <i className="fa-solid fa-pencil text-danger-emphasis"></i>
                                     </button>
                                     <button
-                                    className="btn btn-danger btn-sm rounded-pill"
-                                    onClick={() => Eliminar(Pelicula.id)}
+                                        className="btn btn-danger btn-sm rounded-pill"
+                                        onClick={() => Eliminar(Pelicula.id)}
                                     >
                                     <i className="fa-solid fa-trash-can text-danger-emphasis"></i>
                                     </button>

@@ -153,3 +153,38 @@ input[type="text"].placeholder-light::placeholder {
   object-fit: contain;
   object-position: top;
 }
+
+.paginador {
+  background-color: #343a40; /* Color de fondo oscuro */
+  color: #fff; /* Color de texto blanco */
+  padding: 20px;
+  margin-top: 15px;
+  border-radius: 4px;
+  width: 350px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.pyBadge {
+  background-color: #ffbd07; /* Color de fondo amarillo */
+  color: #343a40; /* Color de texto oscuro */
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 0.9rem;
+}
+
+.form-select {
+  background-color: #212529; /* Color de fondo oscuro para el select */
+  color: #fff; /* Color de texto blanco */
+  border: 1px solid #ffc107; /* Borde con color amarillo */
+  border-radius: 5px;
+  padding: 5px 10px;
+  font-size: 0.9rem;
+  width: 50px; /* Ancho del select */
+
+}
+
+.form-select option {
+  background-color: #343a40; /* Color de fondo oscuro para las opciones del select */
+  color: #fff; /* Color de texto blanco */
+}
