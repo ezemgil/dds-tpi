@@ -5,7 +5,7 @@ import moment from "moment";
 const IdiomasLista = ({ 
     Idiomas, 
     Editar, 
-    Eliminar,
+    ActivarDesactivar,
     Pagina,
     totalIdiomas,
     Paginas,
@@ -24,6 +24,7 @@ const IdiomasLista = ({
                                 <tr>
                                     <th>Id</th>
                                     <th>Nombre</th>
+                                    <th>Activo</th>
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
@@ -33,19 +34,32 @@ const IdiomasLista = ({
                                     <tr key={idioma.id}>
                                         <td>{idioma.id}</td>
                                         <td>{idioma.nombre}</td>
+                                        <td>{idioma.activo}</td>
                                         <td className="d-flex gap-2 justify-content-center">
-                                            <button
-                                                className="btn btn-warning btn-sm rounded-pill"
-                                                onClick={() => Editar(idioma.id)}
-                                            >
-                                                <i className="fa-solid fa-pencil"></i>
-                                            </button>
-                                            <button
-                                                className="btn btn-danger btn-sm rounded-pill"
-                                                onClick={() => Eliminar(idioma.id)}
-                                            >
-                                                <i className="fa-solid fa-trash-can"></i>
-                                            </button>
+                                        <button
+                                          className="btn btn-warning btn-sm rounded-pill"
+                                          onClick={() => Editar(idioma.id)}
+                                          title="Editar"
+                                        >
+                                          <i className="fa-solid fa-pencil"></i>
+                                        </button>
+                                        {idioma.activo ? (
+                                          <button
+                                            className="btn btn-danger btn-sm rounded-pill"
+                                            onClick={() => ActivarDesactivar(idioma)}
+                                            title="Desactivar"
+                                          >
+                                            <i className="fa-solid fa-circle-xmark"></i>
+                                          </button>
+                                        ) : (
+                                          <button
+                                            className="btn btn-success btn-sm rounded-pill"
+                                            onClick={() => ActivarDesactivar(idioma)}
+                                            title="Activar"
+                                          >
+                                            <i className="fa-solid fa-circle-check"></i>
+                                          </button>
+                                        )}
                                         </td>
                                     </tr>
                                 ))

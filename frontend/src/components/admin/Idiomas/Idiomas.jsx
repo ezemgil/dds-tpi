@@ -3,7 +3,6 @@ import idiomaService from "../../../services/idioma.service";
 
 import IdiomasLista from "./IdiomasLista";
 import IdiomasFormModal from "./IdiomasFormModal";
-import IdiomasForm from "./IdiomasForm";
 
 
 const Idiomas = () => {
@@ -49,14 +48,25 @@ const Idiomas = () => {
         BuscarPagina(Pagina);
       }, [Pagina]); // Array de dependencias
 
-      
+
+    // Una lista con todos los idiomas
+    const [ListaIdiomas, setListaIdiomas] = useState([]);
+    useEffect(() => {
+        async function ListarIdiomas() {
+            const res = await idiomaService.getAll()
+            setListaIdiomas(res.data.idiomas);    
+        }
+        ListarIdiomas()
+    }, [])
+
+    console.log(ListaIdiomas)
+
     // Funcion para buscar un idioma por id
     async function BuscarPorId(id, accion) {
         const res = await idiomaService.getById(id);
         setItemIdioma(res.data);
         setAccionCRUD(accion);
-        console.log(itemIdioma)
-      }
+    };
 
     // Funcion para editar un idioma
     function Editar(id) {
@@ -64,17 +74,13 @@ const Idiomas = () => {
         BuscarPorId(id, "U");
     };
     
+    
     // Grabar un idioma
     async function Grabar(itemIdioma) {
-      const idiomaEndpoint = {
-        nombre: itemIdioma.nombre,
-        activo: itemIdioma.activo,
-      };
-
       if (AccionCRUD === "C") {
-        await idiomaService.create(idiomaEndpoint);
+        await idiomaService.create(itemIdioma);
       } else if (AccionCRUD === "U") {
-        await idiomaService.update(itemIdioma.id, idiomaEndpoint);
+        await idiomaService.update(itemIdioma.id, itemIdioma);
       }
       BuscarPagina(Pagina);
       setModalShow(false);
@@ -98,10 +104,16 @@ const Idiomas = () => {
 
     // Eliminar un idioma id
     async function Eliminar(id) {
-        const res = await idiomaServiceService.getById(id)
+        const res = await idiomaService.getById(id)
         await idiomaService.remove(res.data.id);
         BuscarPagina(Pagina);
         setAccionCRUD("RA");
+    };
+
+    // Activar o desactivar un idioma
+    async function ActivarDesactivar(idioma) {
+        await idiomaService.update(idioma.id, { activo: idioma.activo ? 0 : 1 });
+        BuscarPagina(Pagina);
     };
 
     return (
@@ -121,7 +133,7 @@ const Idiomas = () => {
                 {...{
                     Idiomas, 
                     Editar, 
-                    Eliminar,
+                    ActivarDesactivar,
                     Pagina,
                     totalIdiomas,
                     Paginas,
@@ -137,6 +149,7 @@ const Idiomas = () => {
                     Grabar={Grabar}
                     Volver={Volver}
                     Titulo={"Idiomas " + TituloCRUD[AccionCRUD]}
+                    ListaIdiomas={ListaIdiomas}
                 />
             )}
 
@@ -151,6 +164,7 @@ const Idiomas = () => {
                     Grabar={Grabar}
                     Volver={Volver}
                     Titulo={"Idiomas " + TituloCRUD[AccionCRUD]}
+                    ListaIdiomas={ListaIdiomas}
                 />
             )}
             </div>

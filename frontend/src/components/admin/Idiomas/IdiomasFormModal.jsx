@@ -17,7 +17,7 @@ const IdiomasFormModal = (props) => {
             </Modal.Header>
             <Modal.Body className="bg-dark">
                 <IdiomasForm
-                    itemIdioma={props.itemPais}
+                    itemIdioma={props.itemIdioma}
                     Volver={props.Volver}
                     Grabar={props.Grabar}
                 />

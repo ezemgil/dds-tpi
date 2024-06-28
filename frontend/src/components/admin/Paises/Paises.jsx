@@ -61,15 +61,11 @@ const Paises = () => {
 
   // Grabar un pais
   async function Grabar(itemPais) {
-    const paisEndpoint = {
-      nombre: itemPais.nombre,
-      codigo: itemPais.codigo,
-    };
-
     if (AccionCRUD === "C") {
-      await paisService.create(paisEndpoint);
+      await paisService.create(itemPais);
     } else if (AccionCRUD === "U") {
-      await paisService.update(itemPais.id, paisEndpoint);
+      await paisService.update(itemPais.id, itemPais);
+      console.log(itemPais)
     }
     BuscarPagina(Pagina);
     setModalShow(false);
