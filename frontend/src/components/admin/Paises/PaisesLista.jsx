@@ -76,7 +76,7 @@ const PaisesLista = ({
                   >
                     {Paginas.map((pagina) => (
                       <option key={pagina} value={pagina}>
-                        {pagina}
+                        {pagina + 1}
                       </option>
                     ))}
                   </select>

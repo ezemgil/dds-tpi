@@ -87,14 +87,15 @@ const Paises = () => {
   };
 
   function Volver() {
+    setModalShow(false);
     setAccionCRUD("RA");
   }
 
   // Eliminar un pais
-  function Eliminar(id) {
-    paisService.remove(id).then((response) => {
-      paisService.getAll().then((response) => setPaises(response.data));
-    });
+  async function Eliminar(id) {
+    const res = await paisService.getById(id)
+    await paisService.remove(res.data.id);
+    BuscarPagina(Pagina);
     setAccionCRUD("RA");
   }
 
@@ -126,7 +127,7 @@ const Paises = () => {
         {AccionCRUD === "C" && (
           <PaisesFormModal
             show={modalShow}
-            onHide={() => setModalShow(true)}
+            onHide={() => setModalShow(false)}
             itemPais={itemPais}
             Grabar={Grabar}
             Volver={Volver}
@@ -143,7 +144,7 @@ const Paises = () => {
             }}
             itemPais={itemPais}
             Grabar={Grabar}
-            Volver={onHide}
+            Volver={Volver}
             Titulo={"Paises " + TituloCRUD[AccionCRUD]}
           />
         )}

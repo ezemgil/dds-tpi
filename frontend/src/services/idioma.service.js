@@ -3,10 +3,11 @@ import SERVER_CONFIG from "../config/server.config";
 
 const IDIOMA_API_URL = `${SERVER_CONFIG.SERVER_API_URL}/idiomas`;
 
-async function getAll() {
+async function getAll(page, size) {
     try {
-        const response = await httpService.get(IDIOMA_API_URL);
-        return response;
+        if (!page && !size) return await httpService.get(IDIOMA_API_URL);
+        const response = await httpService.get(`${IDIOMA_API_URL}?page=${page}&size=${size}`);
+        return response.data;
     } catch (error) {
         console.error("Error al obtener todos los idiomas:", error);
         throw new Error("Error al obtener todos los idiomas.");

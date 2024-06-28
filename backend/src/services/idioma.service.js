@@ -3,10 +3,16 @@ import Idioma from "../models/idiomas.js";
 
 // Buscar todos los idiomas
 export const findAll = async (page = undefined, size = undefined) => {
-  return await Idioma.findAll({
+  const options = {
     offset: page && size ? page * size : undefined,
     limit: size ? size : undefined,
-  });
+  };
+  const { count, rows } = await Idioma.findAndCountAll(options);
+
+  return {
+    totalIdiomas: count,
+    idiomas: rows,
+  };
 };
 
 // Crear un nuevo idioma

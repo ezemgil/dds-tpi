@@ -1,13 +1,13 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 
-const PaisesForm = ({itemPais, Volver, Grabar}) => {
+const IdiomasForm = ({itemIdioma, Volver, Grabar}) => {
 
     const {
         register,
         handleSubmit,
         formState: { errors, touchedFields, isValid, isSubmitted } 
-    } = useForm({defaultValues: itemPais});
+    } = useForm({defaultValues: itemIdioma});
 
     const onSubmit = (data) => {
         Grabar(data);
@@ -26,14 +26,6 @@ const PaisesForm = ({itemPais, Volver, Grabar}) => {
                         />
                     </div>
 
-                    {/* Campo codigo */}
-                    <div className="mb-3">
-                        <label htmlFor="codigo" className="form-label">Codigo</label>
-                        <input type="text" className="form-control bg-dark text-light border-secondary" id="codigo" name="codigo" 
-                            {...register('codigo', {required: { value: true, message: 'Campo requerido' }})}
-                        />
-                    </div>
-
                     {/* Botones */}
                     <div className="d-flex justify-content-center">
                         <button type="submit" className="btn btn-primary mx-2 text-dark"><i className="fa-regular fa-floppy-disk me-2"></i>Guardar</button>
@@ -45,4 +37,4 @@ const PaisesForm = ({itemPais, Volver, Grabar}) => {
     )
 }
 
-export default PaisesForm;
+export default IdiomasForm;
