@@ -3,6 +3,7 @@ import Cineasta from "../models/cineastas.js";
 import Paises from "../models/paises.js";
 import Pelicula from "../models/peliculas.js";
 import { DatabaseValidationError } from "../utils/errors.js";
+import TipoRol from "../models/tiposRol.js";
 
 // GET ALL
 export const findAll = async (page = undefined, size = undefined) => {
