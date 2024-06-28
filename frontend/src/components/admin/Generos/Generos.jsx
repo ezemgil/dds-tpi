@@ -18,11 +18,6 @@ const Generos = () => {
     BuscarPagina(Pagina);
   }, [Pagina]);
 
-  async function getGeneros() {
-    const response = await generoService.getAll();
-    setGeneros(response.data);
-  }
-
   async function findGeneroById(id, AccionCRUD) {
     const response = await generoService.getById(id);
     setGenero(response.data);
@@ -36,7 +31,7 @@ const Generos = () => {
 
   async function ActivarDesactivar(Genero) {
     await generoService.update(Genero.id, { activo: Genero.activo ? 0 : 1 });
-    getGeneros();
+    BuscarPagina(Pagina);
   }
 
   async function Guardar(data) {
@@ -45,7 +40,7 @@ const Generos = () => {
     } else {
       await generoService.update(Genero.id, data);
     }
-    getGeneros();
+    BuscarPagina(Pagina);
     setModalShow(false);
     setAccionCRUD("RA");
   }
