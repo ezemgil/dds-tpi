@@ -78,7 +78,7 @@ const PeliculasForm = ({itemPelicula, Volver, Grabar}) => {
             setClasificaciones(response.data);
         });
         generosService.getAll().then((response) => {
-            setGeneros(response.data);
+            setGeneros(response.data.generos);
         });
         idiomaService.getAll().then((response) => {
             setIdiomas(response.data);
@@ -93,17 +93,18 @@ const PeliculasForm = ({itemPelicula, Volver, Grabar}) => {
                     {/* Campo titulo */}
                     <div className="mb-3">
                         <label htmlFor="titulo" className="form-label">Titulo</label>
-                        <input type="text" className="form-control bg-dark text-light border-secondary" id="titulo" name="titulo" 
-                            {...register('titulo', {required: { value: true, message: 'Campo requerido' }})}
-                        />
+                        <input type="text" className="mb-1 form-control bg-dark text-light border-secondary" id="titulo" name="titulo" 
+                            {...register('titulo', {required: { value: true, message: 'Titulo es obligatorio' }})}/>
+                            {errors.titulo && <span className="text-danger">{errors.titulo.message}</span>}
                     </div>
 
                     {/* Campo titulo_original */}
                     <div className="mb-3">
                         <label htmlFor="titulo_original" className="form-label">Titulo Original</label>
-                        <input type="text" className="form-control bg-dark text-light border-secondary" id="titulo_original" name="titulo_original" 
-                            {...register('titulo_original', {required: { value: true, message: 'Campo requerido' }})}
+                        <input type="text" className="mb-1 form-control bg-dark text-light border-secondary" id="titulo_original" name="titulo_original" 
+                            {...register('titulo_original', {required: { value: true, message: 'Titulo original es obligatorio' }})}
                         />
+                        {errors.titulo_original && <span className="text-danger">{errors.titulo_original.message}</span>}
                     </div>
 
                     {/* Campo descripcion */}
@@ -118,29 +119,30 @@ const PeliculasForm = ({itemPelicula, Volver, Grabar}) => {
                         <div className="mb-3">
                             <label htmlFor="fecha_estreno" className="col-form-label">Fecha Estreno</label>
                             <input type="date" id="fecha_estreno" name="fecha_estreno"
-                                {...register('fecha_estreno', {required: { value: true, message: 'Campo requerido' }})}
-                                className={'bg-dark text-light border-secondary form-control' + (errors?.fecha_estreno ? ' is-invalid' : '')}/>
-                            <div className="invalid-feedback">{errors?.fecha_estreno?.message}</div>
+                                {...register('fecha_estreno', {required: { value: true, message: 'Fecha de estreno es obligatoria' }})}
+                                className={'mb-1 bg-dark text-light border-secondary form-control' + (errors?.fecha_estreno ? ' is-invalid' : '')}/>
+                            {errors.fecha_estreno && <span className="text-danger">{errors.fecha_estreno.message}</span>}
                         </div>
                     </div>
 
                     {/* Campo clasificacion setClasificacionItem(clasificaciones[(e.value) - 1])*/}
-
                     <div className="row">
                         <label htmlFor="clasificacion" className="col-form-label">Clasificacion</label>
-                        <div className="mb-3 d-flex">
-                            <span className="badge d-flex p-2 me-3 fs-5 align-items-center text-bg-warning rounded-pill">
-                                {clasificacionItem.nombre}
-                                {/* {clasificacionItem.nombre == '' ? 'N/A' : clasificacionItem.nombre} */}
-                            </span>
-                            <select value={clasificacionItem?.id || ''} onChange={(e) => setClasificacionItem(clasificaciones.find(clasi => clasi.id == e.target.value))}
-                                className="form-select bg-dark text-light border-secondary" id="clasificacion" name="clasificacion">
-                                    <option disabled={true} key={''} value={''}>Seleccione un campo</option>
+                        <div className="mb-1 d-flex">
+                            <select
+                                value={clasificacionItem?.id || ''}
+                                onChange={(e) => setClasificacionItem(clasificaciones.find(clasi => clasi.id == e.target.value))}
+                                className="form-select w-auto bg-dark text-light border-secondary" id="clasificacion" name="clasificacion">
+                                    <option key='' value=''>Seleccione un campo</option>
                                     {clasificaciones?.map((clas) => (
                                         <option key={clas.id} value={clas.id}> {clas.nombre} | {clas.descripcion} </option>
                                     ))}
                             </select>
+                            <span className="badge d-flex p-2 ms-3 fs-5 align-items-center text-bg-warning rounded-pill">
+                                {clasificacionItem?.nombre}
+                            </span>
                         </div>
+                        {errors.clasificacion && <span className="text-danger">{errors.clasificacion.message}</span>}
                     </div>
 
                     {/* Campo generos */}
@@ -180,11 +182,6 @@ const PeliculasForm = ({itemPelicula, Volver, Grabar}) => {
                                         ))}
                                     </div>
                                 </Modal.Body>
-                                <Modal.Footer className="bg-dark">
-                                    <Button variant="secondary" onClick={handleGenerosModal}>
-                                        Cerrar
-                                    </Button>
-                                </Modal.Footer>
                             </Modal>
                         </div>
                     </div>
@@ -250,12 +247,11 @@ const PeliculasForm = ({itemPelicula, Volver, Grabar}) => {
                             className={'bg-dark text-light border-secondary form-control mb-2' + (errors?.fecha_estreno ? ' is-invalid' : '')}/>
 
                             <div className="w-auto d-flex justify-content-center">
-                                <img  src={urlImagen !== '' ? urlImagen : 'https://via.placeholder.com/300'} 
+                                <img  
+                                src={urlImagen !== '' ? urlImagen : 'https://via.placeholder.com/300'} 
                                 alt="Poster de la pelicula" 
                                 className="img-fluid rounded shadow col-lg-5 col-5 mb-3 mb-lg-3" /> 
                             </div>
-                            
-                            
                             <div className="invalid-feedback">{errors?.fecha_estreno?.message}</div>
                         </div>
 
@@ -290,10 +286,9 @@ const PeliculasForm = ({itemPelicula, Volver, Grabar}) => {
                                     <div className="invalid-feedback">{errors?.duracion?.message}</div>
                                 </div>
                             </div>
-
-
                         </div>
                     </div>
+
 
                     {/* Botones de accion */}
                     <div className="d-flex justify-content-center">

@@ -12,14 +12,14 @@ const CineastasFormModal = (props) => {
     >
         <Modal.Header closeButton className="bg-dark">
             <Modal.Title id="contained-modal-title-vcenter">
-                {props.Titulo}
+                {props.titulo}
             </Modal.Title>
         </Modal.Header>
         <Modal.Body className="bg-dark">
             <CineastasForm
                 itemCineasta={props.itemCineasta}
-                Volver={props.onHide}
-                Grabar={props.Grabar}
+                volver={props.onHide}
+                grabar={props.grabar}
             />
         </Modal.Body>
     </Modal>

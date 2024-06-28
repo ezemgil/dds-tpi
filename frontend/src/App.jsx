@@ -12,6 +12,7 @@ import Inicio from "./pages/Inicio";
 import Login from "./pages/Login";
 import Peliculas from "./pages/Peliculas";
 
+
 function App() {
   const location = useLocation();
   const excludedRoutes = ["/login", "/admin"];

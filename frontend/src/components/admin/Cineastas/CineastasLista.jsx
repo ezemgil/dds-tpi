@@ -1,9 +1,9 @@
+import moment from "moment";
 import React from "react";
 import { Helmet } from "react-helmet";
-import moment from "moment";
 import { Link } from "react-router-dom";
 
-const CineastasLista = ({ Cineastas, Editar, Eliminar }) => {
+const CineastasLista = ({ cineastas, editar, eliminar }) => {
 
     return (
         <>
@@ -26,7 +26,7 @@ const CineastasLista = ({ Cineastas, Editar, Eliminar }) => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {Cineastas.map((cineasta) => (
+                                {cineastas.map((cineasta) => (
                                     <tr key={cineasta.id}>
                                         <td>{cineasta.id}</td>
                                         <td>{cineasta.nombre}</td>
@@ -41,15 +41,15 @@ const CineastasLista = ({ Cineastas, Editar, Eliminar }) => {
                                             </Link>
                                             <button
                                                 className="btn btn-warning btn-sm rounded-pill"
-                                                onClick={() => Editar(cineasta.id)}
+                                                onClick={() => editar(cineasta.id)}
                                             >
-                                                <i className="fa-solid fa-pencil"></i>
+                                                <i className="fa-solid fa-pencil text-danger-emphasis"></i>
                                             </button>
                                             <button
                                                 className="btn btn-danger btn-sm rounded-pill"
-                                                onClick={() => Eliminar(cineasta.id)}
+                                                onClick={() => eliminar(cineasta.id)}
                                             >
-                                                <i className="fa-solid fa-trash-can"></i>
+                                                <i className="fa-solid fa-trash-can text-danger-emphasis"></i>
                                             </button>
                                         </td>
                                     </tr>

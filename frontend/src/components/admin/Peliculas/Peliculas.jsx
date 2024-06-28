@@ -16,9 +16,6 @@ const Peliculas = () => {
     const [AccionCRUD, setAccionCRUD] = useState("RA");
     const [itemPelicula, setItemPelicula] = useState({});
     const [modalShow, setModalShow] = useState(false);
-    const [deleteModal, setDeleteModal] = useState(false);
-
-
 
     const BuscarPorId = async (idPelicula, accion) => {
         const resPelicula = await peliculaService.getById(idPelicula);
@@ -47,7 +44,8 @@ const Peliculas = () => {
         }
 
         if (AccionCRUD === "C") {
-            peliculaService.create(peliculaEndpoint).then((response) => {
+            peliculaService.create(peliculaEndpoint)
+            .then((response) => {
                 peliculaService.getAll().then((response) => setPeliculas(response.data))
             })
         } else {

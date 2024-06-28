@@ -33,22 +33,35 @@ const PeliculasLista = ({ Peliculas, Editar, Eliminar }) => {
                                 <td>{Pelicula.fecha_estreno}</td>
                                 
                                 <td className="d-flex gap-2 justify-content-center">
+                                    <button
+                                    className="btn badge text-light btn-sm border rounded-pill btn-custom-light"
+                                    onClick={console.log("Add cineastas")}>
+                                        <i class="fa-solid fa-user-plus"></i>
+                                    </button>
+
+                                    <button
+                                    className="btn btn-sm btn-success text-success-emphasis border border-success rounded-pill"
+                                    onClick={console.log("Add cineastas")}>
+                                        <i class="shadow fa-solid fa-trophy"></i>
+                                    </button>
+
+
                                     <Link to={`/pelicula/${Pelicula.id}`}>
                                         <button className="btn btn-info btn-sm rounded-pill">
                                             <i className="fa-solid fa-eye text-primary-emphasis"></i>
                                         </button>
                                     </Link>
+
                                     <button
-                                        className="btn btn-warning btn-sm rounded-pill"
-                                        onClick={() => Editar(Pelicula.id)}
-                                    >
-                                    <i className="fa-solid fa-pencil text-danger-emphasis"></i>
+                                    className="btn btn-warning btn-sm rounded-pill"
+                                    onClick={() => Editar(Pelicula.id)}>
+                                        <i className="fa-solid fa-pencil text-danger-emphasis"></i>
                                     </button>
+
                                     <button
-                                        className="btn btn-danger btn-sm rounded-pill"
-                                        onClick={() => Eliminar(Pelicula.id)}
-                                    >
-                                    <i className="fa-solid fa-trash-can text-danger-emphasis"></i>
+                                    className="btn btn-danger btn-sm rounded-pill"
+                                    onClick={() => Eliminar(Pelicula.id)}>
+                                        <i className="fa-solid fa-trash-can text-danger-emphasis"></i>
                                     </button>
                                 </td>
                             </tr>
