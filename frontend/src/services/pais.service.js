@@ -3,10 +3,10 @@ import SERVER_CONFIG from "../config/server.config";
 
 const PAISES_API_URL = `${SERVER_CONFIG.SERVER_API_URL}/paises`;
 
-async function getAll() {
+async function getAll(page, size) {
   try {
-    const response = await httpService.get(PAISES_API_URL);
-    return response;
+    const response = await httpService.get(`${PAISES_API_URL}?page=${page}&size=${size}`);
+    return response.data;
   } catch (error) {
     console.error("Error al obtener todos los paises:", error);
     throw new Error("Error al obtener todos los paises.");

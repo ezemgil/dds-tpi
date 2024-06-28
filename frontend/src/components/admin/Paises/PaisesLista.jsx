@@ -1,7 +1,15 @@
 import React, { useState } from "react";
 import { Helmet } from "react-helmet";
 
-const PaisesLista = ({ Paises, Editar, Eliminar }) => {
+const PaisesLista = ({ 
+        Paises, 
+        Editar, 
+        Eliminar, 
+        Pagina, 
+        totalPaises, 
+        Paginas, 
+        BuscarPagina,
+    }) => {
     return (
         <>
             <Helmet>
@@ -10,7 +18,7 @@ const PaisesLista = ({ Paises, Editar, Eliminar }) => {
 
             <div className="row flex-nowrap">
                 <div className="col py-3">
-                    <div className="table-responsive">
+                    <div className="">
                         <table className="table table-striped table-dark text-center table-bordered table-hover table-sm">
                             <thead>
                                 <tr>
@@ -21,7 +29,8 @@ const PaisesLista = ({ Paises, Editar, Eliminar }) => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {Paises.map((pais) => (
+                                {Paises.length > 0 ? (
+                                Paises.map((pais) => (
                                     <tr key={pais.id}>
                                         <td>{pais.id}</td>
                                         <td>{pais.nombre}</td>
@@ -41,9 +50,38 @@ const PaisesLista = ({ Paises, Editar, Eliminar }) => {
                                             </button>
                                         </td>
                                     </tr>
-                                ))}
+                                ))
+                            ) : (<tr><td colSpan="6">No hay paises</td></tr>)}
                             </tbody>
                         </table>
+
+                        {/* Paginador */}                                 
+                        <div className="paginador">
+                            <div className="row align-items-center d-flex justify-content-center">
+                                <div style={{ display: "flex", marginRight: 'auto' }} className="col text-center">
+                                    Página: &nbsp;
+                                    <select 
+                                        className="form-select"
+                                        value={Pagina} 
+                                        onChange={(e) => { BuscarPagina(e.target.value) }}
+                                    >
+                                        {Paginas.map((pagina) => (
+                                            <option key={pagina} value={pagina}>
+                                                {pagina}
+                                            </option>
+                                        ))}
+                                    </select>
+                                    &nbsp; de {Paginas.length}
+                                    
+                                    <span style={{ marginLeft: 'auto' }}>
+                                        <span className="pyBadge">Total: {totalPaises}</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                            
+                         
                     </div>
                 </div>
             </div>

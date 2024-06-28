@@ -1,7 +1,10 @@
 import React from "react";
+import Button from "react-bootstrap/esm/Button";
+import Modal from "react-bootstrap/Modal";
 import { useForm } from "react-hook-form";
 
 const PaisesForm = ({itemPais, Volver, Grabar}) => {
+
     const {
         register,
         handleSubmit,
@@ -33,6 +36,7 @@ const PaisesForm = ({itemPais, Volver, Grabar}) => {
                         />
                     </div>
 
+                    {/* Botones */}
                     <div className="d-flex justify-content-center">
                         <button type="submit" className="btn btn-primary mx-2 text-dark"><i className="fa-regular fa-floppy-disk me-2"></i>Guardar</button>
                         <button className='btn btn-dark border border-secondary px-2 mx-2 ' onClick={() => Volver()}>Volver</button>

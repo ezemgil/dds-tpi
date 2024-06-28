@@ -18,18 +18,37 @@ const Paises = () => {
     const [itemPais, setItemPais] = useState({});
     const [modalShow, setModalShow] = useState(false);
 
-    const [RegistrosTotal, setRegistrosTotal] = useState(0);
-    const [Pagina, setPagina] = useState(1);
+    const [totalPaises, setTotalPaises] = useState(0);
+    const [Pagina, setPagina] = useState(0);
     const [Paginas, setPaginas] = useState([]);
+
+        
+    // Funcion para buscar una pagina
+    async function BuscarPagina(_pagina) {
+        if (_pagina && _pagina !== Pagina) {
+            setPagina(_pagina);
+        }
+        else {
+            _pagina = Pagina
+        }
+
+        const res = await paisService.getAll(_pagina, 10);
+        setPaises(res.paises);
+        setTotalPaises(res.totalPaises);
+ 
+        // Generar resultado para mostrar en el select del paginador
+        const arrPaginas = [];
+        for (let i = 1; i <= Math.ceil(res.totalPaises / 10); i++) {
+            arrPaginas.push(i-1);
+        }
+        setPaginas(arrPaginas);
+    };
     
-    // Listar todos los paises
+    // Listar la primera pagina de paises
     useEffect(() => {
-        async function cargarPaises() {
-            paisService.getAll().then((response) => {
-                setPaises(response.data);
-        });}
-        cargarPaises(
-    )}, []);
+        BuscarPagina(Pagina);
+    }, [Pagina]); // Array de dependencias
+
 
     // Buscar un pais por id
     async function BuscarPorId(id, accion) {
@@ -43,36 +62,49 @@ const Paises = () => {
         setModalShow(true);
         BuscarPorId(id, "U")
     };
-    
-    // Eliminar un pais
-    function Eliminar() {
-        console.log("Eliminar");
-    };
 
     // Grabar un pais
     function Grabar(itemPais) {
+        const paisEndpoint = {
+            nombre: itemPais.nombre,
+            codigo: itemPais.codigo,
+        }
+
         if (AccionCRUD === "C") {
-            paisService.create(itemPais);
+            paisService.create(paisEndpoint).then((response) => {
+                paisService.getAll().then((response) => setPaises(response.data))
+            });
         } else if (AccionCRUD === "U") {
-            paisService.update(itemPais.id, itemPais);
+            paisService.update(itemPais.id, paisEndpoint).then((response) => {
+                paisService.getAll().then((response) => setPaises(response.data))
+            });
         }
         setAccionCRUD("RA");
     };
-
+    
     // Agregar un nuevo pais
     const Agregar = () => {
         setModalShow(true);
         setItemPais({
             nombre: "",
-            codigo: "",
+            codigo: null,
         });
         setAccionCRUD("C");
     };
-
+    
     function Volver() {
         setAccionCRUD("RA");
     };
+
+    // Eliminar un pais
+    function Eliminar(id) {
+        paisService.remove(id).then((response) => {
+            paisService.getAll().then((response) => setPaises(response.data))
+        });
+        setAccionCRUD("RA");
+    };
     
+
     return (
         <div>
                 <h1>Paises</h1>
@@ -86,6 +118,10 @@ const Paises = () => {
                             Paises, 
                             Editar, 
                             Eliminar, 
+                            Pagina, 
+                            totalPaises,
+                            Paginas,
+                            BuscarPagina,
                         }}
                     />
 
@@ -100,7 +136,7 @@ const Paises = () => {
                             Nombre={'Paises ' + TituloCRUD[AccionCRUD]}
                         />
 
-                    )};
+                    )}
                         
                     {AccionCRUD === "U" && (
                         <PaisesFormModal
@@ -114,7 +150,7 @@ const Paises = () => {
                             Titulo={'Paises ' + TituloCRUD[AccionCRUD]}
                             
                         />
-                    )};
+                    )}
 
                 </div>
 

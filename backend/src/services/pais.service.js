@@ -3,10 +3,16 @@ import Pais from "../models/paises.js";
 
 // Buscar todos los países
 export const findAll = async (page = undefined, size = undefined) => {
-  return await Pais.findAll({
+  const options = {
     offset: page && size ? page * size : undefined,
     limit: size ? size : undefined,
-  });
+  };
+  const { count, rows } = await Pais.findAndCountAll(options); 
+
+  return {
+    totalPaises: count,
+    paises: rows,
+  };
 };
 
 // Crear un nuevo país
