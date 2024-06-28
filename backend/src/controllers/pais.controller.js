@@ -1,5 +1,5 @@
 import * as service from "../services/pais.service.js";
-import { NotFoundError } from "../utils/errors.js";
+import { NotFoundError, ForbiddenError } from "../utils/errors.js";
 import { log } from "../utils/logger.js";
 
 // Buscar todos los países
@@ -45,8 +45,13 @@ export const getPaisByNombre = async (req, res, next) => {
 // Crear un nuevo país
 export const createPais = async (req, res, next) => {
   try {
-    const pais = await service.create(req.body);
-    res.status(201).json(pais);
+    if (res.locals.user.rol === "Administrador") {
+      const pais = await service.create(req.body);
+      log(req, `País ${pais.nombre} creado por ${res.locals.user.usuario}`);
+      res.status(201).json(pais);
+    } else {
+      next(new ForbiddenError("No tiene permiso para realizar esta acción"));
+    }
   } catch (error) {
     log(req, `Error en createPais: ${error.message}`);
     next(error);
@@ -56,11 +61,19 @@ export const createPais = async (req, res, next) => {
 // Actualizar un país
 export const updatePais = async (req, res, next) => {
   try {
-    const pais = await service.update(req.params.id, req.body);
-    if (pais) {
-      res.json(pais);
+    if (res.locals.user.rol === "Administrador") {
+      const pais = await service.update(req.params.id, req.body);
+      if (pais) {
+        log(
+          req,
+          `País ${pais.nombre} actualizado por ${res.locals.user.usuario}`
+        );
+        res.json(pais);
+      } else {
+        next(new NotFoundError("País no encontrado"));
+      }
     } else {
-      next(new NotFoundError("País no encontrado"));
+      next(new ForbiddenError("No tiene permiso para realizar esta acción"));
     }
   } catch (error) {
     log(req, `Error en updatePais: ${error.message}`);
@@ -71,11 +84,19 @@ export const updatePais = async (req, res, next) => {
 // Eliminar un país
 export const deletePais = async (req, res, next) => {
   try {
-    const result = await service.remove(req.params.id);
-    if (result) {
-      res.send("País eliminado");
+    if (res.locals.user.rol === "Administrador") {
+      const pais = await service.remove(req.params.id);
+      if (pais) {
+        log(
+          req,
+          `País ${pais.nombre} eliminado por ${res.locals.user.usuario}`
+        );
+        res.json(pais);
+      } else {
+        next(new NotFoundError("País no encontrado"));
+      }
     } else {
-      next(new NotFoundError("País no encontrado"));
+      next(new ForbiddenError("No tiene permiso para realizar esta acción"));
     }
   } catch (error) {
     log(req, `Error en deletePais: ${error.message}`);

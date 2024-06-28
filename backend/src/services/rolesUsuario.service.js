@@ -1,42 +1,63 @@
 import RolUsuario from "../models/rolesUsuario.js";
+import { DatabaseValidationError } from "../utils/errors.js";
 
 // Buscar todos los roles
 export const findAll = async (page = undefined, size = undefined) => {
-  return await RolUsuario.findAll({
-    offset: page && size ? page * size : undefined,
-    limit: size ? size : undefined,
-  });
+    try {
+        return await RolUsuario.findAll({
+            offset: page && size ? page * size : undefined,
+            limit: size ? size : undefined,
+        });
+    } catch (error) {
+        throw new DatabaseValidationError(error.message);
+    }
 };
 
 // Buscar rol por nombre
 export const findByName = async (nombre) => {
-  return await RolUsuario.findOne({
-    where: {
-      rol: nombre,
-    },
-  });
+    try {
+        return await RolUsuario.findOne({
+            where: {
+                rol: nombre,
+            },
+        });
+    } catch (error) {
+        throw new DatabaseValidationError(error.message);
+    }
 };
 
 // Crear un nuevo rol
 export const createRol = async (rol) => {
-  return await RolUsuario.create(rol);
+    try {
+        return await RolUsuario.create(rol);
+    } catch (error) {
+        throw new DatabaseValidationError(error.message);
+    }
 };
 
 // Actualizar un rol
 export const updateRol = async (id, nombre) => {
-  const rolToUpdate = await RolUsuario.findByPk(id);
-  if (rolToUpdate) {
-    rolToUpdate.nombre = nombre;
-    return await rolToUpdate.save();
-  }
-  return null;
+    try {
+        const rolToUpdate = await RolUsuario.findByPk(id);
+        if (rolToUpdate) {
+            rolToUpdate.nombre = nombre;
+            return await rolToUpdate.save();
+        }
+        return null;
+    } catch (error) {
+        throw new DatabaseValidationError(error.message);
+    }
 };
 
 // Eliminar un rol
 export const deleteRol = async (id) => {
-  const rolToDelete = await RolUsuario.findByPk(id);
-  if (rolToDelete) {
-    return await rolToDelete.destroy();
-  }
-  return null;
+    try {
+        const rolToDelete = await RolUsuario.findByPk(id);
+        if (rolToDelete) {
+            return await rolToDelete.destroy();
+        }
+        return null;
+    } catch (error) {
+        throw new DatabaseValidationError(error.message);
+    }
 };
