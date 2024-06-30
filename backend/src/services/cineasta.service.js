@@ -177,6 +177,9 @@ export const create = async (cineasta, roles) => {
             return result;
         }
     } catch (error) {
+        if (error.name === "SequelizeUniqueConstraintError") {
+            throw new DatabaseValidationError("El cineasta ya existe");
+        }
         throw new DatabaseValidationError(error.message);
     }
 };
@@ -190,9 +193,12 @@ export const update = async (id, cineasta, roles) => {
             if (roles && roles.length > 0) {
                 await filmmaker.setRoles(roles);
             }
+            return filmmaker;
         }
-        return result;
     } catch (error) {
+        if (error.name === "SequelizeUniqueConstraintError") {
+            throw new DatabaseValidationError("El cineasta ya existe");
+        }
         throw new DatabaseValidationError(error.message);
     }
 };

@@ -19,6 +19,9 @@ export const create = async (idioma) => {
     try {
         return await Idioma.create(idioma);
     } catch (error) {
+        if (error.name === "SequelizeUniqueConstraintError") {
+            throw new DatabaseValidationError("El idioma ya existe");
+        }
         throw new DatabaseValidationError(error.message);
     }
 };
@@ -52,6 +55,9 @@ export const update = async (id, idioma) => {
         }
         return null;
     } catch (error) {
+        if (error.name === "SequelizeUniqueConstraintError") {
+            throw new DatabaseValidationError("El idioma ya existe");
+        }
         throw new DatabaseValidationError(error.message);
     }
 };

@@ -19,6 +19,9 @@ export const create = async (tipoRol) => {
     try {
         return await TipoRol.create(tipoRol);
     } catch (error) {
+        if (error.name === "SequelizeUniqueConstraintError") {
+            throw new DatabaseValidationError("El tipo de rol ya existe");
+        }
         throw new DatabaseValidationError(error.message);
     }
 };
@@ -52,6 +55,9 @@ export const update = async (id, tipoRol) => {
         }
         return null;
     } catch (error) {
+        if (error.name === "SequelizeUniqueConstraintError") {
+            throw new DatabaseValidationError("El tipo de rol ya existe");
+        }
         throw new DatabaseValidationError(error.message);
     }
 };

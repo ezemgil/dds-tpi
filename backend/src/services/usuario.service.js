@@ -20,6 +20,9 @@ export const createUsuario = async (usuario) => {
     try {
         return await Usuario.create(usuario);
     } catch (error) {
+        if (error.name === "SequelizeUniqueConstraintError") {
+            throw new DatabaseValidationError("El usuario ya existe");
+        }
         throw new DatabaseValidationError(error.message);
     }
 };
@@ -36,6 +39,9 @@ export const updateUsuario = async (id, usuario, clave, id_rol) => {
         }
         return null;
     } catch (error) {
+        if (error.name === "SequelizeUniqueConstraintError") {
+            throw new DatabaseValidationError("El usuario ya existe");
+        }
         throw new DatabaseValidationError(error.message);
     }
 };

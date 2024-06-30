@@ -55,6 +55,9 @@ export const create = async (pelicula, generos, idiomas) => {
             return result;
         }
     } catch (error) {
+        if (error.name === "SequelizeUniqueConstraintError") {
+            throw new DatabaseValidationError("La película ya existe");
+        }
         throw new DatabaseValidationError(error.message);
     }
 };
@@ -196,21 +199,14 @@ export const update = async (id, pelicula, generos, idiomas) => {
             return movie;
         }
     } catch (error) {
+        if (error.name === "SequelizeUniqueConstraintError") {
+            throw new DatabaseValidationError("La película ya existe");
+        }
         throw new DatabaseValidationError(error.message);
     }
 };
 
 // Eliminar una película
-// export const remove = async (id) => {
-//     try {
-//         const result = await Pelicula.destroy({ where: { id } });
-//         if (result) {
-//             return true;
-//         }
-//     } catch (error) {
-//         throw new DatabaseValidationError(error.message);
-//     }
-// };
 export const remove = async (id) => {
     try {
         return await Pelicula.destroy({ where: { id } });
@@ -218,7 +214,6 @@ export const remove = async (id) => {
         throw new DatabaseValidationError(error.message);
     }
 };
-
 
 // Agregar un cineasta a una película
 export const addCineastas = async (id, cineastas) => {

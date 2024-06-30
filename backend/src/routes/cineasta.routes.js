@@ -11,10 +11,6 @@ router.get("/api/cineastas", controller.getCineastas);
 router.get("/api/cineastas/:id", controller.getCineastaById);
 router.post("/api/cineastas", authentificateJWT, controller.createCineasta);
 router.put("/api/cineastas/:id", authentificateJWT, controller.updateCineasta);
-router.delete(
-  "/api/cineastas/:id",
-  authentificateJWT,
-  controller.deleteCineasta
-);
+router.delete("/api/cineastas/:id", authentificateJWT, controller.deleteCineasta);
 
 export default router;

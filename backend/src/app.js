@@ -19,12 +19,10 @@ import rolesUsuarioRoutes from "./routes/rolesUsuario.routes.js";
 import tipoRolRoutes from "./routes/tipoRol.routes.js";
 import usuarioRoutes from "./routes/usuario.routes.js";
 
-
 // Crear aplicación express
 const app = express();
 app.use(cors());
 app.use(express.json());
-
 
 // Rutas
 app.use(authRoutes);
@@ -41,12 +39,12 @@ app.use(usuarioRoutes);
 app.use(tipoRolRoutes);
 
 app.get("/api/status", (req, res) => {
-  res.json({ status: "API en funcionamiento" });
+    res.json({ status: "API en funcionamiento" });
 });
 
 // Ruta no encontrada
 app.use((req, res, next) => {
-  res.status((404).json({ error: "Not Found" }));
+    res.status(404).json({ error: "Not Found" });
 });
 
 // Configuración de express y middlewares

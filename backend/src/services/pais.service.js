@@ -25,6 +25,9 @@ export const create = async (pais) => {
     try {
         return await Pais.create(pais);
     } catch (error) {
+        if (error.name === "SequelizeUniqueConstraintError") {
+            throw new DatabaseValidationError("El país ya existe");
+        }
         throw new DatabaseValidationError(error.message);
     }
 };
@@ -58,6 +61,9 @@ export const update = async (id, pais) => {
         }
         return null;
     } catch (error) {
+        if (error.name === "SequelizeUniqueConstraintError") {
+            throw new DatabaseValidationError("El país ya existe");
+        }
         throw new DatabaseValidationError(error.message);
     }
 };

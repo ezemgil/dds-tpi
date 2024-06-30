@@ -38,7 +38,13 @@ CREATE TABLE IF NOT EXISTS Cineastas (
     imagen TEXT,
     nacionalidad INTEGER NOT NULL,
     nacionalidad2 INTEGER,
-    FOREIGN KEY (nacionalidad) REFERENCES Paises(id)
+    FOREIGN KEY (nacionalidad) REFERENCES Paises(id),
+    FOREIGN KEY (nacionalidad2) REFERENCES Paises(id) ON DELETE SET NULL,
+    CONSTRAINT unique_cineasta UNIQUE (nombre, apellido, fecha_nacimiento),
+    CHECK (fecha_nacimiento <= fecha_fallecimiento),
+    CHECK (nacionalidad != nacionalidad2),
+    CHECK (fecha_nacimiento <= CURRENT_DATE),
+    CHECK (fecha_fallecimiento <= CURRENT_DATE)
 );
 
 CREATE TABLE IF NOT EXISTS Peliculas (
@@ -51,7 +57,12 @@ CREATE TABLE IF NOT EXISTS Peliculas (
     titulo_original TEXT NOT NULL,
     imagen TEXT,
     id_clasificacion INTEGER,
-    FOREIGN KEY (id_clasificacion) REFERENCES Clasificaciones(id)
+    FOREIGN KEY (id_clasificacion) REFERENCES Clasificaciones(id),
+    CONSTRAINT unique_pelicula UNIQUE (titulo, fecha_estreno),
+    CHECK (calificacion >= 0 AND calificacion <= 10),
+    CHECK (duracion > 0),
+    CHECK (fecha_estreno <= CURRENT_DATE),
+    CHECK (titulo_original != '')
 );
 
 CREATE TABLE IF NOT EXISTS RolesCineasta (
@@ -86,14 +97,6 @@ CREATE TABLE IF NOT EXISTS GenerosPelicula (
     FOREIGN KEY (id_genero) REFERENCES Generos(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS Usuarios (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    nombre TEXT NOT NULL UNIQUE,
-    clave TEXT NOT NULL,
-    id_rol INTEGER,
-    FOREIGN KEY (id_rol) REFERENCES RolesUsuario(id)
-);
-
 CREATE TABLE IF NOT EXISTS Premios (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     nombre TEXT NOT NULL UNIQUE
@@ -106,7 +109,9 @@ CREATE TABLE IF NOT EXISTS NominacionesPelicula (
     fecha_nominacion DATE NOT NULL,
     fue_ganador INTEGER NOT NULL DEFAULT 0 CHECK(fue_ganador IN (0, 1)),
     FOREIGN KEY (id_premio) REFERENCES Premios(id),
-    FOREIGN KEY (id_pelicula) REFERENCES Peliculas(id) ON DELETE CASCADE ON UPDATE CASCADE
+    FOREIGN KEY (id_pelicula) REFERENCES Peliculas(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT unique_nominacion UNIQUE (id_premio, id_pelicula, fecha_nominacion),
+    CHECK (fecha_nominacion <= CURRENT_DATE)
 );
 
 CREATE TABLE IF NOT EXISTS RolesUsuario (
@@ -114,6 +119,14 @@ CREATE TABLE IF NOT EXISTS RolesUsuario (
     rol TEXT NOT NULL UNIQUE
 );
 
+
+CREATE TABLE IF NOT EXISTS Usuarios (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nombre TEXT NOT NULL UNIQUE,
+    clave TEXT NOT NULL,
+    id_rol INTEGER,
+    FOREIGN KEY (id_rol) REFERENCES RolesUsuario(id)
+);
 
 INSERT INTO Clasificaciones (nombre, descripcion) VALUES ('R', 'Restringida'), ('PG-13', 'Mayores de 13 años'), ('PG', 'Mayores de 7 años'), ('G', 'Todo público'), ('NR', 'No recomendada'), ('NC-17', 'Mayores de 17 años');
 
@@ -370,10 +383,12 @@ INSERT INTO PeliculaCineasta (id_pelicula, id_cineasta) VALUES (10, 47);
 
 INSERT INTO NominacionesPelicula (id_premio, id_pelicula, fecha_nominacion, fue_ganador) VALUES (1, 2, '2002-10-3', 1), (2, 10, '1999-12-31', 1), (3, 9, '1998-04-05', 0), (4, 2, '1995-03-27', 0), (5, 1, '2001-05-15', 0), (6, 10, '1980-10-09', 0), (7, 4, '2007-06-14', 0), (8, 4, '1988-12-23', 0), (9, 4, '1993-11-08', 1), (10, 5, '1985-04-19', 0);
 
-INSERT INTO RolesUsuario (rol) VALUES ('Administrador'), ('Usuario');
 
+INSERT INTO RolesUsuario (rol) VALUES ('Administrador');
+INSERT INTO RolesUsuario (rol) VALUES ('Usuario');
 INSERT INTO Usuarios (nombre, clave, id_rol) VALUES ('admin', '$2b$10$kXII2Vd5f3KOgUBbiJ7Oq.ChAHdEbszy4xHbzvQInvGBYc6rPQ3wS', 1); 
 INSERT INTO Usuarios (nombre, clave, id_rol) VALUES ('usuario', '$2b$10$4H82aRCITwhn/fRa/nI3x.TBRxB3oomH7WUutc25sr7Qu3DvrSWG6', 2);
+
 
 UPDATE Cineastas
 SET fecha_fallecimiento = '1999-01-01'

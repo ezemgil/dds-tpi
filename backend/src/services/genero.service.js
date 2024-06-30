@@ -25,6 +25,9 @@ export const create = async (genero) => {
     try {
         return await Genero.create(genero);
     } catch (error) {
+        if (error.name === "SequelizeUniqueConstraintError") {
+            throw new DatabaseValidationError("El género ya existe");
+        }
         throw new DatabaseValidationError(error.message);
     }
 };
@@ -58,6 +61,9 @@ export const update = async (id, genero) => {
         }
         return null;
     } catch (error) {
+        if (error.name === "SequelizeUniqueConstraintError") {
+            throw new DatabaseValidationError("El género ya existe");
+        }
         throw new DatabaseValidationError(error.message);
     }
 };

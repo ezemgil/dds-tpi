@@ -31,6 +31,9 @@ export const createRol = async (rol) => {
     try {
         return await RolUsuario.create(rol);
     } catch (error) {
+        if (error.name === "SequelizeUniqueConstraintError") {
+            throw new DatabaseValidationError("El rol ya existe");
+        }
         throw new DatabaseValidationError(error.message);
     }
 };
@@ -40,11 +43,14 @@ export const updateRol = async (id, nombre) => {
     try {
         const rolToUpdate = await RolUsuario.findByPk(id);
         if (rolToUpdate) {
-            rolToUpdate.nombre = nombre;
+            rolToUpdate.rol = nombre;
             return await rolToUpdate.save();
         }
         return null;
     } catch (error) {
+        if (error.name === "SequelizeUniqueConstraintError") {
+            throw new DatabaseValidationError("El rol ya existe");
+        }
         throw new DatabaseValidationError(error.message);
     }
 };

@@ -93,7 +93,6 @@ export const updateCineasta = async (req, res, next) => {
             const updatedCineasta = await service.update(req.params.id, cineasta, roles);
             if (updatedCineasta) {
                 res.json(updatedCineasta);
-                log(req, `PUT /cineastas/${req.params.id}`);
             } else {
                 next(new NotFoundError("Cineasta no encontrado"));
             }

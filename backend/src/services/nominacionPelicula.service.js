@@ -56,6 +56,9 @@ export const create = async (nominacion) => {
     try {
         return await NominacionPelicula.create(nominacion);
     } catch (error) {
+        if (error.name === "SequelizeUniqueConstraintError") {
+            throw new DatabaseValidationError("La nominacion de pelicula ya existe");
+        }
         throw new DatabaseValidationError(error.message);
     }
 };
@@ -92,6 +95,9 @@ export const update = async (id, nominacion) => {
         }
         return null;
     } catch (error) {
+        if (error.name === "SequelizeUniqueConstraintError") {
+            throw new DatabaseValidationError("La nominacion de pelicula ya existe");
+        }
         throw new DatabaseValidationError(error.message);
     }
 };

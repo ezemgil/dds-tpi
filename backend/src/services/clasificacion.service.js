@@ -19,6 +19,9 @@ export const create = async (clasificacion) => {
     try {
         return await Clasificacion.create(clasificacion);
     } catch (error) {
+        if (error.name === "SequelizeUniqueConstraintError") {
+            throw new DatabaseValidationError("La clasificación ya existe");
+        }
         throw new DatabaseValidationError(error.message);
     }
 };
@@ -52,6 +55,9 @@ export const update = async (id, clasificacion) => {
         }
         return null;
     } catch (error) {
+        if (error.name === "SequelizeUniqueConstraintError") {
+            throw new DatabaseValidationError("La clasificación ya existe");
+        }
         throw new DatabaseValidationError(error.message);
     }
 };

@@ -59,7 +59,7 @@ export const updateRol = async (req, res, next) => {
     try {
         if (user.rol === "Administrador") {
             const { id } = req.params;
-            const result = await service.updateRol(id, req.body);
+            const result = await service.updateRol(id, req.body.nombre);
             if (!result) {
                 next(new NotFoundError("Rol no encontrado"));
             }

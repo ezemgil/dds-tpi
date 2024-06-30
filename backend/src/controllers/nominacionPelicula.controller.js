@@ -51,7 +51,7 @@ export const getNominacionPeliculaById = async (req, res, next) => {
         if (nominacion) {
             res.json(nominacion);
         } else {
-            throw new ForbiddenError("Nominacion de pelicula no encontrada");
+            throw new NotFoundError("Nominacion de pelicula no encontrada");
         }
     } catch (error) {
         log(req, `Error en getNominacionPeliculaById: ${error.message}`);
