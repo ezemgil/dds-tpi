@@ -9,8 +9,8 @@ const httpService = axios.create({
 });
 
 httpService.interceptors.request.use(
-    (request) => {
-        // modalService.ScreenLock(true);
+    async (request) => {
+        modalService.BloquearPantalla(true);
         const accessToken = sessionStorage.getItem("accessToken");
         if (accessToken) {
             request.headers["Authorization"] = "Bearer " + accessToken;
@@ -25,12 +25,12 @@ httpService.interceptors.request.use(
 
 httpService.interceptors.response.use(
     (response) => {
-        // modalService.ScreenLock(false);
+        modalService.BloquearPantalla(false);
         return response;
     },
     async (error) => {
-        console.log("Error al hacer la petición: ", error);
-        // modalService.ScreenLock(false);
+        console.log("Error al hacer la petición: ", error.response);
+        modalService.BloquearPantalla(false);
 
         switch (error.response.status) {
             case 401:
@@ -40,17 +40,14 @@ httpService.interceptors.response.use(
                     error.config.headers["Authorization"] = "Bearer " + accessToken;
                     return httpService.request(error.config); // Reintentar la petición
                 } catch (refreshError) {
-                    console.log("Error refreshing access token:", refreshError);
                     modalService.Alert("Su sesión ha expirado, por favor vuelva a iniciar sesión");
                 }
                 break;
             case 403:
-                console.log(error.message);
                 modalService.Alert("No tiene permisos para realizar esta acción");
                 break;
             case 422:
-                error.message = "Ya existe un registro con los datos ingresados";
-                modalService.Alert(error.message);
+                modalService.Alert(error.response.data.message);
                 break;
             default:
                 break;
