@@ -50,8 +50,6 @@ const CineastasForm = ({itemCineasta, volver, grabar}) => {
         setItemRoles(itemCineasta.roles);
         paisService.getAll().then((response) => setPaises(response.data.paises));
         rolService.getAll().then((response) => setListaRoles(response.data));
-        console.log(itemCineasta.pais?.id)
-        // console.log(listaRoles)
     }, []);
 
     return (
@@ -63,17 +61,28 @@ const CineastasForm = ({itemCineasta, volver, grabar}) => {
                         {/* Campo nombre */}
                         <div className="mb-3 col">
                             <label htmlFor="nombre" className="form-label">Nombre</label>
-                            <input type="text" className="form-control bg-dark text-light border-secondary" id="nombre" name="nombre" 
-                                {...register('nombre', {required: { value: true, message: 'Campo requerido' }})}
+                            <input 
+                            type="text" 
+                            className="form-control bg-dark text-light border-secondary" 
+                            id="nombre" 
+                            name="nombre" 
+                            {...register('nombre', {required: { value: true, message: 'Campo requerido'},
+                            maxLength: {value: 50, message: 'Maximo 30 caracteres'},
+                            minLength: {value: 3, message: 'Minimo 3 caracteres'}})}
                             />
+                            {errors.nombre && <span className="text-danger">{errors.nombre.message}</span>}
                         </div>
+                        
 
                         {/* Campo apellido */}
                         <div className="mb-3 col">
                             <label htmlFor="apellido" className="form-label">Apellido</label>
                             <input type="text" className="form-control bg-dark text-light border-secondary" id="apellido" name="apellido" 
-                                {...register('apellido', {required: { value: true, message: 'Campo requerido' }})}
+                                {...register('apellido', {required: { value: true, message: 'Campo requerido' },
+                                    maxLength: {value: 50, message: 'Maximo 30 caracteres'},
+                                    minLength: {value: 3, message: 'Minimo 3 caracteres'}})}
                             />
+                            {errors.apellido && <span className="text-danger">{errors.apellido.message}</span>}
                         </div>
                     </div>
                     
@@ -138,14 +147,13 @@ const CineastasForm = ({itemCineasta, volver, grabar}) => {
                     {/* Campo biografia */}
                     <div className="mb-3 ">
                         <label htmlFor="biografia">Biografia</label>
-                        <textarea className="form-control bg-dark text-light  border-secondary"  id="biografia" name="biografia" 
-                            {...register('biografia', {required: {value: true, message: 'Campo requerido'}})}>
-                        </textarea>
+                        <textarea className="form-control bg-dark text-light  border-secondary"  id="biografia" name="biografia" />
                     </div>
 
 
                     {/* Campo nacionalidades e imagenes */}
                     <div className="row mt-3">
+
                         {/* Campo imagen */}
                         <div className="mb-3 col">
                             <label htmlFor="imagen" className="form-label ">Imagen de cineasta (URL)</label>
@@ -165,33 +173,35 @@ const CineastasForm = ({itemCineasta, volver, grabar}) => {
                             </div>
                         </div>
 
-                        {/* Campo nacionalidades */}
                         <div className="ms-3 col">
-                            <label htmlFor="">Nacionalidad 1</label>
-                            <select
-                            name="pais" 
-                            id="pais"
-                            className="form-select w-100 bg-dark text-light border-secondary mb-4 mt-2"
-                            // p.id == e.target.value)
-                            onChange={(e) => setItemPais(listaPaises.find((p) => p.id == e.target.value))}>
-                                    <option selected={true} key={0} value={0}>Seleccione un campo</option>
+                            {/* Campo nacionalidad*/}
+                            <div className="mb-3">
+                                <label className="mb-2" htmlFor="pais">Nacionalidad 1</label>
+                                <select
+                                name="pais" 
+                                id="pais"
+                                className="form-select w-100 bg-dark text-light border-secondary"
+                                onChange={(e) => setItemPais(listaPaises.find((p) => p.id == e.target.value))}>
                                     {listaPaises?.map((p) => (
-                                        <option key={p.id} selected={itemCineasta.pais?.id == p.id} value={p.id}>{p.nombre}</option>
+                                        <option key={p.id} value={p.id} selected={itemCineasta.pais?.id == p.id}>{p.nombre}</option>
                                     ))}
-                            </select>
-                            {errors?.pais && <div className="invalid-feedback">{errors?.pais?.message}</div>}
-                                    
-                            <label htmlFor="">Nacionalidad 2</label>
-                            <select
-                            name="pais2" 
-                            id="pais2"
-                            className="form-select w-100 bg-dark text-light border-secondary"
-                            onChange={(e) => setItemPais2(listaPaises.find((p) => p.id == e.target.value))}>
-                                    <option selected={itemCineasta.pais2?.id == null} disabled key={0} value={0}>Ninguno</option>
-                                    {listaPaises?.map((p) => (
-                                        <option selected={itemCineasta.pais2?.id == p.id} key={p.id} value={p.id}>{p.nombre}</option>
-                                    ))}
-                            </select>
+                                </select>
+                            </div>
+
+                            {/* Campo nacionalidad 2 */}
+                            <div>
+                                <label className="mb-2" htmlFor="pais2">Nacionalidad 2</label>
+                                <select
+                                name="pais2" 
+                                id="pais2"
+                                className="form-select w-100 bg-dark text-light border-secondary"
+                                onChange={(e) => setItemPais2(listaPaises.find((p) => p.id == e.target.value))}>
+                                        <option selected={itemCineasta.pais2?.id == null} key={0} value={0}>Ninguno</option>
+                                        {listaPaises?.map((p) => (
+                                            <option selected={itemCineasta.pais2?.id == p.id} key={p.id} value={p.id}>{p.nombre}</option>
+                                        ))}
+                                </select>
+                            </div>
                         </div>
                     </div>
 

@@ -15,7 +15,7 @@ const NominacionCard = ({ Nominacion }) => {
           <div className="d-flex gap-2 align-items-center">
             <span className="fs-6">
               <b>Año: </b>
-              {moment(Nominacion.fechaNominacion).format("YYYY")}
+              {moment(Nominacion.fecha_nominacion).format("YYYY")}
             </span>
             {Nominacion.fue_ganador ? (
               <span className="badge bg-warning-subtle border border-warning-subtle text-warning-emphasis rounded-pill    ">

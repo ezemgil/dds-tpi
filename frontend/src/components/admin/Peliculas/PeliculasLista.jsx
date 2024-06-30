@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 
-const PeliculasLista = ({ Peliculas, Editar, Eliminar }) => {
+const PeliculasLista = ({ Peliculas, Editar, Eliminar, EditarNominaciones, EditarElenco}) => {
     return (
         <div className="row flex-nowrap ">
             <div className="col py-3">
@@ -33,14 +33,14 @@ const PeliculasLista = ({ Peliculas, Editar, Eliminar }) => {
                                 <td className="d-flex gap-2 justify-content-center">
                                     <button
                                     className="btn badge btn-dark border-secondary text-light btn-sm rounded-pill btn-custom-light"
-                                        onClick={() => console.log("Add bof")}>
-                                        <i class="fa-solid fa-user-plus"></i>
+                                        onClick={() => console.log('EditarElenco()')}>
+                                        <i className="fa-solid fa-user-plus"></i>
                                     </button>
 
                                     <button
                                     className="btn btn-sm btn-success text-dark  rounded-pill"
-                                        onClick={() => console.log("anashe")}>
-                                        <i class="shadow fa-solid fa-trophy"></i>
+                                        onClick={() => EditarNominaciones(Pelicula.id)}>
+                                        <i className="shadow fa-solid fa-trophy"></i>
                                     </button>
 
 

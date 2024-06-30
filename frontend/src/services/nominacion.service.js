@@ -1,5 +1,5 @@
-import httpService from "./http.service";
 import SERVER_CONFIG from "../config/server.config";
+import httpService from "./http.service";
 
 const NOMINACION_API_URL = `${SERVER_CONFIG.SERVER_API_URL}/nominaciones_pelicula`;
 
@@ -22,6 +22,30 @@ async function getById(id) {
   }
 }
 
+async function getByPeliculaId(id) {
+  try {
+    return await httpService.get(`${NOMINACION_API_URL}/pelicula/${id}`);
+  } catch (error) {
+    console.error(
+      `Error al buscar nominaciones de la película con ID ${id}:`,
+      error
+    );
+    throw new Error(
+      `Error al buscar nominaciones de la película con ID ${id}.`
+    );
+  }
+}
+
+
+/* 
+data = 
+  {
+    "id_premio": 9,
+    "id_pelicula": 1,
+    "fecha_nominacion": "2003-07-04",
+    "fue_ganador": 0
+  }
+*/
 async function create(data) {
   try {
     return await httpService.post(NOMINACION_API_URL, data);
@@ -52,6 +76,7 @@ async function remove(id) {
 const nominacionService = {
   getAll,
   getById,
+  getByPeliculaId,
   create,
   update,
   remove,

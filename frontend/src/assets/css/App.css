@@ -199,3 +199,7 @@ input[type="text"].placeholder-light::placeholder {
   background-color: #666666; /* Color de fondo gris claro */
   border-color: #666666; /* Borde con color gris claro */
 }
+
+.bg-dark-70{
+  background-color: rgba(0, 0, 0, 0.7); /* Fondo oscuro con opacidad del 50% */
+}
