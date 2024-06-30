@@ -9,28 +9,30 @@ import Cineastas from "../components/admin/Cineastas/Cineastas";
 import Idiomas from "../components/admin/Idiomas/Idiomas";
 import Paises from "../components/admin/Paises/Paises";
 import Nominaciones from "../components/admin/Nominaciones/Nominaciones";
+import Premios from "../components/admin/Premios/Premios";
 
 const Admin = () => {
-  const [ElementoActual, setElementoActual] = useState("Peliculas");
+    const [ElementoActual, setElementoActual] = useState("Peliculas");
 
-  return (
-    <>
-      <div className="container-fluid">
-        <div className="row flex-nowrap">
-          <Sidebar handleElementoActual={setElementoActual} />
-          <div className="col py-3">
-            {ElementoActual === "Generos" && <Generos />}
-            {ElementoActual === "Peliculas" && <Peliculas />}
-            {ElementoActual === "Clasificaciones" && <Clasificaciones />}
-            {ElementoActual === "Cineastas" && <Cineastas />}
-            {ElementoActual === "Idiomas" && <Idiomas />}
-            {ElementoActual === "Paises" && <Paises />}
-            {ElementoActual === "Nominaciones" && <Nominaciones />}
-          </div>
-        </div>
-      </div>
-    </>
-  );
+    return (
+        <>
+            <div className="container-fluid">
+                <div className="row flex-nowrap">
+                    <Sidebar handleElementoActual={setElementoActual} />
+                    <div className="col py-3">
+                        {ElementoActual === "Generos" && <Generos />}
+                        {ElementoActual === "Peliculas" && <Peliculas />}
+                        {ElementoActual === "Clasificaciones" && <Clasificaciones />}
+                        {ElementoActual === "Cineastas" && <Cineastas />}
+                        {ElementoActual === "Idiomas" && <Idiomas />}
+                        {ElementoActual === "Paises" && <Paises />}
+                        {ElementoActual === "Nominaciones" && <Nominaciones />}
+                        {ElementoActual === "Premios" && <Premios />}
+                    </div>
+                </div>
+            </div>
+        </>
+    );
 };
 
 Admin.ComponenteNoOfuscado = "Admin";
