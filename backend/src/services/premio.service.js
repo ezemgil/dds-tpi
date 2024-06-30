@@ -3,12 +3,9 @@ import Premio from "../models/premios.js";
 import { DatabaseValidationError } from "../utils/errors.js";
 
 // Buscar todos los premios
-export const findAll = async (page = undefined, size = undefined) => {
+export const findAll = async () => {
     try {
-        return await Premio.findAll({
-            offset: page && size ? page * size : undefined,
-            limit: size ? size : undefined,
-        });
+        return await Premio.findAll();
     } catch (error) {
         throw new DatabaseValidationError(error.message);
     }

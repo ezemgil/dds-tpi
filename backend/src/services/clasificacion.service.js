@@ -5,10 +5,15 @@ import { DatabaseValidationError } from "../utils/errors.js";
 // Buscar todas las clasificaciones
 export const findAll = async (page = undefined, size = undefined) => {
     try {
-        return await Clasificacion.findAll({
+        const options = {
             offset: page && size ? page * size : undefined,
             limit: size ? size : undefined,
-        });
+        };
+        const { count, rows } = await Clasificacion.findAndCountAll(options);
+        return {
+            totalClasificaciones: count,
+            clasificaciones: rows,
+        }
     } catch (error) {
         throw new DatabaseValidationError(error.message);
     }

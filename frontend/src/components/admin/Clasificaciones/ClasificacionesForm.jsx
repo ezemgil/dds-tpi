@@ -1,16 +1,16 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 
-const IdiomasForm = ({itemIdioma, Volver, Grabar}) => {
+const ClasificacionesForm = ({itemClasificacion, Volver, Grabar}) => {
 
     const {
         register,
         handleSubmit,
         formState: { errors, touchedFields, isValid, isSubmitted } 
-    } = useForm({defaultValues: itemIdioma});
+    } = useForm({defaultValues: itemClasificacion});
 
     const onSubmit = (data) => {
-        data.id = itemIdioma.id;
+        data.id = itemClasificacion.id;
         Grabar(data);
     }
     
@@ -29,8 +29,21 @@ const IdiomasForm = ({itemIdioma, Volver, Grabar}) => {
                             })}
                         />
                         {errors.nombre && <span className="text-danger text-small d-block mb-2">{errors.nombre.message}</span>}
-                        
                     </div>
+
+                    {/* Campo descripcion */}
+                    <div className="mb-3">
+                        <label htmlFor="descripcion" className="form-label">
+                            Descripcion
+                        </label>
+                        <textarea
+                            className="form-control bg-dark text-light border-secondary "
+                            id="descripcion"
+                            name="descripcion"
+                            {...register("descripcion", {})}
+                        ></textarea>
+                    </div>
+
 
                     {/* Botones */}
                     <div className="d-flex justify-content-center">
@@ -43,4 +56,4 @@ const IdiomasForm = ({itemIdioma, Volver, Grabar}) => {
     )
 }
 
-export default IdiomasForm;
+export default ClasificacionesForm;

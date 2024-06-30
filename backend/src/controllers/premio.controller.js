@@ -4,9 +4,7 @@ import { NotFoundError, BadRequestError, ForbiddenError } from "../utils/errors.
 // Buscar todos los premios
 export const getPremios = async (req, res, next) => {
     try {
-        const page = req.query.page;
-        const size = req.query.size;
-        const premios = await service.findAll(page, size);
+        const premios = await service.findAll();
         res.json(premios);
     } catch (error) {
         next(error);

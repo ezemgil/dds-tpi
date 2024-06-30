@@ -41,25 +41,13 @@ const Idiomas = () => {
           arrPaginas.push(i - 1);
         }
         setPaginas(arrPaginas);
-      }
+    }
     
     // Funcion para listar la primera pagina de paises
     useEffect(() => {
         BuscarPagina(Pagina);
       }, [Pagina]); // Array de dependencias
 
-
-    // Una lista con todos los idiomas
-    const [ListaIdiomas, setListaIdiomas] = useState([]);
-    useEffect(() => {
-        async function ListarIdiomas() {
-            const res = await idiomaService.getAll()
-            setListaIdiomas(res.data.idiomas);    
-        }
-        ListarIdiomas()
-    }, [])
-
-    console.log(ListaIdiomas)
 
     // Funcion para buscar un idioma por id
     async function BuscarPorId(id, accion) {
@@ -97,18 +85,12 @@ const Idiomas = () => {
       setAccionCRUD("C");
     };
 
+    // Funcion para el boton volver
     function Volver() {
       setModalShow(false);
       setAccionCRUD("RA");
     }
 
-    // Eliminar un idioma id
-    async function Eliminar(id) {
-        const res = await idiomaService.getById(id)
-        await idiomaService.remove(res.data.id);
-        BuscarPagina(Pagina);
-        setAccionCRUD("RA");
-    };
 
     // Activar o desactivar un idioma
     async function ActivarDesactivar(idioma) {
@@ -149,7 +131,6 @@ const Idiomas = () => {
                     Grabar={Grabar}
                     Volver={Volver}
                     Titulo={"Idiomas " + TituloCRUD[AccionCRUD]}
-                    ListaIdiomas={ListaIdiomas}
                 />
             )}
 
@@ -164,7 +145,6 @@ const Idiomas = () => {
                     Grabar={Grabar}
                     Volver={Volver}
                     Titulo={"Idiomas " + TituloCRUD[AccionCRUD]}
-                    ListaIdiomas={ListaIdiomas}
                 />
             )}
             </div>

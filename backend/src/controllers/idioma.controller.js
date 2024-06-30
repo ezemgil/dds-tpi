@@ -1,5 +1,5 @@
 import * as service from "../services/idioma.service.js";
-import { NotFoundError, BadRequestError, ForbiddenError } from "../utils/errors.js";
+import { NotFoundError, ForbiddenError } from "../utils/errors.js";
 import { log } from "../utils/logger.js";
 
 // Buscar todos los idiomas
@@ -8,7 +8,7 @@ export const getIdiomas = async (req, res, next) => {
         const page = req.query.page;
         const size = req.query.size;
         const idiomas = await service.findAll(page, size);
-        res.json(idiomas);
+        res.json(idiomas).status(200);
         log(req, `GET /idiomas ${idiomas.length} registros encontrados`);
     } catch (error) {
         log(req, `Error en getIdiomas: ${error.message}`);

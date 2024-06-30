@@ -7,7 +7,9 @@ import { DatabaseValidationError } from "../utils/errors.js";
 // Buscar todas las nominaciones de peliculas
 export const findAll = async (page = undefined, size = undefined) => {
     try {
-        return await NominacionPelicula.findAll({
+        const options = {
+            offset: page && size ? page * size : undefined,
+            limit: size ? size : undefined,
             include: [
                 {
                     model: Premio,
@@ -20,13 +22,16 @@ export const findAll = async (page = undefined, size = undefined) => {
             ],
             attributes: {
                 exclude: ["id_premio", "id_pelicula"],
-            },
-            offset: page && size ? page * size : undefined,
-            limit: size ? size : undefined,
-        });
-    } catch (error) {
+            }
+        };
+        const { count, rows } = await NominacionPelicula.findAndCountAll(options);
+        return {
+            totalNominaciones: count,
+            nominaciones: rows,
+        };
+        } catch (error) {
         throw new DatabaseValidationError(error.message);
-    }
+        }
 };
 
 // Dado un id de pelicula, obtener todas las nominaciones de esa pelicula

@@ -5,8 +5,9 @@ const NOMINACION_API_URL = `${SERVER_CONFIG.SERVER_API_URL}/nominaciones_pelicul
 
 async function getAll() {
   try {
-    const response = await httpService.get(NOMINACION_API_URL);
-    return response;
+    if (!page && !size) return await httpService.get(NOMINACION_API_URL);
+    const response = await httpService.get(`${NOMINACION_API_URL}?page=${page}&size=${size}`);
+    return response.data;
   } catch (error) {
     console.error("Error al obtener todos los nominaciones:", error);
     throw new Error("Error al obtener todos los nominaciones.");
