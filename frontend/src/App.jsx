@@ -17,6 +17,7 @@ import Offline from "./pages/Offline";
 import { useEffect, useState } from "react";
 import getStatus from "./services/status.service";
 
+
 function App() {
     const [Status, setStatus] = useState(null);
 

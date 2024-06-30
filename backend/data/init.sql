@@ -8,7 +8,6 @@ CREATE TABLE IF NOT EXISTS Generos (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     nombre TEXT NOT NULL UNIQUE,
     activo INTEGER NOT NULL DEFAULT 1 CHECK(activo IN (0, 1))
-
 );
 
 CREATE TABLE IF NOT EXISTS Idiomas (
@@ -87,7 +86,6 @@ CREATE TABLE IF NOT EXISTS GenerosPelicula (
     FOREIGN KEY (id_genero) REFERENCES Generos(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-
 CREATE TABLE IF NOT EXISTS Usuarios (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     nombre TEXT NOT NULL UNIQUE,
@@ -108,7 +106,7 @@ CREATE TABLE IF NOT EXISTS NominacionesPelicula (
     fecha_nominacion DATE NOT NULL,
     fue_ganador INTEGER NOT NULL DEFAULT 0 CHECK(fue_ganador IN (0, 1)),
     FOREIGN KEY (id_premio) REFERENCES Premios(id),
-    FOREIGN KEY (id_pelicula) REFERENCES Peliculas(id)
+    FOREIGN KEY (id_pelicula) REFERENCES Peliculas(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS RolesUsuario (

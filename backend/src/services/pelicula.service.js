@@ -1,10 +1,10 @@
-import { Sequelize, Op } from "sequelize";
-import Pelicula from "../models/peliculas.js";
+import { Op, Sequelize } from "sequelize";
+import Cineasta from "../models/cineastas.js";
 import Clasificacion from "../models/clasificaciones.js";
 import Genero from "../models/generos.js";
-import Cineasta from "../models/cineastas.js";
-import TipoRol from "../models/tiposRol.js";
 import Idioma from "../models/idiomas.js";
+import Pelicula from "../models/peliculas.js";
+import TipoRol from "../models/tiposRol.js";
 import { DatabaseValidationError } from "../utils/errors.js";
 
 // Buscar todas las películas
@@ -201,16 +201,24 @@ export const update = async (id, pelicula, generos, idiomas) => {
 };
 
 // Eliminar una película
+// export const remove = async (id) => {
+//     try {
+//         const result = await Pelicula.destroy({ where: { id } });
+//         if (result) {
+//             return true;
+//         }
+//     } catch (error) {
+//         throw new DatabaseValidationError(error.message);
+//     }
+// };
 export const remove = async (id) => {
     try {
-        const result = await Pelicula.destroy({ where: { id } });
-        if (result) {
-            return true;
-        }
+        return await Pelicula.destroy({ where: { id } });
     } catch (error) {
         throw new DatabaseValidationError(error.message);
     }
 };
+
 
 // Agregar un cineasta a una película
 export const addCineastas = async (id, cineastas) => {

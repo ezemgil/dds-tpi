@@ -1,5 +1,5 @@
-import React from "react";
 import moment from "moment";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 
 const PeliculaCard = ({
@@ -32,10 +32,9 @@ const PeliculaCard = ({
             <div className="d-flex gap-1 flex-wrap my-1">
               {Generos &&
                 Generos.map((genero) => (
-                  <span
-                    key={genero}
-                    className="badge bg-danger-subtle border border-danger-subtle text-danger-emphasis rounded-pill"
-                  >
+                  <span 
+                  key={genero}
+                  className="badge bg-danger-subtle border border-danger-subtle text-danger-emphasis rounded-pill">
                     {genero}
                   </span>
                 ))}

@@ -51,10 +51,12 @@ const subscribeUsuarioLogueado = (x) => (CambioUsuarioLogueado = x);
 async function refreshToken() {
     try {
         const refreshToken = sessionStorage.getItem("refreshToken");
-        const response = await httpService.post("/token", { refreshToken });
-        const { accessToken } = response.data;
+        const response = await httpService.post(`${SERVER_CONFIG.SERVER_API_URL}/token`, {
+            token: refreshToken,
+        });
+        const { accessToken, newRefreshToken } = response.data;
         sessionStorage.setItem("accessToken", accessToken);
-        console.log("Se ha refrescado el token de acceso");
+        sessionStorage.setItem("refreshToken", newRefreshToken);
         return accessToken;
     } catch (error) {
         console.log("Error al refrescar el token de acceso:", error);

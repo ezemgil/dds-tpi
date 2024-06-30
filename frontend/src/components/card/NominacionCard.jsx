@@ -1,10 +1,9 @@
-import React from "react";
 import moment from "moment";
+import React from "react";
 
 const NominacionCard = ({ Nominacion }) => {
   return (
     <div className="d-flex align-items-center justify-content-start gap-3">
-      {console.log(Nominacion)}
       <div className="d-flex justify-content-start align-items-center gap-3">
         <i
           class={

@@ -1,5 +1,5 @@
 import * as service from "../services/cineasta.service.js";
-import { NotFoundError, ForbiddenError } from "../utils/errors.js";
+import { ForbiddenError, NotFoundError } from "../utils/errors.js";
 import { log } from "../utils/logger.js";
 
 // Buscar cineastas por nombre

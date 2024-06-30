@@ -1,7 +1,6 @@
 import cors from "cors";
 import express from "express";
 import errorHandler from "./middleware/errorHandler.js";
-import { authentificateJWT } from "./middleware/auth.js";
 
 // Relaciones de modelos
 import "./models/associations.js";
@@ -17,13 +16,15 @@ import paisRoutes from "./routes/pais.routes.js";
 import peliculaRoutes from "./routes/pelicula.routes.js";
 import premioRoutes from "./routes/premio.routes.js";
 import rolesUsuarioRoutes from "./routes/rolesUsuario.routes.js";
+import tipoRolRoutes from "./routes/tipoRol.routes.js";
 import usuarioRoutes from "./routes/usuario.routes.js";
+
 
 // Crear aplicación express
 const app = express();
 app.use(cors());
 app.use(express.json());
-app.use(cors());
+
 
 // Rutas
 app.use(authRoutes);
@@ -37,9 +38,15 @@ app.use(peliculaRoutes);
 app.use(premioRoutes);
 app.use(rolesUsuarioRoutes);
 app.use(usuarioRoutes);
+app.use(tipoRolRoutes);
 
 app.get("/api/status", (req, res) => {
   res.json({ status: "API en funcionamiento" });
+});
+
+// Ruta no encontrada
+app.use((req, res, next) => {
+  res.status((404).json({ error: "Not Found" }));
 });
 
 // Configuración de express y middlewares
