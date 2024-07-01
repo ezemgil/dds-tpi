@@ -4,6 +4,8 @@ import NominacionesLista from "./NominacionesLista";
 
 import nominacionService from "../../../services/nominacion.service";
 
+import { Modal, Button } from "react-bootstrap";
+
 const Nominaciones = () => {
 
     const TituloCRUD = {
@@ -47,27 +49,20 @@ const Nominaciones = () => {
         BuscarPagina(Pagina);
       }, [Pagina]); // Array de dependencias vacio para que solo se ejecute una vez
 
-
-    function Consultar(id) {
-        console.log("Consultar nominacion");
-    };
     
-
     return (
         <div>
-            <h1>Nominaciones y premios</h1>
+            <h1>Nominaciones</h1>
             <div className="container-fluid">
                 <NominacionesLista
                     {...{
                         Nominaciones, 
-                        Consultar, 
                         Pagina,
                         totalNominaciones,
                         Paginas,
-                        BuscarPagina, 
+                        BuscarPagina
                     }}
                 />
-
             </div>
 
         </div>

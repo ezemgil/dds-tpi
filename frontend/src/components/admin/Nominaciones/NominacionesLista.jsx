@@ -5,8 +5,6 @@ import moment from "moment";
 const NominacionesLista = ({ 
         Nominaciones, 
         Consultar, 
-        Editar, 
-        ActivarDesactivar,
         Pagina,
         totalNominaciones,
         Paginas,
@@ -29,7 +27,6 @@ const NominacionesLista = ({
                                     <th>Pelicula</th>
                                     <th>Fecha de nominacion</th>
                                     <th>Fue ganador</th>
-                                    <th>Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -41,15 +38,6 @@ const NominacionesLista = ({
                                         <td>{nominacion.pelicula.titulo}</td> 
                                         <td>{moment(nominacion.fecha_nominacion).format("L")}</td>
                                         <td>{nominacion.fue_ganador === 0 && "No" || nominacion.fue_ganador === 1 && "Si"}</td>
-                                        <td className="d-flex gap-2 justify-content-center">
-                                            <button
-                                                className="btn btn-info btn-sm rounded-pill"
-                                                title="Consultar"
-                                                onClick={() => Consultar(nominacion.id)}
-                                            >
-                                                <i className="fa-solid fa-eye"></i>
-                                            </button>
-                                        </td>
                                     </tr>
                                 ))
                             ): (

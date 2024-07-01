@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../assets/css/App.css';
+import '../../assets/css/InicioAdmin.css';
 import authService from '../../services/auth.service';
 
 const InicioAdmin = () => {

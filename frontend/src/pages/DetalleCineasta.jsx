@@ -20,7 +20,6 @@ const DetalleCineasta = () => {
 
     cineastaService.getParticipaciones(id).then((response) => {
       setParticipaciones(response.data);
-      console.log(response.data);
     });
 
     window.scrollTo({ top: 0, behavior: "smooth" });

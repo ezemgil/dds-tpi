@@ -8,7 +8,10 @@ import { DatabaseValidationError } from "../utils/errors.js";
 // GET ALL
 export const findAll = async (page = undefined, size = undefined) => {
     try {
-        return await Cineasta.findAll({
+        const options = {
+            offset: page && size ? page * size : undefined,
+            limit: size ? size : undefined,
+            distinct: true,
             include: [
                 {
                     model: Paises,
@@ -28,10 +31,13 @@ export const findAll = async (page = undefined, size = undefined) => {
                     },
                 },
             ],
-            attributes: { exclude: ["nacionalidad", "nacionalidad2"] },
-            offset: page && size ? page * size : undefined,
-            limit: size ? size : undefined,
-        });
+            attributes: { exclude: ["nacionalidad", "nacionalidad2"] }
+        };
+        const { count, rows } = await Cineasta.findAndCountAll(options);
+        return {
+            totalCineastas: count,
+            cineastas: rows,
+        };
     } catch (error) {
         throw new DatabaseValidationError(error.message);
     }

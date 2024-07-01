@@ -16,7 +16,8 @@ async function getAll(page, size) {
 
 async function getById(id) {
   try {
-    return await httpService.get(`${NOMINACION_API_URL}/${id}`);
+    const response = await httpService.get(`${NOMINACION_API_URL}/${id}`);
+    return response.data;
   } catch (error) {
     console.error(`Error al buscar nominacion con ID ${id}:`, error);
     throw new Error(`Error al buscar nominacion con ID ${id}.`);
