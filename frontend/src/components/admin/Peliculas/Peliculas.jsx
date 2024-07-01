@@ -1,5 +1,7 @@
 import moment from "moment";
 import React, { useEffect, useState } from "react";
+import nominacionService from "../../../services/nominacion.service";
+import nominacionesService from "../../../services/nominaciones.service";
 import peliculaService from "../../../services/pelicula.service";
 import PeliculasFormModal from "./PeliculasFormModal";
 import PeliculasLista from "./PeliculasLista";
@@ -10,12 +12,15 @@ const Peliculas = () => {
         RA: "(Listado)",
         C: "(Crear)",
         U: "(Editar)",
+        U_ELENCO: "(Editar elenco)",
+        U_NOMINACIONES: "(Editar nominaciones)"
     }
 
     const [Peliculas, setPeliculas] = useState([]);
     const [AccionCRUD, setAccionCRUD] = useState("RA");
     const [itemPelicula, setItemPelicula] = useState({});
     const [modalShow, setModalShow] = useState(false);
+    const [nominacionesDePelicula, setNominacionesDePelicula] = useState([{}]);
 
     const BuscarPorId = async (idPelicula, accion) => {
         const resPelicula = await peliculaService.getById(idPelicula);
@@ -82,13 +87,61 @@ const Peliculas = () => {
         BuscarPorId(idPelicula, "U")
     }
 
+    const EditarElenco = (idPelicula) => {
+        setModalShow(true);
+        BuscarPorId(idPelicula, "U_ELENCO")
+    }
 
+    const EditarNominaciones = (idPelicula) => {
+        nominacionesService.getByPeliculaId(idPelicula).then((response) => setNominacionesDePelicula(response.data))
+        setModalShow(true);
+        BuscarPorId(idPelicula, "U_NOMINACIONES")
+    }
+    
 
     const Eliminar = (id_pelicula) => {
         peliculaService.remove(id_pelicula).then((response) => {
             peliculaService.getAll().then((response) => setPeliculas(response.data))
         })
         setAccionCRUD("RA");
+    }
+
+    // TODO
+    const GrabarNominaciones = (nominaciones) => {
+        const dataEndpoint = {id_premio: 0, id_pelicula: itemPelicula.id, fecha_nominacion: "", fue_ganador: 0}
+
+        nominaciones.forEach((n) => {
+            dataEndpoint.id_premio = n.premio.id;
+            dataEndpoint.fecha_nominacion = n.fecha_nominacion;
+            dataEndpoint.fue_ganador = n.fue_ganador;
+
+            (nominacionesDePelicula.map(nom => nom.id).includes(n.id)) ? nominacionService.update(n.id, dataEndpoint) : nominacionService.create(dataEndpoint)
+        });
+
+        nominacionesDePelicula.forEach((np) => {
+            if (!nominaciones.map(n => n.id).includes(np.id)) {
+                nominacionService.remove(np.id)
+            }
+        });
+
+        console.log(nominaciones)
+        setModalShow(false);
+    }
+
+    const GrabarElenco = (id_pelicula, elenco) => {
+        peliculaService.getElenco(id_pelicula)
+        .then(res => {
+            const elencoOriginal = res.data
+            elencoOriginal.forEach((cinOrig) => {
+                if (!elenco.map(cinNuevo => cinNuevo.id).includes(cinOrig.id)) {
+                    peliculaService.removeCineasta(id_pelicula, cinOrig.id)
+                }
+            })
+        })
+        
+        const dataEndpoint = {"cineastas": elenco.map(cin => cin.id)}
+        peliculaService.addCineastas(id_pelicula, dataEndpoint)
+        setModalShow(false);
     }
 
     
@@ -104,6 +157,8 @@ const Peliculas = () => {
             <PeliculasLista
                 Peliculas={Peliculas}
                 Editar={Editar}
+                EditarElenco={EditarElenco}
+                EditarNominaciones={EditarNominaciones}
                 Eliminar={Eliminar}
             />
 
@@ -113,7 +168,8 @@ const Peliculas = () => {
                     onHide={() => setModalShow(false)}
                     itemPelicula={itemPelicula}
                     Grabar={Grabar}
-                    Titulo={'Peliculas ' + TituloCRUD[AccionCRUD]}>
+                    Titulo={'Peliculas ' + TituloCRUD[AccionCRUD]}
+                    AccionCRUD={AccionCRUD}>
                 </PeliculasFormModal>
             )}
 
@@ -125,7 +181,34 @@ const Peliculas = () => {
                         setAccionCRUD("RA");}}
                     itemPelicula={itemPelicula}
                     Grabar={Grabar}
-                    Titulo={'Peliculas ' + TituloCRUD[AccionCRUD]}>
+                    Titulo={'Peliculas ' + TituloCRUD[AccionCRUD]}
+                    AccionCRUD={AccionCRUD}>
+                </PeliculasFormModal>
+            )}
+
+            {AccionCRUD === "U_ELENCO" && (
+                <PeliculasFormModal
+                    show={modalShow}
+                    onHide={() => {
+                        setModalShow(false);
+                        setAccionCRUD("RA");}}
+                    itemPelicula={itemPelicula}
+                    Grabar={GrabarElenco}
+                    Titulo={'Peliculas ' + TituloCRUD[AccionCRUD]}
+                    AccionCRUD={AccionCRUD}>
+                </PeliculasFormModal>
+            )}
+
+            {AccionCRUD === "U_NOMINACIONES" && (
+                <PeliculasFormModal
+                    show={modalShow}
+                    onHide={() => {
+                        setModalShow(false);
+                        setAccionCRUD("RA");}}
+                    itemPelicula={itemPelicula}
+                    Grabar={GrabarNominaciones}
+                    Titulo={'Peliculas ' + TituloCRUD[AccionCRUD]}
+                    AccionCRUD={AccionCRUD}>
                 </PeliculasFormModal>
             )}
         </div>

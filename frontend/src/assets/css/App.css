@@ -253,3 +253,17 @@ input[type="text"].placeholder-light::placeholder {
 .sidebar-bordered-right {
     border-right: 1px solid rgba(255, 255, 255, 0.2);
 }
+.bg-dark-70 {
+    background-color: rgba(0, 0, 0, 0.7); /* Fondo oscuro con opacidad del 50% */
+}
+
+.btn-custom-delete-img {
+    transition: 0.2s;
+}
+
+.btn-custom-delete-img:hover {
+    opacity: 0.2; /* Opacidad del 70% */
+
+    background-color: #dc3545; /* Color de fondo rojo */
+    border-color: #dc3545; /* Borde con color rojo */
+}

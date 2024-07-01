@@ -80,11 +80,11 @@ const Cineastas = () => {
             nombre: "",
             apellido: "",
             fecha_nacimiento: new Date(),
-            fecha_fallecimiento: new Date(),
+            fecha_fallecimiento: null,
             biografia: "",
             imagen: "",
-            pais: null,
-            pais2: null,
+            pais: {},
+            pais2: {},
             roles: [],
         });
         setAccionCRUD("C");
