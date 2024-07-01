@@ -9,6 +9,7 @@ router.get("/api/nominaciones_pelicula/pelicula/:id", controller.getNominaciones
 router.get("/api/nominaciones_pelicula/:id", controller.getNominacionPeliculaById);
 router.post("/api/nominaciones_pelicula", authentificateJWT, controller.createNominacionPelicula);
 router.put("/api/nominaciones_pelicula/:id", authentificateJWT, controller.updateNominacion);
+router.put("/api/nominaciones_pelicula/pelicula/:id", authentificateJWT, controller.updateNominacionesPelicula);
 router.delete("/api/nominaciones_pelicula/:id", authentificateJWT, controller.deleteNominacionPelicula);
 
 export default router;

@@ -115,3 +115,37 @@ export const remove = async (id) => {
         throw new DatabaseValidationError(error.message);
     }
 };
+
+// Actualizar las nominaciones de una película
+export const updateNominaciones = async (id_pelicula, nominaciones) => {
+    try {
+        nominaciones.forEach(async (nominacion) => {
+            const result = await NominacionPelicula.findOne({
+                where: {
+                    id_pelicula,
+                    id_premio: nominacion.id_premio,
+                },
+            });
+            if (result) {
+                await result.update(nominacion);
+            } else {
+                await NominacionPelicula.create({
+                    id_pelicula,
+                    ...nominacion,
+                });
+            }
+        });
+        // Eliminar las nominaciones que no estén en el array
+        await NominacionPelicula.destroy({
+            where: {
+                id_pelicula,
+                id_premio: {
+                    [Op.notIn]: nominaciones.map((nominacion) => nominacion.id_premio),
+                },
+            },
+        });
+        return await findAllByPelicula(id_pelicula);
+    } catch (error) {
+        throw new DatabaseValidationError(error.message);
+    }
+};

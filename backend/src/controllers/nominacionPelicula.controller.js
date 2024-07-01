@@ -96,3 +96,19 @@ export const deleteNominacionPelicula = async (req, res, next) => {
         next(error);
     }
 };
+
+// Actualizar las nominaciones de pelicula
+export const updateNominacionesPelicula = async (req, res, next) => {
+    try {
+        if (res.locals.user.rol === "Administrador") {
+            const nominaciones = req.body.nominaciones;
+            const updatedNominaciones = await service.updateNominaciones(req.params.id, nominaciones);
+            res.json(updatedNominaciones);
+        } else {
+            next(new ForbiddenError("No tiene permiso para realizar esta acción"));
+        }
+    } catch (error) {
+        log(req, `Error en updateNominacionesPelicula: ${error.message}`);
+        next(error);
+    }
+};
