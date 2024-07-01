@@ -20,22 +20,35 @@ const Cineastas = () => {
     const [AccionCRUD, setAccionCRUD] = useState("RA");
     const [modalShow, setModalShow] = useState(false);
 
-    const [paises, setPaises] = useState(null);
-    // cargar al montar el componente, solo la primera vez por la dependencia entre paises y cineastas
-    useEffect(() => {
-        async function cargarPaises() {
-            let data = await paisService.getAll();
-            setPaises(data);
-        }
-        cargarPaises()
-    }, []);
+    const [totalCineastas, setTotalCineastas] = useState(0);
+    const [Pagina, setPagina] = useState(0);
+    const [Paginas, setPaginas] = useState([]);
 
-    // Listar todos los cineastas
+    // Funcion para buscar una pagina
+    async function BuscarPagina(_pagina) {
+        if (_pagina && _pagina !== Pagina) {
+          setPagina(_pagina);
+        } else {
+          _pagina = Pagina;
+        }
+    
+        const res = await cineastaService.getAll(_pagina, 10);
+        setCineastas(res.cineastas);
+        setTotalCineastas(res.totalCineastas);
+    
+        // Generar resultado para mostrar en el select del paginador
+        const arrPaginas = [];
+        for (let i = 1; i <= Math.ceil(res.totalCineastas / 10); i++) {
+          arrPaginas.push(i - 1);
+        }
+        setPaginas(arrPaginas);
+      }
+
+    // Funcion para listar la primera pagina de clasificaciones
     useEffect(() => {
-        cineastaService.getAll().then((response) => {
-            setCineastas(response.data);
-        });
-    }, []);
+        BuscarPagina(Pagina);
+      }, [Pagina]); // Array de dependencias
+
     
     // Buscar un cineasta por id
     async function BuscarPorId(id, accion) {
@@ -45,7 +58,7 @@ const Cineastas = () => {
     };
 
     // Grabar o actualizar un cineasta
-    const grabar = (itemCineasta) => {
+    const grabar = async (itemCineasta) => {
         const cineastaEndpoint = {
             nombre: itemCineasta.nombre,
             apellido: itemCineasta.apellido,
@@ -58,18 +71,13 @@ const Cineastas = () => {
             roles: itemCineasta.roles.map((r) => r.id)
         }
 
-        console.log("Grabar cineasta: ", cineastaEndpoint);
-        console.log("paises", itemCineasta.pais, itemCineasta.pais2);
-
         if (AccionCRUD === "C") {
-            cineastaService.create(cineastaEndpoint)
-            .then((response) => {
-                cineastaService.getAll().then((response) => setCineastas(response.data))
-            });
+            await cineastaService.create(cineastaEndpoint)
         } else if (AccionCRUD === "U") {
-            cineastaService.update(itemCineasta.id, cineastaEndpoint)
-            .then((response) => {cineastaService.getAll().then((response) => setCineastas(response.data))});
-        }
+            await cineastaService.update(itemCineasta.id, cineastaEndpoint)
+        };
+        BuscarPagina(Pagina);
+        setModalShow(false);
         setAccionCRUD("RA");
     };
 
@@ -122,9 +130,13 @@ const Cineastas = () => {
             <div className="container-fluid">
                 <CineastasLista
                     {...{
-                        cineastas,
+                        cineastas, 
                         editar, 
-                        eliminar, 
+                        eliminar,
+                        Pagina,
+                        totalCineastas,
+                        Paginas,
+                        BuscarPagina 
                     }}
                 />
 

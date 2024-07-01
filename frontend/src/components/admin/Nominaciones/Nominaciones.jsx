@@ -4,76 +4,67 @@ import NominacionesLista from "./NominacionesLista";
 
 import nominacionService from "../../../services/nominacion.service";
 
+import { Modal, Button } from "react-bootstrap";
+
 const Nominaciones = () => {
 
     const TituloCRUD = {
-        C: "Create",
-        R: "Read",
-        U: "Update",
-        D: "Delete",
+        C: "Crear",
+        RA: "Listado",
+        U: "Actualizar",
+        D: "Eliminar",
     };
-    const [AccionCRUD, setAccionCRUD] = useState("R");
 
-    const [Premios, setPremios] = useState(null);
-    // cargar al montar el componente, solo la primera vez por la dependencia entre paises y cineastas
-    // useEffect(() => {
-    //     async function cargarPremio() {
-    //         let data = await premioService.getAll();
-    //         setPremios(data);
-    //     }
-    //     cargarNominaciones()
-    // }, []);
-
-
-    const [Nominacion, setNominacion] = useState(null);
     const [Nominaciones, setNominaciones] = useState([]);
+    const [AccionCRUD, setAccionCRUD] = useState("RA");
+    const [itemNominacion, setItemNominacion] = useState({});
+    const [modalShow, setModalShow] = useState(false);
 
-    useEffect(() => {
-        nominacionService.getAll().then((response) => {
-            setNominaciones(response.data);
-        });
-    }, []);
+    const [totalNominaciones, setTotalNominaciones] = useState(0);
+    const [Pagina, setPagina] = useState(0);
+    const [Paginas, setPaginas] = useState([]);
     
-    async function BuscarPorId(id) {        
-        const data = await nominacionService.getById(id);
-        setNominacion(data);
-        console.log(id)
-        
-    }
-
-    function Consultar(id) {
-        BuscarPorId(id);
-    }
-
-    function Editar() {
-        console.log("Editar");
-    }
-
-    function Eliminar() {
-        window.alert("Esta seguro que desea eliminar el cineasta?");
-        async () => {
-            await nominacionService.remove(Nominacion.id);
-            useEffect(() => {
-                nominacionService.getAll().then((response) => {
-                    setNominaciones(response.data);
-                });
-            }, []);
-            };
+    // Funcion para buscar una pagina
+    async function BuscarPagina(_pagina) {
+        if (_pagina && _pagina !== Pagina) {
+          setPagina(_pagina);
+        } else {
+          _pagina = Pagina;
         }
     
+        const res = await nominacionService.getAll(_pagina, 10);
+        setNominaciones(res.nominaciones);
+        setTotalNominaciones(res.totalNominaciones);
+    
+        // Generar resultado para mostrar en el select del paginador
+        const arrPaginas = [];
+        for (let i = 1; i <= Math.ceil(res.totalNominaciones / 10); i++) {
+          arrPaginas.push(i - 1);
+        }
+        setPaginas(arrPaginas);
+    }
 
+    // Funcion para listar la primera pagina de nominaciones
+    useEffect(() => {
+        BuscarPagina(Pagina);
+      }, [Pagina]); // Array de dependencias vacio para que solo se ejecute una vez
+
+    
     return (
-        <div className="container-fluid">
-            <h2>Nominaciones y premios</h2>
-            <NominacionesLista
-                {...{
-                    Nominaciones,
-                    Consultar,
-                    Editar, 
-                    Eliminar, 
-                }}
-            />
-            
+        <div>
+            <h1>Nominaciones</h1>
+            <div className="container-fluid">
+                <NominacionesLista
+                    {...{
+                        Nominaciones, 
+                        Pagina,
+                        totalNominaciones,
+                        Paginas,
+                        BuscarPagina
+                    }}
+                />
+            </div>
+
         </div>
     );
 };

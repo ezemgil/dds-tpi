@@ -16,12 +16,16 @@ const Peliculas = () => {
     setPeliculas(response.data);
   }
 
+  async function getAll() {
+    const response = await peliculaService.getAll();
+    setPeliculas(response.data.peliculas);
+  };
+
   useEffect(() => {
-    peliculaService.getAll().then((response) => {
-      setPeliculas(response.data);
-    });
+    getAll();
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
+
 
   return (
     <>

@@ -1,17 +1,19 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 
-const PaisesForm = ({itemPais, Volver, Grabar}) => {
+const ClasificacionesForm = ({itemClasificacion, Volver, Grabar}) => {
 
     const {
         register,
         handleSubmit,
         formState: { errors, touchedFields, isValid, isSubmitted } 
-    } = useForm({defaultValues: itemPais});
+    } = useForm({defaultValues: itemClasificacion});
 
     const onSubmit = (data) => {
+        data.id = itemClasificacion.id;
         Grabar(data);
     }
+    
 
     return (
         <div className="d-flex justify-content-center p-2 col-lg-12 col-md-12 col-sm-0">
@@ -22,17 +24,26 @@ const PaisesForm = ({itemPais, Volver, Grabar}) => {
                     <div className="mb-3">
                         <label htmlFor="nombre" className="form-label">Nombre</label>
                         <input type="text" className="form-control bg-dark text-light border-secondary" id="nombre" name="nombre" 
-                            {...register('nombre', {required: { value: true, message: 'Campo requerido' }})}
+                            {...register('nombre', {
+                                required: { value: true, message: 'Campo requerido' }
+                            })}
                         />
+                        {errors.nombre && <span className="text-danger text-small d-block mb-2">{errors.nombre.message}</span>}
                     </div>
 
-                    {/* Campo codigo */}
+                    {/* Campo descripcion */}
                     <div className="mb-3">
-                        <label htmlFor="codigo" className="form-label">Codigo</label>
-                        <input type="text" className="form-control bg-dark text-light border-secondary" id="codigo" name="codigo" 
-                            {...register('codigo', {required: { value: true, message: 'Campo requerido' }})}
-                        />
+                        <label htmlFor="descripcion" className="form-label">
+                            Descripcion
+                        </label>
+                        <textarea
+                            className="form-control bg-dark text-light border-secondary "
+                            id="descripcion"
+                            name="descripcion"
+                            {...register("descripcion", {})}
+                        ></textarea>
                     </div>
+
 
                     {/* Botones */}
                     <div className="d-flex justify-content-center">
@@ -45,4 +56,4 @@ const PaisesForm = ({itemPais, Volver, Grabar}) => {
     )
 }
 
-export default PaisesForm;
+export default ClasificacionesForm;

@@ -8,17 +8,26 @@ const Sidebar = ({ handleElementoActual }) => {
     return (
         <div className="col-auto col-md-3 col-xl-2 px-0 bg-dark sidebar-container sidebar-bordered-right">
             <div className="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100 sticky-top">
-                <Link
-                    to="/admin"
+                <button
+                    onClick={() => handleElementoActual("InicioAdmin")}
                     className="d-flex align-items-center py-4 mb-md-0 me-md-auto text-white text-decoration-none logo-container"
                 >
                     <img src={Logo} alt="logo" className="img-fluid logo-img" />
                     <span className="d-none d-sm-inline logo-text">CineInfo</span>
-                </Link>
+                </button>
                 <ul
                     className="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start w-100"
                     id="menu"
                 >
+                    <li className="nav-item sidebar-item w-100">
+                        <button
+                            onClick={() => handleElementoActual("InicioAdmin")}
+                            className="nav-link px-0 align-middle text-white d-flex align-items-center w-100"
+                        >
+                            <i className="fa-solid fa-user-circle"></i>
+                            <span className="ms-2 d-none d-sm-inline">Inicio</span>
+                        </button>
+                    </li>
                     <li className="nav-item sidebar-item w-100">
                         <button
                             onClick={() => handleElementoActual("Generos")}

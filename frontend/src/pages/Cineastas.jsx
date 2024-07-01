@@ -16,10 +16,13 @@ const Cineastas = () => {
     setCineastas(response.data);
   }
 
+  async function getAll() {
+    const response = await cineastaService.getAll();
+    setCineastas(response.data.cineastas);
+  }
+
   useEffect(() => {
-    cineastaService.getAll().then((response) => {
-      setCineastas(response.data);
-    });
+    getAll();
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
 

@@ -7,14 +7,13 @@ import PeliculasFormModal from "./PeliculasFormModal";
 import PeliculasLista from "./PeliculasLista";
 
 const Peliculas = () => {
-
     const TituloCRUD = {
         RA: "(Listado)",
         C: "(Crear)",
         U: "(Editar)",
         U_ELENCO: "(Editar elenco)",
-        U_NOMINACIONES: "(Editar nominaciones)"
-    }
+        U_NOMINACIONES: "(Editar nominaciones)",
+    };
 
     const [Peliculas, setPeliculas] = useState([]);
     const [AccionCRUD, setAccionCRUD] = useState("RA");
@@ -22,19 +21,45 @@ const Peliculas = () => {
     const [modalShow, setModalShow] = useState(false);
     const [nominacionesDePelicula, setNominacionesDePelicula] = useState([{}]);
 
+    // Constantes para paginacion
+    const [totalPeliculas, setTotalPeliculas] = useState(0);
+    const [Pagina, setPagina] = useState(0);
+    const [Paginas, setPaginas] = useState([]);
+
+    // Funcion para buscar una pagina
+    async function BuscarPagina(_pagina) {
+        if (_pagina && _pagina !== Pagina) {
+            setPagina(_pagina);
+        } else {
+            _pagina = Pagina;
+        }
+
+        const res = await peliculaService.getAll(_pagina, 10);
+        setPeliculas(res.peliculas);
+        setTotalPeliculas(res.totalPeliculas);
+
+        // Generar resultado para mostrar en el select del paginador
+        const arrPaginas = [];
+        for (let i = 1; i <= Math.ceil(res.totalPeliculas / 10); i++) {
+            arrPaginas.push(i - 1);
+        }
+        setPaginas(arrPaginas);
+    }
+
+    // Funcion para listar la primera pagina de clasificaciones
+    useEffect(() => {
+        BuscarPagina(Pagina);
+    }, [Pagina]); // Array de dependencias
+
+    // Funcion para buscar una pelicula por su id
     const BuscarPorId = async (idPelicula, accion) => {
         const resPelicula = await peliculaService.getById(idPelicula);
         setItemPelicula(resPelicula.data);
-        setAccionCRUD(accion)
-    }
+        setAccionCRUD(accion);
+    };
 
-
-    useEffect(() => {
-        peliculaService.getAll().then((response) => setPeliculas(response.data))
-    }, []);
-
-
-    const Grabar = (itemPelicula) => {
+    // Funcion para grabar o actualizar una pelicula
+    const Grabar = async (itemPelicula) => {
         const peliculaEndpoint = {
             titulo: itemPelicula.titulo,
             titulo_original: itemPelicula.titulo_original,
@@ -45,22 +70,20 @@ const Peliculas = () => {
             id_clasificacion: itemPelicula.clasificacion,
             generos: itemPelicula.generos.map((g) => g.id),
             idiomas: itemPelicula.idiomas.map((i) => i.id),
-            imagen: itemPelicula.imagen
-        }
+            imagen: itemPelicula.imagen,
+        };
 
         if (AccionCRUD === "C") {
-            peliculaService.create(peliculaEndpoint)
-            .then((response) => {
-                peliculaService.getAll().then((response) => setPeliculas(response.data))
-            })
-        } else {
-            peliculaService.update(itemPelicula.id, peliculaEndpoint).then((response) => {
-                peliculaService.getAll().then((response) => setPeliculas(response.data))
-            })
+            await peliculaService.create(peliculaEndpoint);
+        } else if (AccionCRUD === "U") {
+            await peliculaService.update(itemPelicula.id, peliculaEndpoint);
         }
+        BuscarPagina(Pagina);
+        setModalShow(false);
         setAccionCRUD("RA");
-    }
+    };
 
+    // Funcion del boton agregar una pelicula
     const Agregar = () => {
         setModalShow(true);
         setItemPelicula({
@@ -72,137 +95,150 @@ const Peliculas = () => {
             fecha_estreno: moment().format("YYYY-MM-DD"),
             clasificacion: {
                 nombre: "",
-                descripcion: ""
+                descripcion: "",
             },
             generos: [],
             idiomas: [],
-            imagen: "https://via.placeholder.com/150"
-
-        })
+            imagen: "https://via.placeholder.com/150",
+        });
         setAccionCRUD("C");
-    }
-    
+    };
+
+    // Funcion para el boton editar una pelicula
     const Editar = (idPelicula) => {
         setModalShow(true);
-        BuscarPorId(idPelicula, "U")
-    }
+        BuscarPorId(idPelicula, "U");
+    };
 
     const EditarElenco = (idPelicula) => {
         setModalShow(true);
-        BuscarPorId(idPelicula, "U_ELENCO")
-    }
+        BuscarPorId(idPelicula, "U_ELENCO");
+    };
 
     const EditarNominaciones = (idPelicula) => {
-        nominacionesService.getByPeliculaId(idPelicula).then((response) => setNominacionesDePelicula(response.data))
+        nominacionesService.getByPeliculaId(idPelicula).then((response) => setNominacionesDePelicula(response.data));
         setModalShow(true);
-        BuscarPorId(idPelicula, "U_NOMINACIONES")
-    }
-    
+        BuscarPorId(idPelicula, "U_NOMINACIONES");
+    };
 
     const Eliminar = (id_pelicula) => {
         peliculaService.remove(id_pelicula).then((response) => {
-            peliculaService.getAll().then((response) => setPeliculas(response.data))
-        })
+            peliculaService.getAll().then((response) => setPeliculas(response.data));
+        });
+        BuscarPagina(Pagina);
         setAccionCRUD("RA");
-    }
 
-    // TODO
-    const GrabarNominaciones = (nominaciones) => {
-        const dataEndpoint = {id_premio: 0, id_pelicula: itemPelicula.id, fecha_nominacion: "", fue_ganador: 0}
+        // TODO
+        const GrabarNominaciones = (nominaciones) => {
+            const dataEndpoint = { id_premio: 0, id_pelicula: itemPelicula.id, fecha_nominacion: "", fue_ganador: 0 };
 
-        nominaciones.forEach((n) => {
-            dataEndpoint.id_premio = n.premio.id;
-            dataEndpoint.fecha_nominacion = n.fecha_nominacion;
-            dataEndpoint.fue_ganador = n.fue_ganador;
+            nominaciones.forEach((n) => {
+                dataEndpoint.id_premio = n.premio.id;
+                dataEndpoint.fecha_nominacion = n.fecha_nominacion;
+                dataEndpoint.fue_ganador = n.fue_ganador;
 
-            (nominacionesDePelicula.map(nom => nom.id).includes(n.id)) ? nominacionService.update(n.id, dataEndpoint) : nominacionService.create(dataEndpoint)
-        });
+                nominacionesDePelicula.map((nom) => nom.id).includes(n.id)
+                    ? nominacionService.update(n.id, dataEndpoint)
+                    : nominacionService.create(dataEndpoint);
+            });
 
-        nominacionesDePelicula.forEach((np) => {
-            if (!nominaciones.map(n => n.id).includes(np.id)) {
-                nominacionService.remove(np.id)
-            }
-        });
+            nominacionesDePelicula.forEach((np) => {
+                if (!nominaciones.map((n) => n.id).includes(np.id)) {
+                    nominacionService.remove(np.id);
+                }
+            });
 
-        console.log(nominaciones)
-        setModalShow(false);
-    }
+            console.log(nominaciones);
+            setModalShow(false);
+        };
 
-    const GrabarElenco = (id_pelicula, elenco) => {
-        const dataEndpoint = {"cineastas": elenco.map(cin => cin.id)}
-        peliculaService.updateElenco(id_pelicula, dataEndpoint);
-        setModalShow(false);
-    }
+        const GrabarElenco = (id_pelicula, elenco) => {
+            const dataEndpoint = { cineastas: elenco.map((cin) => cin.id) };
+            peliculaService.updateElenco(id_pelicula, dataEndpoint);
+            setModalShow(false);
+        };
 
-    
+        return (
+            <div>
+                <h1>Peliculas</h1>
+                <button
+                    className="badge d-flex p-2 align-items-center text-bg-dark border border-warning rounded-pill"
+                    onClick={() => {
+                        Agregar();
+                    }}
+                >
+                    <i className="fa-solid fa-plus me-2"></i> Agregar pelicula
+                </button>
 
-    return (
-        <div>
-            <h1>Peliculas</h1>
-            <button className="badge d-flex p-2 align-items-center text-bg-dark border border-warning rounded-pill" onClick={() => {Agregar()}}>
-                <i className="fa-solid fa-plus me-2"></i> Agregar pelicula
-            </button>
+                <PeliculasLista
+                    {...{
+                        Peliculas,
+                        Editar,
+                        Eliminar,
+                        EditarElenco,
+                        EditarNominaciones,
+                        Pagina,
+                        totalPeliculas,
+                        Paginas,
+                        BuscarPagina,
+                    }}
+                />
 
+                {AccionCRUD === "C" && (
+                    <PeliculasFormModal
+                        show={modalShow}
+                        onHide={() => setModalShow(false)}
+                        itemPelicula={itemPelicula}
+                        Grabar={Grabar}
+                        Titulo={"Peliculas " + TituloCRUD[AccionCRUD]}
+                        AccionCRUD={AccionCRUD}
+                    ></PeliculasFormModal>
+                )}
 
-            <PeliculasLista
-                Peliculas={Peliculas}
-                Editar={Editar}
-                EditarElenco={EditarElenco}
-                EditarNominaciones={EditarNominaciones}
-                Eliminar={Eliminar}
-            />
+                {AccionCRUD === "U" && (
+                    <PeliculasFormModal
+                        show={modalShow}
+                        onHide={() => {
+                            setModalShow(false);
+                            setAccionCRUD("RA");
+                        }}
+                        itemPelicula={itemPelicula}
+                        Grabar={Grabar}
+                        Titulo={"Peliculas " + TituloCRUD[AccionCRUD]}
+                        AccionCRUD={AccionCRUD}
+                    ></PeliculasFormModal>
+                )}
 
-            {AccionCRUD === "C" && (
-                <PeliculasFormModal
-                    show={modalShow}
-                    onHide={() => setModalShow(false)}
-                    itemPelicula={itemPelicula}
-                    Grabar={Grabar}
-                    Titulo={'Peliculas ' + TituloCRUD[AccionCRUD]}
-                    AccionCRUD={AccionCRUD}>
-                </PeliculasFormModal>
-            )}
+                {AccionCRUD === "U_ELENCO" && (
+                    <PeliculasFormModal
+                        show={modalShow}
+                        onHide={() => {
+                            setModalShow(false);
+                            setAccionCRUD("RA");
+                        }}
+                        itemPelicula={itemPelicula}
+                        Grabar={GrabarElenco}
+                        Titulo={"Peliculas " + TituloCRUD[AccionCRUD]}
+                        AccionCRUD={AccionCRUD}
+                    ></PeliculasFormModal>
+                )}
 
-            {AccionCRUD === "U" && (
-                <PeliculasFormModal
-                    show={modalShow}
-                    onHide={() => {
-                        setModalShow(false);
-                        setAccionCRUD("RA");}}
-                    itemPelicula={itemPelicula}
-                    Grabar={Grabar}
-                    Titulo={'Peliculas ' + TituloCRUD[AccionCRUD]}
-                    AccionCRUD={AccionCRUD}>
-                </PeliculasFormModal>
-            )}
-
-            {AccionCRUD === "U_ELENCO" && (
-                <PeliculasFormModal
-                    show={modalShow}
-                    onHide={() => {
-                        setModalShow(false);
-                        setAccionCRUD("RA");}}
-                    itemPelicula={itemPelicula}
-                    Grabar={GrabarElenco}
-                    Titulo={'Peliculas ' + TituloCRUD[AccionCRUD]}
-                    AccionCRUD={AccionCRUD}>
-                </PeliculasFormModal>
-            )}
-
-            {AccionCRUD === "U_NOMINACIONES" && (
-                <PeliculasFormModal
-                    show={modalShow}
-                    onHide={() => {
-                        setModalShow(false);
-                        setAccionCRUD("RA");}}
-                    itemPelicula={itemPelicula}
-                    Grabar={GrabarNominaciones}
-                    Titulo={'Peliculas ' + TituloCRUD[AccionCRUD]}
-                    AccionCRUD={AccionCRUD}>
-                </PeliculasFormModal>
-            )}
-        </div>
-    );
-}
+                {AccionCRUD === "U_NOMINACIONES" && (
+                    <PeliculasFormModal
+                        show={modalShow}
+                        onHide={() => {
+                            setModalShow(false);
+                            setAccionCRUD("RA");
+                        }}
+                        itemPelicula={itemPelicula}
+                        Grabar={GrabarNominaciones}
+                        Titulo={"Peliculas " + TituloCRUD[AccionCRUD]}
+                        AccionCRUD={AccionCRUD}
+                    ></PeliculasFormModal>
+                )}
+            </div>
+        );
+    };
+};
 
 export default Peliculas;

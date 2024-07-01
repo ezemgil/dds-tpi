@@ -10,31 +10,37 @@ import { DatabaseValidationError } from "../utils/errors.js";
 // Buscar todas las películas
 export const findAll = async (page = undefined, size = undefined) => {
     try {
-        return await Pelicula.findAll({
-            include: [
-                {
-                    model: Clasificacion,
-                    as: "clasificacion",
-                },
-                {
-                    model: Genero,
-                    as: "generos",
-                    through: {
-                        attributes: [],
-                    },
-                },
-                {
-                    model: Idioma,
-                    as: "idiomas",
-                    through: {
-                        attributes: [],
-                    },
-                },
-            ],
-            attributes: { exclude: ["id_clasificacion"] },
+        const options = {
             offset: page && size ? page * size : undefined,
             limit: size ? size : undefined,
-        });
+            distinct: true,
+            include: [
+            {
+                model: Clasificacion,
+                as: "clasificacion",
+            },
+            {
+                model: Genero,
+                as: "generos",
+                through: {
+                    attributes: [],
+                },
+            },
+            {
+                model: Idioma,
+                as: "idiomas",
+                through: {
+                    attributes: [],
+                },
+            },
+        ],
+        attributes: { exclude: ["id_clasificacion"] },
+        };
+        const { count, rows } = await Pelicula.findAndCountAll(options);
+        return {
+            totalPeliculas: count,
+            peliculas: rows,
+        };
     } catch (error) {
         throw new DatabaseValidationError(error.message);
     }

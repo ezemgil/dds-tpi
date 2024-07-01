@@ -2,7 +2,14 @@ import React from "react";
 import { Helmet } from "react-helmet";
 import moment from "moment";
 
-const NominacionesLista = ({ Nominaciones, Consultar, Editar, Eliminar }) => {
+const NominacionesLista = ({ 
+        Nominaciones, 
+        Consultar, 
+        Pagina,
+        totalNominaciones,
+        Paginas,
+        BuscarPagina,
+    }) => {
     return (
         <>
             <Helmet>
@@ -20,42 +27,56 @@ const NominacionesLista = ({ Nominaciones, Consultar, Editar, Eliminar }) => {
                                     <th>Pelicula</th>
                                     <th>Fecha de nominacion</th>
                                     <th>Fue ganador</th>
-                                    <th>Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {Nominaciones.map((nominacion) => (
+                                {Nominaciones !== undefined && Nominaciones.length > 0 ? (
+                                    Nominaciones.map((nominacion) => (
                                     <tr key={nominacion.id}>
                                         <td>{nominacion.id}</td>
-                                        <td>{nominacion.premio.nombre}</td>
+                                        <td>{nominacion.premio.nombre}</td> 
                                         <td>{nominacion.pelicula.titulo}</td> 
                                         <td>{moment(nominacion.fecha_nominacion).format("L")}</td>
                                         <td>{nominacion.fue_ganador === 0 && "No" || nominacion.fue_ganador === 1 && "Si"}</td>
-                                        <td className="d-flex gap-2 justify-content-center">
-                                            <button
-                                                className="btn btn-primary btn-sm"
-                                                title="Consultar"
-                                                onClick={() => Consultar(nominacion.id)}
-                                            >
-                                                <i className="fa-solid fa-eye"></i>
-                                            </button>
-                                            <button
-                                                className="btn btn-warning btn-sm"
-                                                onClick={() => Editar(nominacion.id)}
-                                            >
-                                                <i className="fa-solid fa-pencil"></i>
-                                            </button>
-                                            <button
-                                                className="btn btn-danger btn-sm"
-                                                onClick={() => Eliminar(nominacion.id)}
-                                            >
-                                                <i className="fa-solid fa-trash-can"></i>
-                                            </button>
-                                        </td>
                                     </tr>
-                                ))}
+                                ))
+                            ): (
+                                <tr>
+                                    <td colSpan="6">No hay nominaciones</td>
+                                    </tr>
+                                )}
                             </tbody>
                         </table>
+
+                        {/* Paginacion */}
+                        <div className="paginador">
+                          <div className="row align-items-center d-flex justify-content-center">
+                            <div
+                              style={{ display: "flex", marginRight: "auto" }}
+                              className="col text-center"
+                            >
+                              Página: &nbsp;
+                              <select
+                                className="form-select"
+                                value={Pagina}
+                                onChange={(e) => {
+                                  BuscarPagina(e.target.value);
+                                }}
+                              >
+                                {Paginas.map((pagina) => (
+                                  <option key={pagina} value={pagina}>
+                                    {pagina + 1}
+                                  </option>
+                                ))}
+                              </select>
+                              &nbsp; de {Paginas.length}
+                              <span style={{ marginLeft: "auto" }}>
+                                <span className="pyBadge">Total: {totalNominaciones}</span>
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+
                     </div>
                 </div>
             </div>

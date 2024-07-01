@@ -3,13 +3,14 @@ import httpService from "./http.service";
 
 const PELICULA_API_URL = `${SERVER_CONFIG.SERVER_API_URL}/peliculas`;
 
-async function getAll() {
+async function getAll(page, size) {
     try {
-        const response = await httpService.get(PELICULA_API_URL);
-        return response;
+        if (!page && !size) return await httpService.get(PELICULA_API_URL);
+        const response = await httpService.get(`${PELICULA_API_URL}?page=${page}&size=${size}`);
+        return response.data;
     } catch (error) {
-        console.error("Error al obtener todas las películas:", error);
-        throw new Error("Error al obtener todas las películas.");
+        console.error("Error al obtener todas las peliculas:", error);
+        throw new Error("Error al obtener todas las peliculas.");
     }
 }
 
@@ -97,7 +98,7 @@ async function removeCineasta(id_pelicula, id_cineasta) {
     }
 }
 
-async function updateElenco(id_pelicula, cineastas){
+async function updateElenco(id_pelicula, cineastas) {
     try {
         return await httpService.put(`${PELICULA_API_URL}/${id_pelicula}/cineastas`, cineastas);
     } catch (error) {
@@ -105,8 +106,6 @@ async function updateElenco(id_pelicula, cineastas){
         throw new Error(`Error al actualizar el elenco de la película con id ${id_pelicula}.`);
     }
 }
-
-
 
 const peliculaService = {
     getAll,
@@ -119,7 +118,7 @@ const peliculaService = {
     getElenco,
     addCineastas,
     removeCineasta,
-    updateElenco
+    updateElenco,
 };
 
 export default peliculaService;

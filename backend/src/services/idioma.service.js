@@ -4,14 +4,19 @@ import { DatabaseValidationError } from "../utils/errors.js";
 
 // Buscar todos los idiomas
 export const findAll = async (page = undefined, size = undefined) => {
-    try {
-        return await Idioma.findAll({
-            offset: page && size ? page * size : undefined,
-            limit: size ? size : undefined,
-        });
-    } catch (error) {
-        throw new DatabaseValidationError(error.message);
+  try {
+    const options = {
+        offset: page && size ? page * size : undefined,
+        limit: size ? size : undefined,
+    };
+    const { count, rows } = await Idioma.findAndCountAll(options);
+    return {
+      totalIdiomas: count,
+      idiomas: rows,
     }
+  } catch (error) {
+      throw new DatabaseValidationError(error.message);
+  }
 };
 
 // Crear un nuevo idioma

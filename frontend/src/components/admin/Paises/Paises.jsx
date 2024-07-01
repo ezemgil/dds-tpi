@@ -45,6 +45,10 @@ const Paises = () => {
     useEffect(() => {
         BuscarPagina(Pagina);
     }, [Pagina]); // Array de dependencias
+    // Listar la primera pagina de paises
+    useEffect(() => {
+        BuscarPagina(Pagina);
+    }, [Pagina]); // Array de dependencias
 
     // Buscar un pais por id
     async function BuscarPorId(id, accion) {
@@ -57,6 +61,18 @@ const Paises = () => {
     function Editar(id) {
         setModalShow(true);
         BuscarPorId(id, "U");
+    }
+    function Volver() {
+        setModalShow(false);
+        setAccionCRUD("RA");
+    }
+
+    // Eliminar un pais
+    async function Eliminar(id) {
+        const res = await paisService.getById(id);
+        await paisService.remove(res.data.id);
+        BuscarPagina(Pagina);
+        setAccionCRUD("RA");
     }
 
     // Grabar un pais
@@ -86,18 +102,6 @@ const Paises = () => {
         setAccionCRUD("C");
     };
 
-    function Volver() {
-        setAccionCRUD("RA");
-    }
-
-    // Eliminar un pais
-    function Eliminar(id) {
-        paisService.remove(id).then(() => {
-            BuscarPagina(Pagina);
-        });
-        setAccionCRUD("RA");
-    }
-
     return (
         <div>
             <h1>Paises</h1>
@@ -126,7 +130,7 @@ const Paises = () => {
                 {AccionCRUD === "C" && (
                     <PaisesFormModal
                         show={modalShow}
-                        onHide={() => setModalShow(true)}
+                        onHide={() => setModalShow(false)}
                         itemPais={itemPais}
                         Grabar={Grabar}
                         Volver={Volver}
@@ -143,7 +147,7 @@ const Paises = () => {
                         }}
                         itemPais={itemPais}
                         Grabar={Grabar}
-                        Volver={onHide}
+                        Volver={Volver}
                         Titulo={"Paises " + TituloCRUD[AccionCRUD]}
                     />
                 )}
