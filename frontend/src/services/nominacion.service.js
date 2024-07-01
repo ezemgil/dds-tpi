@@ -73,6 +73,22 @@ async function remove(id) {
   }
 }
 
+async function updateNominaciones(id_pelicula, nominaciones) {
+  try {
+    const data = {
+      nominaciones: nominaciones,
+    };
+    return await httpService.put(
+      `${NOMINACION_API_URL}/pelicula/${id_pelicula}`,
+      data
+    );
+  } catch (err) {
+    console.error(`Error al actualizar las nominaciones de la película con id ${id_pelicula}:`, err);
+    throw new Error(`Error al actualizar las nominaciones de la película con id ${id_pelicula}.`);
+  }
+    
+}
+
 const nominacionService = {
   getAll,
   getById,

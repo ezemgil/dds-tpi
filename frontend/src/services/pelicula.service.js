@@ -97,6 +97,17 @@ async function removeCineasta(id_pelicula, id_cineasta) {
     }
 }
 
+async function updateElenco(id_pelicula, cineastas){
+    try {
+        return await httpService.put(`${PELICULA_API_URL}/${id_pelicula}/cineastas`, cineastas);
+    } catch (error) {
+        console.error(`Error al actualizar el elenco de la película con id ${id_pelicula}:`, error);
+        throw new Error(`Error al actualizar el elenco de la película con id ${id_pelicula}.`);
+    }
+}
+
+
+
 const peliculaService = {
     getAll,
     getById,
@@ -108,6 +119,7 @@ const peliculaService = {
     getElenco,
     addCineastas,
     removeCineasta,
+    updateElenco
 };
 
 export default peliculaService;
