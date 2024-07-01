@@ -239,3 +239,16 @@ export const removeCineasta = async (id, cineasta) => {
         throw new DatabaseValidationError(error.message);
     }
 };
+
+// Actualizar el elenco de una película
+export const updateElenco = async (id, cineastas) => {
+    try {
+        const movie = await Pelicula.findByPk(id);
+        if (movie) {
+            await movie.setCineastas(cineastas);
+            return true;
+        }
+    } catch (error) {
+        throw new DatabaseValidationError(error.message);
+    }
+};

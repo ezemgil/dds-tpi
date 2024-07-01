@@ -14,6 +14,7 @@ router.get("/api/peliculas/:id", controller.getPeliculaById);
 router.post("/api/peliculas", authentificateJWT, controller.createPelicula);
 router.post("/api/peliculas/:id/cineastas", authentificateJWT, controller.addCineastas);
 router.put("/api/peliculas/:id", authentificateJWT, controller.updatePelicula);
+router.put("/api/peliculas/:id/cineastas", authentificateJWT, controller.updateElenco);
 router.delete("/api/peliculas/:id/cineastas/:cineasta", authentificateJWT, controller.removeCineasta);
 router.delete("/api/peliculas/:id", authentificateJWT, controller.deletePelicula);
 

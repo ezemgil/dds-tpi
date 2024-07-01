@@ -162,3 +162,23 @@ export const removeCineasta = async (req, res, next) => {
         next(error);
     }
 };
+
+// Actualizar el elenco de una película
+export const updateElenco = async (req, res, next) => {
+    try {
+        if (res.locals.user.rol === "Administrador") {
+            const { cineastas } = req.body;
+            const result = await service.updateElenco(req.params.id, cineastas);
+            if (result) {
+                res.send("Elenco actualizado");
+            } else {
+                next(new BadRequestError("No se pudo actualizar el elenco"));
+            }
+        } else {
+            next(new ForbiddenError("No tiene permiso para realizar esta acción"));
+        }
+    } catch (error) {
+        log(req, `Error: ${error.message}`);
+        next(error);
+    }
+};
