@@ -104,11 +104,11 @@ CREATE TABLE IF NOT EXISTS Premios (
 
 CREATE TABLE IF NOT EXISTS NominacionesPelicula (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    id_premio INTEGER,
+    id_premio INTEGER DEFAULT 0,
     id_pelicula INTEGER,
     fecha_nominacion DATE NOT NULL,
     fue_ganador INTEGER NOT NULL DEFAULT 0 CHECK(fue_ganador IN (0, 1)),
-    FOREIGN KEY (id_premio) REFERENCES Premios(id),
+    FOREIGN KEY (id_premio) REFERENCES Premios(id) ON DELETE SET DEFAULT,
     FOREIGN KEY (id_pelicula) REFERENCES Peliculas(id) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT unique_nominacion UNIQUE (id_premio, id_pelicula, fecha_nominacion),
     CHECK (fecha_nominacion <= CURRENT_DATE)
@@ -141,6 +141,7 @@ INSERT INTO Paises (id, nombre, codigo) VALUES (0, 'Desconocido', '');
 INSERT INTO Idiomas (nombre) VALUES ('Alemán'), ('Francés'), ('Italiano'), ('Neerlandés'), ('Danés'), ('Inglés'), ('Griego'), ('Español'), ('Portugués'), ('Finés'), ('Sueco'), ('Checo'), ('Eslovaco'), ('Esloveno'), ('Estonio'), ('Húngaro'), ('Letón'), ('Lituano'), ('Maltés'), ('Polaco'), ('Búlgaro'), ('Irlandés'), ('Rumano'), ('Croata');
 
 INSERT INTO Premios (nombre) VALUES ('Mejor Película'), ('Mejor Director'), ('Mejor Actor'), ('Mejor Actriz'), ('Mejor Guión'), ('Mejor Fotografía'), ('Mejor Diseño de Producción'), ('Mejor Edición'), ('Mejor Banda Sonora'), ('Mejor Sonido');
+INSERT INTO Premios (id, nombre) VALUES (0, 'Desconocido');
 INSERT INTO Peliculas (titulo, descripcion, calificacion, duracion, fecha_estreno, titulo_original, id_clasificacion, imagen)
     VALUES ('Sueño de fuga', 'El banquero Andy Dufresne es arrestado por matar a su esposa y amante. Tras una dura adaptación, intenta mejorar las condiciones de la prisión y dar esperanza a sus compañeros.', 9.3, 142, '1994-10-14', 'The Shawshank Redemption', 1, 'https://m.media-amazon.com/images/M/MV5BZmE2MTk5NmItNWViNC00MGJiLWI0ZDYtNzA0YjQ2MmVhODBmL2ltYWdlXkEyXkFqcGdeQXVyNjgwNjA3ODA@._V1_FMjpg_UX1012_.jpg');
 INSERT INTO GenerosPelicula (id_pelicula, id_genero) VALUES (1, 1);

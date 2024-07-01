@@ -49,6 +49,7 @@ const CineastasForm = ({ itemCineasta, volver, grabar }) => {
         setItemRoles(itemCineasta.roles);
         paisService.getAll().then((response) => setPaises(response.data.paises));
         rolService.getAll().then((response) => setListaRoles(response.data));
+        console.log(itemCineasta); /////////////////////////////////
     }, []);
 
     console.log(listaRoles);
@@ -183,12 +184,18 @@ const CineastasForm = ({ itemCineasta, volver, grabar }) => {
 
                     {/* Campo biografia */}
                     <div className="mb-3 ">
-                        <label htmlFor="biografia">Biografia</label>
+                        <label htmlFor="biografia">Biografía</label>
                         <textarea
                             className="form-control bg-dark text-light  border-secondary"
                             id="biografia"
                             name="biografia"
+                            {...register("biografia", {
+                                required: { value: true, message: "Campo requerido" },
+                                maxLength: { value: 500, message: "Maximo 500 caracteres" },
+                                minLength: { value: 10, message: "Minimo 10 caracteres" },
+                            })}
                         />
+                        {errors.biografia && <span className="text-danger">{errors.biografia.message}</span>}
                     </div>
 
                     {/* Campo nacionalidades e imagenes */}

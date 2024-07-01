@@ -6,11 +6,11 @@ import authService from "../../services/auth.service";
 
 const Sidebar = ({ handleElementoActual }) => {
     return (
-        <div className="col-auto col-md-3 col-xl-2 px-0 bg-dark sidebar-container sidebar-bordered-right">
+        <div className="col-auto col-md-3 col-xl-2 px-0 bg-dark sidebar-bordered-right">
             <div className="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100 sticky-top">
                 <button
                     onClick={() => handleElementoActual("InicioAdmin")}
-                    className="d-flex align-items-center py-4 mb-md-0 me-md-auto text-white text-decoration-none logo-container"
+                    className="d-flex align-items-center py-4 mb-md-0 me-md-auto text-white text-decoration-none logo-container bg-dark border-0 w-100"
                 >
                     <img src={Logo} alt="logo" className="img-fluid logo-img" />
                     <span className="d-none d-sm-inline logo-text">CineInfo</span>

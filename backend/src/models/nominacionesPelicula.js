@@ -18,6 +18,8 @@ const NominacionPelicula = sequelize.define(
                 model: Premio,
                 key: "id",
             },
+            defaultValue: 0,
+            onDelete: "SET DEFAULT",
         },
         id_pelicula: {
             type: DataTypes.INTEGER,
