@@ -1,5 +1,6 @@
 import React from "react";
 import Modal from "react-bootstrap/Modal";
+import PeliculasElenco from "./PeliculasElenco";
 import PeliculasForm from "./PeliculasForm";
 import PeliculasNominaciones from "./PeliculasNominaciones";
 
@@ -33,6 +34,13 @@ const PeliculasFormModal = (props) => {
 
             {props.AccionCRUD === "U_NOMINACIONES" &&
             <PeliculasNominaciones
+                itemPelicula={props.itemPelicula}
+                Volver={props.onHide}
+                Grabar={props.Grabar}
+            />}
+
+            {props.AccionCRUD === "U_ELENCO" &&
+            <PeliculasElenco
                 itemPelicula={props.itemPelicula}
                 Volver={props.onHide}
                 Grabar={props.Grabar}

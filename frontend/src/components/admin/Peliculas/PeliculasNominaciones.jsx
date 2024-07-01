@@ -1,10 +1,10 @@
+import moment from 'moment';
 import React, { useEffect, useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import { useForm } from "react-hook-form";
 import nominacionesService from "../../../services/nominaciones.service";
 import premioService from "../../../services/premio.service";
 
-// TODO
 const PeliculasNominaciones = ({itemPelicula, Volver, Grabar}) => {
 
     const [nominaciones, setNominaciones] = useState([]);
@@ -22,6 +22,7 @@ const PeliculasNominaciones = ({itemPelicula, Volver, Grabar}) => {
 
     const EditarNominacion = (nominacion) => {
         setNominacionItem(nominacion);
+        console.log(nominacion);
         setSubModalShow(true);
         setSubaccionCRUD("U");
     }
@@ -30,41 +31,51 @@ const PeliculasNominaciones = ({itemPelicula, Volver, Grabar}) => {
         register,
         handleSubmit,
         formState: { errors, touchedFields, isValid, isSubmitted } 
-    } = useForm({defaultValues: itemPelicula});
+    } = useForm({defaultValues: nominacionItem});
 
     
 
     const AgregarNominacion = () => {
         setNominacionItem({
-            id: 0,
-            fecha_nominacion: "",
+            fecha_nominacion: moment().format("YYYY-MM-DD"),
             fue_ganador: 1,
             id_pelicula: itemPelicula.id,
-            id_premio: {}
-        });
+            premio: null
+        })
         setSubModalShow(true);
         setSubaccionCRUD("C");
     }
 
     const GrabarNominacion = (nominacion) => {
-        setNominaciones([...nominaciones, nominacion]);
-        setSubModalShow(false);
+
+        nominaciones.map(n => n.premio.id).includes(nominacion.premio.id) ?
+            console.log('Nominacion ya existente, desea reemplazar?')
+        :
+            setNominaciones([...nominaciones, nominacion]);
+            setSubModalShow(false);
+
     }
+
+    const onSubmit = () => {
+        subaccionCRUD === "U" ?
+            GrabarEdicionNominacion(nominacionItem) :
+            GrabarNominacion(nominacionItem)
+    }
+
 
     const GrabarEdicionNominacion = (nominacion) => {
         setNominaciones([...nominaciones.filter((n) => n.id !== nominacion.id), nominacion]);
-
         setSubModalShow(false);
     }
 
     const Eliminar = (id) => {
         setNominaciones([...nominaciones.filter((n) => n.id !== id)]);
         
-    }   
+    }
 
 
     return (
-        <div>
+        <div action="">
             <div className="h3">{itemPelicula.titulo}</div>
             {/* {console.log(itemPelicula, nominaciones, nominaciones.map((nominacion) => nominacion.premio.nombre))} */}
 
@@ -114,49 +125,56 @@ const PeliculasNominaciones = ({itemPelicula, Volver, Grabar}) => {
                     <div className="h3">Nueva nominacion</div>
                 </Modal.Header>
                 <Modal.Body className="bg-dark">
-                    <div className="row">
-                        <div className="col form-group">
-                            <label htmlFor="fecha_nominacion">Fecha de nominacion</label>
-                            <input
-                                type="date"
-                                className="form-control bg-dark text-light border border-secondary"
-                                id="fecha_nominacion"
-                                value={nominacionItem.fecha_nominacion}
-                                onChange={(e) => setNominacionItem({ ...nominacionItem, fecha_nominacion: e.target.value })}
-                                {...register("fecha_nominacion", { required: true })}
-                            />
-                        </div>
+                    
+                    <div>
+                        <div>
+                            <div className="col form-group">
+                                <label htmlFor="fecha_nominacion">Fecha de nominacion</label>
+                                <input
+                                    type="date"
+                                    className="form-control bg-dark text-light border border-secondary"
+                                    id="fecha_nominacion"
+                                    value={nominacionItem.fecha_nominacion}
+                                    onChange={(e) => setNominacionItem({ ...nominacionItem, fecha_nominacion: e.target.value })}/>
+                                {errors.fecha_nominacion && <span className="text-danger">{errors.fecha_nominacion.message}</span>}
+                            </div>
 
 
-                        <div className="col form-group">
-                            <label htmlFor="id_premio">Premio</label>
-                            <select
-                            className="form-select bg-dark text-light border border-secondary w-100"
-                            id="id_premio"
-                            onChange={(e) => setNominacionItem({ ...nominacionItem, premio: listaPremios.find((p) => p.id == e.target.value)})}>
-                                {listaPremios.map((premio) => (
-                                    <option selected={premio.id == nominacionItem.premio?.id} value={premio.id}>{premio.nombre}</option>
-                                ))}
-                            </select>
+                            <div className="col form-group">
+                                <label htmlFor="premio">Premio</label>
+                                <select
+                                className="form-select bg-dark text-light border border-secondary w-100"
+                                id="premio"
+                                onClick={() => console.log(nominacionItem)}
+                                onChange={(e) => setNominacionItem({ ...nominacionItem, premio: listaPremios.find((p) => p.id == e.target.value)})}>
+                                    <option disabled selected={nominacionItem.premio == null}>Seleccione una opcion</option>
+                                    {listaPremios.map((premio) => (
+                                        nominaciones.map(n => n.premio.id).includes(premio.id) ? 
+                                        (premio.id === nominacionItem.premio?.id ? <option key={premio.id} selected={premio.id == nominacionItem.premio?.id} value={premio.id}>{premio.nombre}</option> : <></>) :
+                                            <option key={premio.id} selected={premio.id == nominacionItem.premio?.id} value={premio.id}>{premio.nombre}</option>))}
+                                </select>
+                            </div>
+
+                            <div className="col form-group mt-4">
+                                <label htmlFor="fue_ganador">Fue ganador: </label>
+                                <button
+                                className={`btn ${nominacionItem.fue_ganador ? 'btn-success'  : 'btn-danger'} btn-sm rounded-pill ms-2`}
+                                onClick={() => setNominacionItem({ ...nominacionItem, fue_ganador: nominacionItem.fue_ganador ? 0 : 1 })}
+                                title={"fue_ganador"}
+                                ><i className={`fa-solid ${nominacionItem.fue_ganador ? 'fa-circle-check'  : 'fa-circle-xmark'}`}></i></button>
+                            </div>
+
+                            <div className="d-flex w-100 mt-4 justify-content-center">
+                                <button 
+                                    type='submit'
+                                    className={`btn mx-2 text-dark ${nominacionItem.premio? 'btn-primary' : 'btn-secondary'}`}
+                                    disabled={!nominacionItem.premio}
+                                    onClick={() => nominacionItem.premio ? onSubmit() : console.log('invalido')}>
+                                        <i className="fa-regular fa-floppy-disk me-2" ></i>Guardar
+                                </button>
+                                <button className='btn btn-dark border border-secondary px-2 mx-2 ' onClick={() => setSubModalShow(false)}>Cancelar</button>
+                            </div>
                         </div>
-                        <div className="col form-group mt-4">
-                            <label htmlFor="fue_ganador">Fue ganador: </label>
-                            <button
-                            className={`btn ${nominacionItem.fue_ganador ? 'btn-success'  : 'btn-danger'} btn-sm rounded-pill ms-2`}
-                            onClick={() =>setNominacionItem({ ...nominacionItem, fue_ganador: nominacionItem.fue_ganador ? 0 : 1 })}
-                            title={"fue_ganador"}
-                            ><i className={`fa-solid ${nominacionItem.fue_ganador ? 'fa-circle-check'  : 'fa-circle-xmark'}`}></i></button>
-                        </div>
-                    </div>
-                    <div className="d-flex w-100 mt-4 justify-content-center">
-                        <button 
-                            className="btn btn-primary mx-2 text-dark" 
-                            onClick={() => subaccionCRUD === "U" ? 
-                            GrabarEdicionNominacion(nominacionItem) : 
-                            GrabarNominacion(nominacionItem)}>
-                                <i className="fa-regular fa-floppy-disk me-2" ></i>Guardar
-                        </button>
-                        <button className='btn btn-dark border border-secondary px-2 mx-2 ' onClick={() => setSubModalShow(false)}>Cancelar</button>
                     </div>
 
                 </Modal.Body>
@@ -166,9 +184,7 @@ const PeliculasNominaciones = ({itemPelicula, Volver, Grabar}) => {
             <div className="d-flex w-100 justify-content-end">
                 <button type="submit" className="btn btn-primary mx-2 text-dark" onClick={() => {Grabar(nominaciones)}}><i className="fa-regular fa-floppy-disk me-2" ></i>Guardar</button>
                 <button className='btn btn-dark border border-secondary px-2 mx-2 ' onClick={() => Volver()}>Volver</button>
-                <button className='btn btn-danger border border-secondary px-2 mx-2 ' onClick={() => console.log(nominaciones)}>aa</button>
             </div>
-
         </div>
     )
 }

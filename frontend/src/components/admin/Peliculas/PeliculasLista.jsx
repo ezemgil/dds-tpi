@@ -33,7 +33,7 @@ const PeliculasLista = ({ Peliculas, Editar, Eliminar, EditarNominaciones, Edita
                                 <td className="d-flex gap-2 justify-content-center">
                                     <button
                                     className="btn badge btn-dark border-secondary text-light btn-sm rounded-pill btn-custom-light"
-                                        onClick={() => console.log('EditarElenco()')}>
+                                        onClick={() => EditarElenco(Pelicula.id)}>
                                         <i className="fa-solid fa-user-plus"></i>
                                     </button>
 

@@ -78,6 +78,24 @@ async function getByName(nombre) {
   }
 }
 
+async function addCineastas(id_pelicula, lista_id_cineastas){
+  try {
+    return await httpService.post(`${PELICULA_API_URL}/${id_pelicula}/cineastas`, lista_id_cineastas)
+  } catch (error) {
+    console.error(`Error al agregar los cineastas`, error)
+    throw new Error(`Error al agregar los cineastas con id ${lista_id_cineastas}`);
+  }
+}
+
+async function removeCineasta(id_pelicula, id_cineasta){
+  try{
+    return await httpService.delete(`${PELICULA_API_URL}/${id_pelicula}/cineastas/${id_cineasta}`)
+  }catch (error) {
+    console.error(`Error al eliminar el cineasta con id ${id_cineasta} de la película con id ${id_pelicula}`, error)
+    throw new Error(`Error al eliminar el cineasta con id ${id_cineasta} de la película con id ${id_pelicula}`);
+  }
+}
+
 const peliculaService = {
   getAll,
   getById,
@@ -87,6 +105,8 @@ const peliculaService = {
   remove,
   getRandom,
   getElenco,
+  addCineastas,
+  removeCineasta
 };
 
 export default peliculaService;
