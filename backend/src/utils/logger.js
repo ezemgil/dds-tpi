@@ -22,4 +22,8 @@ const log = (req, resource) => {
     logger.info(message);
 };
 
-export { logger, log };
+const justLog = (message) => {
+    logger.debug(message);
+};
+
+export { logger, log, justLog };

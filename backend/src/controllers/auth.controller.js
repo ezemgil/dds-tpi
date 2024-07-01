@@ -51,7 +51,6 @@ export const login = async (req, res, next) => {
 
 export const refresh = (req, res, next) => {
     const { token } = req.body;
-
     if (!token) {
         log(req, "Error en refresh: Token de refresco no proporcionado");
         return next(new BadRequestError("Token de refresco no proporcionado"));
@@ -72,11 +71,8 @@ export const refresh = (req, res, next) => {
             expiresIn: auth.accessTokenExpiration,
         });
 
-        const newRefreshToken = jwt.sign({ usuario: user.usuario, rol: user.rol }, auth.refreshTokenSecret);
-        refreshTokens.push(newRefreshToken);
-
         log(req, "Token de acceso actualizado");
-        res.json({ accessToken, newRefreshToken });
+        res.json({ accessToken });
     });
 };
 

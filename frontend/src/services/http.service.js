@@ -36,9 +36,14 @@ httpService.interceptors.response.use(
             case 401:
                 // Solicitar un nuevo token de acceso
                 try {
-                    const accessToken = await authService.refreshToken();
-                    error.config.headers["Authorization"] = "Bearer " + accessToken;
-                    return httpService.request(error.config); // Reintentar la petición
+                    window.confirm("Su sesión ha expirado, ¿desea iniciar sesión nuevamente?")
+                        ? authService.refreshToken().then(() => {
+                              error.config.headers["Authorization"] = "Bearer " + sessionStorage.getItem("accessToken");
+                              // Reintentar la petición original
+                              return httpService.request(error.config);
+                          })
+                        : authService.logout();
+                    break;
                 } catch (refreshError) {
                     modalService.Alert("Su sesión ha expirado, por favor vuelva a iniciar sesión");
                 }

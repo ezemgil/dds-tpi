@@ -17,7 +17,6 @@ async function login(usuario, clave, redirect) {
             sessionStorage.setItem("accessToken", response.data.accessToken);
             sessionStorage.setItem("refreshToken", response.data.refreshToken);
             sessionStorage.setItem("usuario", usuario);
-
             if (CambioUsuarioLogueado) CambioUsuarioLogueado(usuario);
             redirect();
         } else {
@@ -54,10 +53,8 @@ async function refreshToken() {
         const response = await httpService.post(`${SERVER_CONFIG.SERVER_API_URL}/token`, {
             token: refreshToken,
         });
-        const { accessToken, newRefreshToken } = response.data;
+        const accessToken = response.data.accessToken;
         sessionStorage.setItem("accessToken", accessToken);
-        sessionStorage.setItem("refreshToken", newRefreshToken);
-        return accessToken;
     } catch (error) {
         console.log("Error al refrescar el token de acceso:", error);
         throw error;
