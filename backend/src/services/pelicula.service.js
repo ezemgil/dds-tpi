@@ -36,7 +36,6 @@ export const findAll = async (page = undefined, size = undefined) => {
             limit: size ? size : undefined,
         });
     } catch (error) {
-        console.log(error);
         throw new DatabaseValidationError(error.message);
     }
 };
@@ -218,7 +217,6 @@ export const remove = async (id) => {
 // Agregar un cineasta a una película
 export const addCineastas = async (id, cineastas) => {
     try {
-        console.log(cineastas);
         const movie = await Pelicula.findByPk(id);
         if (movie) {
             await movie.addCineasta(cineastas);

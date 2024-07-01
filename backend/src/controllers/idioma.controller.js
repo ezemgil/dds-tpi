@@ -79,7 +79,6 @@ export const updateIdioma = async (req, res, next) => {
 
 // Eliminar idioma
 export const deleteIdioma = async (req, res, next) => {
-    console.log(`Borrando idioma: ${req.params.id}`);
     try {
         if (res.locals.user.rol === "Administrador") {
             const result = await service.remove(req.params.id);
