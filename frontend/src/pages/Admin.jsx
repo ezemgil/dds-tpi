@@ -9,9 +9,10 @@ import Cineastas from "../components/admin/Cineastas/Cineastas";
 import Idiomas from "../components/admin/Idiomas/Idiomas";
 import Paises from "../components/admin/Paises/Paises";
 import Nominaciones from "../components/admin/Nominaciones/Nominaciones";
+import InicioAdmin from "../components/admin/InicioAdmin";
 
 const Admin = () => {
-  const [ElementoActual, setElementoActual] = useState("Peliculas");
+  const [ElementoActual, setElementoActual] = useState("InicioAdmin");
 
   return (
     <>
@@ -19,6 +20,7 @@ const Admin = () => {
         <div className="row flex-nowrap">
           <Sidebar handleElementoActual={setElementoActual} />
           <div className="col py-3">
+            {ElementoActual === "InicioAdmin" && <InicioAdmin />}
             {ElementoActual === "Generos" && <Generos />}
             {ElementoActual === "Peliculas" && <Peliculas />}
             {ElementoActual === "Clasificaciones" && <Clasificaciones />}

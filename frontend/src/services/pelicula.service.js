@@ -3,15 +3,17 @@ import httpService from "./http.service";
 
 const PELICULA_API_URL = `${SERVER_CONFIG.SERVER_API_URL}/peliculas`;
 
-async function getAll() {
+async function getAll(page, size) {
   try {
-    const response = await httpService.get(PELICULA_API_URL);
-    return response;
+    if (!page && !size) return await httpService.get(PELICULA_API_URL);
+    const response = await httpService.get(`${PELICULA_API_URL}?page=${page}&size=${size}`);
+    return response.data;
   } catch (error) {
-    console.error("Error al obtener todas las películas:", error);
-    throw new Error("Error al obtener todas las películas.");
+    console.error("Error al obtener todas las peliculas:", error);
+    throw new Error("Error al obtener todas las peliculas.");
   }
 }
+
 
 async function getById(id) {
   try {

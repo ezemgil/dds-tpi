@@ -3,7 +3,7 @@ import SERVER_CONFIG from "../config/server.config";
 
 const NOMINACION_API_URL = `${SERVER_CONFIG.SERVER_API_URL}/nominaciones_pelicula`;
 
-async function getAll() {
+async function getAll(page, size) {
   try {
     if (!page && !size) return await httpService.get(NOMINACION_API_URL);
     const response = await httpService.get(`${NOMINACION_API_URL}?page=${page}&size=${size}`);

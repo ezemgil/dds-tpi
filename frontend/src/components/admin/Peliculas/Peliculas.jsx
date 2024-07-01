@@ -17,6 +17,39 @@ const Peliculas = () => {
     const [itemPelicula, setItemPelicula] = useState({});
     const [modalShow, setModalShow] = useState(false);
 
+    // Constantes para paginacion
+    const [totalPeliculas, setTotalPeliculas] = useState(0);
+    const [Pagina, setPagina] = useState(0);
+    const [Paginas, setPaginas] = useState([]);
+
+
+    // Funcion para buscar una pagina
+    async function BuscarPagina(_pagina) {
+        if (_pagina && _pagina !== Pagina) {
+          setPagina(_pagina);
+        } else {
+          _pagina = Pagina;
+        }
+    
+        const res = await peliculaService.getAll(_pagina, 10);
+        setPeliculas(res.peliculas);
+        setTotalPeliculas(res.totalPeliculas);
+    
+        // Generar resultado para mostrar en el select del paginador
+        const arrPaginas = [];
+        for (let i = 1; i <= Math.ceil(res.totalPeliculas / 10); i++) {
+          arrPaginas.push(i - 1);
+        }
+        setPaginas(arrPaginas);
+      }
+    
+    // Funcion para listar la primera pagina de clasificaciones
+    useEffect(() => {
+        BuscarPagina(Pagina);
+      }, [Pagina]); // Array de dependencias
+
+    
+    // Funcion para buscar una pelicula por su id
     const BuscarPorId = async (idPelicula, accion) => {
         const resPelicula = await peliculaService.getById(idPelicula);
         setItemPelicula(resPelicula.data);
@@ -24,12 +57,8 @@ const Peliculas = () => {
     }
 
 
-    useEffect(() => {
-        peliculaService.getAll().then((response) => setPeliculas(response.data))
-    }, []);
-
-
-    const Grabar = (itemPelicula) => {
+    // Funcion para grabar o actualizar una pelicula
+    const Grabar = async (itemPelicula) => {
         const peliculaEndpoint = {
             titulo: itemPelicula.titulo,
             titulo_original: itemPelicula.titulo_original,
@@ -44,18 +73,16 @@ const Peliculas = () => {
         }
 
         if (AccionCRUD === "C") {
-            peliculaService.create(peliculaEndpoint)
-            .then((response) => {
-                peliculaService.getAll().then((response) => setPeliculas(response.data))
-            })
-        } else {
-            peliculaService.update(itemPelicula.id, peliculaEndpoint).then((response) => {
-                peliculaService.getAll().then((response) => setPeliculas(response.data))
-            })
+            await peliculaService.create(peliculaEndpoint)
+        } else if (AccionCRUD === "U"){
+            await peliculaService.update(itemPelicula.id, peliculaEndpoint)
         }
+        BuscarPagina(Pagina);
+        setModalShow(false);
         setAccionCRUD("RA");
     }
 
+    // Funcion del boton agregar una pelicula
     const Agregar = () => {
         setModalShow(true);
         setItemPelicula({
@@ -77,21 +104,21 @@ const Peliculas = () => {
         setAccionCRUD("C");
     }
     
+    // Funcion para el boton editar una pelicula
     const Editar = (idPelicula) => {
         setModalShow(true);
         BuscarPorId(idPelicula, "U")
     }
 
-
-
+    // Funcion para el boton eliminar una pelicula
     const Eliminar = (id_pelicula) => {
         peliculaService.remove(id_pelicula).then((response) => {
             peliculaService.getAll().then((response) => setPeliculas(response.data))
         })
+        BuscarPagina(Pagina);
         setAccionCRUD("RA");
-    }
 
-    
+    }
 
     return (
         <div>
@@ -102,9 +129,15 @@ const Peliculas = () => {
 
 
             <PeliculasLista
-                Peliculas={Peliculas}
-                Editar={Editar}
-                Eliminar={Eliminar}
+            {...{
+                Peliculas,
+                Editar,
+                Eliminar,
+                Pagina,
+                totalPeliculas,
+                Paginas,
+                BuscarPagina,
+            }}
             />
 
             {AccionCRUD === "C" && (

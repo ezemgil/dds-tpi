@@ -27,6 +27,15 @@ const Sidebar = ({ handleElementoActual }) => {
         >
           <li>
             <button
+              onClick={() => handleElementoActual("InicioAdmin")}
+              className="nav-link px-0 align-middle text-white d-flex align-items-center"
+            >
+              <i className="fa-solid fa-user-circle"></i>
+              <span className="ms-2 d-none d-sm-inline">Inicio</span>
+            </button>
+          </li>
+          <li>
+            <button
               onClick={() => handleElementoActual("Generos")}
               className="nav-link px-0 align-middle text-white d-flex align-items-center"
             >
@@ -68,7 +77,7 @@ const Sidebar = ({ handleElementoActual }) => {
             >
               <i className="fa-solid fa-trophy"></i>
               <span className="ms-2 d-none d-sm-inline">
-                Nominaciones y premios
+                Nominaciones
               </span>
             </button>
           </li>

@@ -2,7 +2,15 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 
-const PeliculasLista = ({ Peliculas, Editar, Eliminar }) => {
+const PeliculasLista = ({ 
+        Peliculas, 
+        Editar, 
+        Eliminar,
+        Pagina,
+        totalPeliculas,
+        Paginas,
+        BuscarPagina,    
+    }) => {
     return (
         <div className="row flex-nowrap ">
             <div className="col py-3">
@@ -20,7 +28,7 @@ const PeliculasLista = ({ Peliculas, Editar, Eliminar }) => {
                     </tr>
                     </thead>
                     <tbody>
-                    {Peliculas.length > 0 ? (
+                    {Peliculas !== undefined || Peliculas.length > 0 ? (
                         Peliculas?.map((Pelicula) => (
                             
                             <tr key={Pelicula.id}>
@@ -69,6 +77,36 @@ const PeliculasLista = ({ Peliculas, Editar, Eliminar }) => {
                     : (<tr><td colSpan="6">No hay peliculas</td></tr>)}
                     </tbody>
                 </table>
+
+                {/* Paginador */}
+                <div className="paginador">
+                  <div className="row align-items-center d-flex justify-content-center">
+                    <div
+                      style={{ display: "flex", marginRight: "auto" }}
+                      className="col text-center"
+                    >
+                      Página: &nbsp;
+                      <select
+                        className="form-select"
+                        value={Pagina}
+                        onChange={(e) => {
+                          BuscarPagina(e.target.value);
+                        }}
+                      >
+                        {Paginas.map((pagina) => (
+                          <option key={pagina} value={pagina}>
+                            {pagina + 1}
+                          </option>
+                        ))}
+                      </select>
+                      &nbsp; de {Paginas.length}
+                      <span style={{ marginLeft: "auto" }}>
+                        <span className="pyBadge">Total: {totalPeliculas}</span>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
                 </div>
             </div>
         </div>

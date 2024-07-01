@@ -75,13 +75,13 @@ const PeliculasForm = ({itemPelicula, Volver, Grabar}) => {
         setGenerosItem(itemPelicula.generos);
         setIdiomasItem(itemPelicula.idiomas);
         clasificacionService.getAll().then((response) => {
-            setClasificaciones(response.data);
+            setClasificaciones(response.data.clasificaciones);
         });
         generosService.getAll().then((response) => {
             setGeneros(response.data.generos);
         });
         idiomaService.getAll().then((response) => {
-            setIdiomas(response.data);
+            setIdiomas(response.data.idiomas);
         });
     }, []);
 

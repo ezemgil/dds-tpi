@@ -37,29 +37,17 @@ const NominacionesLista = ({
                                     Nominaciones.map((nominacion) => (
                                     <tr key={nominacion.id}>
                                         <td>{nominacion.id}</td>
-                                        <td>{nominacion.premio.nombre}</td>
+                                        <td>{nominacion.premio.nombre}</td> 
                                         <td>{nominacion.pelicula.titulo}</td> 
                                         <td>{moment(nominacion.fecha_nominacion).format("L")}</td>
                                         <td>{nominacion.fue_ganador === 0 && "No" || nominacion.fue_ganador === 1 && "Si"}</td>
                                         <td className="d-flex gap-2 justify-content-center">
                                             <button
-                                                className="btn btn-primary btn-sm"
+                                                className="btn btn-info btn-sm rounded-pill"
                                                 title="Consultar"
                                                 onClick={() => Consultar(nominacion.id)}
                                             >
                                                 <i className="fa-solid fa-eye"></i>
-                                            </button>
-                                            <button
-                                                className="btn btn-warning btn-sm rounded-pill"
-                                                onClick={() => Editar(nominacion.id)}
-                                            >
-                                                <i className="fa-solid fa-pencil"></i>
-                                            </button>
-                                            <button
-                                                className="btn btn-danger btn-sm rounded-pill"
-                                                onClick={() => ActivarDesactivar(nominacion.id)}
-                                            >
-                                                <i className="fa-solid fa-trash-can"></i>
                                             </button>
                                         </td>
                                     </tr>

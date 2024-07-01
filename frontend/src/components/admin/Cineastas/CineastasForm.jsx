@@ -51,8 +51,10 @@ const CineastasForm = ({itemCineasta, volver, grabar}) => {
         paisService.getAll().then((response) => setPaises(response.data.paises));
         rolService.getAll().then((response) => setListaRoles(response.data));
         console.log(itemCineasta.pais?.id)
-        // console.log(listaRoles)
     }, []);
+    
+    console.log(listaRoles)
+    console.log(listaPaises)
 
     return (
         <div className="d-flex justify-content-center p-2 col-lg-12 col-md-12 col-sm-0">

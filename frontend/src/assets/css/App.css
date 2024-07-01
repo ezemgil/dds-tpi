@@ -199,3 +199,140 @@ input[type="text"].placeholder-light::placeholder {
   background-color: #666666; /* Color de fondo gris claro */
   border-color: #666666; /* Borde con color gris claro */
 }
+
+@font-face {
+  font-family: "Roboto";
+  src: url("../fonts/Roboto-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Roboto-Bold";
+  src: url("../fonts/Roboto-Bold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Roboto-Thin";
+  src: url("../fonts/Roboto-Thin.ttf") format("truetype");
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+  background-color: #1a1a1a;
+  color: #ffffff;
+}
+
+.inicio-admin-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #1a1a1a;
+  color: #ffffff;
+}
+
+.inicio-admin-heading {
+  font-size: 2.5rem;
+  color: #ffffff;
+  font-family: "Roboto-Bold", sans-serif;
+}
+
+.inicio-admin-paragraph {
+  font-size: 1.2rem;
+  color: #cccccc;
+  font-family: "Roboto", sans-serif;
+}
+
+@font-face {
+  font-family: "Roboto";
+  src: url("../fonts/Roboto-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Roboto-Bold";
+  src: url("../fonts/Roboto-Bold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Roboto-Thin";
+  src: url("../fonts/Roboto-Thin.ttf") format("truetype");
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+  background-color: #1a1a1a;
+  color: #ffffff;
+}
+
+.inicio-admin-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background-color: #1a1a1a;
+  color: #ffffff;
+}
+
+.inicio-admin-heading {
+  font-size: 2.5rem;
+  color: #ffffff;
+  font-family: "Roboto-Bold", sans-serif;
+}
+
+.inicio-admin-paragraph {
+  font-size: 1.2rem;
+  color: #cccccc;
+  font-family: "Roboto", sans-serif;
+}
+
+.botones-guia {
+  margin-top: 20px;
+  text-align: left;
+}
+
+.botones-guia h2 {
+  font-size: 1.5rem;
+  color: #ffc107;
+  font-family: "Roboto-Bold", sans-serif;
+}
+
+.botones-guia ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.botones-guia li.boton-guia-item {
+  font-size: 1rem;
+  color: #cccccc;
+  margin: 15px 0;
+  font-family: "Roboto", sans-serif;
+  display: flex;
+  align-items: center;
+}
+
+.botones-guia i {
+  margin-right: 0px;
+}
+
+.boton-guia-item .btn {
+  margin-right: 10px;
+}
+
+.guia-texto {
+  margin-left: 10px;
+}
+
+.btn-info {
+  background-color: #17a2b8;
+  border: none;
+  color: white;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  border: none;
+  color: white;
+}
+
+
