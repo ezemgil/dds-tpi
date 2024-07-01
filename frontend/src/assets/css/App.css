@@ -1,201 +1,255 @@
 @font-face {
-  font-family: "Roboto";
-  src: url("../fonts/Roboto-Regular.ttf") format("truetype");
+    font-family: "Roboto";
+    src: url("../fonts/Roboto-Regular.ttf") format("truetype");
 }
 
 @font-face {
-  font-family: "Roboto-Bold";
-  src: url("../fonts/Roboto-Bold.ttf") format("truetype");
+    font-family: "Roboto-Bold";
+    src: url("../fonts/Roboto-Bold.ttf") format("truetype");
 }
 
 @font-face {
-  font-family: "Roboto-Thin";
-  src: url("../fonts/Roboto-Thin.ttf") format("truetype");
+    font-family: "Roboto-Thin";
+    src: url("../fonts/Roboto-Thin.ttf") format("truetype");
 }
 
 body {
-  font-family: "Roboto", sans-serif;
-  background-color: #1a1a1a;
-  color: #ffffff;
+    font-family: "Roboto", sans-serif;
+    background-color: #1a1a1a;
+    color: #ffffff;
 }
 
 .navbar {
-  background-color: #333333;
+    background-color: #333333;
 }
 
 .navbar-brand span {
-  color: #ffffff;
-  font-weight: bold;
-  font-size: 1.2rem;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 1.2rem;
 }
 
 .navbar-nav .nav-link {
-  color: #ffffff;
+    color: #ffffff;
 }
 
 .navbar-nav .nav-link:hover {
-  color: #ffc107;
+    color: #ffc107;
 }
 
 .navbar .form-control {
-  max-width: 300px;
-  background-color: #222;
-  border: 1px solid #444;
-  color: #fff;
+    max-width: 300px;
+    background-color: #222;
+    border: 1px solid #444;
+    color: #fff;
 }
 
 .navbar .btn-warning {
-  background-color: #ffc107;
-  border-color: #ffc107;
+    background-color: #ffc107;
+    border-color: #ffc107;
 }
 
 .navbar .btn-warning:hover {
-  background-color: #e0a800;
+    background-color: #e0a800;
 }
 
 .btn-primary {
-  background-color: #ffc107;
-  border-color: #ffc107;
+    background-color: #ffc107;
+    border-color: #ffc107;
 }
 
 .btn-primary:hover {
-  background-color: #e0a800;
+    background-color: #e0a800;
 }
 
 .btn-outline-secondary {
-  border-color: #ffc107;
-  color: #ffc107;
+    border-color: #ffc107;
+    color: #ffc107;
 }
 
 .btn-outline-secondary:hover {
-  background-color: #ffc107;
-  color: #121212;
+    background-color: #ffc107;
+    color: #121212;
 }
 
 .card-img-top {
-  height: 300px;
-  object-fit: cover;
+    height: 300px;
+    object-fit: cover;
 }
 
 .section-title {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
 }
 
 .section-title h2 {
-  font-size: 1.5rem;
-  font-weight: bold;
+    font-size: 1.5rem;
+    font-weight: bold;
 }
 
 .section-title .btn {
-  background-color: #ffc107;
-  border-color: #ffc107;
+    background-color: #ffc107;
+    border-color: #ffc107;
 }
 
 .section-title .btn:hover {
-  background-color: #e0a800;
+    background-color: #e0a800;
 }
 
 .card {
-  background-color: #222;
-  border: 1px solid #444;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
-  margin-bottom: 20px;
+    background-color: #222;
+    border: 1px solid #444;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    margin-bottom: 20px;
 }
 
 .card-title {
-  font-size: 1.1rem;
-  font-weight: bold;
-  color: #ffffff;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #ffffff;
 }
 
 .card-text {
-  font-size: 0.9rem;
-  color: #cccccc;
+    font-size: 0.9rem;
+    color: #cccccc;
 }
 
 .footer {
-  background-color: #333333;
-  color: #ffffff;
-  padding: 20px 0;
+    background-color: #333333;
+    color: #ffffff;
+    padding: 20px 0;
 }
 
 .footer a {
-  color: #dba400;
-  text-decoration: none;
+    color: #dba400;
+    text-decoration: none;
 }
 
 .footer a:hover {
-  color: #bb8c00;
+    color: #bb8c00;
 }
 
 input[type="text"].placeholder-light::placeholder {
-  color: #818181;
+    color: #818181;
 }
 
 .nav-link {
-  color: white;
+    color: white;
 }
 
 .nav-link.active {
-  color: #ffc107; /* warning color */
+    color: #ffc107; /* warning color */
 }
 
 .nav-link:hover {
-  color: #dc3545; /* danger color */
+    color: #dc3545; /* danger color */
 }
 
 .card-img {
-  max-height: 500px;
-  max-width: fit-content;
-  object-fit: contain;
-  object-position: top;
+    max-height: 500px;
+    max-width: fit-content;
+    object-fit: contain;
+    object-position: top;
 }
 
 .paginador {
-  background-color: #343a40; /* Color de fondo oscuro */
-  color: #fff; /* Color de texto blanco */
-  padding: 20px;
-  margin-top: 15px;
-  border-radius: 4px;
-  width: 350px;
-  margin-left: auto;
-  margin-right: auto;
+    background-color: #343a40; /* Color de fondo oscuro */
+    color: #fff; /* Color de texto blanco */
+    padding: 20px;
+    margin-top: 15px;
+    border-radius: 4px;
+    width: 350px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .pyBadge {
-  background-color: #ffbd07; /* Color de fondo amarillo */
-  color: #343a40; /* Color de texto oscuro */
-  padding: 5px 10px;
-  border-radius: 5px;
-  font-size: 0.9rem;
+    background-color: #ffbd07; /* Color de fondo amarillo */
+    color: #343a40; /* Color de texto oscuro */
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.9rem;
 }
 
 .form-select {
-  background-color: #212529; /* Color de fondo oscuro para el select */
-  color: #fff; /* Color de texto blanco */
-  border: 1px solid #ffc107; /* Borde con color amarillo */
-  border-radius: 5px;
-  padding: 5px 10px;
-  font-size: 0.9rem;
-  width: 50px; /* Ancho del select */
-
+    background-color: #212529; /* Color de fondo oscuro para el select */
+    color: #fff; /* Color de texto blanco */
+    border: 1px solid #ffc107; /* Borde con color amarillo */
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 0.9rem;
+    width: 50px; /* Ancho del select */
 }
 
 .form-select option {
-  background-color: #343a40; /* Color de fondo oscuro para las opciones del select */
-  color: #fff; /* Color de texto blanco */
+    background-color: #343a40; /* Color de fondo oscuro para las opciones del select */
+    color: #fff; /* Color de texto blanco */
 }
 
 .btn-custom-warning:hover {
-  background-color: #b88a00; /* Color de fondo amarillo */
-  border-color: #e4ab00; /* Borde con color amarillo */
+    background-color: #b88a00; /* Color de fondo amarillo */
+    border-color: #e4ab00; /* Borde con color amarillo */
 }
 
 .btn-custom-light:hover {
-  color: #1a1a1a;
-  background-color: #666666; /* Color de fondo gris claro */
-  border-color: #666666; /* Borde con color gris claro */
+    color: #1a1a1a;
+    background-color: #666666; /* Color de fondo gris claro */
+    border-color: #666666; /* Borde con color gris claro */
+}
+
+/* Sidebar */
+
+.sidebar-item {
+    background-color: #343a40; /* Color de fondo oscuro */
+    color: #ffc107; /* Color de texto amarillo */
+    margin-bottom: 5px;
+    /* margin-bottom: 5px; */
+    border-radius: 5px;
+}
+
+.sidebar-item:hover {
+    background-color: #454d53; /* Color de fondo oscuro más claro */
+}
+
+.sidebar-item button {
+    color: #fff; /* Color de texto blanco */
+}
+
+.sidebar-item button > i {
+    padding-left: 10px;
+}
+
+.sidebar-item button > * {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.logo-img {
+    width: 40px;
+    height: 40px;
+    transition: transform 0.3s;
+}
+
+.logo-img:hover {
+    transform: scale(1.1);
+}
+
+.logo-text {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-left: 0.5rem;
+}
+
+.sidebar-bordered-right {
+    border-right: 1px solid rgba(255, 255, 255, 0.2);
 }
