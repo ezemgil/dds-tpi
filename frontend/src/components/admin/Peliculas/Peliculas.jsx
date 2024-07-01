@@ -129,18 +129,8 @@ const Peliculas = () => {
     }
 
     const GrabarElenco = (id_pelicula, elenco) => {
-        peliculaService.getElenco(id_pelicula)
-        .then(res => {
-            const elencoOriginal = res.data
-            elencoOriginal.forEach((cinOrig) => {
-                if (!elenco.map(cinNuevo => cinNuevo.id).includes(cinOrig.id)) {
-                    peliculaService.removeCineasta(id_pelicula, cinOrig.id)
-                }
-            })
-        })
-        
         const dataEndpoint = {"cineastas": elenco.map(cin => cin.id)}
-        peliculaService.addCineastas(id_pelicula, dataEndpoint)
+        peliculaService.updateElenco(id_pelicula, dataEndpoint);
         setModalShow(false);
     }
 
