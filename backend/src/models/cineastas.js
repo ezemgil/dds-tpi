@@ -60,6 +60,8 @@ const Cineasta = sequelize.define(
                 model: Paises,
                 key: "id",
             },
+            defaultValue: 0,
+            onDelete: "SET DEFAULT",
         },
         nacionalidad2: {
             type: DataTypes.INTEGER,

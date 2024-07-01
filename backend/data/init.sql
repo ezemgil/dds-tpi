@@ -36,9 +36,9 @@ CREATE TABLE IF NOT EXISTS Cineastas (
     fecha_fallecimiento DATE,
     biografia TEXT,
     imagen TEXT,
-    nacionalidad INTEGER NOT NULL,
+    nacionalidad INTEGER DEFAULT 0,
     nacionalidad2 INTEGER,
-    FOREIGN KEY (nacionalidad) REFERENCES Paises(id),
+    FOREIGN KEY (nacionalidad) REFERENCES Paises(id) ON DELETE SET DEFAULT,
     FOREIGN KEY (nacionalidad2) REFERENCES Paises(id) ON DELETE SET NULL,
     CONSTRAINT unique_cineasta UNIQUE (nombre, apellido, fecha_nacimiento),
     CHECK (fecha_nacimiento <= fecha_fallecimiento),
@@ -136,6 +136,7 @@ INSERT INTO Generos (nombre) VALUES ('Drama'), ('Crimen'), ('Misterio'), ('Fanta
 
 INSERT INTO Paises (nombre, codigo) VALUES ('Alemania', 'DE'), ('Francia', 'FR'), ('Italia', 'IT'), ('Países Bajos', 'NL'), ('Dinamarca', 'DK'), ('Reino Unido', 'UK'), ('Grecia', 'GR'), ('España', 'ES'), ('Portugal', 'PT'), ('Finlandia', 'FI'), ('Suecia', 'SE'), ('República Checa', 'CZ'), ('Eslovaquia', 'SK'), ('Eslovenia', 'SI'), ('Estonia', 'EE'), ('Hungría', 'HU'), ('Letonia', 'LV'), ('Lituania', 'LT'), ('Malta', 'MT'), ('Polonia', 'PL'), ('Bulgaria', 'BG'), ('Irlanda', 'IE'), ('Rumanía', 'RO'), ('Croacia', 'HR'), ('Australia', 'AU'), ('Nueva Zelanda', 'NZ'), ('Estados Unidos', 'US'), ('Irlanda del Norte', 'UK-NIR');
 INSERT INTO Paises (nombre, codigo) VALUES ('Argentina', 'AR'), ('Bolivia', 'BO'), ('Brasil', 'BR'), ('Chile', 'CL'), ('Colombia', 'CO'), ('Costa Rica', 'CR'), ('Cuba', 'CU'), ('Ecuador', 'EC'), ('El Salvador', 'SV'), ('Guatemala', 'GT'), ('Honduras', 'HN'), ('México', 'MX'), ('Nicaragua', 'NI'), ('Panamá', 'PA'), ('Paraguay', 'PY'), ('Perú', 'PE'), ('Puerto Rico', 'PR'), ('República Dominicana', 'DO'), ('Uruguay', 'UY'), ('Venezuela', 'VE');
+INSERT INTO Paises (id, nombre, codigo) VALUES (0, 'Desconocido', '');
 
 INSERT INTO Idiomas (nombre) VALUES ('Alemán'), ('Francés'), ('Italiano'), ('Neerlandés'), ('Danés'), ('Inglés'), ('Griego'), ('Español'), ('Portugués'), ('Finés'), ('Sueco'), ('Checo'), ('Eslovaco'), ('Esloveno'), ('Estonio'), ('Húngaro'), ('Letón'), ('Lituano'), ('Maltés'), ('Polaco'), ('Búlgaro'), ('Irlandés'), ('Rumano'), ('Croata');
 
