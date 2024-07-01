@@ -1,139 +1,178 @@
 import request from "supertest";
-import * as tipoRolController from "../controllers/tipoRolController.js";
 import app from "../src/app.js";
+import * as controller from "../src/controllers/tipoRol.controller.js";
 
-jest.mock("../controllers/tipoRolController");
+jest.mock("../src/controllers/tipoRol.controller.js");
+jest.mock("../src/middleware/auth.js", () => {
+    return {
+        authentificateJWT: (req, res, next) => {
+            next();
+        },
+    };
+});
 
-const tiposRol = [
-    {id: 1, nombre: "Actor"},
-    {id: 2, nombre: "Director"},
-    {id: 3, nombre: "Productor"}
-];
+describe("GET /api/tipos_rol/buscar - Get tipoRol by name", () => {
+    test("Successfully get tipoRol by name", async () => {
+        controller.getTipoRolByName.mockImplementationOnce((req, res) => {
+            res.json({ id: 1, nombre: "Admin" });
+        });
+        const response = await request(app).get("/api/tipos_rol/buscar?nombre=Admin");
+        expect(response.status).toBe(200);
+        expect(response.body).toEqual({ id: 1, nombre: "Admin" });
+    });
 
-// Mockear la funcion tipoRolController.getTipoRoles
-beforeEach(() => {
-    tipoRolController.getTiposRol.mockImplementation((req, res) => {
-        res.json(tiposRol);
+    test("Error while getting tipoRol by name", async () => {
+        controller.getTipoRolByName.mockImplementationOnce((req, res) => {
+            res.status(500).send("Error");
+        });
+        const response = await request(app).get("/api/tipos_rol/buscar?nombre=Admin");
+        expect(response.status).toBe(500);
+        expect(response.text).toBe("Error");
     });
 });
 
-// TEST PARA EL ENDPOINT Get all
-describe("GET /tipos_rol - obtener todos los tipos de roles", () => {
-    test("Obtener todos los tipos de rol exitosamente", async () => {
-        const response = await request(app).get("/tipos_rol");
+describe("GET /api/tipos_rol - Get all tiposRol", () => {
+    test("Successfully get all tiposRol", async () => {
+        const tiposRol = [
+            { id: 1, nombre: "Admin" },
+            { id: 2, nombre: "User" },
+        ];
+        controller.getTiposRol.mockImplementationOnce((req, res) => {
+            res.json(tiposRol);
+        });
+        const response = await request(app).get("/api/tipos_rol");
         expect(response.status).toBe(200);
         expect(response.body).toEqual(tiposRol);
     });
-});
 
-// TEST PARA EL ENDPOINT Get By ID
-describe("GET /tipos_rol/:id - obtener un tipo de rol por su id", () => {
-    test("Obtener un tipo de rol por su id exitosamente", async () => {
-        tipoRolController.getTipoRolById.mockImplementationOnce((req, res) => {
-            res.json(tiposRol[0]);
-        })
-        const response = await request(app).get("/tipos_rol/1");
-        expect(response.status).toBe(200); // 200 OK
-        expect(response.body).toEqual(tiposRol[0]);
-    });
-    
-    test("Error al obtener tipo de rol por ID", async () => {
-        tipoRolController.getTipoRolById.mockImplementationOnce((req, res) => {
+    test("Error while getting all tiposRol", async () => {
+        controller.getTiposRol.mockImplementationOnce((req, res) => {
             res.status(500).send("Error");
         });
-        const response = await request(app).get("/tipos_rol/1");
-        expect(response.status).toBe(500); // 500 Internal Server Error
-        expect(response.text).toBe("Error");
-    });
-    
-    test("Tipo de rol no encontrado", async () => {
-        tipoRolController.getTipoRolById.mockImplementationOnce((req, res) => {
-              res.status(404).send("Tipo de rol no encontrado");
-        });
-        const response = await request(app).get("/tipos_rol/1");
-        expect(response.status).toBe(404); // 404 Not Found
-        expect(response.text).toBe("Tipo de rol no encontrado");
-    });
-});
-
-// TEST PARA EL ENDPOINT Create
-describe("POST /tipos_rol - crear un nuevo tipo de rol", () => {
-    test("Crear un nuevo tipo de rol exitosamente", async () => {
-        const nuevoTipoRol = {id: 4, nombre: "Guionista"};
-        tipoRolController.createTipoRol.mockImplementationOnce((req, res) => {
-            res.status(201).json(nuevoTipoRol);
-        });
-        const response = await request(app)
-            .post("/tipos_rol")
-            .send(nuevoTipoRol);
-        expect(response.status).toBe(201);
-        expect(response.body).toEqual(nuevoTipoRol);
-    });
-    
-    test("Error al crear un nuevo tipo de rol", async () => {
-        tipoRolController.createTipoRol.mockImplementationOnce((req, res) => {
-            res.status(500).send("Error");
-        });
-        const response = await request(app)
-            .post("/tipos_rol")
-            .send({nombre: "Guionista"});
+        const response = await request(app).get("/api/tipos_rol");
         expect(response.status).toBe(500);
         expect(response.text).toBe("Error");
     });
 });
 
-// TEST PARA EL ENDPOINT Update
-describe("PUT /tipos_rol/:id - actualizar un tipo de rol", () => {
-    test("Actualizar un tipo de rol exitosamente", async () => {
-        const tipoRolActualizado = {id: 1, nombre: "Actor de reparto"};
-        tipoRolController.updateTipoRol.mockImplementationOnce((req, res) => {
-            res.json(tipoRolActualizado);
+describe("GET /api/tipos_rol/:id - Get tipoRol by ID", () => {
+    test("Successfully get tipoRol by ID", async () => {
+        controller.getTipoRolById.mockImplementationOnce((req, res) => {
+            res.json({ id: 1, nombre: "Admin" });
         });
-        const response = await request(app)
-            .put("/tipos_rol/1")
-            .send(tipoRolActualizado);
+        const response = await request(app).get("/api/tipos_rol/1");
         expect(response.status).toBe(200);
-        expect(response.body).toEqual(tipoRolActualizado);
+        expect(response.body).toEqual({ id: 1, nombre: "Admin" });
     });
-    
-    test("Error al actualizar un tipo de rol", async () => {
-        tipoRolController.updateTipoRol.mockImplementationOnce((req, res) => {
-            res.status(500).send("Error");
-        });
-        const response = await request(app)
-            .put("/tipos_rol/1")
-            .send({nombre: "Actor"});
-        expect(response.status).toBe(500);
-        expect(response.text).toBe("Error");
-    });
-});
 
-// TEST PARA EL ENDPOINT Delete
-describe("DELETE /tipos_rol/:id - eliminar un tipo de rol", () => {
-    test("Eliminar un tipo de rol exitosamente", async () => {
-        tipoRolController.deleteTipoRol.mockImplementationOnce((req, res) => {
-            res.send("Tipo de rol eliminado");
-        });
-        const response = await request(app).delete("/tipos_rol/1");
-        expect(response.status).toBe(200);
-        expect(response.text).toBe("Tipo de rol eliminado");
-    });
-    
-    test("Error al eliminar un tipo de rol", async () => {
-        tipoRolController.deleteTipoRol.mockImplementationOnce((req, res) => {
+    test("Error while getting tipoRol by ID", async () => {
+        controller.getTipoRolById.mockImplementationOnce((req, res) => {
             res.status(500).send("Error");
         });
-        const response = await request(app).delete("/tipos_rol/1");
+        const response = await request(app).get("/api/tipos_rol/1");
         expect(response.status).toBe(500);
         expect(response.text).toBe("Error");
     });
-    
-    test("Tipo de rol no encontrado", async () => {
-        tipoRolController.deleteTipoRol.mockImplementationOnce((req, res) => {
-            res.status(404).send("Tipo de rol no encontrado");
+
+    test("TipoRol not found", async () => {
+        controller.getTipoRolById.mockImplementationOnce((req, res) => {
+            res.status(404).send("TipoRol not found");
         });
-        const response = await request(app).delete("/tipos_rol/1");
+        const response = await request(app).get("/api/tipos_rol/1");
         expect(response.status).toBe(404);
-        expect(response.text).toBe("Tipo de rol no encontrado");
+        expect(response.text).toBe("TipoRol not found");
+    });
+});
+
+describe("POST /api/tipos_rol - Create a tipoRol", () => {
+    test("Successfully create a tipoRol", async () => {
+        controller.createTipoRol.mockImplementationOnce((req, res) => {
+            res.json({ id: 1, nombre: "Admin" });
+        });
+        const response = await request(app)
+            .post("/api/tipos_rol")
+            .set("Authorization", "Bearer your-access-token")
+            .send({ nombre: "Admin" });
+        expect(response.status).toBe(200);
+        expect(response.body).toEqual({ id: 1, nombre: "Admin" });
+    });
+
+    test("Error while creating a tipoRol", async () => {
+        controller.createTipoRol.mockImplementationOnce((req, res) => {
+            res.status(500).send("Error");
+        });
+        const response = await request(app)
+            .post("/api/tipos_rol")
+            .set("Authorization", "Bearer your-access-token")
+            .send({ nombre: "Admin" });
+        expect(response.status).toBe(500);
+        expect(response.text).toBe("Error");
+    });
+});
+
+describe("PUT /api/tipos_rol/:id - Update a tipoRol", () => {
+    test("Successfully update a tipoRol", async () => {
+        controller.updateTipoRol.mockImplementationOnce((req, res) => {
+            res.json({ id: 1, nombre: "Admin" });
+        });
+        const response = await request(app)
+            .put("/api/tipos_rol/1")
+            .set("Authorization", "Bearer your-access-token")
+            .send({ nombre: "Admin" });
+        expect(response.status).toBe(200);
+        expect(response.body).toEqual({ id: 1, nombre: "Admin" });
+    });
+
+    test("Error while updating a tipoRol", async () => {
+        controller.updateTipoRol.mockImplementationOnce((req, res) => {
+            res.status(500).send("Error");
+        });
+        const response = await request(app)
+            .put("/api/tipos_rol/1")
+            .set("Authorization", "Bearer your-access-token")
+            .send({ nombre: "Admin" });
+        expect(response.status).toBe(500);
+        expect(response.text).toBe("Error");
+    });
+
+    test("TipoRol not found", async () => {
+        controller.updateTipoRol.mockImplementationOnce((req, res) => {
+            res.status(404).send("TipoRol not found");
+        });
+        const response = await request(app)
+            .put("/api/tipos_rol/1")
+            .set("Authorization", "Bearer your-access-token")
+            .send({ nombre: "Admin" });
+        expect(response.status).toBe(404);
+        expect(response.text).toBe("TipoRol not found");
+    });
+});
+
+describe("DELETE /api/tipos_rol/:id - Delete a tipoRol", () => {
+    test("Successfully delete a tipoRol", async () => {
+        controller.deleteTipoRol.mockImplementationOnce((req, res) => {
+            res.json({ id: 1, nombre: "Admin" });
+        });
+        const response = await request(app).delete("/api/tipos_rol/1").set("Authorization", "Bearer your-access-token");
+        expect(response.status).toBe(200);
+        expect(response.body).toEqual({ id: 1, nombre: "Admin" });
+    });
+
+    test("Error while deleting a tipoRol", async () => {
+        controller.deleteTipoRol.mockImplementationOnce((req, res) => {
+            res.status(500).send("Error");
+        });
+        const response = await request(app).delete("/api/tipos_rol/1").set("Authorization", "Bearer your-access-token");
+        expect(response.status).toBe(500);
+        expect(response.text).toBe("Error");
+    });
+
+    test("TipoRol not found", async () => {
+        controller.deleteTipoRol.mockImplementationOnce((req, res) => {
+            res.status(404).send("TipoRol not found");
+        });
+        const response = await request(app).delete("/api/tipos_rol/1").set("Authorization", "Bearer your-access-token");
+        expect(response.status).toBe(404);
+        expect(response.text).toBe("TipoRol not found");
     });
 });

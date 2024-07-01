@@ -1,141 +1,165 @@
 import request from "supertest";
 import app from "../src/app.js";
-import * as premioController from "../controllers/premioController.js";
+import * as generoController from "../src/controllers/genero.controller.js";
 
-jest.mock("../controllers/premioController.js");
+jest.mock("../src/controllers/genero.controller.js");
+jest.mock("../src/middleware/auth.js", () => {
+    return {
+        authentificateJWT: (req, res, next) => {
+            next();
+        },
+    };
+});
 
-const premios = [
-    { id: 1, nombre: "Premio 1" },
-    { id: 2, nombre: "Premio 2" },
-    { id: 3, nombre: "Premio 3" },
-    { id: 4, nombre: "Premio 4" },
-]
+const generos = [
+    { id: 1, nombre: "Acción" },
+    { id: 2, nombre: "Comedia" },
+    { id: 3, nombre: "Drama" },
+    { id: 4, nombre: "Aventura" },
+];
 
-
-// Mockear la funcion premioController.getPremios
+// Mock the generoController.getGeneros function
 beforeEach(() => {
-    premioController.getPremios.mockImplementation((req, res) => {
-        res.json(premios);
+    generoController.getGeneros.mockImplementation((req, res) => {
+        res.json(generos);
     });
 });
 
-describe("GET /premios - Obtener todos los premios", () => {
-    test("Obtener todos los premios exitosamente", async () => {
-        const response = await request(app).get("/premios");
+describe("GET /api/generos - Get all genres", () => {
+    test("Successfully get all genres", async () => {
+        const response = await request(app).get("/api/generos");
         expect(response.status).toBe(200);
-        expect(response.body).toEqual(premios);
+        expect(response.body).toEqual(generos);
     });
 
-    test("Error al obtener todos los premios", async () => {
-        premioController.getPremios.mockImplementationOnce((req, res) => {
+    test("Error while getting all genres", async () => {
+        generoController.getGeneros.mockImplementationOnce((req, res) => {
             res.status(500).send("Error");
         });
-        const response = await request(app).get("/premios");
+        const response = await request(app).get("/api/generos");
         expect(response.status).toBe(500);
         expect(response.text).toBe("Error");
     });
 });
 
-// Mockear la funcion premioController.getPremioById
-describe("GET /premios/:id - Obtener premio por ID", () => {
-    test("Obtener premio por ID exitosamente", async () => {
-        premioController.getPremioById.mockImplementationOnce((req, res) => {
-            res.json(premios[0]);
+describe("GET /api/generos/:id - Get genre by ID", () => {
+    test("Successfully get genre by ID", async () => {
+        generoController.getGeneroById.mockImplementationOnce((req, res) => {
+            res.json(generos[0]);
         });
-        const response = await request(app).get("/premios/1");
+        const response = await request(app).get("/api/generos/1");
         expect(response.status).toBe(200);
-        expect(response.body).toEqual(premios[0]);
+        expect(response.body).toEqual(generos[0]);
     });
-    test("Error al obtener premio por ID", async () => {
-        premioController.getPremioById.mockImplementationOnce((req, res) => {
+
+    test("Error while getting genre by ID", async () => {
+        generoController.getGeneroById.mockImplementationOnce((req, res) => {
             res.status(500).send("Error");
         });
-        const response = await request(app).get("/premios/1");
+        const response = await request(app).get("/api/generos/1");
         expect(response.status).toBe(500);
         expect(response.text).toBe("Error");
     });
-    test("Premio no encontrado", async () => {
-        premioController.getPremioById.mockImplementationOnce((req, res) => {
-            res.status(404).send("Premio no encontrado");
+
+    test("Genre not found", async () => {
+        generoController.getGeneroById.mockImplementationOnce((req, res) => {
+            res.status(404).send("Genre not found");
         });
-        const response = await request(app).get("/premios/1");
+        const response = await request(app).get("/api/generos/1");
         expect(response.status).toBe(404);
-        expect(response.text).toBe("Premio no encontrado");
+        expect(response.text).toBe("Genre not found");
     });
 });
 
-// Mockear la funcion premioController.createPremio
-describe("POST /premios - Crear premio", () => {
-    test("Crear premio exitosamente", async () => {
-        premioController.createPremio.mockImplementationOnce((req, res) => {
-            res.json(premios[0]);
+describe("POST /api/generos - Create a genre", () => {
+    test("Successfully create a genre", async () => {
+        generoController.createGenero.mockImplementationOnce((req, res) => {
+            res.json(generos[0]);
         });
-        const response = await request(app).post("/premios").send(premios[0]);
+        const response = await request(app)
+            .post("/api/generos")
+            .set("Authorization", "Bearer your-access-token")
+            .send(generos[0]);
         expect(response.status).toBe(200);
-        expect(response.body).toEqual(premios[0]);
+        expect(response.body).toEqual(generos[0]);
     });
-    test("Error al crear premio", async () => {
-        premioController.createPremio.mockImplementationOnce((req, res) => {
+
+    test("Error while creating a genre", async () => {
+        generoController.createGenero.mockImplementationOnce((req, res) => {
             res.status(500).send("Error");
         });
-        const response = await request(app).post("/premios").send(premios[0]);
+        const response = await request(app)
+            .post("/api/generos")
+            .set("Authorization", "Bearer your-access-token")
+            .send(generos[0]);
         expect(response.status).toBe(500);
         expect(response.text).toBe("Error");
     });
 });
 
-// Mockear la funcion premioController.updatePremio
-describe("PUT /premios/:id - Actualizar premio", () => {
-    test("Actualizar premio exitosamente", async () => {
-        premioController.updatePremio.mockImplementationOnce((req, res) => {
-            res.json(premios[0]);
+describe("PUT /api/generos/:id - Update a genre", () => {
+    test("Successfully update a genre", async () => {
+        generoController.updateGenero.mockImplementationOnce((req, res) => {
+            res.json(generos[0]);
         });
-        const response = await request(app).put("/premios/1").send(premios[0]);
+        const response = await request(app)
+            .put("/api/generos/1")
+            .set("Authorization", "Bearer your-access-token")
+            .send(generos[0]);
         expect(response.status).toBe(200);
-        expect(response.body).toEqual(premios[0]);
+        expect(response.body).toEqual(generos[0]);
     });
-    test("Error al actualizar premio", async () => {
-        premioController.updatePremio.mockImplementationOnce((req, res) => {
+
+    test("Error while updating a genre", async () => {
+        generoController.updateGenero.mockImplementationOnce((req, res) => {
             res.status(500).send("Error");
         });
-        const response = await request(app).put("/premios/1").send(premios[0]);
+        const response = await request(app)
+            .put("/api/generos/1")
+            .set("Authorization", "Bearer your-access-token")
+            .send(generos[0]);
         expect(response.status).toBe(500);
         expect(response.text).toBe("Error");
     });
-    test("Premio no encontrado", async () => {
-        premioController.updatePremio.mockImplementationOnce((req, res) => {
-            res.status(404).send("Premio no encontrado");
+
+    test("Genre not found", async () => {
+        generoController.updateGenero.mockImplementationOnce((req, res) => {
+            res.status(404).send("Genre not found");
         });
-        const response = await request(app).put("/premios/1").send(premios[0]);
+        const response = await request(app)
+            .put("/api/generos/1")
+            .set("Authorization", "Bearer your-access-token")
+            .send(generos[0]);
         expect(response.status).toBe(404);
-        expect(response.text).toBe("Premio no encontrado");
+        expect(response.text).toBe("Genre not found");
     });
 });
 
-// Mockear la funcion premioController.deletePremio
-describe("DELETE /premios/:id - Eliminar premio", () => {
-    test("Eliminar premio exitosamente", async () => {
-        premioController.deletePremio.mockImplementationOnce((req, res) => {
-            res.json(premios[0]);
+describe("DELETE /api/generos/:id - Delete a genre", () => {
+    test("Successfully delete a genre", async () => {
+        generoController.deleteGenero.mockImplementationOnce((req, res) => {
+            res.json(generos[0]);
         });
-        const response = await request(app).delete("/premios/1");
+        const response = await request(app).delete("/api/generos/1").set("Authorization", "Bearer your-access-token");
         expect(response.status).toBe(200);
-        expect(response.body).toEqual(premios[0]);
+        expect(response.body).toEqual(generos[0]);
     });
-    test("Error al eliminar premio", async () => {
-        premioController.deletePremio.mockImplementationOnce((req, res) => {
+
+    test("Error while deleting a genre", async () => {
+        generoController.deleteGenero.mockImplementationOnce((req, res) => {
             res.status(500).send("Error");
         });
-        const response = await request(app).delete("/premios/1");
+        const response = await request(app).delete("/api/generos/1").set("Authorization", "Bearer your-access-token");
         expect(response.status).toBe(500);
         expect(response.text).toBe("Error");
     });
-    test("Premio no encontrado", async () => {
-        premioController.deletePremio.mockImplementationOnce((req, res) => {
-            res.status(404).send("Premio no encontrado");
+
+    test("Genre not found", async () => {
+        generoController.deleteGenero.mockImplementationOnce((req, res) => {
+            res.status(404).send("Genre not found");
         });
-        const response = await request(app).delete("/premios/1");
+        const response = await request(app).delete("/api/generos/1").set("Authorization", "Bearer your-access-token");
         expect(response.status).toBe(404);
-        expect(response.text).toBe("Premio no encontrado");
+        expect(response.text).toBe("Genre not found");
     });
 });

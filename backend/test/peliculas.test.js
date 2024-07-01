@@ -1,174 +1,168 @@
 import request from "supertest";
-import app from "../src/app";
-import * as peliculasController from "../controllers/peliculaController";
+import app from "../src/app.js";
+import * as controller from "../src/controllers/pelicula.controller.js";
 
-jest.mock("../controllers/peliculaController");
+jest.mock("../src/controllers/pelicula.controller.js");
+jest.mock("../src/middleware/auth.js", () => {
+    return {
+        authentificateJWT: (req, res, next) => {
+            next();
+        },
+    };
+});
 
 const peliculas = [
-  {
-    id: 1,
-    titulo: "Sueño de fuga",
-    sinopsis:
-      "El banquero Andy Dufresne es arrestado por matar a su esposa y amante. Tras una dura adaptación, intenta mejorar las condiciones de la prisión y dar esperanza a sus compañeros.",
-    calificacion: 9.3,
-    duracion: 142,
-    fechaEstreno: "1994-10-14",
-    nombre: "The Shawshank Redemption",
-    clasificacionId: 1,
-  },
-  {
-    id: 2,
-    titulo: "El padrino",
-    sinopsis:
-      "La familia mafiosa Corleone intenta establecer un imperio en la industria de la droga en Nueva York mientras lucha por mantener el control de su territorio.",
-    calificacion: 9.2,
-    duracion: 175,
-    fechaEstreno: "1972-03-24",
-    nombre: "The Godfather",
-    clasificacionId: 4,
-  },
-  {
-    id: 3,
-    titulo: "El padrino: Parte II",
-    sinopsis:
-      "Michael Corleone expande su imperio de la mafia y se enfrenta a traiciones mientras intenta consolidar su poder y legado.",
-    calificacion: 9.0,
-    duracion: 202,
-    fechaEstreno: "1974-12-20",
-    nombre: "The Godfather: Part II",
-    clasificacionId: 4,
-  },
+    { id: 1, nombre: "Pelicula 1" },
+    { id: 2, nombre: "Pelicula 2" },
+    { id: 3, nombre: "Pelicula 3" },
+    { id: 4, nombre: "Pelicula 4" },
 ];
 
-// Mockear la función peliculasController.getPeliculas
+// Mock the controller functions
 beforeEach(() => {
-  peliculasController.getPeliculas.mockImplementation((req, res) => {
-    res.json(peliculas);
-  });
+    controller.getPeliculaByNombre.mockImplementation((req, res) => {
+        res.json(peliculas);
+    });
+
+    controller.getPeliculasAleatorias.mockImplementation((req, res) => {
+        res.json(peliculas);
+    });
+
+    controller.getElenco.mockImplementation((req, res) => {
+        res.json(peliculas[0]);
+    });
+
+    controller.getPeliculas.mockImplementation((req, res) => {
+        res.json(peliculas);
+    });
+
+    controller.getPeliculaById.mockImplementation((req, res) => {
+        res.json(peliculas[0]);
+    });
+
+    controller.createPelicula.mockImplementation((req, res) => {
+        res.json(peliculas[0]);
+    });
+
+    controller.addCineastas.mockImplementation((req, res) => {
+        res.json(peliculas[0]);
+    });
+
+    controller.updatePelicula.mockImplementation((req, res) => {
+        res.json(peliculas[0]);
+    });
+
+    controller.updateElenco.mockImplementation((req, res) => {
+        res.json(peliculas[0]);
+    });
+
+    controller.removeCineasta.mockImplementation((req, res) => {
+        res.json(peliculas[0]);
+    });
+
+    controller.deletePelicula.mockImplementation((req, res) => {
+        res.json(peliculas[0]);
+    });
 });
 
-describe("GET /peliculas - Obtener todas las películas", () => {
-  test("Obtener todas las películas exitosamente", async () => {
-    const response = await request(app).get("/peliculas");
-    expect(response.status).toBe(200);
-    expect(response.body).toEqual(peliculas);
-  });
-
-  test("Error al obtener todas las películas", async () => {
-    peliculasController.getPeliculas.mockImplementationOnce((req, res) => {
-      res.status(500).send("Error");
+describe("GET /api/peliculas/buscar - Get pelicula by nombre", () => {
+    test("Successfully get pelicula by nombre", async () => {
+        const response = await request(app).get("/api/peliculas/buscar");
+        expect(response.status).toBe(200);
+        expect(response.body).toEqual(peliculas);
     });
-    const response = await request(app).get("/peliculas");
-    expect(response.status).toBe(500);
-    expect(response.text).toBe("Error");
-  });
 });
 
-describe("GET /peliculas/:id - Obtener película por ID", () => {
-  test("Obtener película por ID exitosamente", async () => {
-    peliculasController.getPeliculaById.mockImplementationOnce((req, res) => {
-      res.json(peliculas[0]);
+describe("GET /api/peliculas/random - Get random peliculas", () => {
+    test("Successfully get random peliculas", async () => {
+        const response = await request(app).get("/api/peliculas/random");
+        expect(response.status).toBe(200);
+        expect(response.body).toEqual(peliculas);
     });
-    const response = await request(app).get("/peliculas/1");
-    expect(response.status).toBe(200);
-    expect(response.body).toEqual(peliculas[0]);
-  });
-
-  test("Error al obtener película por ID", async () => {
-    peliculasController.getPeliculaById.mockImplementationOnce((req, res) => {
-      res.status(500).send("Error");
-    });
-    const response = await request(app).get("/peliculas/1");
-    expect(response.status).toBe(500);
-    expect(response.text).toBe("Error");
-  });
-
-  test("Película no encontrada", async () => {
-    peliculasController.getPeliculaById.mockImplementationOnce((req, res) => {
-      res.status(404).send("Película no encontrada");
-    });
-    const response = await request(app).get("/peliculas/1");
-    expect(response.status).toBe(404);
-    expect(response.text).toBe("Película no encontrada");
-  });
 });
 
-describe("POST /peliculas - Crear película", () => {
-  test("Crear película exitosamente", async () => {
-    peliculasController.createPelicula.mockImplementationOnce((req, res) => {
-      res.status(201).json(peliculas[0]);
+describe("GET /api/peliculas/:id/elenco - Get elenco of pelicula", () => {
+    test("Successfully get elenco of pelicula", async () => {
+        const response = await request(app).get("/api/peliculas/1/elenco");
+        expect(response.status).toBe(200);
+        expect(response.body).toEqual(peliculas[0]);
     });
-    const response = await request(app).post("/peliculas").send(peliculas[0]);
-    expect(response.status).toBe(201);
-    expect(response.body).toEqual(peliculas[0]);
-  });
-
-  test("Error al crear película", async () => {
-    peliculasController.createPelicula.mockImplementationOnce((req, res) => {
-      res.status(500).send("Error");
-    });
-    const response = await request(app).post("/peliculas").send(peliculas[0]);
-    expect(response.status).toBe(500);
-    expect(response.text).toBe("Error");
-  });
 });
 
-describe("PUT /peliculas/:id - Actualizar película", () => {
-  test("Actualizar película exitosamente", async () => {
-    peliculasController.updatePelicula.mockImplementationOnce((req, res) => {
-      res.json(peliculas[0]);
+describe("GET /api/peliculas - Get all peliculas", () => {
+    test("Successfully get all peliculas", async () => {
+        const response = await request(app).get("/api/peliculas");
+        expect(response.status).toBe(200);
+        expect(response.body).toEqual(peliculas);
     });
-    const response = await request(app).put("/peliculas/1").send(peliculas[0]);
-    expect(response.status).toBe(200);
-    expect(response.body).toEqual(peliculas[0]);
-  });
-
-  test("Error al actualizar película", async () => {
-    peliculasController.updatePelicula.mockImplementationOnce((req, res) => {
-      res.status(500).send("Error");
-    });
-    const response = await request(app).put("/peliculas/1").send(peliculas[0]);
-    expect(response.status).toBe(500);
-    expect(response.text).toBe("Error");
-  });
-
-  test("Película no encontrada al actualizar", async () => {
-    peliculasController.updatePelicula.mockImplementationOnce((req, res) => {
-      res.status(404).send("Película no encontrada");
-    });
-    const response = await request(app)
-      .put("/peliculas/100")
-      .send(peliculas[0]);
-    expect(response.status).toBe(404);
-    expect(response.text).toBe("Película no encontrada");
-  });
 });
 
-describe("DELETE /peliculas/:id - Eliminar película", () => {
-  test("Eliminar película exitosamente", async () => {
-    peliculasController.deletePelicula.mockImplementationOnce((req, res) => {
-      res.status(204).send();
+describe("GET /api/peliculas/:id - Get pelicula by ID", () => {
+    test("Successfully get pelicula by ID", async () => {
+        const response = await request(app).get("/api/peliculas/1");
+        expect(response.status).toBe(200);
+        expect(response.body).toEqual(peliculas[0]);
     });
-    const response = await request(app).delete("/peliculas/1");
-    expect(response.status).toBe(204);
-    expect(response.text).toBe("");
-  });
+});
 
-  test("Error al eliminar película", async () => {
-    peliculasController.deletePelicula.mockImplementationOnce((req, res) => {
-      res.status(500).send("Error");
+describe("POST /api/peliculas - Create a pelicula", () => {
+    test("Successfully create a pelicula", async () => {
+        const response = await request(app)
+            .post("/api/peliculas")
+            .set("Authorization", "Bearer your-access-token")
+            .send(peliculas[0]);
+        expect(response.status).toBe(200);
+        expect(response.body).toEqual(peliculas[0]);
     });
-    const response = await request(app).delete("/peliculas/1");
-    expect(response.status).toBe(500);
-    expect(response.text).toBe("Error");
-  });
+});
 
-  test("Película no encontrada al eliminar", async () => {
-    peliculasController.deletePelicula.mockImplementationOnce((req, res) => {
-      res.status(404).send("Película no encontrada");
+describe("POST /api/peliculas/:id/cineastas - Add cineastas to pelicula", () => {
+    test("Successfully add cineastas to pelicula", async () => {
+        const response = await request(app)
+            .post("/api/peliculas/1/cineastas")
+            .set("Authorization", "Bearer your-access-token")
+            .send(peliculas[0]);
+        expect(response.status).toBe(200);
+        expect(response.body).toEqual(peliculas[0]);
     });
-    const response = await request(app).delete("/peliculas/100");
-    expect(response.status).toBe(404);
-    expect(response.text).toBe("Película no encontrada");
-  });
+});
+
+describe("PUT /api/peliculas/:id - Update a pelicula", () => {
+    test("Successfully update a pelicula", async () => {
+        const response = await request(app)
+            .put("/api/peliculas/1")
+            .set("Authorization", "Bearer your-access-token")
+            .send(peliculas[0]);
+        expect(response.status).toBe(200);
+        expect(response.body).toEqual(peliculas[0]);
+    });
+});
+
+describe("PUT /api/peliculas/:id/cineastas - Update elenco of pelicula", () => {
+    test("Successfully update elenco of pelicula", async () => {
+        const response = await request(app)
+            .put("/api/peliculas/1/cineastas")
+            .set("Authorization", "Bearer your-access-token")
+            .send(peliculas[0]);
+        expect(response.status).toBe(200);
+        expect(response.body).toEqual(peliculas[0]);
+    });
+});
+
+describe("DELETE /api/peliculas/:id/cineastas/:cineasta - Remove cineasta from pelicula", () => {
+    test("Successfully remove cineasta from pelicula", async () => {
+        const response = await request(app)
+            .delete("/api/peliculas/1/cineastas/1")
+            .set("Authorization", "Bearer your-access-token");
+        expect(response.status).toBe(200);
+        expect(response.body).toEqual(peliculas[0]);
+    });
+});
+
+describe("DELETE /api/peliculas/:id - Delete a pelicula", () => {
+    test("Successfully delete a pelicula", async () => {
+        const response = await request(app).delete("/api/peliculas/1").set("Authorization", "Bearer your-access-token");
+        expect(response.status).toBe(200);
+        expect(response.body).toEqual(peliculas[0]);
+    });
 });

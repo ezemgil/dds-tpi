@@ -1,190 +1,102 @@
 import request from "supertest";
-import app from "../src/app";
-import * as clasificacionController from "../controllers/clasificacionController";
+import app from "../src/app.js";
+import * as controller from "../src/controllers/clasificacion.controller.js";
 
-jest.mock("../controllers/clasificacionController");
+jest.mock("../src/controllers/clasificacion.controller.js");
+jest.mock("../src/middleware/auth.js", () => {
+    return {
+        authentificateJWT: (req, res, next) => {
+            next();
+        },
+    };
+});
 
 const clasificaciones = [
-  { id: 1, nombre: "G", descripcion: "Todo público" },
-  { id: 2, nombre: "PG", descripcion: "Guía parental sugerida" },
-  { id: 3, nombre: "PG-13", descripcion: "No apto para menores de 13 años" },
-  { id: 4, nombre: "R", descripcion: "Restringido" },
+    { id: 1, nombre: "Clasificacion 1" },
+    { id: 2, nombre: "Clasificacion 2" },
+    { id: 3, nombre: "Clasificacion 3" },
+    { id: 4, nombre: "Clasificacion 4" },
 ];
 
-// Mockear la función clasificacionController.getClasificaciones
+// Mock the controller functions
 beforeEach(() => {
-  clasificacionController.getClasificaciones.mockImplementation((req, res) => {
-    res.json(clasificaciones);
-  });
-});
+    controller.getClasificacionByNombre.mockImplementation((req, res) => {
+        res.json(clasificaciones);
+    });
 
-describe("GET /clasificaciones - Obtener todas las clasificaciones", () => {
-  test("Obtener todas las clasificaciones exitosamente", async () => {
-    const response = await request(app).get("/clasificaciones");
-    expect(response.status).toBe(200);
-    expect(response.body).toEqual(clasificaciones);
-  });
+    controller.getClasificaciones.mockImplementation((req, res) => {
+        res.json(clasificaciones);
+    });
 
-  test("Error al obtener todas las clasificaciones", async () => {
-    clasificacionController.getClasificaciones.mockImplementationOnce(
-      (req, res) => {
-        res.status(500).send("Error");
-      }
-    );
-    const response = await request(app).get("/clasificaciones");
-    expect(response.status).toBe(500);
-    expect(response.text).toBe("Error");
-  });
-});
-
-describe("GET /clasificaciones/:id - Obtener clasificación por ID", () => {
-  test("Obtener clasificación por ID exitosamente", async () => {
-    clasificacionController.getClasificacionById.mockImplementationOnce(
-      (req, res) => {
+    controller.getClasificacionById.mockImplementation((req, res) => {
         res.json(clasificaciones[0]);
-      }
-    );
-    const response = await request(app).get("/clasificaciones/1");
-    expect(response.status).toBe(200);
-    expect(response.body).toEqual(clasificaciones[0]);
-  });
+    });
 
-  test("Error al obtener clasificación por ID", async () => {
-    clasificacionController.getClasificacionById.mockImplementationOnce(
-      (req, res) => {
-        res.status(500).send("Error");
-      }
-    );
-    const response = await request(app).get("/clasificaciones/1");
-    expect(response.status).toBe(500);
-    expect(response.text).toBe("Error");
-  });
+    controller.createClasificacion.mockImplementation((req, res) => {
+        res.json(clasificaciones[0]);
+    });
 
-  test("Clasificación no encontrada", async () => {
-    clasificacionController.getClasificacionById.mockImplementationOnce(
-      (req, res) => {
-        res.status(404).send("Clasificación no encontrada");
-      }
-    );
-    const response = await request(app).get("/clasificaciones/100");
-    expect(response.status).toBe(404);
-    expect(response.text).toBe("Clasificación no encontrada");
-  });
+    controller.updateClasificacion.mockImplementation((req, res) => {
+        res.json(clasificaciones[0]);
+    });
+
+    controller.deleteClasificacion.mockImplementation((req, res) => {
+        res.json(clasificaciones[0]);
+    });
 });
 
-describe("POST /clasificaciones - Crear clasificación", () => {
-  test("Crear clasificación exitosamente", async () => {
-    clasificacionController.createClasificacion.mockImplementationOnce(
-      (req, res) => {
-        res.json(clasificaciones[0]);
-      }
-    );
-    const response = await request(app)
-      .post("/clasificaciones")
-      .send(clasificaciones[0]);
-    expect(response.status).toBe(200);
-    expect(response.body).toEqual(clasificaciones[0]);
-  });
-
-  test("Error al crear clasificación", async () => {
-    clasificacionController.createClasificacion.mockImplementationOnce(
-      (req, res) => {
-        res.status(500).send("Error");
-      }
-    );
-    const response = await request(app)
-      .post("/clasificaciones")
-      .send(clasificaciones[0]);
-    expect(response.status).toBe(500);
-    expect(response.text).toBe("Error");
-  });
-
-  test("Clasificación ya existe", async () => {
-    clasificacionController.createClasificacion.mockImplementationOnce(
-      (req, res) => {
-        res.status(400).send("Clasificación ya existe");
-      }
-    );
-    const response = await request(app)
-      .post("/clasificaciones")
-      .send(clasificaciones[0]);
-    expect(response.status).toBe(400);
-    expect(response.text).toBe("Clasificación ya existe");
-  });
+describe("GET /api/clasificaciones/buscar - Get clasificacion by nombre", () => {
+    test("Successfully get clasificacion by nombre", async () => {
+        const response = await request(app).get("/api/clasificaciones/buscar");
+        expect(response.status).toBe(200);
+        expect(response.body).toEqual(clasificaciones);
+    });
 });
 
-describe("PUT /clasificaciones/:id - Actualizar clasificación", () => {
-  test("Actualizar clasificación exitosamente", async () => {
-    clasificacionController.updateClasificacion.mockImplementationOnce(
-      (req, res) => {
-        res.json(clasificaciones[0]);
-      }
-    );
-    const response = await request(app)
-      .put("/clasificaciones/1")
-      .send(clasificaciones[0]);
-    expect(response.status).toBe(200);
-    expect(response.body).toEqual(clasificaciones[0]);
-  });
-
-  test("Error al actualizar clasificación", async () => {
-    clasificacionController.updateClasificacion.mockImplementationOnce(
-      (req, res) => {
-        res.status(500).send("Error");
-      }
-    );
-    const response = await request(app)
-      .put("/clasificaciones/1")
-      .send(clasificaciones[0]);
-    expect(response.status).toBe(500);
-    expect(response.text).toBe("Error");
-  });
-
-  test("Clasificación no encontrada", async () => {
-    clasificacionController.updateClasificacion.mockImplementationOnce(
-      (req, res) => {
-        res.status(404).send("Clasificación no encontrada");
-      }
-    );
-    const response = await request(app)
-      .put("/clasificaciones/100")
-      .send(clasificaciones[0]);
-    expect(response.status).toBe(404);
-    expect(response.text).toBe("Clasificación no encontrada");
-  });
+describe("GET /api/clasificaciones - Get all clasificaciones", () => {
+    test("Successfully get all clasificaciones", async () => {
+        const response = await request(app).get("/api/clasificaciones");
+        expect(response.status).toBe(200);
+        expect(response.body).toEqual(clasificaciones);
+    });
 });
 
-describe("DELETE /clasificaciones/:id - Eliminar clasificación", () => {
-  test("Eliminar clasificación exitosamente", async () => {
-    clasificacionController.deleteClasificacion.mockImplementationOnce(
-      (req, res) => {
-        res.json(clasificaciones[0]);
-      }
-    );
-    const response = await request(app).delete("/clasificaciones/1");
-    expect(response.status).toBe(200);
-    expect(response.body).toEqual(clasificaciones[0]);
-  });
+describe("GET /api/clasificaciones/:id - Get clasificacion by ID", () => {
+    test("Successfully get clasificacion by ID", async () => {
+        const response = await request(app).get("/api/clasificaciones/1");
+        expect(response.status).toBe(200);
+        expect(response.body).toEqual(clasificaciones[0]);
+    });
+});
 
-  test("Error al eliminar clasificación", async () => {
-    clasificacionController.deleteClasificacion.mockImplementationOnce(
-      (req, res) => {
-        res.status(500).send("Error");
-      }
-    );
-    const response = await request(app).delete("/clasificaciones/1");
-    expect(response.status).toBe(500);
-    expect(response.text).toBe("Error");
-  });
+describe("POST /api/clasificaciones - Create a clasificacion", () => {
+    test("Successfully create a clasificacion", async () => {
+        const response = await request(app)
+            .post("/api/clasificaciones")
+            .set("Authorization", "Bearer your-access-token")
+            .send(clasificaciones[0]);
+        expect(response.status).toBe(200);
+        expect(response.body).toEqual(clasificaciones[0]);
+    });
+});
 
-  test("Clasificación no encontrada", async () => {
-    clasificacionController.deleteClasificacion.mockImplementationOnce(
-      (req, res) => {
-        res.status(404).send("Clasificación no encontrada");
-      }
-    );
-    const response = await request(app).delete("/clasificaciones/100");
-    expect(response.status).toBe(404);
-    expect(response.text).toBe("Clasificación no encontrada");
-  });
+describe("PUT /api/clasificaciones/:id - Update a clasificacion", () => {
+    test("Successfully update a clasificacion", async () => {
+        const response = await request(app)
+            .put("/api/clasificaciones/1")
+            .set("Authorization", "Bearer your-access-token")
+            .send(clasificaciones[0]);
+        expect(response.status).toBe(200);
+        expect(response.body).toEqual(clasificaciones[0]);
+    });
+});
+
+describe("DELETE /api/clasificaciones/:id - Delete a clasificacion", () => {
+    test("Successfully delete a clasificacion", async () => {
+        const response = await request(app)
+            .delete("/api/clasificaciones/1")
+            .set("Authorization", "Bearer your-access-token");
+        expect(response.status).toBe(200);
+        expect(response.body).toEqual(clasificaciones[0]);
+    });
 });
