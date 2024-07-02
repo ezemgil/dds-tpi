@@ -5,6 +5,7 @@ import nominacionesService from "../../../services/nominaciones.service";
 import peliculaService from "../../../services/pelicula.service";
 import PeliculasFormModal from "./PeliculasFormModal";
 import PeliculasLista from "./PeliculasLista";
+import { Helmet } from "react-helmet";
 
 const Peliculas = () => {
     const TituloCRUD = {
@@ -49,7 +50,7 @@ const Peliculas = () => {
     // Funcion para listar la primera pagina de clasificaciones
     useEffect(() => {
         BuscarPagina(Pagina);
-    }, [Pagina]); // Array de dependencias
+    }, [Pagina]);
 
     // Funcion para buscar una pelicula por su id
     const BuscarPorId = async (idPelicula, accion) => {
@@ -122,123 +123,124 @@ const Peliculas = () => {
     };
 
     const Eliminar = (id_pelicula) => {
-        peliculaService.remove(id_pelicula).then((response) => {
-            peliculaService.getAll().then((response) => setPeliculas(response.data));
+        peliculaService.remove(id_pelicula).then(() => {
+            BuscarPagina(Pagina);
+            setAccionCRUD("RA");
         });
         BuscarPagina(Pagina);
         setAccionCRUD("RA");
-
-        // TODO
-        const GrabarNominaciones = (nominaciones) => {
-            const dataEndpoint = { id_premio: 0, id_pelicula: itemPelicula.id, fecha_nominacion: "", fue_ganador: 0 };
-
-            nominaciones.forEach((n) => {
-                dataEndpoint.id_premio = n.premio.id;
-                dataEndpoint.fecha_nominacion = n.fecha_nominacion;
-                dataEndpoint.fue_ganador = n.fue_ganador;
-
-                nominacionesDePelicula.map((nom) => nom.id).includes(n.id)
-                    ? nominacionService.update(n.id, dataEndpoint)
-                    : nominacionService.create(dataEndpoint);
-            });
-
-            nominacionesDePelicula.forEach((np) => {
-                if (!nominaciones.map((n) => n.id).includes(np.id)) {
-                    nominacionService.remove(np.id);
-                }
-            });
-
-            console.log(nominaciones);
-            setModalShow(false);
-        };
-
-        const GrabarElenco = (id_pelicula, elenco) => {
-            const dataEndpoint = { cineastas: elenco.map((cin) => cin.id) };
-            peliculaService.updateElenco(id_pelicula, dataEndpoint);
-            setModalShow(false);
-        };
-
-        return (
-            <div>
-                <h1>Peliculas</h1>
-                <button
-                    className="badge d-flex p-2 align-items-center text-bg-dark border border-warning rounded-pill"
-                    onClick={() => {
-                        Agregar();
-                    }}
-                >
-                    <i className="fa-solid fa-plus me-2"></i> Agregar pelicula
-                </button>
-
-                <PeliculasLista
-                    {...{
-                        Peliculas,
-                        Editar,
-                        Eliminar,
-                        EditarElenco,
-                        EditarNominaciones,
-                        Pagina,
-                        totalPeliculas,
-                        Paginas,
-                        BuscarPagina,
-                    }}
-                />
-
-                {AccionCRUD === "C" && (
-                    <PeliculasFormModal
-                        show={modalShow}
-                        onHide={() => setModalShow(false)}
-                        itemPelicula={itemPelicula}
-                        Grabar={Grabar}
-                        Titulo={"Peliculas " + TituloCRUD[AccionCRUD]}
-                        AccionCRUD={AccionCRUD}
-                    ></PeliculasFormModal>
-                )}
-
-                {AccionCRUD === "U" && (
-                    <PeliculasFormModal
-                        show={modalShow}
-                        onHide={() => {
-                            setModalShow(false);
-                            setAccionCRUD("RA");
-                        }}
-                        itemPelicula={itemPelicula}
-                        Grabar={Grabar}
-                        Titulo={"Peliculas " + TituloCRUD[AccionCRUD]}
-                        AccionCRUD={AccionCRUD}
-                    ></PeliculasFormModal>
-                )}
-
-                {AccionCRUD === "U_ELENCO" && (
-                    <PeliculasFormModal
-                        show={modalShow}
-                        onHide={() => {
-                            setModalShow(false);
-                            setAccionCRUD("RA");
-                        }}
-                        itemPelicula={itemPelicula}
-                        Grabar={GrabarElenco}
-                        Titulo={"Peliculas " + TituloCRUD[AccionCRUD]}
-                        AccionCRUD={AccionCRUD}
-                    ></PeliculasFormModal>
-                )}
-
-                {AccionCRUD === "U_NOMINACIONES" && (
-                    <PeliculasFormModal
-                        show={modalShow}
-                        onHide={() => {
-                            setModalShow(false);
-                            setAccionCRUD("RA");
-                        }}
-                        itemPelicula={itemPelicula}
-                        Grabar={GrabarNominaciones}
-                        Titulo={"Peliculas " + TituloCRUD[AccionCRUD]}
-                        AccionCRUD={AccionCRUD}
-                    ></PeliculasFormModal>
-                )}
-            </div>
-        );
     };
+
+    const GrabarNominaciones = (nominaciones) => {
+        const dataEndpoint = { id_premio: 0, id_pelicula: itemPelicula.id, fecha_nominacion: "", fue_ganador: 0 };
+
+        nominaciones.forEach((n) => {
+            dataEndpoint.id_premio = n.premio.id;
+            dataEndpoint.fecha_nominacion = n.fecha_nominacion;
+            dataEndpoint.fue_ganador = n.fue_ganador;
+
+            nominacionesDePelicula.map((nom) => nom.id).includes(n.id)
+                ? nominacionService.update(n.id, dataEndpoint)
+                : nominacionService.create(dataEndpoint);
+        });
+
+        nominacionesDePelicula.forEach((np) => {
+            if (!nominaciones.map((n) => n.id).includes(np.id)) {
+                nominacionService.remove(np.id);
+            }
+        });
+        setModalShow(false);
+    };
+
+    const GrabarElenco = (id_pelicula, elenco) => {
+        const dataEndpoint = { cineastas: elenco.map((cin) => cin.id) };
+        peliculaService.updateElenco(id_pelicula, dataEndpoint);
+        setModalShow(false);
+    };
+    return (
+        <div>
+            <Helmet>
+                <title>Lista de películas</title>
+            </Helmet>
+
+            <h1>Peliculas</h1>
+            <button
+                className="badge d-flex p-2 align-items-center text-bg-dark border border-warning rounded-pill"
+                onClick={() => {
+                    Agregar();
+                }}
+            >
+                <i className="fa-solid fa-plus me-2"></i> Agregar película
+            </button>
+
+            <PeliculasLista
+                {...{
+                    Peliculas,
+                    Editar,
+                    Eliminar,
+                    EditarElenco,
+                    EditarNominaciones,
+                    Pagina,
+                    totalPeliculas,
+                    Paginas,
+                    BuscarPagina,
+                }}
+            />
+
+            {AccionCRUD === "C" && (
+                <PeliculasFormModal
+                    show={modalShow}
+                    onHide={() => setModalShow(false)}
+                    itemPelicula={itemPelicula}
+                    Grabar={Grabar}
+                    Titulo={"Peliculas " + TituloCRUD[AccionCRUD]}
+                    AccionCRUD={AccionCRUD}
+                ></PeliculasFormModal>
+            )}
+
+            {AccionCRUD === "U" && (
+                <PeliculasFormModal
+                    show={modalShow}
+                    onHide={() => {
+                        setModalShow(false);
+                        setAccionCRUD("RA");
+                    }}
+                    itemPelicula={itemPelicula}
+                    Grabar={Grabar}
+                    Titulo={"Peliculas " + TituloCRUD[AccionCRUD]}
+                    AccionCRUD={AccionCRUD}
+                ></PeliculasFormModal>
+            )}
+
+            {AccionCRUD === "U_ELENCO" && (
+                <PeliculasFormModal
+                    show={modalShow}
+                    onHide={() => {
+                        setModalShow(false);
+                        setAccionCRUD("RA");
+                    }}
+                    itemPelicula={itemPelicula}
+                    Grabar={GrabarElenco}
+                    Titulo={"Peliculas " + TituloCRUD[AccionCRUD]}
+                    AccionCRUD={AccionCRUD}
+                ></PeliculasFormModal>
+            )}
+
+            {AccionCRUD === "U_NOMINACIONES" && (
+                <PeliculasFormModal
+                    show={modalShow}
+                    onHide={() => {
+                        setModalShow(false);
+                        setAccionCRUD("RA");
+                    }}
+                    itemPelicula={itemPelicula}
+                    Grabar={GrabarNominaciones}
+                    Titulo={"Peliculas " + TituloCRUD[AccionCRUD]}
+                    AccionCRUD={AccionCRUD}
+                ></PeliculasFormModal>
+            )}
+        </div>
+    );
 };
 
 export default Peliculas;

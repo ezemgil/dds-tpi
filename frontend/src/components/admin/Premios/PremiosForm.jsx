@@ -17,7 +17,7 @@ const PremiosForm = (props) => {
         <Modal {...props} size="lg" aria-labelledby="contained-modal-title-vcenter" centered className="text-light ">
             <Modal.Header closeButton className="bg-dark">
                 <Modal.Title id="contained-modal-title-vcenter">
-                    {props.AccionCRUD === "C" ? "Agregar género" : "Editar género"}
+                    {props.AccionCRUD === "C" ? "Agregar premio" : "Editar premio"}
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body className="bg-dark ">

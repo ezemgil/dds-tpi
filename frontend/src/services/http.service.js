@@ -15,10 +15,11 @@ httpService.interceptors.request.use(
         if (accessToken) {
             request.headers["Authorization"] = "Bearer " + accessToken;
         }
+        console.info("[HTTP.service] Fetching data:", request.url);
         return request;
     },
     (error) => {
-        console.log("error en axios request", error);
+        console.error("[HTTP.service] Error al hacer la petición: ", error);
         return Promise.reject(error);
     }
 );

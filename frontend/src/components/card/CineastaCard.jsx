@@ -9,7 +9,7 @@ const CineastaCard = ({ Id, Nombre, FechaNacimiento, FechaFallecimiento, Roles, 
     };
     return (
         <div className="col mb-4" onClick={handleClick}>
-            <div className="card h-100 bg-dark text-white" focusable="true" tabIndex="0" role="button">
+            <div className="card h-100 bg-dark text-white card-hover" focusable="true" tabIndex="0" role="button">
                 <img src={Imagen} className="bd-placeholder-img card-img-top" width="100%" height="300" alt={Nombre} />
                 <div className="card-body">
                     <div className="d-flex justify-content-between align-items-center mb-2">

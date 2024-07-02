@@ -11,6 +11,7 @@ const Sidebar = ({ handleElementoActual }) => {
                 <button
                     onClick={() => handleElementoActual("InicioAdmin")}
                     className="d-flex align-items-center py-4 mb-md-0 me-md-auto text-white text-decoration-none logo-container bg-dark border-0 w-100"
+                    title="Inicio"
                 >
                     <img src={Logo} alt="logo" className="img-fluid logo-img" />
                     <span className="d-none d-sm-inline logo-text">CineInfo</span>
@@ -104,6 +105,7 @@ const Sidebar = ({ handleElementoActual }) => {
                 <Link
                     to="/"
                     className="btn btn-warning w-100 d-flex align-items-center justify-content-center text-white mt-4 text-decoration-none fw-bold py-2 border-0 bg-gradient"
+                    title="Volver al inicio"
                 >
                     <i className="fa-solid fa-house"></i>
                     <span className="ms-2 d-none d-sm-inline">Inicio</span>
@@ -112,6 +114,7 @@ const Sidebar = ({ handleElementoActual }) => {
                     onClick={authService.logout}
                     to="/inicio"
                     className="btn btn-danger w-100 d-flex align-items-center justify-content-center text-white mt-4 text-decoration-none fw-bold py-2 border-0 bg-gradient"
+                    title="Cerrar sesión"
                 >
                     <i className="fa-solid fa-sign-out"></i>
                     <span className="ms-2 d-none d-sm-inline">Cerrar sesión</span>

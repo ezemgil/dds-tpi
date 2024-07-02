@@ -5,7 +5,7 @@ const PaisesLista = ({ Paises, Editar, Eliminar, Pagina, totalPaises, Paginas, B
     return (
         <>
             <Helmet>
-                <title>Lista de Paises</title>
+                <title>Lista de países</title>
             </Helmet>
 
             <div className="row flex-nowrap">
@@ -16,14 +16,13 @@ const PaisesLista = ({ Paises, Editar, Eliminar, Pagina, totalPaises, Paginas, B
                                 <tr>
                                     <th>Id</th>
                                     <th>Nombre</th>
-                                    <th>Codigo</th>
+                                    <th>Código</th>
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
-                            {console.log(Paises)}
                             <tbody>
                                 {Paises !== undefined ? (
-                                    Paises.map((pais) => (
+                                    Paises.filter((pais) => pais.id !== 0).map((pais) => (
                                         <tr key={pais.id}>
                                             <td>{pais.id}</td>
                                             <td>{pais.nombre}</td>
@@ -32,12 +31,14 @@ const PaisesLista = ({ Paises, Editar, Eliminar, Pagina, totalPaises, Paginas, B
                                                 <button
                                                     className="btn btn-warning btn-sm rounded-pill"
                                                     onClick={() => Editar(pais.id)}
+                                                    title="Editar"
                                                 >
                                                     <i className="fa-solid fa-pencil"></i>
                                                 </button>
                                                 <button
                                                     className="btn btn-danger btn-sm rounded-pill"
                                                     onClick={() => Eliminar(pais.id)}
+                                                    title="Eliminar"
                                                 >
                                                     <i className="fa-solid fa-trash-can"></i>
                                                 </button>

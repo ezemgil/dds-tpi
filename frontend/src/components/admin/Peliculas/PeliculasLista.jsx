@@ -1,7 +1,17 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const PeliculasLista = ({ Peliculas, Editar, Eliminar, Pagina, totalPeliculas, Paginas, BuscarPagina }) => {
+const PeliculasLista = ({
+    Peliculas,
+    Editar,
+    Eliminar,
+    EditarNominaciones,
+    EditarElenco,
+    BuscarPagina,
+    Paginas,
+    totalPeliculas,
+    Pagina,
+}) => {
     return (
         <div className="row flex-nowrap ">
             <div className="col py-3">
@@ -10,15 +20,15 @@ const PeliculasLista = ({ Peliculas, Editar, Eliminar, Pagina, totalPeliculas, P
                         <thead>
                             <tr>
                                 <th>Id</th>
-                                <th>Titulo</th>
-                                <th>Calificacion</th>
-                                <th>Duracion</th>
-                                <th>Fecha Estreno</th>
+                                <th>Título</th>
+                                <th>Calificación</th>
+                                <th>Duración</th>
+                                <th>Fecha de estreno</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {Peliculas !== undefined || Peliculas.length > 0 ? (
+                            {Peliculas !== undefined || Peliculas?.length > 0 ? (
                                 Peliculas?.map((Pelicula) => (
                                     <tr key={Pelicula.id}>
                                         <td>{Pelicula.id}</td>
@@ -31,6 +41,7 @@ const PeliculasLista = ({ Peliculas, Editar, Eliminar, Pagina, totalPeliculas, P
                                             <button
                                                 className="btn badge btn-dark border-secondary text-light btn-sm rounded-pill btn-custom-light"
                                                 onClick={() => EditarElenco(Pelicula.id)}
+                                                title="Editar elenco"
                                             >
                                                 <i className="fa-solid fa-user-plus"></i>
                                             </button>
@@ -38,12 +49,13 @@ const PeliculasLista = ({ Peliculas, Editar, Eliminar, Pagina, totalPeliculas, P
                                             <button
                                                 className="btn btn-sm btn-success text-dark  rounded-pill"
                                                 onClick={() => EditarNominaciones(Pelicula.id)}
+                                                title="Editar nominaciones"
                                             >
                                                 <i className="shadow fa-solid fa-trophy"></i>
                                             </button>
 
                                             <Link to={`/pelicula/${Pelicula.id}`}>
-                                                <button className="btn btn-info btn-sm rounded-pill">
+                                                <button className="btn btn-info btn-sm rounded-pill" title="Ver">
                                                     <i className="fa-solid fa-eye text-primary-emphasis"></i>
                                                 </button>
                                             </Link>
@@ -51,6 +63,7 @@ const PeliculasLista = ({ Peliculas, Editar, Eliminar, Pagina, totalPeliculas, P
                                             <button
                                                 className="btn btn-warning btn-sm rounded-pill"
                                                 onClick={() => Editar(Pelicula.id)}
+                                                title="Editar"
                                             >
                                                 <i className="fa-solid fa-pencil text-danger-emphasis"></i>
                                             </button>
@@ -58,6 +71,7 @@ const PeliculasLista = ({ Peliculas, Editar, Eliminar, Pagina, totalPeliculas, P
                                             <button
                                                 className="btn btn-danger btn-sm rounded-pill"
                                                 onClick={() => Eliminar(Pelicula.id)}
+                                                title="Eliminar"
                                             >
                                                 <i className="fa-solid fa-trash-can text-danger-emphasis"></i>
                                             </button>

@@ -267,3 +267,17 @@ input[type="text"].placeholder-light::placeholder {
     background-color: #dc3545; /* Color de fondo rojo */
     border-color: #dc3545; /* Borde con color rojo */
 }
+
+.card-hover:hover {
+    transform: scale(1.02);
+    transition: 0.2s;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.card-hover:hover > .card-body {
+    background-color: #262a2c;
+}
+
+.card-hover:hover > img {
+    filter: brightness(1.2);
+}

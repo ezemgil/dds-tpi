@@ -45,10 +45,6 @@ const Paises = () => {
     useEffect(() => {
         BuscarPagina(Pagina);
     }, [Pagina]); // Array de dependencias
-    // Listar la primera pagina de paises
-    useEffect(() => {
-        BuscarPagina(Pagina);
-    }, [Pagina]); // Array de dependencias
 
     // Buscar un pais por id
     async function BuscarPorId(id, accion) {

@@ -9,9 +9,9 @@ const NominacionCard = ({ Nominacion }) => {
             tabIndex="0"
             role="button"
         >
-            <div className="d-flex justify-content-start align-items-center gap-3">
+            <div className="d-flex justify-content-start align-items-center gap-3 card-hover">
                 <i
-                    class={
+                    className={
                         "fa-solid fa-award fs-1 " + (Nominacion.fue_ganador === 0 ? "text-secondary" : "text-warning")
                     }
                 ></i>

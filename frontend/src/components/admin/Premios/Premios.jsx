@@ -12,14 +12,36 @@ const Premios = () => {
     const [itemPremio, setItemPremio] = useState({});
     const [modalShow, setModalShow] = useState(false);
 
+    const [totalPremios, setTotalPremios] = useState(0);
+    const [Pagina, setPagina] = useState(0);
+    const [Paginas, setPaginas] = useState([]);
+
     useEffect(() => {
-        premioService.getAll().then((response) => setPremios(response.data));
-    }, []);
+        BuscarPagina(Pagina);
+    }, [Pagina]);
 
     async function findPremioById(id, AccionCRUD) {
         const response = await premioService.getById(id);
         setItemPremio(response.data);
         setAccionCRUD(AccionCRUD);
+    }
+
+    async function BuscarPagina(_pagina) {
+        if (_pagina && _pagina !== Pagina) {
+            setPagina(_pagina);
+        } else {
+            _pagina = Pagina;
+        }
+
+        const res = await premioService.getAll(_pagina, 10);
+        setPremios(res.premios);
+        setTotalPremios(res.totalPremios);
+
+        const arrPaginas = [];
+        for (let i = 1; i <= Math.ceil(res.totalPremios / 10); i++) {
+            arrPaginas.push(i - 1);
+        }
+        setPaginas(arrPaginas);
     }
 
     async function Guardar(data) {
@@ -28,7 +50,7 @@ const Premios = () => {
         } else {
             await premioService.update(itemPremio.id, data);
         }
-        premioService.getAll().then((response) => setPremios(response.data));
+        BuscarPagina(Pagina);
         setModalShow(false);
         setAccionCRUD("RA");
     }
@@ -49,7 +71,7 @@ const Premios = () => {
     const Eliminar = (idPremio) => {
         window.confirm("¿Está seguro de eliminar el premio?") &&
             premioService.remove(idPremio).then(() => {
-                premioService.getAll().then((response) => setPremios(response.data));
+                BuscarPagina(Pagina);
             });
     };
 
@@ -68,7 +90,7 @@ const Premios = () => {
                 <i className="fa-solid fa-plus me-2"></i> Agregar premio
             </button>
 
-            <PremiosLista premios={Premios} Editar={Editar} Eliminar={Eliminar} />
+            <PremiosLista {...{ Premios, Editar, Eliminar, Paginas, Pagina, totalPremios, BuscarPagina }} />
 
             {AccionCRUD === "C" && (
                 <PremiosForm

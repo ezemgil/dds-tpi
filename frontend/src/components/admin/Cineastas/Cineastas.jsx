@@ -9,8 +9,8 @@ const Cineastas = () => {
     const TituloCRUD = {
         C: "(Nuevo)",
         RA: "(Listado)",
-        U: "(Edicion)",
-        D: "(Eliminacion)",
+        U: "(Edición)",
+        D: "(Eliminación)",
     };
 
     const [cineastas, setCineastas] = useState([]);
