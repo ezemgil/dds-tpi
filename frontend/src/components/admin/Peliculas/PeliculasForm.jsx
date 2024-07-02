@@ -175,10 +175,11 @@ const PeliculasForm = ({ itemPelicula, Volver, Grabar }) => {
                                     Seleccione un campo
                                 </option>
                                 {clasificaciones?.map((clas) => (
+                                    clas.activo?
                                     <option key={clas.id} value={clas.id}>
                                         {" "}
                                         {clas.nombre} | {clas.descripcion}{" "}
-                                    </option>
+                                    </option>: <></>
                                 ))}
                             </select>
                             <span className="badge d-flex p-2 ms-3 fs-5 align-items-center text-bg-warning rounded-pill">
@@ -220,11 +221,10 @@ const PeliculasForm = ({ itemPelicula, Volver, Grabar }) => {
                                         {generos.map((genero) =>
                                             generosItem.find((g) => g.id == genero.id) ? null : (
                                                 <button
-                                                    key={genero.id}
-                                                    onClick={() =>
-                                                        agregarGenero(generos.find((g) => g.id == genero.id))
-                                                    }
-                                                    className="btn bg-dark d-flex badge m-1 p-2 border border-warning rounded-pill"
+                                                key={genero.id}
+                                                onClick={() =>agregarGenero(generos.find((g) => g.id == genero.id))}
+                                                className={`btn bg-dark d-flex badge m-1 p-2 border  rounded-pill ${genero.activo ? 'bg-dark border-warning' : 'text-subtle border border-secondary disabled text-decoration-line-through'}`}
+                                                disabled={!genero.activo}
                                                 >
                                                     <span className="px-1">{genero.nombre}</span>
                                                 </button>
@@ -272,7 +272,9 @@ const PeliculasForm = ({ itemPelicula, Volver, Grabar }) => {
                                                     onClick={() =>
                                                         agregarIdioma(idiomas.find((g) => g.id == idioma.id))
                                                     }
-                                                    className="btn bg-dark d-flex badge m-1 p-2 border border-warning rounded-pill"
+                                                    // className="btn bg-dark d-flex badge m-1 p-2 border border-warning rounded-pill"
+                                                    className={`btn d-flex badge m-1 p-2 border rounded-pill ${idioma.activo ? 'bg-dark border-warning' : 'text-subtle border border-secondary disabled text-decoration-line-through'}`}
+                                                    disabled={!idioma.activo}
                                                 >
                                                     <span className="px-1">{idioma.nombre}</span>
                                                 </button>
