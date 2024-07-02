@@ -11,8 +11,8 @@ jest.mock("../src/middleware/auth.js", () => {
     };
 });
 
-describe("GET /api/nominaciones_pelicula - Get all nominaciones_pelicula", () => {
-    test("Successfully get all nominaciones_pelicula", async () => {
+describe("GET /api/nominaciones_pelicula - Obtener todas las nominaciones_pelicula", () => {
+    test("Se obtuvieron todas las nominaciones_pelicula exitosamente", async () => {
         const nominaciones = [
             { id: 1, peliculaId: 1, categoria: "Mejor Película" },
             { id: 2, peliculaId: 2, categoria: "Mejor Director" },
@@ -25,7 +25,7 @@ describe("GET /api/nominaciones_pelicula - Get all nominaciones_pelicula", () =>
         expect(response.body).toEqual(nominaciones);
     });
 
-    test("Error while getting all nominaciones_pelicula", async () => {
+    test("Error mientras se obtenian todas las nominaciones_pelicula", async () => {
         controller.getNominacionesPelicula.mockImplementationOnce((req, res) => {
             res.status(500).send("Error");
         });
@@ -35,8 +35,8 @@ describe("GET /api/nominaciones_pelicula - Get all nominaciones_pelicula", () =>
     });
 });
 
-describe("GET /api/nominaciones_pelicula/pelicula/:id - Get nominaciones_pelicula by pelicula ID", () => {
-    test("Successfully get nominaciones_pelicula by pelicula ID", async () => {
+describe("GET /api/nominaciones_pelicula/pelicula/:id - Obtener nominaciones_pelicula por ID de peliculaq", () => {
+    test("Se obtuvieron las nominaciones_pelicula por ID pelicula exitosamente", async () => {
         const nominaciones = [
             { id: 1, peliculaId: 1, categoria: "Mejor Película" },
             { id: 2, peliculaId: 1, categoria: "Mejor Director" },
@@ -49,7 +49,7 @@ describe("GET /api/nominaciones_pelicula/pelicula/:id - Get nominaciones_pelicul
         expect(response.body).toEqual(nominaciones);
     });
 
-    test("Error while getting nominaciones_pelicula by pelicula ID", async () => {
+    test("Error mientras se obtenia la nominacion_pelicula por ID de pelicula", async () => {
         controller.getNominacionesByPelicula.mockImplementationOnce((req, res) => {
             res.status(500).send("Error");
         });
@@ -59,8 +59,8 @@ describe("GET /api/nominaciones_pelicula/pelicula/:id - Get nominaciones_pelicul
     });
 });
 
-describe("GET /api/nominaciones_pelicula/:id - Get nominacion_pelicula by ID", () => {
-    test("Successfully get nominacion_pelicula by ID", async () => {
+describe("GET /api/nominaciones_pelicula/:id - Obtener nominacion_pelicula por ID", () => {
+    test("Se obtuvo la nominacion_pelicula por ID exitosamente", async () => {
         controller.getNominacionPeliculaById.mockImplementationOnce((req, res) => {
             res.json({ id: 1, peliculaId: 1, categoria: "Mejor Película" });
         });
@@ -69,7 +69,7 @@ describe("GET /api/nominaciones_pelicula/:id - Get nominacion_pelicula by ID", (
         expect(response.body).toEqual({ id: 1, peliculaId: 1, categoria: "Mejor Película" });
     });
 
-    test("Error while getting nominacion_pelicula by ID", async () => {
+    test("Error mientras se obtenia nominacion_pelicula por ID", async () => {
         controller.getNominacionPeliculaById.mockImplementationOnce((req, res) => {
             res.status(500).send("Error");
         });
@@ -79,8 +79,8 @@ describe("GET /api/nominaciones_pelicula/:id - Get nominacion_pelicula by ID", (
     });
 });
 
-describe("POST /api/nominaciones_pelicula - Create a nominacion_pelicula", () => {
-    test("Successfully create a nominacion_pelicula", async () => {
+describe("POST /api/nominaciones_pelicula - Crear una nominacion_pelicula", () => {
+    test("Se creo una nominacion_pelicula exitosamente", async () => {
         controller.createNominacionPelicula.mockImplementationOnce((req, res) => {
             res.json({ id: 1, peliculaId: 1, categoria: "Mejor Película" });
         });
@@ -92,7 +92,7 @@ describe("POST /api/nominaciones_pelicula - Create a nominacion_pelicula", () =>
         expect(response.body).toEqual({ id: 1, peliculaId: 1, categoria: "Mejor Película" });
     });
 
-    test("Error while creating a nominacion_pelicula", async () => {
+    test("Error al crear una nominacion_pelicula", async () => {
         controller.createNominacionPelicula.mockImplementationOnce((req, res) => {
             res.status(500).send("Error");
         });
@@ -105,8 +105,8 @@ describe("POST /api/nominaciones_pelicula - Create a nominacion_pelicula", () =>
     });
 });
 
-describe("PUT /api/nominaciones_pelicula/:id - Update a nominacion_pelicula", () => {
-    test("Successfully update a nominacion_pelicula", async () => {
+describe("PUT /api/nominaciones_pelicula/:id - Actualizar una nominacion_pelicula", () => {
+    test("Se actualizo una nominacion_pelicula exitosamente", async () => {
         controller.updateNominacion.mockImplementationOnce((req, res) => {
             res.json({ id: 1, peliculaId: 1, categoria: "Mejor Película" });
         });
@@ -118,7 +118,7 @@ describe("PUT /api/nominaciones_pelicula/:id - Update a nominacion_pelicula", ()
         expect(response.body).toEqual({ id: 1, peliculaId: 1, categoria: "Mejor Película" });
     });
 
-    test("Error while updating a nominacion_pelicula", async () => {
+    test("Error al actualizar una nominacion_pelicula", async () => {
         controller.updateNominacion.mockImplementationOnce((req, res) => {
             res.status(500).send("Error");
         });
@@ -131,8 +131,8 @@ describe("PUT /api/nominaciones_pelicula/:id - Update a nominacion_pelicula", ()
     });
 });
 
-describe("PUT /api/nominaciones_pelicula/pelicula/:id - Update nominaciones_pelicula by pelicula ID", () => {
-    test("Successfully update nominaciones_pelicula by pelicula ID", async () => {
+describe("PUT /api/nominaciones_pelicula/pelicula/:id - Actualizar una nominacion_pelicula por ID de pelicula", () => {
+    test("Se actualizo nominacion_pelicula por ID de pelicula exitosamente", async () => {
         controller.updateNominacionesPelicula.mockImplementationOnce((req, res) => {
             res.json({ id: 1, peliculaId: 1, categoria: "Mejor Película" });
         });
@@ -144,7 +144,7 @@ describe("PUT /api/nominaciones_pelicula/pelicula/:id - Update nominaciones_peli
         expect(response.body).toEqual({ id: 1, peliculaId: 1, categoria: "Mejor Película" });
     });
 
-    test("Error while updating nominaciones_pelicula by pelicula ID", async () => {
+    test("Error al actualizar nominacion_pelicula por ID de pelicula", async () => {
         controller.updateNominacionesPelicula.mockImplementationOnce((req, res) => {
             res.status(500).send("Error");
         });
@@ -157,8 +157,8 @@ describe("PUT /api/nominaciones_pelicula/pelicula/:id - Update nominaciones_peli
     });
 });
 
-describe("DELETE /api/nominaciones_pelicula/:id - Delete a nominacion_pelicula", () => {
-    test("Successfully delete a nominacion_pelicula", async () => {
+describe("DELETE /api/nominaciones_pelicula/:id - Eliminar nominacion_pelicula", () => {
+    test("Se elimino una nominacion_pelicula exitosamente", async () => {
         controller.deleteNominacionPelicula.mockImplementationOnce((req, res) => {
             res.json({ id: 1, peliculaId: 1, categoria: "Mejor Película" });
         });
@@ -169,7 +169,7 @@ describe("DELETE /api/nominaciones_pelicula/:id - Delete a nominacion_pelicula",
         expect(response.body).toEqual({ id: 1, peliculaId: 1, categoria: "Mejor Película" });
     });
 
-    test("Error while deleting a nominacion_pelicula", async () => {
+    test("Error al eliminar una nominacion_pelicula", async () => {
         controller.deleteNominacionPelicula.mockImplementationOnce((req, res) => {
             res.status(500).send("Error");
         });

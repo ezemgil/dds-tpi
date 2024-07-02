@@ -11,8 +11,8 @@ jest.mock("../src/middleware/auth.js", () => {
     };
 });
 
-describe("GET /api/tipos_rol/buscar - Get tipoRol by name", () => {
-    test("Successfully get tipoRol by name", async () => {
+describe("GET /api/tipos_rol/buscar - Obtener tipoRol por name", () => {
+    test("Se obtuvieron los tiposRol por nombre exitosamente", async () => {
         controller.getTipoRolByName.mockImplementationOnce((req, res) => {
             res.json({ id: 1, nombre: "Admin" });
         });
@@ -21,7 +21,7 @@ describe("GET /api/tipos_rol/buscar - Get tipoRol by name", () => {
         expect(response.body).toEqual({ id: 1, nombre: "Admin" });
     });
 
-    test("Error while getting tipoRol by name", async () => {
+    test("Error mientras se obtenia tiposRol por nombre", async () => {
         controller.getTipoRolByName.mockImplementationOnce((req, res) => {
             res.status(500).send("Error");
         });
@@ -31,8 +31,8 @@ describe("GET /api/tipos_rol/buscar - Get tipoRol by name", () => {
     });
 });
 
-describe("GET /api/tipos_rol - Get all tiposRol", () => {
-    test("Successfully get all tiposRol", async () => {
+describe("GET /api/tipos_rol - Obtener todos los tipos rol", () => {
+    test("Se obtuvieron todos los tiposRol exitosamente", async () => {
         const tiposRol = [
             { id: 1, nombre: "Admin" },
             { id: 2, nombre: "User" },
@@ -45,7 +45,7 @@ describe("GET /api/tipos_rol - Get all tiposRol", () => {
         expect(response.body).toEqual(tiposRol);
     });
 
-    test("Error while getting all tiposRol", async () => {
+    test("Error mientras se obtenian todos los tiposRol", async () => {
         controller.getTiposRol.mockImplementationOnce((req, res) => {
             res.status(500).send("Error");
         });
@@ -55,8 +55,8 @@ describe("GET /api/tipos_rol - Get all tiposRol", () => {
     });
 });
 
-describe("GET /api/tipos_rol/:id - Get tipoRol by ID", () => {
-    test("Successfully get tipoRol by ID", async () => {
+describe("GET /api/tipos_rol/:id - Obtener tipoRol por ID", () => {
+    test("Se obtuvieron los tiposRol por ID exitosamente", async () => {
         controller.getTipoRolById.mockImplementationOnce((req, res) => {
             res.json({ id: 1, nombre: "Admin" });
         });
@@ -65,7 +65,7 @@ describe("GET /api/tipos_rol/:id - Get tipoRol by ID", () => {
         expect(response.body).toEqual({ id: 1, nombre: "Admin" });
     });
 
-    test("Error while getting tipoRol by ID", async () => {
+    test("Error mientras se obtenian los tiposRol por ID", async () => {
         controller.getTipoRolById.mockImplementationOnce((req, res) => {
             res.status(500).send("Error");
         });
@@ -74,7 +74,7 @@ describe("GET /api/tipos_rol/:id - Get tipoRol by ID", () => {
         expect(response.text).toBe("Error");
     });
 
-    test("TipoRol not found", async () => {
+    test("tipoRol no encontrado", async () => {
         controller.getTipoRolById.mockImplementationOnce((req, res) => {
             res.status(404).send("TipoRol not found");
         });
@@ -84,8 +84,8 @@ describe("GET /api/tipos_rol/:id - Get tipoRol by ID", () => {
     });
 });
 
-describe("POST /api/tipos_rol - Create a tipoRol", () => {
-    test("Successfully create a tipoRol", async () => {
+describe("POST /api/tipos_rol - Crear un tipoRol", () => {
+    test("Se creo un tipoRol exitosamente", async () => {
         controller.createTipoRol.mockImplementationOnce((req, res) => {
             res.json({ id: 1, nombre: "Admin" });
         });
@@ -97,7 +97,7 @@ describe("POST /api/tipos_rol - Create a tipoRol", () => {
         expect(response.body).toEqual({ id: 1, nombre: "Admin" });
     });
 
-    test("Error while creating a tipoRol", async () => {
+    test("Error mientras se creaba un tipoRol", async () => {
         controller.createTipoRol.mockImplementationOnce((req, res) => {
             res.status(500).send("Error");
         });
@@ -110,8 +110,8 @@ describe("POST /api/tipos_rol - Create a tipoRol", () => {
     });
 });
 
-describe("PUT /api/tipos_rol/:id - Update a tipoRol", () => {
-    test("Successfully update a tipoRol", async () => {
+describe("PUT /api/tipos_rol/:id - Actualizar un tipoRol", () => {
+    test("Se actualizo el tipoRol exitosamente", async () => {
         controller.updateTipoRol.mockImplementationOnce((req, res) => {
             res.json({ id: 1, nombre: "Admin" });
         });
@@ -123,7 +123,7 @@ describe("PUT /api/tipos_rol/:id - Update a tipoRol", () => {
         expect(response.body).toEqual({ id: 1, nombre: "Admin" });
     });
 
-    test("Error while updating a tipoRol", async () => {
+    test("Error mientras se actualizaba un tipoRol", async () => {
         controller.updateTipoRol.mockImplementationOnce((req, res) => {
             res.status(500).send("Error");
         });
@@ -135,7 +135,7 @@ describe("PUT /api/tipos_rol/:id - Update a tipoRol", () => {
         expect(response.text).toBe("Error");
     });
 
-    test("TipoRol not found", async () => {
+    test("tipoRol no encontrado", async () => {
         controller.updateTipoRol.mockImplementationOnce((req, res) => {
             res.status(404).send("TipoRol not found");
         });
@@ -148,8 +148,8 @@ describe("PUT /api/tipos_rol/:id - Update a tipoRol", () => {
     });
 });
 
-describe("DELETE /api/tipos_rol/:id - Delete a tipoRol", () => {
-    test("Successfully delete a tipoRol", async () => {
+describe("DELETE /api/tipos_rol/:id - Eliminar un tipoRol", () => {
+    test("Se elimino un tipoRol exitosamente", async () => {
         controller.deleteTipoRol.mockImplementationOnce((req, res) => {
             res.json({ id: 1, nombre: "Admin" });
         });
@@ -158,7 +158,7 @@ describe("DELETE /api/tipos_rol/:id - Delete a tipoRol", () => {
         expect(response.body).toEqual({ id: 1, nombre: "Admin" });
     });
 
-    test("Error while deleting a tipoRol", async () => {
+    test("Error mientras se eliminaba un tipoRol", async () => {
         controller.deleteTipoRol.mockImplementationOnce((req, res) => {
             res.status(500).send("Error");
         });
@@ -167,7 +167,7 @@ describe("DELETE /api/tipos_rol/:id - Delete a tipoRol", () => {
         expect(response.text).toBe("Error");
     });
 
-    test("TipoRol not found", async () => {
+    test("tipoRol no encontrado", async () => {
         controller.deleteTipoRol.mockImplementationOnce((req, res) => {
             res.status(404).send("TipoRol not found");
         });

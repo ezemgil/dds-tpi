@@ -45,7 +45,7 @@ beforeEach(() => {
     });
 });
 
-describe("GET /api/clasificaciones/buscar - Get clasificacion by nombre", () => {
+describe("GET /api/clasificaciones/buscar - Obtener una clasificacion por nombre", () => {
     test("Successfully get clasificacion by nombre", async () => {
         const response = await request(app).get("/api/clasificaciones/buscar");
         expect(response.status).toBe(200);
@@ -53,24 +53,24 @@ describe("GET /api/clasificaciones/buscar - Get clasificacion by nombre", () => 
     });
 });
 
-describe("GET /api/clasificaciones - Get all clasificaciones", () => {
-    test("Successfully get all clasificaciones", async () => {
+describe("GET /api/clasificaciones - Obtener todas las clasificaciones", () => {
+    test("Se obtuvieron todas las clasificaciones exitosamente", async () => {
         const response = await request(app).get("/api/clasificaciones");
         expect(response.status).toBe(200);
         expect(response.body).toEqual(clasificaciones);
     });
 });
 
-describe("GET /api/clasificaciones/:id - Get clasificacion by ID", () => {
-    test("Successfully get clasificacion by ID", async () => {
+describe("GET /api/clasificaciones/:id - Obtener una clasificaion por ID", () => {
+    test("Se obtuvo la clasificacion por ID exitosamente", async () => {
         const response = await request(app).get("/api/clasificaciones/1");
         expect(response.status).toBe(200);
         expect(response.body).toEqual(clasificaciones[0]);
     });
 });
 
-describe("POST /api/clasificaciones - Create a clasificacion", () => {
-    test("Successfully create a clasificacion", async () => {
+describe("POST /api/clasificaciones - Crear una clasificacion", () => {
+    test("Se creo una clasificacion exitosamente", async () => {
         const response = await request(app)
             .post("/api/clasificaciones")
             .set("Authorization", "Bearer your-access-token")
@@ -80,8 +80,8 @@ describe("POST /api/clasificaciones - Create a clasificacion", () => {
     });
 });
 
-describe("PUT /api/clasificaciones/:id - Update a clasificacion", () => {
-    test("Successfully update a clasificacion", async () => {
+describe("PUT /api/clasificaciones/:id - Actualizar una clasificacion", () => {
+    test("Se actualizo una clasificacion exitosamente", async () => {
         const response = await request(app)
             .put("/api/clasificaciones/1")
             .set("Authorization", "Bearer your-access-token")
@@ -91,8 +91,8 @@ describe("PUT /api/clasificaciones/:id - Update a clasificacion", () => {
     });
 });
 
-describe("DELETE /api/clasificaciones/:id - Delete a clasificacion", () => {
-    test("Successfully delete a clasificacion", async () => {
+describe("DELETE /api/clasificaciones/:id - Eliminar una clasificacion", () => {
+    test("Se elimino una clasificacion exitosamente", async () => {
         const response = await request(app)
             .delete("/api/clasificaciones/1")
             .set("Authorization", "Bearer your-access-token");
