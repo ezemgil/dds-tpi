@@ -4,13 +4,13 @@ import Logo from "../../assets/img/logo/logo-01.svg";
 
 import authService from "../../services/auth.service";
 
-const Sidebar = ({ handleElementoActual }) => {
+const Sidebar = ({ handleElementoActual, ElementoActual }) => {
     return (
         <div className="col-auto col-md-3 col-xl-2 px-0 bg-dark sidebar-bordered-right">
             <div className="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100 sticky-top">
                 <button
                     onClick={() => handleElementoActual("InicioAdmin")}
-                    className="d-flex align-items-center py-4 mb-md-0 me-md-auto text-white text-decoration-none logo-container bg-dark border-0 w-100"
+                    className="d-flex align-items-center py-4 mb-md-0 me-md-auto text-decoration-none logo-container border-0 w-100 bg-dark text-white"
                     title="Inicio"
                 >
                     <img src={Logo} alt="logo" className="img-fluid logo-img" />
@@ -23,7 +23,10 @@ const Sidebar = ({ handleElementoActual }) => {
                     <li className="nav-item sidebar-item w-100">
                         <button
                             onClick={() => handleElementoActual("InicioAdmin")}
-                            className="nav-link px-0 align-middle text-white d-flex align-items-center w-100"
+                            className={
+                                "nav-link px-0 align-middle d-flex align-items-center w-100" +
+                                (ElementoActual === "InicioAdmin" ? " bg-secondary text-warning" : " text-white")
+                            }
                         >
                             <i className="fa-solid fa-user-circle"></i>
                             <span className="ms-2 d-none d-sm-inline">Inicio</span>
@@ -32,7 +35,10 @@ const Sidebar = ({ handleElementoActual }) => {
                     <li className="nav-item sidebar-item w-100">
                         <button
                             onClick={() => handleElementoActual("Generos")}
-                            className="nav-link px-0 align-middle text-white d-flex align-items-center w-100"
+                            className={
+                                "nav-link px-0 align-middle d-flex align-items-center w-100" +
+                                (ElementoActual === "Generos" ? " bg-secondary text-warning" : " text-white")
+                            }
                         >
                             <i className="fa-solid fa-masks-theater"></i>
                             <span className="ms-2 d-none d-sm-inline">Géneros</span>
@@ -41,7 +47,10 @@ const Sidebar = ({ handleElementoActual }) => {
                     <li className="nav-item sidebar-item w-100">
                         <button
                             onClick={() => handleElementoActual("Cineastas")}
-                            className="nav-link px-0 align-middle text-white d-flex align-items-center w-100"
+                            className={
+                                "nav-link px-0 align-middle d-flex align-items-center w-100" +
+                                (ElementoActual === "Cineastas" ? " bg-secondary text-warning" : " text-white")
+                            }
                         >
                             <i className="fa-solid fa-clapperboard"></i>
                             <span className="ms-2 d-none d-sm-inline">Cineastas</span>
@@ -50,7 +59,10 @@ const Sidebar = ({ handleElementoActual }) => {
                     <li className="nav-item sidebar-item w-100">
                         <button
                             onClick={() => handleElementoActual("Clasificaciones")}
-                            className="nav-link px-0 align-middle text-white d-flex align-items-center w-100"
+                            className={
+                                "nav-link px-0 align-middle d-flex align-items-center w-100" +
+                                (ElementoActual === "Clasificaciones" ? " bg-secondary text-warning" : " text-white")
+                            }
                         >
                             <i className="fa-solid fa-clipboard-list"></i>
                             <span className="ms-2 d-none d-sm-inline">Clasificaciones</span>
@@ -59,7 +71,10 @@ const Sidebar = ({ handleElementoActual }) => {
                     <li className="nav-item sidebar-item w-100">
                         <button
                             onClick={() => handleElementoActual("Idiomas")}
-                            className="nav-link px-0 align-middle text-white d-flex align-items-center w-100"
+                            className={
+                                "nav-link px-0 align-middle d-flex align-items-center w-100" +
+                                (ElementoActual === "Idiomas" ? " bg-secondary text-warning" : " text-white")
+                            }
                         >
                             <i className="fa-solid fa-language"></i>
                             <span className="ms-2 d-none d-sm-inline">Idiomas</span>
@@ -68,7 +83,10 @@ const Sidebar = ({ handleElementoActual }) => {
                     <li className="nav-item sidebar-item w-100">
                         <button
                             onClick={() => handleElementoActual("Nominaciones")}
-                            className="nav-link px-0 align-middle text-white d-flex align-items-center w-100"
+                            className={
+                                "nav-link px-0 align-middle d-flex align-items-center w-100" +
+                                (ElementoActual === "Nominaciones" ? " bg-secondary text-warning" : " text-white")
+                            }
                         >
                             <i className="fa-solid fa-trophy"></i>
                             <span className="ms-2 d-none d-sm-inline">Nominaciones</span>
@@ -77,7 +95,10 @@ const Sidebar = ({ handleElementoActual }) => {
                     <li className="nav-item sidebar-item w-100">
                         <button
                             onClick={() => handleElementoActual("Paises")}
-                            className="nav-link px-0 align-middle text-white d-flex align-items-center w-100"
+                            className={
+                                "nav-link px-0 align-middle d-flex align-items-center w-100" +
+                                (ElementoActual === "Paises" ? " bg-secondary text-warning" : " text-white")
+                            }
                         >
                             <i className="fa-solid fa-earth-americas"></i>
                             <span className="ms-2 d-none d-sm-inline">Países</span>
@@ -86,7 +107,10 @@ const Sidebar = ({ handleElementoActual }) => {
                     <li className="nav-item sidebar-item w-100">
                         <button
                             onClick={() => handleElementoActual("Peliculas")}
-                            className="nav-link px-0 align-middle text-white d-flex align-items-center w-100"
+                            className={
+                                "nav-link px-0 align-middle d-flex align-items-center w-100" +
+                                (ElementoActual === "Peliculas" ? " bg-secondary text-warning" : " text-white")
+                            }
                         >
                             <i className="fa-solid fa-photo-film"></i>
                             <span className="ms-2 d-none d-sm-inline">Películas</span>
@@ -95,7 +119,10 @@ const Sidebar = ({ handleElementoActual }) => {
                     <li className="nav-item sidebar-item w-100">
                         <button
                             onClick={() => handleElementoActual("Premios")}
-                            className="nav-link px-0 align-middle text-white d-flex align-items-center w-100"
+                            className={
+                                "nav-link px-0 align-middle d-flex align-items-center w-100" +
+                                (ElementoActual === "Premios" ? " bg-secondary text-warning" : " text-white")
+                            }
                         >
                             <i className="fa-solid fa-award"></i>
                             <span className="ms-2 d-none d-sm-inline">Premios</span>

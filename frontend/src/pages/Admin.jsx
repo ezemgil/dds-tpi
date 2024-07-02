@@ -19,7 +19,7 @@ const Admin = () => {
         <>
             <div className="container-fluid">
                 <div className="row flex-nowrap">
-                    <Sidebar handleElementoActual={setElementoActual} />
+                    <Sidebar handleElementoActual={setElementoActual} ElementoActual={ElementoActual} />
                     <div className="col py-3">
                         {ElementoActual === "InicioAdmin" && <InicioAdmin />}
                         {ElementoActual === "Generos" && <Generos />}
