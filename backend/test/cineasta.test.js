@@ -11,8 +11,8 @@ jest.mock("../src/middleware/auth.js", () => {
     };
 });
 
-describe("GET /api/cineastas/buscar - Get cineastas by name", () => {
-    test("Successfully get cineastas by name", async () => {
+describe("GET /api/cineastas/buscar - Obtener cineastas por nombre", () => {
+    test("Se obtuvieron cineatas por nombre exitosamente", async () => {
         controller.getCineastasByName.mockImplementationOnce((req, res) => {
             res.json([{ id: 1, nombre: "Cineasta 1" }]);
         });
@@ -21,7 +21,7 @@ describe("GET /api/cineastas/buscar - Get cineastas by name", () => {
         expect(response.body).toEqual([{ id: 1, nombre: "Cineasta 1" }]);
     });
 
-    test("Error while getting cineastas by name", async () => {
+    test("Error al obtener cineastas por nombre", async () => {
         controller.getCineastasByName.mockImplementationOnce((req, res) => {
             res.status(500).send("Error");
         });
@@ -31,8 +31,8 @@ describe("GET /api/cineastas/buscar - Get cineastas by name", () => {
     });
 });
 
-describe("GET /api/cineastas/:id/peliculas - Get peliculas by cineasta ID", () => {
-    test("Successfully get peliculas by cineasta ID", async () => {
+describe("GET /api/cineastas/:id/peliculas - Obtener peliculas por ID de cineasta", () => {
+    test("Se obtuvieron las peliculas por el ID del cineasta", async () => {
         controller.getPeliculasByCineasta.mockImplementationOnce((req, res) => {
             res.json([{ id: 1, titulo: "Pelicula 1" }]);
         });
@@ -41,7 +41,7 @@ describe("GET /api/cineastas/:id/peliculas - Get peliculas by cineasta ID", () =
         expect(response.body).toEqual([{ id: 1, titulo: "Pelicula 1" }]);
     });
 
-    test("Error while getting peliculas by cineasta ID", async () => {
+    test("Error al obtener peliculas por el ID de cineastas", async () => {
         controller.getPeliculasByCineasta.mockImplementationOnce((req, res) => {
             res.status(500).send("Error");
         });
@@ -51,8 +51,8 @@ describe("GET /api/cineastas/:id/peliculas - Get peliculas by cineasta ID", () =
     });
 });
 
-describe("GET /api/cineastas/random - Get random cineastas", () => {
-    test("Successfully get random cineastas", async () => {
+describe("GET /api/cineastas/random - Obtener cineastas aleatorios", () => {
+    test(" Se obtuvieron cineastas aleatorios", async () => {
         const cineastas = [
             { id: 1, nombre: "Cineasta 1" },
             { id: 2, nombre: "Cineasta 2" },
@@ -65,7 +65,7 @@ describe("GET /api/cineastas/random - Get random cineastas", () => {
         expect(response.body).toEqual(cineastas);
     });
 
-    test("Error while getting random cineastas", async () => {
+    test("Error al obtener cineastas aleatorios", async () => {
         controller.getCineastasAleatorios.mockImplementationOnce((req, res) => {
             res.status(500).send("Error");
         });
@@ -75,8 +75,8 @@ describe("GET /api/cineastas/random - Get random cineastas", () => {
     });
 });
 
-describe("GET /api/cineastas - Get all cineastas", () => {
-    test("Successfully get all cineastas", async () => {
+describe("GET /api/cineastas - Otbener todos los cineastas", () => {
+    test("Se obtuvieron todos los cineastas exitosamente", async () => {
         const cineastas = [
             { id: 1, nombre: "Cineasta 1" },
             { id: 2, nombre: "Cineasta 2" },
@@ -89,7 +89,7 @@ describe("GET /api/cineastas - Get all cineastas", () => {
         expect(response.body).toEqual(cineastas);
     });
 
-    test("Error while getting all cineastas", async () => {
+    test("Error al obtener todos los cineastas", async () => {
         controller.getCineastas.mockImplementationOnce((req, res) => {
             res.status(500).send("Error");
         });
@@ -99,8 +99,8 @@ describe("GET /api/cineastas - Get all cineastas", () => {
     });
 });
 
-describe("GET /api/cineastas/:id - Get cineasta by ID", () => {
-    test("Successfully get cineasta by ID", async () => {
+describe("GET /api/cineastas/:id - Obtener cineasta por ID", () => {
+    test("Se obtuvo el cineasta por ID exitosamente", async () => {
         controller.getCineastaById.mockImplementationOnce((req, res) => {
             res.json({ id: 1, nombre: "Cineasta 1" });
         });
@@ -109,7 +109,7 @@ describe("GET /api/cineastas/:id - Get cineasta by ID", () => {
         expect(response.body).toEqual({ id: 1, nombre: "Cineasta 1" });
     });
 
-    test("Error while getting cineasta by ID", async () => {
+    test("Error al obtener un cineasta por ID", async () => {
         controller.getCineastaById.mockImplementationOnce((req, res) => {
             res.status(500).send("Error");
         });
@@ -118,7 +118,7 @@ describe("GET /api/cineastas/:id - Get cineasta by ID", () => {
         expect(response.text).toBe("Error");
     });
 
-    test("Cineasta not found", async () => {
+    test("Cineasta no encontrado", async () => {
         controller.getCineastaById.mockImplementationOnce((req, res) => {
             res.status(404).send("Cineasta not found");
         });
@@ -128,8 +128,8 @@ describe("GET /api/cineastas/:id - Get cineasta by ID", () => {
     });
 });
 
-describe("POST /api/cineastas - Create a cineasta", () => {
-    test("Successfully create a cineasta", async () => {
+describe("POST /api/cineastas - Crear un cineastas", () => {
+    test("Se creo un cineastas exitosamente", async () => {
         controller.createCineasta.mockImplementationOnce((req, res) => {
             res.json({ id: 1, nombre: "Cineasta 1" });
         });
@@ -141,7 +141,7 @@ describe("POST /api/cineastas - Create a cineasta", () => {
         expect(response.body).toEqual({ id: 1, nombre: "Cineasta 1" });
     });
 
-    test("Error while creating a cineasta", async () => {
+    test("Error al crear un cineastas", async () => {
         controller.createCineasta.mockImplementationOnce((req, res) => {
             res.status(500).send("Error");
         });
@@ -154,8 +154,8 @@ describe("POST /api/cineastas - Create a cineasta", () => {
     });
 });
 
-describe("PUT /api/cineastas/:id - Update a cineasta", () => {
-    test("Successfully update a cineasta", async () => {
+describe("PUT /api/cineastas/:id - Actualizar un cineastas", () => {
+    test("Se actualizo un cineasta exitosamente", async () => {
         controller.updateCineasta.mockImplementationOnce((req, res) => {
             res.json({ id: 1, nombre: "Cineasta 1" });
         });
@@ -167,7 +167,7 @@ describe("PUT /api/cineastas/:id - Update a cineasta", () => {
         expect(response.body).toEqual({ id: 1, nombre: "Cineasta 1" });
     });
 
-    test("Error while updating a cineasta", async () => {
+    test("Error al actualizar un cineasta", async () => {
         controller.updateCineasta.mockImplementationOnce((req, res) => {
             res.status(500).send("Error");
         });
@@ -179,7 +179,7 @@ describe("PUT /api/cineastas/:id - Update a cineasta", () => {
         expect(response.text).toBe("Error");
     });
 
-    test("Cineasta not found", async () => {
+    test("Cineasta no encontrado", async () => {
         controller.updateCineasta.mockImplementationOnce((req, res) => {
             res.status(404).send("Cineasta not found");
         });
@@ -192,8 +192,8 @@ describe("PUT /api/cineastas/:id - Update a cineasta", () => {
     });
 });
 
-describe("DELETE /api/cineastas/:id - Delete a cineasta", () => {
-    test("Successfully delete a cineasta", async () => {
+describe("DELETE /api/cineastas/:id - Eliminar un cineasta", () => {
+    test("Se elimino un cineasta exitosamente", async () => {
         controller.deleteCineasta.mockImplementationOnce((req, res) => {
             res.json({ id: 1, nombre: "Cineasta 1" });
         });
@@ -202,7 +202,7 @@ describe("DELETE /api/cineastas/:id - Delete a cineasta", () => {
         expect(response.body).toEqual({ id: 1, nombre: "Cineasta 1" });
     });
 
-    test("Error while deleting a cineasta", async () => {
+    test("Error al eliminar un cineasta", async () => {
         controller.deleteCineasta.mockImplementationOnce((req, res) => {
             res.status(500).send("Error");
         });
@@ -211,7 +211,7 @@ describe("DELETE /api/cineastas/:id - Delete a cineasta", () => {
         expect(response.text).toBe("Error");
     });
 
-    test("Cineasta not found", async () => {
+    test("Cineasta no encontrado", async () => {
         controller.deleteCineasta.mockImplementationOnce((req, res) => {
             res.status(404).send("Cineasta not found");
         });

@@ -25,14 +25,14 @@ beforeEach(() => {
     });
 });
 
-describe("GET /api/generos - Get all genres", () => {
-    test("Successfully get all genres", async () => {
+describe("GET /api/generos - Obtener todos los generos", () => {
+    test("Se obtuvieron todos los generos exitosamente", async () => {
         const response = await request(app).get("/api/generos");
         expect(response.status).toBe(200);
         expect(response.body).toEqual(generos);
     });
 
-    test("Error while getting all genres", async () => {
+    test("Error al obtener todos los generos", async () => {
         generoController.getGeneros.mockImplementationOnce((req, res) => {
             res.status(500).send("Error");
         });
@@ -42,8 +42,8 @@ describe("GET /api/generos - Get all genres", () => {
     });
 });
 
-describe("GET /api/generos/:id - Get genre by ID", () => {
-    test("Successfully get genre by ID", async () => {
+describe("GET /api/generos/:id - Obtener genero por ID", () => {
+    test("Se obtuvo un genero por ID exitosamente", async () => {
         generoController.getGeneroById.mockImplementationOnce((req, res) => {
             res.json(generos[0]);
         });
@@ -52,7 +52,7 @@ describe("GET /api/generos/:id - Get genre by ID", () => {
         expect(response.body).toEqual(generos[0]);
     });
 
-    test("Error while getting genre by ID", async () => {
+    test("Error al obtener gener por ID", async () => {
         generoController.getGeneroById.mockImplementationOnce((req, res) => {
             res.status(500).send("Error");
         });
@@ -61,7 +61,7 @@ describe("GET /api/generos/:id - Get genre by ID", () => {
         expect(response.text).toBe("Error");
     });
 
-    test("Genre not found", async () => {
+    test("Genero no encontrado", async () => {
         generoController.getGeneroById.mockImplementationOnce((req, res) => {
             res.status(404).send("Genre not found");
         });
@@ -71,8 +71,8 @@ describe("GET /api/generos/:id - Get genre by ID", () => {
     });
 });
 
-describe("POST /api/generos - Create a genre", () => {
-    test("Successfully create a genre", async () => {
+describe("POST /api/generos - Crear un genero", () => {
+    test("Se creo un genero exitosamente", async () => {
         generoController.createGenero.mockImplementationOnce((req, res) => {
             res.json(generos[0]);
         });
@@ -84,7 +84,7 @@ describe("POST /api/generos - Create a genre", () => {
         expect(response.body).toEqual(generos[0]);
     });
 
-    test("Error while creating a genre", async () => {
+    test("Error al crear un genero", async () => {
         generoController.createGenero.mockImplementationOnce((req, res) => {
             res.status(500).send("Error");
         });
@@ -97,8 +97,8 @@ describe("POST /api/generos - Create a genre", () => {
     });
 });
 
-describe("PUT /api/generos/:id - Update a genre", () => {
-    test("Successfully update a genre", async () => {
+describe("PUT /api/generos/:id - Actualizar un genero", () => {
+    test("Se actualizo un genero exitosamente", async () => {
         generoController.updateGenero.mockImplementationOnce((req, res) => {
             res.json(generos[0]);
         });
@@ -110,7 +110,7 @@ describe("PUT /api/generos/:id - Update a genre", () => {
         expect(response.body).toEqual(generos[0]);
     });
 
-    test("Error while updating a genre", async () => {
+    test("Error al actualizar un genero", async () => {
         generoController.updateGenero.mockImplementationOnce((req, res) => {
             res.status(500).send("Error");
         });
@@ -122,7 +122,7 @@ describe("PUT /api/generos/:id - Update a genre", () => {
         expect(response.text).toBe("Error");
     });
 
-    test("Genre not found", async () => {
+    test("Genero no encontrado", async () => {
         generoController.updateGenero.mockImplementationOnce((req, res) => {
             res.status(404).send("Genre not found");
         });
@@ -135,8 +135,8 @@ describe("PUT /api/generos/:id - Update a genre", () => {
     });
 });
 
-describe("DELETE /api/generos/:id - Delete a genre", () => {
-    test("Successfully delete a genre", async () => {
+describe("DELETE /api/generos/:id - Eliminar un genero", () => {
+    test("Se elimino un genero exitosamente", async () => {
         generoController.deleteGenero.mockImplementationOnce((req, res) => {
             res.json(generos[0]);
         });
@@ -145,7 +145,7 @@ describe("DELETE /api/generos/:id - Delete a genre", () => {
         expect(response.body).toEqual(generos[0]);
     });
 
-    test("Error while deleting a genre", async () => {
+    test("Error al eliminar un genero", async () => {
         generoController.deleteGenero.mockImplementationOnce((req, res) => {
             res.status(500).send("Error");
         });
@@ -154,7 +154,7 @@ describe("DELETE /api/generos/:id - Delete a genre", () => {
         expect(response.text).toBe("Error");
     });
 
-    test("Genre not found", async () => {
+    test("Genero no encontrado", async () => {
         generoController.deleteGenero.mockImplementationOnce((req, res) => {
             res.status(404).send("Genre not found");
         });

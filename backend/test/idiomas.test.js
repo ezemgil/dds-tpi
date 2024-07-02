@@ -25,14 +25,14 @@ beforeEach(() => {
     });
 });
 
-describe("GET /api/idiomas - Get all languages", () => {
-    test("Successfully get all languages", async () => {
+describe("GET /api/idiomas - Obtener todos los idiomas", () => {
+    test("Se obtuvieron todos los idiomas exitosamente", async () => {
         const response = await request(app).get("/api/idiomas");
         expect(response.status).toBe(200);
         expect(response.body).toEqual(idiomas);
     });
 
-    test("Error while getting all languages", async () => {
+    test("Error al obtener todos los idiomas", async () => {
         idiomaController.getIdiomas.mockImplementationOnce((req, res) => {
             res.status(500).send("Error");
         });
@@ -42,8 +42,8 @@ describe("GET /api/idiomas - Get all languages", () => {
     });
 });
 
-describe("GET /api/idiomas/:id - Get language by ID", () => {
-    test("Successfully get language by ID", async () => {
+describe("GET /api/idiomas/:id - Obtener idioma por ID", () => {
+    test("Se obtuvo el idioma por ID exitosamente", async () => {
         idiomaController.getIdiomaById.mockImplementationOnce((req, res) => {
             res.json(idiomas[0]);
         });
@@ -52,7 +52,7 @@ describe("GET /api/idiomas/:id - Get language by ID", () => {
         expect(response.body).toEqual(idiomas[0]);
     });
 
-    test("Error while getting language by ID", async () => {
+    test("Error al obtener idioma por ID", async () => {
         idiomaController.getIdiomaById.mockImplementationOnce((req, res) => {
             res.status(500).send("Error");
         });
@@ -61,7 +61,7 @@ describe("GET /api/idiomas/:id - Get language by ID", () => {
         expect(response.text).toBe("Error");
     });
 
-    test("Language not found", async () => {
+    test("Idioma no encontrado", async () => {
         idiomaController.getIdiomaById.mockImplementationOnce((req, res) => {
             res.status(404).send("Language not found");
         });
@@ -71,8 +71,8 @@ describe("GET /api/idiomas/:id - Get language by ID", () => {
     });
 });
 
-describe("POST /api/idiomas - Create a language", () => {
-    test("Successfully create a language", async () => {
+describe("POST /api/idiomas - Crear un idioma", () => {
+    test("Se creo un idioma exitosamente", async () => {
         idiomaController.createIdioma.mockImplementationOnce((req, res) => {
             res.json(idiomas[0]);
         });
@@ -84,7 +84,7 @@ describe("POST /api/idiomas - Create a language", () => {
         expect(response.body).toEqual(idiomas[0]);
     });
 
-    test("Error while creating a language", async () => {
+    test("Error al crear un idioma", async () => {
         idiomaController.createIdioma.mockImplementationOnce((req, res) => {
             res.status(500).send("Error");
         });
@@ -97,8 +97,8 @@ describe("POST /api/idiomas - Create a language", () => {
     });
 });
 
-describe("PUT /api/idiomas/:id - Update a language", () => {
-    test("Successfully update a language", async () => {
+describe("PUT /api/idiomas/:id - Actualizar un idioma", () => {
+    test("Se actualizo un idioma exitosamente", async () => {
         idiomaController.updateIdioma.mockImplementationOnce((req, res) => {
             res.json(idiomas[0]);
         });
@@ -110,7 +110,7 @@ describe("PUT /api/idiomas/:id - Update a language", () => {
         expect(response.body).toEqual(idiomas[0]);
     });
 
-    test("Error while updating a language", async () => {
+    test("Error al actualizar un idioma", async () => {
         idiomaController.updateIdioma.mockImplementationOnce((req, res) => {
             res.status(500).send("Error");
         });
@@ -122,7 +122,7 @@ describe("PUT /api/idiomas/:id - Update a language", () => {
         expect(response.text).toBe("Error");
     });
 
-    test("Language not found", async () => {
+    test("Idioma no encontrado", async () => {
         idiomaController.updateIdioma.mockImplementationOnce((req, res) => {
             res.status(404).send("Language not found");
         });
@@ -135,8 +135,8 @@ describe("PUT /api/idiomas/:id - Update a language", () => {
     });
 });
 
-describe("DELETE /api/idiomas/:id - Delete a language", () => {
-    test("Successfully delete a language", async () => {
+describe("DELETE /api/idiomas/:id - Eliminar un idioma", () => {
+    test("Se elimino un idioma exitosamente", async () => {
         idiomaController.deleteIdioma.mockImplementationOnce((req, res) => {
             res.json(idiomas[0]);
         });
@@ -145,7 +145,7 @@ describe("DELETE /api/idiomas/:id - Delete a language", () => {
         expect(response.body).toEqual(idiomas[0]);
     });
 
-    test("Error while deleting a language", async () => {
+    test("Error al eliminar un idioma", async () => {
         idiomaController.deleteIdioma.mockImplementationOnce((req, res) => {
             res.status(500).send("Error");
         });
@@ -154,7 +154,7 @@ describe("DELETE /api/idiomas/:id - Delete a language", () => {
         expect(response.text).toBe("Error");
     });
 
-    test("Language not found", async () => {
+    test("Idioma no encontrado", async () => {
         idiomaController.deleteIdioma.mockImplementationOnce((req, res) => {
             res.status(404).send("Language not found");
         });
