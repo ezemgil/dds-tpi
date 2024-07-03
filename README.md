@@ -18,6 +18,11 @@ Las APIs implementan los métodos CRUD (Create, Read, Update, Delete) y se han r
 
 # Backend
 
+### Iniciar la base de datos
+Se adjunta además un script en SQL llamado `init.SQL` que define las tablas con sus restricciones y relaciones y que además le inserta unos primeros valores.
+Si se quiere utilizar este script, asegurarse de ejecutarlo antes de levantar el servidor.
+Existe también una utilidad que crea una conexión con la base de datos y ejectuta este script. En caso de querer utilizarlo, con `node ./backend/data/runSQL.js`.
+
 ## Instalar dependencias
 ```bash
 $ cd backend
